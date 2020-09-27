@@ -12,7 +12,7 @@
 <link rel='stylesheet' href='include\main.css'>
 
 <div class='container'>
-    <h3 class='h3'>shopping Demo-4 </h3>
+    <h3 class='h3'>View Products </h3>
     <div class='row'>
         <?php
             $productDAO = new productDAO();
@@ -44,8 +44,8 @@
                 
                 echo "
                 <div class='col-md-3 col-sm-6'>
-                <div class='product-grid4'>
-                    <div class='product-image4'>
+                <div class='product-grid'>
+                    <div class='product-image'>
                         <a href='#'>
                             <img class='pic-1' width='250' height='200' src='images/$type/$name.jpg'>
                         </a>";
