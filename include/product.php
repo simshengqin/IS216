@@ -14,9 +14,10 @@ class product {
     private $price_before;
     private $quantity;
     private $type;
+    private $mode_of_collection;
     
     
-    public function __construct($product_id, $company_id, $decay_date, $decay_time, $name, $posted_date, $posted_time, $price_after, $price_before, $quantity, $type)
+    public function __construct($product_id, $company_id, $decay_date, $decay_time, $name, $posted_date, $posted_time, $price_after, $price_before, $quantity, $type, $mode_of_collection)
     {
         $this->product_id = $product_id;
         $this->company_id = $company_id;
@@ -29,6 +30,7 @@ class product {
         $this->price_before = $price_before;
         $this->quantity = $quantity;
         $this->type = $type;
+        $this->mode_of_collection = $mode_of_collection;
     }
     public function get_product_id()
     { 
@@ -73,6 +75,10 @@ class product {
     public function get_type()
     { 
         return $this->type;
+    }
+    public function get_mode_of_collection()
+    {
+        return $this->mode_of_collection;
     }
 
     
