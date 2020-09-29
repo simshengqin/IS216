@@ -39,28 +39,36 @@ class productDAO {
         $result = [];
 
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $result[] = new product($row['product_id'], $row['company_id'], $row['decay_date'], $row['decay_time'], $row['name'], $row['posted_date'], $row['posted_time'], $row['price_after'], $row['price_before'], $row['quantity'], $row['type']);
+            $result[] = new product($row['product_id'], $row['company_id'], $row['decay_date'], $row['decay_time'], $row['name'], $row['posted_date'], $row['posted_time'], $row['price_after'], $row['price_before'], $row['quantity'], $row['type'], $row['mode_of_collection']);
         }
         return $result;
     }
 
-    public function retrieveStudent($userid){
-        $sql = "SELECT * FROM student WHERE userid = :userid";
+    public function retrieve_product($product_id){
+        $sql = "SELECT * FROM product WHERE product_id = :product_id";
         $connMgr = new ConnectionManager();      
         $conn = $connMgr->getConnection();
 
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':userid', $userid, PDO::PARAM_STR);
+        $stmt->bindParam(':product_id', $product_id, PDO::PARAM_STR);
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $stmt->execute();
-        $result = "";
-
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $result = new Student($row['userid'], $row['password'],$row['name'], $row['school'], $row['edollar']);
+            $result = new product($row['product_id'], $row['company_id'], $row['decay_date'], $row['decay_time'], $row['name'], $row['posted_date'], $row['posted_time'], $row['price_after'], $row['price_before'], $row['quantity'], $row['type'], $row['mode_of_collection']);
         }
         return $result;
     }
+    public function remove_product($product_id){
+        $sql = "DELETE * FROM product WHERE product_id = :product_id";
+        $connMgr = new ConnectionManager();      
+        $conn = $connMgr->getConnection();
 
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':product_id', $product_id, PDO::PARAM_STR);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $status = $stmt->execute();
+        return $status;
+    }
 
     public function removeAll(){
         $sql = 'TRUNCATE TABLE student';
