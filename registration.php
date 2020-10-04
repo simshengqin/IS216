@@ -15,7 +15,7 @@
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js">" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     </head>
@@ -29,7 +29,7 @@
                         $school            =$_POST['school'];
                         $email             =$_POST['email'];
                         $phoneNumber       =$_POST['phoneNumber'];
-                        $password          =$_POST['password'];
+                        $password          = sha1($_POST['password']);
                         $reEnterPassword   =$_POST['reEnterPassword'];
                         $edollar           = 0;
                         $cart              ="";
@@ -76,16 +76,51 @@
                         <hr class = "mb-4">
                         <input class="btn btn-primary" type="submit" name="submitted" id="register" value="Register">
                     </div>
-                    
+
                     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
                     <script type="text/javascript" >
-                        $( '#register').click(function() {
+                        $( '#register').click(function(e) {
+
+                            var valid = this.form.checkValidity();
+                            
+                            if( valid ) {
+                                var name = $("#name").val();
+                                var school = $("school").val();
+                                var email = $("email").val();
+                                var phoneNumber = $("phoneNumber").val();
+                                var password = $("password").val();
+                                var reEnterPassword = $("reEnterPassword").val();
+
+                                e.preventDefault();
+
+                                $.ajax({
+                                    type: "POST",
+                                    url: "Registration.php" ,
+                                    data : { name: name, school:school, email: email, phoneNumber: phoneNumber, password: password, reEnterPassword: reEnterPassword},
+                                    success: function( data ) {
+                                        Swal.fire({
+                                                    "title" : "Successful",
+                                                    "text": "Thank you for registering an account",
+                                                    "type": "success",
+                                                })
+                                     },
+                                error: function( data ) {
+                                    Swal.fire({
+                                                    "title" : "Errors",
+                                                    "text": "",
+                                                    "type": "success",
+                                                })
+                                    }   
+                                });
+                            } else {
+                                Swal.fire({
+                                    "title" : "Errors",
+                                    "text": "Please Enter Your Fields",
+                                    "type": "success",
+                                })
+                            }
                             //alert( "hello" );
-                            Swal.fire({
-                                "title" : "hello world",
-                                "text": "this is from sweet alert 2",
-                                "type": "success",
-                            })
+                            
                         });
                     </script>
 
