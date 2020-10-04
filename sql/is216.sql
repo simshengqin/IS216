@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Sep 29, 2020 at 12:32 PM
+-- Generation Time: Oct 03, 2020 at 05:05 PM
 -- Server version: 5.7.31
 -- PHP Version: 7.3.21
 CREATE Database IF NOT EXISTS `is216`;
@@ -21,6 +21,57 @@ SET time_zone = "+00:00";
 --
 -- Database: `is216`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `company`
+--
+
+DROP TABLE IF EXISTS `company`;
+CREATE TABLE IF NOT EXISTS `company` (
+  `company_id` int(255) NOT NULL AUTO_INCREMENT,
+  `address` varchar(1000) CHARACTER SET utf8mb4 NOT NULL,
+  `description` varchar(9999) CHARACTER SET utf8mb4 NOT NULL,
+  `following` varchar(1000) CHARACTER SET utf8mb4 NOT NULL,
+  `joined_date` date NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
+  `password` varchar(1000) CHARACTER SET utf8mb4 NOT NULL,
+  `rating` float NOT NULL,
+  PRIMARY KEY (`company_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `company`
+--
+
+INSERT INTO `company` (`company_id`, `address`, `description`, `following`, `joined_date`, `name`, `password`, `rating`) VALUES
+(1, 'Hougang 1', 'Come and experience the rich coordination of Italian cuisine, and enjoy your meal! Italian food culture has a long tradition, built up over many years.\r\n\r\nAll dishes and drinks, from appetizers to desserts, aperitifs to digestifs, have their own sophistication. Selecting and combining these elements allows us to form a meal that is more than the sum of its parts, as foods complement one another to double the flavors.\r\n\r\nAt Saizeriya, we portion our dishes just right, so diners can enjoy our flavors whether alone or with a large group. Not only do we determine portions, but also prices, in order to make it easy to mix and match to create the perfect meal. Furthermore, our free condiment section lets our diners customise their dishes to their hearts\' content.\r\n\r\nCome and experience the rich coordination of Italian cuisine, and enjoy your meal!', '1,2,3,4,5,6', '2020-09-02', 'saizeriya', 'password1', 5),
+(2, 'Boat Quay', '<br>Enjoy authentic Italian cuisine at Pasta Fresca! Our restaurant offers the widest range of fresh pasta in Singapore and more! View our menu now.', '1,2,3,6', '2020-09-02', 'pasta fresca', 'password1', 5),
+(3, 'Serangoon', 'A staple in the diet of many in Asia, we honour the art of bread-making by giving life to novel creations since our inception in 2000.', '1,2,3,6', '2020-09-02', 'breadtalk', 'password1', 5),
+(4, 'Jurong West', 'We have been providing wide range of bakery products and cakes by applying Japanese up-to-date technologies, rigorous quality assurance and innovative spirit. We recognize to prove \'Good Quality\' of products is equal to \'Good Service\' to our customers. In response to increased awareness of food safety and security in Singapore, we continue to strengthen our food safety and hygiene systems to guarantee our ongoing capability to provide products and services by putting on uppermost level of Japanese system to guarantee our ongoing capability that meet customers\' needs. We manage quality at all stages including the procurement of raw material, such as high quality of wheat flour from one of leading companies in the industry, as a trustworthy bakery manufacturer.\r\n\r\nAs one of the leading companies in the bakery industry, we are making extensive efforts to contribute to the Singapore food industry, especially for bakery culture and development of innovative methods of bakery business in Singapore.', '1,2,3,6', '2020-09-02', 'four leaves', 'password1', 5),
+(5, 'Hougang 1', 'Today, we are delighted to prepare and serve one of the freshest sushi in town at affordable prices. Besides sushi, we offer sashimi, bentos, udons and Japanese salads, enjoyed by customers of all ages and walks of life.\r\nConceived as a quick dining and takeaway service, you do not have to wait long to tuck into a yummy bento with your friends. We offer party platters and delivery services too, celebrating and rejoicing with you on those special occasions.', '1,2,3,6', '2020-09-02', 'umisushi', 'password1', 5);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `message`
+--
+
+DROP TABLE IF EXISTS `message`;
+CREATE TABLE IF NOT EXISTS `message` (
+  `message_id` int(255) NOT NULL AUTO_INCREMENT,
+  `body` varchar(1000) CHARACTER SET utf8mb4 NOT NULL,
+  `date` datetime NOT NULL,
+  `from_id` int(255) NOT NULL,
+  `from_type` varchar(1000) CHARACTER SET utf8mb4 NOT NULL,
+  `seen` varchar(1000) CHARACTER SET utf8mb4 NOT NULL,
+  `time` varchar(1000) CHARACTER SET utf8mb4 NOT NULL,
+  `to_id` int(255) NOT NULL,
+  `to_type` varchar(1000) CHARACTER SET utf8mb4 NOT NULL,
+  `type` varchar(1000) CHARACTER SET utf8mb4 NOT NULL,
+  PRIMARY KEY (`message_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -71,15 +122,19 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
   `user_id` int(255) NOT NULL AUTO_INCREMENT,
   `cart` varchar(9999) CHARACTER SET utf8mb4 NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`user_id`, `cart`) VALUES
-(1, '1:3,3:1,4:2,5:1,7:1,10:1,6:1');
+INSERT INTO `user` (`user_id`, `cart`, `name`) VALUES
+(1, '3:1,4:2,5:1,7:1,10:1,6:1,2:1,1:1', 'Sheng Qin'),
+(2, '1:1,3:1,4:2,5:1,7:1,10:1,6:1,2:1', 'Vittorio'),
+(4, '1:1,3:1,4:2,5:1,7:1,10:1,6:1,2:1', 'Sheng Xue'),
+(3, '1:1,3:1,4:2,5:1,7:1,10:1,6:1,2:1', 'Mark');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
