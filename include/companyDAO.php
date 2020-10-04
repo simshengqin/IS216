@@ -1,8 +1,8 @@
 <?php
 
-class productDAO {
+class companyDAO {
 
-    public function add($userid, $password, $name, $school, $edollar) {
+    public function add($company_id, $password, $name, $school, $edollar) {
         $sql = 'INSERT INTO student (userid, password, name, school, edollar) 
                     VALUES (:userid, :password, :name, :school, :edollar)';
         
@@ -11,7 +11,7 @@ class productDAO {
          
         $stmt = $conn->prepare($sql); 
 
-        $stmt->bindParam(':userid', $userid, PDO::PARAM_STR);
+        $stmt->bindParam(':company_id', $company_id, PDO::PARAM_STR);
         $stmt->bindParam(':password', $password, PDO::PARAM_STR);
         $stmt->bindParam(':name', $name, PDO::PARAM_STR);
         $stmt->bindParam(':school', $school, PDO::PARAM_STR);
@@ -27,7 +27,7 @@ class productDAO {
 
 
     public function retrieve_all(){
-        $sql = 'select * from product';
+        $sql = 'select * from company';
 
         $connMgr = new ConnectionManager();      
         $conn = $connMgr->getConnection();
@@ -39,28 +39,13 @@ class productDAO {
         $result = [];
 
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $result[] = new product($row['product_id'], $row['company_id'], $row['decay_date'], $row['decay_time'], $row['name'], $row['posted_date'], $row['posted_time'], $row['price_after'], $row['price_before'], $row['quantity'], $row['type'], $row['mode_of_collection']);
+            $result[] = new company($row['company_id'], $row['address'], $row['description'], $row['following'], $row['joined_date'], $row['name'], $row['password'], $row['rating']);
         }
         return $result;
     }
 
-    public function retrieve_product($product_id){
-        $sql = "SELECT * FROM product WHERE product_id = :product_id";
-        $connMgr = new ConnectionManager();      
-        $conn = $connMgr->getConnection();
-
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':product_id', $product_id, PDO::PARAM_STR);
-        $stmt->setFetchMode(PDO::FETCH_ASSOC);
-        $stmt->execute();
-        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $result = new product($row['product_id'], $row['company_id'], $row['decay_date'], $row['decay_time'], $row['name'], $row['posted_date'], $row['posted_time'], $row['price_after'], $row['price_before'], $row['quantity'], $row['type'], $row['mode_of_collection']);
-        }
-        return $result;
-    }
-    
-    public function retrieve_product_by_company($company_id){
-        $sql = "SELECT * FROM product WHERE company_id = :company_id";
+    public function retrieve_company($company_id){
+        $sql = "SELECT * FROM company WHERE company_id = :company_id";
         $connMgr = new ConnectionManager();      
         $conn = $connMgr->getConnection();
 
@@ -68,26 +53,39 @@ class productDAO {
         $stmt->bindParam(':company_id', $company_id, PDO::PARAM_STR);
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $stmt->execute();
-        $result = [];
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $result[] = new product($row['product_id'], $row['company_id'], $row['decay_date'], $row['decay_time'], $row['name'], $row['posted_date'], $row['posted_time'], $row['price_after'], $row['price_before'], $row['quantity'], $row['type'], $row['mode_of_collection']);
+            $result = new company($row['company_id'], $row['address'], $row['description'], $row['following'], $row['joined_date'], $row['name'], $row['password'], $row['rating']);
         }
         return $result;
     }
-    public function remove_product($product_id){
-        $sql = "DELETE * FROM product WHERE product_id = :product_id";
+    public function retrieve_company_from_company_name($name){
+        $sql = "SELECT * FROM company WHERE name = :name";
         $connMgr = new ConnectionManager();      
         $conn = $connMgr->getConnection();
 
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':product_id', $product_id, PDO::PARAM_STR);
+        $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->execute();
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $result = new company($row['company_id'], $row['address'], $row['description'], $row['following'], $row['joined_date'], $row['name'], $row['password'], $row['rating']);
+        }
+        return $result;
+    }
+    public function remove_company($company_id){
+        $sql = "DELETE * FROM company WHERE company_id = :company_id";
+        $connMgr = new ConnectionManager();      
+        $conn = $connMgr->getConnection();
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':company_id', $company_id, PDO::PARAM_STR);
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $status = $stmt->execute();
         return $status;
     }
 
     public function removeAll(){
-        $sql = 'TRUNCATE TABLE student';
+        $sql = 'TRUNCATE TABLE company';
         
         $connMgr = new ConnectionManager();
         $conn = $connMgr->getConnection();
