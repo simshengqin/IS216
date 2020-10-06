@@ -73,7 +73,7 @@ class userDAO {
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $stmt->execute();
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $result = new user($row['user_id'], $row['cart'], $row['name']);
+            $result = new user($row['user_id'], $row['cart'], $row['name'], $row['email'], $row['phoneNumber'], $row['preferences']);
         }
         return $result;
     }
