@@ -28,6 +28,21 @@ class userDAO {
         return $isAddOK;
     }
 
+    public function get_user( $username, $password ){
+        $sql = "SELECT * FROM user WHERE email = :email AND password = :password";
+        $connMgr = new ConnectionManager();
+        $conn = $connMgr ->getConnection();
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam( ":email", $username, PDO::PARAM_STR);
+        $stmt->bindParam(":password", $password, PDO::PARAM_STR);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $result = $stmt->execute();
+        
+        
+        return $result;
+    }
+
 
     public function retrieve_all(){
         $sql = 'select * from user';

@@ -459,7 +459,7 @@ img {
   border-radius: 5px;
 }
 
-.login_logo_container {
+.brand_logo_container {
   position: absolute;
   height: 170px;
   width: 170px;
@@ -507,6 +507,7 @@ img {
 .user_input:focus{
   box-shadow: none;
   outline: 0px;
+  color: black;
 }
 
 .checkbox_group .custom_checkbox:checked~.custom_label_checkbox::before{
