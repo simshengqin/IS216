@@ -73,10 +73,13 @@
                             <label class="input-group-text" for="inputGroupSelect01">
                             Sort by</label>
                         </span>
-                        <select class="form-control custom-select " id="sort_by" onchange = "sort_products();"                                                                                                                >
-                            <option selected value="1">Newest</option>
-                            <option value="2">Price: Low to high</option>
-                            <option value="3">Price: High to low</option>
+                        <select class="form-control custom-select " id="sort_by_bar" onchange = "sort_products();"                                                                                                                >
+                            <option selected value="Posted Date: Newest to oldest">Posted Date: Newest to oldest</option>
+                            <option selected value="Posted Date: Oldest to newest">Posted Date: Oldest to newest</option>
+                            <option selected value="Expiry Date: Shorter away to further away">Expiry Date: Shorter away to further away</option>
+                            <option selected value="Expiry Date: Further away to shorter away">Expiry Date: Further away to shorter away</option>
+                            <option value="Price: Low to high">Price: Low to high</option>
+                            <option value="Price: High to low">Price: High to low</option>
                         </select>
                     </div>  
                 </div>
@@ -149,8 +152,8 @@
                     </span>
                 </div>
             </div>
-            <div class="row" name="main_product_grid">
-                <span id="no_items_warning"></span>
+            <span id="no_items_warning"></span>
+            <div class="row" id="main_product_grid">               
                 <?php
                     $productDAO = new productDAO();
                     $all_product_info = $productDAO->retrieve_all();
@@ -181,7 +184,7 @@
                         //$datetime = date('m/d/Y h:i:s a', time());
                         
                         echo "
-                        <div class='col-xl-3 col-lg-4 col-sm-6 single_product_grid' name='$product_id,$company_id,$decay_date,$decay_time,$name,$posted_date,$posted_time,$price_after,$price_before,$quantity,$type,$mode_of_collection'>
+                        <div class='col-xl-3 col-lg-4 col-sm-6 single_product_grid' id ='single_product_grid' name='$product_id,$company_id,$decay_date,$decay_time,$name,$posted_date,$posted_time,$price_after,$price_before,$quantity,$type,$mode_of_collection'>
                         <div class='product-grid'>
                             
                             <div class='product-image'>
@@ -301,7 +304,72 @@
         }
     }
     function sort_products() {
+        var selected_option = document.getElementById("sort_by_bar").value;        
+        var main_product_grid = document.getElementById('main_product_grid');
+        //var divs = container.getElementsById('single_product_grid');
+        var product_grids = Array.from(document.getElementsByClassName("single_product_grid"));
+        var search_for_products = document.getElementById("search_for_products").value;
+        var price_min = document.getElementById("price_min").value;
+        var price_max = document.getElementById("price_max").value;
+        var offers_free_delivery = document.getElementById("offers_free_delivery").checked;
+        var offers_has_discount = document.getElementById("offers_has_discount").checked;
+        var freshness_min_days_to_expiry = document.getElementById("freshness_min_days_to_expiry").value;
+        var categories_dessert = document.getElementById("categories_dessert").checked;
+        var categories_vegetables = document.getElementById("categories_vegetables").checked;
+        var categories_meal = document.getElementById("categories_meal").checked;
+        var has_at_least_one_value = false;
+        if (selected_option == "Price: Low to high") {
+            var product_grids_sorted = product_grids.sort(function(a, b){return parseFloat(a.getAttribute("name").split(",")[7])-parseFloat(b.getAttribute("name").split(",")[7])});
+        }
+
+        else if (selected_option == "Price: High to low") {
+            var product_grids_sorted = product_grids.sort(function(b, a){return parseFloat(a.getAttribute("name").split(",")[7])-parseFloat(b.getAttribute("name").split(",")[7])});
+        }
+        //Create a date object based on date and time field and compare which one is larger
+        else if (selected_option == "Posted Date: Newest to oldest") {
+            var product_grids_sorted = product_grids.sort(function(b, a){return Date.parse(a.getAttribute("name").split(",")[5] + " " + a.getAttribute("name").split(",")[6])-Date.parse(b.getAttribute("name").split(",")[5] + " " + b.getAttribute("name").split(",")[6])});
+        }   
+        else if (selected_option == "Posted Date: Oldest to newest") {
+            var product_grids_sorted = product_grids.sort(function(a, b){return Date.parse(a.getAttribute("name").split(",")[5] + " " + a.getAttribute("name").split(",")[6])-Date.parse(b.getAttribute("name").split(",")[5] + " " + b.getAttribute("name").split(",")[6])});
+        }  
+        else if (selected_option == "Expiry Date: Further away to shorter away") {
+            var product_grids_sorted = product_grids.sort(function(b, a){return Date.parse(a.getAttribute("name").split(",")[2] + " " + a.getAttribute("name").split(",")[3])-Date.parse(b.getAttribute("name").split(",")[2] + " " + b.getAttribute("name").split(",")[3])});
+        }  
+        else if (selected_option == "Expiry Date: Shorter away to further away") {
+            var product_grids_sorted = product_grids.sort(function(a, b){return Date.parse(a.getAttribute("name").split(",")[2] + " " + a.getAttribute("name").split(",")[3])-Date.parse(b.getAttribute("name").split(",")[2] + " " + b.getAttribute("name").split(",")[3])});
+        }  
         
+        //console.log(sorted_by_price);
+        main_product_grid.innerHTML = "";
+        for (var i = 0; i < product_grids_sorted.length; i++) {
+            main_product_grid.appendChild(product_grids_sorted[i]);
+        }
+          
+        /*
+        for (var i=0; i < product_grids.length; i++) {
+            var product_grid = product_grids[i];
+            if (sorted_by_price.length == 0){
+                sorted_by_price.push()
+            }
+            for (var j=0; j < sorted_by_price.length; j++) {
+
+            }
+        */
+            //productinfo = $product_id, $company_id, $decay_date, $decay_time, $name, $posted_date, $posted_time, $price_after, $price_before, $quantity, $type, $mode_of_collection
+            //To retrieve the name, need to split by , and find the 5th element
+            //product_info_arr = product_grid.getAttribute("name").split(",");
+            //product_id = product_info_arr[0];
+            //company_id = product_info_arr[1];
+            //decay_date = product_info_arr[2];
+            //decay_time = product_info_arr[3];
+            //name = product_info_arr[4];
+            //posted_date = product_info_arr[5];
+            //posted_time = product_info_arr[6];
+            //price_after = parseFloat(product_info_arr[7]);
+            //price_before = parseFloat(product_info_arr[8]);
+            //quantity = product_info_arr[9];
+            //type = product_info_arr[10];
+            //mode_of_collection_user = product_info_arr[11];    
     }
     //****Add to cart message popup****//
     $(document).ready(function(){
