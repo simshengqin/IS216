@@ -107,6 +107,30 @@ class companyDAO {
         $stmt->execute();
     }
 
+    public function updateCompanyProfile($id, $description, $address) {
+        // STEP 1
+        $connMgr = new ConnectionManager();
+        $conn = $connMgr->getConnection();
+
+        // STEP 2
+        $sql = "UPDATE company SET description = :description, address = :address WHERE company_id = :id";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->bindParam(':description', $description, PDO::PARAM_STR);
+        $stmt->bindParam(':address', $address, PDO::PARAM_STR);
+
+        // STEP 3
+        if( $stmt->execute() ) {
+            // STEP 4
+            $stmt = null;
+            $conn = null;
+            return true;
+        }
+
+        // STEP 4
+        return false;
+    }
+
     
 }
 

@@ -19,6 +19,7 @@ class ConnectionManager {
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
         return $conn;  
         
+       
         /*
         $host = "is216.cmhvzsrgae8q.us-east-1.rds.amazonaws.com";
         $username = "admin";
