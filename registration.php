@@ -27,16 +27,14 @@
                 if(isset($_POST['submitted'])) {
 
                         $name              =$_POST['name'];
-                        $school            =$_POST['school'];
                         $email             =$_POST['email'];
                         $phoneNumber       =$_POST['phoneNumber'];
                         $password          = sha1($_POST['password']);
                         $reEnterPassword   =$_POST['reEnterPassword'];
-                        $edollar           = 0;
                         $cart              ="";
-
+                        
                         $userDAO = new userDAO();
-                        $result = $userDAO->add( $password, $name, $school, $edollar, $email, $phoneNumber, $cart );
+                        $result = $userDAO->add( $password, $name, $email, $phoneNumber, $cart );
                 
                        
                 }
@@ -53,10 +51,6 @@
                         <label for="name"><b>Name</b></label>
                         <br>
                         <input class="form_control" type="text" name="name" required>
-                        <br>
-                        <label for="school"><b>School</b></label>
-                        <br>
-                        <input class="form_control" type="text" name="school" required>
                         <br>
                         <label for="email"><b>Email</b></label><br>
                         <input class="form_control" type="email" name="email" required>
@@ -82,7 +76,6 @@
                             
                             if( valid ) {
                                 var name = $("#name").val();
-                                var school = $("school").val();
                                 var email = $("email").val();
                                 var phoneNumber = $("phoneNumber").val();
                                 var password = $("password").val();
@@ -93,7 +86,7 @@
                                 $.ajax({
                                     type: "POST",
                                     url: "Registration.php" ,
-                                    data : { name: name, school:school, email: email, phoneNumber: phoneNumber, password: password, reEnterPassword: reEnterPassword},
+                                    data : { name: name, email: email, phoneNumber: phoneNumber, password: password, reEnterPassword: reEnterPassword},
                                     success: function( data ) {
                                         Swal.fire({
                                                     "title" : "Successful",

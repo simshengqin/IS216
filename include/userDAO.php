@@ -2,9 +2,9 @@
 
 class userDAO {
 
-    public function add( $password, $name, $school, $edollar, $email, $phoneNumber, $cart) {
-        $sql = 'INSERT INTO user ( password, name, school, edollar, email, phoneNumber, cart) 
-                    VALUES ( :password, :name, :school, :edollar, :email, :phoneNumber, :cart)';
+    public function add( $password, $name, $email, $phoneNumber, $cart, $preferences) {
+        $sql = 'INSERT INTO user ( password, name, email, phoneNumber, cart, preferences) 
+                    VALUES ( :password, :name, :email, :phoneNumber, :cart, :preferences)';
         
         $connMgr = new ConnectionManager();       
         $conn = $connMgr->getConnection();
@@ -14,11 +14,10 @@ class userDAO {
         //$stmt->bindParam(':userid', $userid, PDO::PARAM_STR);
         $stmt->bindParam(':password', $password, PDO::PARAM_STR);
         $stmt->bindParam(':name', $name, PDO::PARAM_STR);
-        $stmt->bindParam(':school', $school, PDO::PARAM_STR);
-        $stmt->bindParam(':edollar', $edollar, PDO::PARAM_STR);
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->bindParam(':phoneNumber', $phoneNumber, PDO::PARAM_STR);
         $stmt->bindParam(':cart', $cart, PDO::PARAM_STR);
+        $stmt->bindParam(':preferences', $preferences, PDO::PARAM_STR);
 
         $isAddOK = False;
         if ($stmt->execute()) {
@@ -92,6 +91,7 @@ class userDAO {
         }
         return $result;
     }
+
     public function update_user_cart($userid, $cart){
         $sql = "UPDATE user SET cart =:cart WHERE user_id =:user_id";
         $connMgr = new ConnectionManager();    
@@ -102,6 +102,19 @@ class userDAO {
         $status = $stmt->execute();
         return $status;
     }
+
+    public function update_user_preferences($userid, $preferences){
+        $sql = "UPDATE user SET preferences =:preferences WHERE user_id =:user_id";
+        $connMgr = new ConnectionManager();    
+        $conn = $connMgr->getConnection();
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':user_id', $userid, PDO::PARAM_STR);
+        $stmt->bindParam(':preferences', $preferences, PDO::PARAM_STR);
+        $status = $stmt->execute();
+        return $status;
+    }
+
+
     public function retrieveStudent($userid){
         $sql = "SELECT * FROM student WHERE userid = :userid";
         $connMgr = new ConnectionManager();      
@@ -133,15 +146,15 @@ class userDAO {
     }
 
 
-    public function updateEDollar($userid,$edollar){
-        $sql = "UPDATE student SET edollar =:edollar WHERE userid =:userid";
-        $connMgr = new ConnectionManager();    
-        $conn = $connMgr->getConnection();
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':userid', $userid, PDO::PARAM_STR);
-        $stmt->bindParam(':edollar', $edollar, PDO::PARAM_STR);
-        $stmt->execute();
-    }
+    // public function updateEDollar($userid,$edollar){
+    //     $sql = "UPDATE student SET edollar =:edollar WHERE userid =:userid";
+    //     $connMgr = new ConnectionManager();    
+    //     $conn = $connMgr->getConnection();
+    //     $stmt = $conn->prepare($sql);
+    //     $stmt->bindParam(':userid', $userid, PDO::PARAM_STR);
+    //     $stmt->bindParam(':edollar', $edollar, PDO::PARAM_STR);
+    //     $stmt->execute();
+    // }
 
     
 }
