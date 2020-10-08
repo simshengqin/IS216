@@ -1,10 +1,10 @@
 <?php
 
-class order {
+class transaction_history {
     // property declaration
-    private $order_id;
+    private $transaction_id;
     private $userid;
-    private $food_id;
+    private $product_id;
     private $company_id;
     private $order_date;
     private $order_time;
@@ -15,11 +15,11 @@ class order {
     
     
     
-    public function __construct($order_id, $userid, $food_id, $company_id, $order_date, $order_time, $amount, $collection_type, $review, $rating)
+    public function __construct($transaction_id, $userid, $product_id, $company_id, $order_date, $order_time, $amount, $collection_type, $review, $rating)
     {
-        $this->order_id = $order_id;
+        $this->transaction_id = $transaction_id;
         $this->userid = $userid;
-        $this->food_id = $food_id;
+        $this->product_id = $product_id;
         $this->company_id = $company_id;
         $this->order_date = $order_date;
         $this->order_time = $order_time;
@@ -28,9 +28,9 @@ class order {
         $this->review = $review;
         $this->rating = $rating;
     }
-    public function get_order_id()
+    public function get_transaction_id()
     { 
-        return $this->order_id;
+        return $this->transaction_id;
     }
     public function get_company_id()
     { 
@@ -40,9 +40,9 @@ class order {
     { 
         return $this->userid;
     }
-    public function get_food_id()
+    public function get_product_id()
     { 
-        return $this->food_id;
+        return $this->product_id;
     }
    
     public function get_order_date()
