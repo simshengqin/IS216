@@ -21,6 +21,16 @@ body {
   /* min-height: 600px; */
 }
 
+.search-box {
+  position: absolute;
+  bottom: 20px;
+  right: 180px;
+  background-color:white;
+  color: black;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
 
 /* mouse over link */
 a:hover {
