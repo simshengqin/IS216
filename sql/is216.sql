@@ -1,14 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Oct 08, 2020 at 01:26 PM
--- Server version: 5.7.23
--- PHP Version: 7.2.10
-
+-- Generation Time: Oct 03, 2020 at 05:05 PM
+-- Server version: 5.7.31
+-- PHP Version: 7.3.21
+CREATE Database IF NOT EXISTS `is216`;
+USE is216;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -71,14 +71,7 @@ CREATE TABLE IF NOT EXISTS `message` (
   `to_type` varchar(1000) CHARACTER SET utf8mb4 NOT NULL,
   `type` varchar(1000) CHARACTER SET utf8mb4 NOT NULL,
   PRIMARY KEY (`message_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `message`
---
-
-INSERT INTO `message` (`message_id`, `body`, `date`, `from_id`, `from_type`, `seen`, `time`, `to_id`, `to_type`, `type`) VALUES
-(1, 'nnnnnnnnnnnnn', '2020-10-05 16:55:46', 1, 'user', 'false', '', 1, 'company', '');
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -122,35 +115,6 @@ INSERT INTO `product` (`product_id`, `company_id`, `decay_date`, `decay_time`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `transaction_history`
---
-
-DROP TABLE IF EXISTS `transaction_history`;
-CREATE TABLE IF NOT EXISTS `transaction_history` (
-  `transaction_id` int(255) NOT NULL AUTO_INCREMENT,
-  `userid` int(255) NOT NULL,
-  `product_id` int(100) NOT NULL,
-  `company_id` int(255) NOT NULL,
-  `order_date` varchar(10) NOT NULL,
-  `order_time` varchar(10) NOT NULL,
-  `amount` float NOT NULL,
-  `collection_type` text NOT NULL,
-  `review` varchar(100) NOT NULL,
-  `rating` int(1) NOT NULL,
-  PRIMARY KEY (`transaction_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `transaction_history`
---
-
-INSERT INTO `transaction_history` (`transaction_id`, `userid`, `product_id`, `company_id`, `order_date`, `order_time`, `amount`, `collection_type`, `review`, `rating`) VALUES
-(1, 1, 1, 1, '2020/08/08', '21:00 PM', 3, 'Pickup', 'Value for money!', 4),
-(2, 1, 2, 2, '2020/08/08', '20:30 PM', 5, 'Pickup', '', 3);
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `user`
 --
 
@@ -162,7 +126,8 @@ CREATE TABLE IF NOT EXISTS `user` (
   `name` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `phoneNumber` varchar(100) NOT NULL,
-  `preferences` varchar(100) NOT NULL,
+  `edollar` int(255) NOT NULL,
+  `school` varchar(100) NOT NULL,
   PRIMARY KEY (`user_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
 
@@ -170,9 +135,24 @@ CREATE TABLE IF NOT EXISTS `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`user_id`, `cart`, `password`, `name`, `email`, `phoneNumber`, `preferences`) VALUES
-(1, '1:1,3:1,4:2,5:1,7:1,10:1', 'open123', 'John Doe', 'johndoe@hotmail.com', '98444432', 'Vegetarian, Halal'),
-(5, '', 'uicnJD6S1!', 'Tan Lin Ming', 'linming.tan.2017@sis.smu.edu.sg', '90895157', '');
+INSERT INTO `user` (`user_id`, `cart`, `password`, `name`, `email`, `phoneNumber`, `edollar`, `school`) VALUES
+(1, '1:3,3:1,4:2,5:1,7:1,10:1,6:1', '', '', '', '', 0, ''),
+(5, '', 'uicnJD6S1!', 'Tan Lin Ming', 'linming.tan.2017@sis.smu.edu.sg', '90895157', 0, 'smu'),
+(6, '', 'uicnJD6S1!', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', 0, 'smu'),
+(7, '', 'uicnJD6S1!', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', 0, 'smu'),
+(8, '', 'uicnJD6S1!', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', 0, 'smu'),
+(9, '', 'uicnJD6S1!', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', 0, 'smu'),
+(10, '', 'uicnJD6S1!', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', 0, 'smu'),
+(20, '', 'sdf', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', 0, 'smu'),
+(21, '', 'sdf', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', 0, 'smu'),
+(22, '', 'sdf', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', 0, 'smu'),
+(23, '', 'sdf', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', 0, 'smu'),
+(24, '', 'sdf', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', 0, 'smu'),
+(25, '', 'sdf', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', 0, 'smu'),
+(26, '', 'sdf', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', 0, 'smu'),
+(27, '', 'sdf', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', 0, 'smu'),
+(28, '', 'sdf', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', 0, 'smu'),
+(29, '', '9a6747fc6259aa374ab4e1bb03074b6ec672cf99', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', 0, 'smu');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
