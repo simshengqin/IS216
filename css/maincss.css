@@ -3,12 +3,34 @@ body {
   font: Roboto;
 }
 
+.profile-img {
+  height: 20%;
+  width: 20%;
+}
+
+.personal-details {
+  text-align: center;
+}
+
+
 .header-img {
   width: 100%;
-  height: 400px;
-  background: url("../images/header-img/salad-2.jpg");
+  height: 100%;
+  background: url("../images/header-img/header1.jpg");
   background-size: cover;
+  /* min-height: 600px; */
 }
+
+.search-box {
+  position: absolute;
+  bottom: 20px;
+  right: 180px;
+  background-color:white;
+  color: black;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
 
 /* mouse over link */
 a:hover {
@@ -282,7 +304,6 @@ img {
   display: inline-block;
   text-align: right;
   width: 60%;
-  padding: ;
 }
 .headind_srch {
   padding: 10px 29px 10px 20px;
@@ -459,7 +480,7 @@ img {
   border-radius: 5px;
 }
 
-.login_logo_container {
+.brand_logo_container {
   position: absolute;
   height: 170px;
   width: 170px;
@@ -507,6 +528,7 @@ img {
 .user_input:focus{
   box-shadow: none;
   outline: 0px;
+  color: black;
 }
 
 .checkbox_group .custom_checkbox:checked~.custom_label_checkbox::before{
