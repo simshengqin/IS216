@@ -109,6 +109,26 @@ class productDAO {
         $stmt->execute();
     }
 
+
+    public function retrieve_product_type(){
+        $sql = "SELECT DISTINCT type FROM product";
+        $connMgr = new ConnectionManager();      
+        $conn = $connMgr->getConnection();
+
+        $stmt = $conn->prepare($sql);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->execute();
+
+        $result = [];
+
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            $result[] = $row["type"];
+        }
+        
+        return $result;
+    }
+
+
     
 }
 

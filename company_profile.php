@@ -83,6 +83,12 @@
     <div class="jumbotron jumbotron-fluid bg-light">
         <div class="container">
             <div class="row">
+
+                <div class="col-md-12">
+                  </br>
+                  <h1 class="text-center font-weight-light"> Profile </h1>
+                  </br>
+                </div>
                 
                 <div class="col-md-6 text-center">
                   <img class="mr-2 mb-2" width="200px" src="images/profile_picture/company/<?php echo $company_id ?>.png"></img>
@@ -110,7 +116,9 @@
             <div class="row">
               
               <div class="col-md-12">
+                </br>
                 <h1 class="text-center font-weight-light"> Active Promotion </h1>
+                </br>
               </div>
 
               <div class="col-md-12">
@@ -142,31 +150,24 @@
 
 <?php
 
-/*
-    if (isset($_GET["company_id"])) {
-      $company_id = $_GET["company_id"];   
-    }
-    else {
-    $company_id = "1";
-    }
-    $companyProducts = new productDAO();
-    $products = $companyProducts->retrieve_product_by_company($company_id);
-*/
-
     function displayProducts($company_id) {
       $companyProducts = new productDAO();
       $products = $companyProducts->retrieve_product_by_company($company_id);
       foreach($products as $product){
         echo"
-        <div class='card'>
-        <img class='card-img-top' src='images/{$product->get_type()}/{$product->get_name()}.jpg' style='height: 200px; width: 200px'>
-        <div class='card-body'>
-          <h5 class='card-title'>{$product->get_name()}</h5>
-          <p class='card-text'> Promotion End: {$product->get_decay_date()}, at {$product->get_decay_time()}</p>
-          <p class='card-text'> Before Price: {$product->get_price_after()} After Price: {$product->get_price_before()}</p>
-          <p class='card-text'> Quantity Left: {$product->get_quantity()}</p>
-        </div>
-      </div>
+          <div class='col-md-4'>
+            <div class='card mb-4 shadow-sm'>
+              <img class='card-img-top' src='images/{$product->get_type()}/{$product->get_name()}.jpg' width='100%' height='225'>
+              <div class='card-body'>
+                <h4 class='card-title'> ".str_replace('_', ' ', $product->get_name())."</h4>
+                <p class='card-text'> Promotion End: {$product->get_decay_date()}, at {$product->get_decay_time()}</p>
+                <p class='card-text font-weight-light'> Before Price: $ {$product->get_price_after()}</p>
+                <p class='card-text font-weight-light'> After Price: $ {$product->get_price_before()}</p>
+                <p class='card-text'> Quantity Left: {$product->get_quantity()}</p>
+                <button type='button' class='btn btn-info' href='#'> EDIT </button>
+              </div>
+            </div>
+          </div>
       ";
       }
     }

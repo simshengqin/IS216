@@ -4,6 +4,9 @@
 
     $companyDAO = new companyDAO();
     
+    $productDAO = new productDAO();
+    $productType = $productDAO->retrieve_product_type();
+    
     if (isset($_GET["company_id"])) {
         $company_id = $_GET["company_id"];   
     }
@@ -11,16 +14,7 @@
       $company_id = "1";
     }
 
-    $company = $companyDAO->retrieve_company($company_id);
-    
-    $company_name = $company->get_name();
-    $company_address = $company->get_address();
-    $company_description = $company->get_description();
-    $company_following = $company->get_following();
-    $numOfFollowing = count(explode( ',', $company_following ));
-    $company_joined_date = $company->get_joined_date();
-    $company_rating = $company->get_rating();
-
+    // After vlaidtaion is Ok, will JSON to this page.
     if(isset($_POST['companyAddress']) && isset($_POST['companyDescription'])) 
     {
       $update_company_address = $_POST['companyAddress'];
@@ -92,15 +86,28 @@
             <div class="form-row">
 
                     
-                    <!-- Product Name-->
+                    <!-- Product Name -->
                     <div class="form-group col-md-6">
-                        <input class="form-control form-control-lg" type="text" placeholder="Product Name">
+                        <input class="form-control form-control-lg" id="productName" type="text" placeholder="Product Name">
+                        <p id='errorProductName' style='visibility: hidden; color: red;'> Please specify a Product Name </p>
                     </div>
 
-                    <div class="form-group col-md-6">
-                        <select class="form-control form-control-lg" id="productType">
+                    <!-- Product Type -->
+                    <div class="form-group col-md-5">
+                        <select class="form-control form-control-lg inline" id="productType">
                             <option disabled selected> Select Product's type </option>
+                            <?php
+                                foreach($productType as $type){
+                                  echo "<option value='".$type."'> ".$type." </option>";
+                                }
+                            ?>
                         </select>
+                        <p id='errorProductName' style='visibility: hidden; color: red;'> Please specify a Product Name </p>
+    
+                    </div>
+
+                    <div class="form-group col-md-1">
+                      <button type="button" class="btn btn-outline-secondary btn-lg"  data-toggle="modal" data-target="#foodTypeModal">  <b> + </b> </button> 
                     </div>
 
                     <!-- Product Name-->
@@ -136,7 +143,7 @@
 
                     <div class="form-group col-md-6">
                         <div class="form-group">
-                            <label for="productImageUpload">Select Image to upload</label>
+                            <label for="productImageUpload">Select Image to upload ( jpg & png only )</label>
                             <input type="file" class="form-control-file form-control-lg" id="productImageUpload">
                         </div>
                     </div>
@@ -160,13 +167,41 @@
                         <span> Promotional End Time</span>
                         <input id="timeInput" class="form-control form-control-lg" type="time">
                     </div>
-             </div>
 
+                    <div class="form-group col-md-12" style="margin-top: 25px;">
+                        <button type="button" class="btn btn-success btn-lg inline" onclick='validate()'> Create </button>
+                        <button type="button" class="btn btn-danger btn-lg inline"> Cancel </button>
+                    </div>
+             </div>
         </form>
 
 
         </div>
     </div>
+
+    <!-- Modal for Adding new food type-->
+            <div class="modal fade" id="foodTypeModal" tabindex="-1" role="dialog">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title"> Add to the list! </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <form>
+                  <div class="modal-body">
+                      <input class="form-control form-control-lg" id="newFoodType" type="text" placeholder="What's New?">
+                      <p id='errorNewFoodType' style='visibility: hidden; color: red;'> Please specify a food type! </p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="addNewType()"> Add </button>
+                  </div>
+                  </form>
+                </div>
+              </div>
+            </div>
 
   <!-- Footer -->
   <footer class="py-5">
@@ -179,6 +214,35 @@
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+  <script>
+      function addNewType(){
+
+        var newItem = document.getElementById('newFoodType').value
+        
+        if(newItem==""){
+          document.getElementById("errorNewFoodType").style.visibility = "visible";
+        } else {
+          document.getElementById("errorNewFoodType").style.visibility = "hidden";
+          var element = document.getElementById('productType'); 
+          var node = document.createElement("OPTION"); 
+          var textnode = document.createTextNode(newItem);
+          node.appendChild(textnode);
+          newItem = newItem.replace(/\s/g, '_')
+          node.setAttribute("value", newItem);
+          $('#foodTypeModal').modal('hide');
+          element.appendChild(node)
+        }
+      }
+
+      function validate(){
+        var productName = document.getElementById('productName').value
+        var productType = document.getElementById('productType').value
+        var productType = document.getElementById('productType').value
+        
+      }
+  </script>
+
 
 </body>
 
