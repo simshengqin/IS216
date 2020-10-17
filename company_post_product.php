@@ -85,7 +85,7 @@
     <div class="jumbotron jumbotron-fluid bg-light">
         <div class="container">
 
-        <h1> Create Promotion </h1>
+        <h1 class="font-weight-light"> Create Promotion </h1>
         </br>
 
         <form>
@@ -160,13 +160,14 @@
                         <span> Promotional End Time</span>
                         <input id="timeInput" class="form-control form-control-lg" type="time">
                     </div>
-
-
              </div>
 
         </form>
+
+
         </div>
     </div>
+
   <!-- Footer -->
   <footer class="py-5">
     <div class="container">

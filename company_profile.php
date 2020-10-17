@@ -106,8 +106,26 @@
                 </div>
 
             </div>
+            <!-- Company active products  -->
+            <div class="row">
+              
+              <div class="col-md-12">
+                <h1 class="text-center font-weight-light"> Active Promotion </h1>
+              </div>
+
+              <div class="col-md-12">
+                <div class="card-deck">
+                    <?php
+                          displayProducts($company_id);
+                    ?>
+                </div>
+              <div>
+
+            </div>
+
         </div>
     </div>
+    
   <!-- Footer -->
   <footer class="py-5">
     <div class="container">
@@ -123,5 +141,34 @@
 </body>
 
 <?php
+
+/*
+    if (isset($_GET["company_id"])) {
+      $company_id = $_GET["company_id"];   
+    }
+    else {
+    $company_id = "1";
+    }
+    $companyProducts = new productDAO();
+    $products = $companyProducts->retrieve_product_by_company($company_id);
+*/
+
+    function displayProducts($company_id) {
+      $companyProducts = new productDAO();
+      $products = $companyProducts->retrieve_product_by_company($company_id);
+      foreach($products as $product){
+        echo"
+        <div class='card'>
+        <img class='card-img-top' src='images/{$product->get_type()}/{$product->get_name()}.jpg' style='height: 200px; width: 200px'>
+        <div class='card-body'>
+          <h5 class='card-title'>{$product->get_name()}</h5>
+          <p class='card-text'> Promotion End: {$product->get_decay_date()}, at {$product->get_decay_time()}</p>
+          <p class='card-text'> Before Price: {$product->get_price_after()} After Price: {$product->get_price_before()}</p>
+          <p class='card-text'> Quantity Left: {$product->get_quantity()}</p>
+        </div>
+      </div>
+      ";
+      }
+    }
 
 ?>
