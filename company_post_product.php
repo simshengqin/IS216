@@ -1,6 +1,7 @@
 <?php
     require_once 'include/common.php';
     require_once 'include/protect.php';
+    header("Access-Control-Allow-Origin: *");
 
     $companyDAO = new companyDAO();
     
@@ -79,7 +80,7 @@
     <div class="jumbotron jumbotron-fluid bg-light">
         <div class="container">
 
-        <h1 class="font-weight-light"> Create Promotion </h1>
+        <h1 class="font-weight-light text-center"> Create Promotion </h1>
         </br>
 
         <form>
@@ -87,85 +88,98 @@
 
                     
                     <!-- Product Name -->
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-6" style="margin-bottom: -10px;">
                         <input class="form-control form-control-lg" id="productName" type="text" placeholder="Product Name">
                         <p id='errorProductName' style='visibility: hidden; color: red;'> Please specify a Product Name </p>
                     </div>
 
                     <!-- Product Type -->
-                    <div class="form-group col-md-5">
+                    <div class="form-group col-md-5" style="margin-bottom: -10px;">
                         <select class="form-control form-control-lg inline" id="productType">
-                            <option disabled selected> Select Product's type </option>
+                            <option disabled selected value=""> Select Product's type </option>
                             <?php
                                 foreach($productType as $type){
                                   echo "<option value='".$type."'> ".$type." </option>";
                                 }
                             ?>
                         </select>
-                        <p id='errorProductName' style='visibility: hidden; color: red;'> Please specify a Product Name </p>
-    
+                        <p id='errorProductType' style='visibility: hidden; color: red;'> Please select a type </p>
                     </div>
 
-                    <div class="form-group col-md-1">
+                    <div class="form-group col-md-1" style="margin-bottom: -10px;">
                       <button type="button" class="btn btn-outline-secondary btn-lg"  data-toggle="modal" data-target="#foodTypeModal">  <b> + </b> </button> 
                     </div>
 
-                    <!-- Product Name-->
-                    <div class="form-group col-md-6">
-                        <input class="form-control form-control-lg" type="number" placeholder="Quantity">
+                    <!-- Qty -->
+                    <div class="form-group col-md-6" style="margin-bottom: -10px;">
+                        <input class="form-control form-control-lg" id="productQuantity" type="number" placeholder="Quantity">
+                        <p id='errorQuantity' style='visibility: hidden; color: red;'> Please input quantity </p>
                     </div>
 
-                    <div class="form-group col-md-6">
+                    <!-- Mode of Collection -->
+                    <div class="form-group col-md-6" style="margin-bottom: -10px;">
                         <select class="form-control form-control-lg" id="modeOfCollection">
-                            <option disabled selected> Mode Of Collection</option>
+                            <option disabled selected value=""> Mode Of Collection</option>
                             <option value="selfcollect"> Self-Collect Only</option>
                             <option value="delivery"> Delivery Only</option>
                             <option value="both"> Self-Collect / Delivery </option>
                         </select>
+                        <p id='errorCollection' style='visibility: hidden; color: red;'> Please select collection mode </p>
                     </div>
 
 
                     <!-- Before Price -->
-                    <div class="input-group form-group col-md-6">
+                    <div class="form-group col-md-6 input-group" style="margin-bottom: -10px;">
                         <div class="input-group-prepend">
                             <span class="input-group-text">$</span>
                         </div>
-                        <input type="number" class="form-control form-control-lg" placeholder="Before Price">                  
+                        <input type="number" id="beforePrice" class="form-control form-control-lg" placeholder="Before Price"> 
+                        <p id='errorBeforePrice' style='visibility: hidden; color: red;'> Please indicate a before price </p> 
                     </div>
+                    
 
                     <!-- After Price -->
-                    <div class="input-group form-group col-md-6">
+                    <div class="input-group form-group col-md-6" style="margin-bottom: -10px;">
                         <div class="input-group-prepend">
                                 <span class="input-group-text">$</span>
                         </div>
-                            <input type="number" class="form-control form-control-lg" placeholder="After Price">                  
+                        <input type="number" id="afterPrice" class="form-control form-control-lg" placeholder="After Price"> 
+                        <p id='errorAfterPrice' style='visibility: hidden; color: red;'> Please indicate a after price </p> 
                     </div>
+                    
 
-                    <div class="form-group col-md-6">
+
+
+                    <!-- Upload Image -->
+                    <div class="form-group col-md-6" style="margin-top: 50px;">
                         <div class="form-group">
                             <label for="productImageUpload">Select Image to upload ( jpg & png only )</label>
                             <input type="file" class="form-control-file form-control-lg" id="productImageUpload">
                         </div>
+                        <p id='errorProductImageUpload' style='visibility: hidden; color: red;'> Please insert an image file with correct file extension </p>  
                     </div>
 
                     <div class="form-group col-md-6">
                         <!-- empty -->
                     </div>
 
-
-                    <div class="form-group col-md-6">
+                    <!-- promotion end date -->
+                    <div class="form-group col-md-6" style="margin-bottom: -10px;">
                         <!-- <label for="dateInput" class="col-form-label"><h5>End Date: </h5></label> -->
                         <span> Promotional End Date</span>
                         <input id="dateInput" class="form-control form-control-lg" type="date">
+                        <p id='errorPromotionEndDate' style='visibility: hidden; color: red;'> Please indicate a promotion end date </p>
                     </div>
 
                     <div class="form-group col-md-6">
                         <!-- empty -->
                     </div>
 
-                    <div class="form-group col-md-6">
+                    <!-- promotion end time -->
+                    <div class="form-group col-md-6" style="margin-bottom: -10px;">
                         <span> Promotional End Time</span>
                         <input id="timeInput" class="form-control form-control-lg" type="time">
+                        <p id='errorPromotionEndTime' style='visibility: hidden; color: red;'> Please indicate a promotion end time </p>
                     </div>
 
                     <div class="form-group col-md-12" style="margin-top: 25px;">
@@ -236,16 +250,138 @@
       }
 
       function validate(){
+        
+        var data = {};
+        var noError = true;
+
         var productName = document.getElementById('productName').value
         var productType = document.getElementById('productType').value
-        var productType = document.getElementById('productType').value
-        
+        var productQty = document.getElementById('productQuantity').value
+        var productModeOfCollection = document.getElementById('modeOfCollection').value
+        var productBeforePrice = document.getElementById('beforePrice').value
+        var productAfterPrice = document.getElementById('afterPrice').value
+        var productImage = document.getElementById('productImageUpload').value
+        var productDateInput = document.getElementById('dateInput').value
+        var productTimeInput = document.getElementById('timeInput').value
+
+        // validate product name 
+        if(productName==""){
+          document.getElementById("errorProductName").style.visibility = "visible";
+          noError = false;
+        } else {
+          data["productName"] = productName;
+          document.getElementById("errorProductName").style.visibility = "hidden";
+        }
+
+        // validate product type 
+        if(productType==""){
+          document.getElementById("errorProductType").style.visibility = "visible";
+          noError = false;
+        } else {
+          data["productType"] = productType;
+          document.getElementById("errorProductType").style.visibility = "hidden";
+        }
+
+        // validate product Qty 
+        if(productQty==""){
+          document.getElementById("errorQuantity").style.visibility = "visible";
+          noError = false;
+        } else {
+          data["productQty"] = productQty;
+          document.getElementById("errorQuantity").style.visibility = "hidden";
+        }
+
+        // validate Mode Of Collection 
+        if(productModeOfCollection==""){
+          document.getElementById("errorCollection").style.visibility = "visible";
+          noError = false;
+        } else {
+          data["productModeOfCollection"] = productModeOfCollection;
+          document.getElementById("errorCollection").style.visibility = "hidden";
+        }
+
+        // validate before price
+        if(productBeforePrice==""){
+          document.getElementById("errorBeforePrice").style.visibility = "visible";
+          noError = false;
+        } else {
+          data["productBeforePrice"] = productBeforePrice;
+          document.getElementById("errorBeforePrice").style.visibility = "hidden";
+        }
+
+        // validate After Price 
+        if(productAfterPrice==""){
+          document.getElementById("errorAfterPrice").style.visibility = "visible";
+          noError = false;
+        } else {
+          data["productAfterPrice"] = productAfterPrice;
+          document.getElementById("errorAfterPrice").style.visibility = "hidden";
+        }
+
+        // validate image upload
+        if(productImage==""){
+          document.getElementById("errorProductImageUpload").style.visibility = "visible";
+          noError = false;
+        } else {
+          data["productImage"] = productImage;
+          document.getElementById("errorProductImageUpload").style.visibility = "hidden";
+        }
+
+        // validate promotion end date
+        if(productDateInput==""){
+          document.getElementById("errorPromotionEndDate").style.visibility = "visible";
+          noError = false;
+        } else {
+          data["productDateInput"] = productDateInput;
+          document.getElementById("errorPromotionEndDate").style.visibility = "hidden";
+        }
+
+        // validate promotion end date
+        if(productTimeInput==""){
+          document.getElementById("errorPromotionEndTime").style.visibility = "visible";
+          noError = false;
+        } else {
+          data["productTimeInput"] = productTimeInput;
+          document.getElementById("errorPromotionEndTime").style.visibility = "hidden";
+        }
+
+        console.log(data);
+        console.log(noError);
+
+        if(noError){
+          processToServer(data)
+        }
+
+      }
+
+      function processToServer(data){
+        var dataObj;
+        var request = new XMLHttpRequest();
+                request.onreadystatechange = function() {
+                  if(this.readyState == 4 && this.status == 200) {
+                    //dataObj = JSON.parse(this.responseText);
+                    //console.log(dataObj);
+                    console.log("it works!!");
+                  } else {
+                    //console.log("Error in transition to database")
+                  }
+                }
+        var jsObj = {"data": data,};
+        var jsonObj = JSON.stringify(jsObj);
+        console.log(jsonObj);
+        request.open("POST", "company_post_product.php", true);
+        request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        request.send("c=" + jsonObj);
       }
   </script>
 
+<?php
+    if(isset($_POST['c'])) 
+    {
+      $query = $_POST["c"];
+      var_dump($query);
+    }
+?>
 
 </body>
 
-<?php
-
-?>
