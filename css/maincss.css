@@ -4,25 +4,29 @@ body {
 }
 
 .profile-img {
-  height: 20%;
-  width: 20%;
+  height: 80%;
+  width: 80%;
 }
 
 .personal-details {
   text-align: center;
 }
 
+.profile {
+  background-color: #e9ecef;
+}
+
 
 .header-img {
-  width: 100%;
-  height: 100%;
+  max-width: 100%;
+  height: auto;
   background: url("../images/header-img/header1.jpg");
   background-size: cover;
   /* min-height: 600px; */
 }
 
 .search-box {
-  position: absolute;
+  position: relative;
   bottom: 20px;
   right: 180px;
   background-color:white;
@@ -111,6 +115,11 @@ a:hover {
   min-width: 230px;
   border: 1px solid #ddd;
   z-index: 1;
+}
+
+.footer-color {
+  background-color: #75917a;
+  color: white;
 }
 
 /* Links inside the dropdown */

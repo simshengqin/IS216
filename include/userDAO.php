@@ -103,7 +103,7 @@ class userDAO {
         return $status;
     }
 
-    public function update_user_preferences($userid, $preferences){
+    public function update_preferences($userid, $preferences){
         $sql = "UPDATE user SET preferences =:preferences WHERE user_id =:user_id";
         $connMgr = new ConnectionManager();    
         $conn = $connMgr->getConnection();
