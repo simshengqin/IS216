@@ -345,6 +345,8 @@
           document.getElementById("errorPromotionEndTime").style.visibility = "hidden";
         }
 
+        data["company_id"] = $company_id;
+
         console.log(data);
         console.log(noError);
 
@@ -359,29 +361,23 @@
         var request = new XMLHttpRequest();
                 request.onreadystatechange = function() {
                   if(this.readyState == 4 && this.status == 200) {
-                    //dataObj = JSON.parse(this.responseText);
-                    //console.log(dataObj);
+                    console.log(this.responseText);
+                    dataObj = JSON.parse(this.responseText);
+                    console.log(dataObj);
                     console.log("it works!!");
                   } else {
                     //console.log("Error in transition to database")
                   }
                 }
-        var jsObj = {"data": data,};
+        var jsObj = {"data": data};
         var jsonObj = JSON.stringify(jsObj);
         console.log(jsonObj);
-        request.open("POST", "company_post_product.php", true);
+        request.open("POST", "company_post_product_transition.php", true);
         request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        request.send("c=" + jsonObj);
+        request.send("data=" + jsonObj);
       }
   </script>
 
-<?php
-    if(isset($_POST['c'])) 
-    {
-      $query = $_POST["c"];
-      var_dump($query);
-    }
-?>
 
 </body>
 
