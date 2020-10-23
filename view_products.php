@@ -66,75 +66,77 @@
         </div>
 
         <div name="filterform" class="col-md-4">
-            <div class="form-row ">
-                <div class="form-group col-12">
-                    <div class="input-group">
-                        <span class="input-group-prepend">
-                            <label class="input-group-text" for="inputGroupSelect01">
-                            Sort by</label>
-                        </span>
-                        <select class="form-control custom-select " id="sort_by_bar" onchange = "sort_products();"                                                                                                                >
-                            <option selected value="Posted Date: Newest to oldest">Posted Date: Newest to oldest</option>
-                            <option selected value="Posted Date: Oldest to newest">Posted Date: Oldest to newest</option>
-                            <option selected value="Expiry Date: Shorter away to further away">Expiry Date: Shorter away to further away</option>
-                            <option selected value="Expiry Date: Further away to shorter away">Expiry Date: Further away to shorter away</option>
-                            <option value="Price: Low to high">Price: Low to high</option>
-                            <option value="Price: High to low">Price: High to low</option>
-                        </select>
-                    </div>  
+            <div><!--class="position-fixed"-->
+                <div class="form-row ">
+                    <div class="form-group col-12">
+                        <div class="input-group">
+                            <span class="input-group-prepend">
+                                <label class="input-group-text" for="inputGroupSelect01">
+                                Sort by</label>
+                            </span>
+                            <select class="form-control custom-select " id="sort_by_bar" onchange = "sort_products();"                                                                                                                >
+                                <option selected value="Posted Date: Newest to oldest">Posted Date: Newest to oldest</option>
+                                <option selected value="Posted Date: Oldest to newest">Posted Date: Oldest to newest</option>
+                                <option selected value="Expiry Date: Shorter away to further away">Expiry Date: Shorter away to further away</option>
+                                <option selected value="Expiry Date: Further away to shorter away">Expiry Date: Further away to shorter away</option>
+                                <option value="Price: Low to high">Price: Low to high</option>
+                                <option value="Price: High to low">Price: High to low</option>
+                            </select>
+                        </div>  
+                    </div>
+                </div>  
+                <hr> 
+                <div class="form-row mb-2">
+                    Mode of collection 
                 </div>
-            </div>  
-            <hr> 
-            <div class="form-row mb-2">
-                Mode of collection 
-            </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <input type="radio" id="mode_of_collection_delivery" name="mode_of_collection" value="delivery" onchange ='search_filter()'> Delivery
-                    <input type="radio" id="mode_of_collection_pickup" name="mode_of_collection" value="pickup" onchange ='search_filter()'> Pickup
-                </div>               
-            </div>
-            <hr>
-            <div class="form-row mb-2">
-                Price 
-            </div>
-            <div class="form-row">
-                <div class="form-group col-12">
-                    
-                    <input type="text" id="price_min" class="mb-2" oninput ='search_filter()' placeholder='Min $'></input>
-                    <input type="text" id="price_max" oninput ='search_filter()' placeholder='Max $'></input>
+                <div class="form-row">
+                    <div class="form-group">
+                        <input type="radio" id="mode_of_collection_delivery" name="mode_of_collection" value="delivery" onchange ='search_filter()'> Delivery
+                        <input type="radio" id="mode_of_collection_pickup" name="mode_of_collection" value="pickup" onchange ='search_filter()'> Pickup
+                    </div>               
                 </div>
-            </div>
-            <hr>
-            <div class="form-row mb-2">
-                Offers 
-            </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <input type="checkbox" id="offers_free_delivery" onchange ='search_filter()'> Free delivery
-                    <input type="checkbox" id="offers_has_discount" onchange ='search_filter()'> Has discount 
-                </div>               
-            </div>
-            <hr>
-            <div class="form-row mb-2">
-                Freshness 
-            </div>
-            <div class="form-row">
-                <div class="form-group col-12">
-                    <input type="number" id="freshness_min_days_to_expiry" min="1" step="1" oninput ='search_filter()' placeholder='Min days to expiry'></input>   
+                <hr>
+                <div class="form-row mb-2">
+                    Price 
                 </div>
-            </div>
-            <hr>
-            
-            <div class="form-row mb-2">
-                Categories
-            </div>
-            <div class="form-row">
-                <div class="form-group col-12">
-                    <input type="checkbox" id="categories_dessert" onchange ='search_filter()'> Dessert
-                    <input type="checkbox" id="categories_vegetables" onchange ='search_filter()'> Vegetables
-                    <input type="checkbox" id="categories_meal" onchange ='search_filter()'> Meal
+                <div class="form-row">
+                    <div class="form-group col-12">
+                        
+                        <input type="text" id="price_min" class="mb-2" oninput ='search_filter()' placeholder='Min $'></input>
+                        <input type="text" id="price_max" oninput ='search_filter()' placeholder='Max $'></input>
+                    </div>
+                </div>
+                <hr>
+                <div class="form-row mb-2">
+                    Offers 
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <input type="checkbox" id="offers_free_delivery" onchange ='search_filter()'> Free delivery
+                        <input type="checkbox" id="offers_has_discount" onchange ='search_filter()'> Has discount 
+                    </div>               
+                </div>
+                <hr>
+                <div class="form-row mb-2">
+                    Freshness 
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-12">
+                        <input type="number" id="freshness_min_days_to_expiry" min="1" step="1" oninput ='search_filter()' placeholder='Min days to expiry'></input>   
+                    </div>
+                </div>
+                <hr>
+                
+                <div class="form-row mb-2">
+                    Categories
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-12">
+                        <input type="checkbox" id="categories_dessert" onchange ='search_filter()'> Dessert
+                        <input type="checkbox" id="categories_vegetables" onchange ='search_filter()'> Vegetables
+                        <input type="checkbox" id="categories_meal" onchange ='search_filter()'> Meal
 
+                    </div>
                 </div>
             </div>
 
@@ -187,8 +189,8 @@
                         <div class='col-xl-3 col-lg-4 col-sm-6 single_product_grid' id ='single_product_grid' name='$product_id,$company_id,$decay_date,$decay_time,$name,$posted_date,$posted_time,$price_after,$price_before,$quantity,$type,$mode_of_collection'>
                         <div class='product-grid'>
                             
-                            <div class='product-image'>
-                                <img class='pic-1'  src='images/$type/$name.jpg'>";
+                            <div class='product-image d-flex w-100'>
+                                <img class='pic-1 my-auto'  src='images/$type/$name.jpg'>";
                                 //only add a new label if the product is posted today 
                                 //Need to follow sql format, which is Y-m-d
                                 if (date('Y-m-d', time())== $posted_date) {

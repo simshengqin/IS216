@@ -156,9 +156,11 @@
                   $cart_arr = explode(",",$cart);
                 }               
                 echo "<h5 class='mb-4' >Cart (<span id='cartsize'>" . sizeof($cart_arr) . "</span> items)</h5>";
-                $total_price = 0;
+                $total_price = "0.00";
                 if (strlen($cart) ==0) {
                   echo "<div class='text-danger'>No items in cart currently!</div>";
+                  $total_price_with_shipping = "0.00";
+                  $shipping = "0.00";
                 }
                 else {
                   foreach ($cart_arr as $productqty) {
@@ -180,14 +182,42 @@
                       $price_before = $product->get_price_before();
                       $quantity = $product->get_quantity();
                       $type = $product->get_type();
+                      $discount = round((($price_before-$price_after)/$price_before)*100,0);
+                      $total_price_for_current_product = $price_after * $quantity_in_cart;
+                      //set timezone to singapore so the time will be correct
+                      date_default_timezone_set('Asia/Singapore');
+                      //if there is no discount, do not show the -% label and the crossed out price
+                      if ($discount == 0.0) {
+                          $price_before_modified = "";                 
+                      }     
+                      else {
+                          $price_before_modified = "$" . $price_before . "&nbsp;";
+                      }     
                       #Calculates the total price of current cart
                       $total_price += round($price_after * $quantity_in_cart,2);
+                      #There is only a shippping cost if there is at least 1 product
+                      if ($total_price == 0) {
+                        $total_price_with_shipping = "0.00";
+                      }
+                      else {
+                        $shipping = 3.00;
+                        $total_price_with_shipping = $total_price + 3.00;
+                        
+                      }
+                      
                       echo "
-                      <div class='row mb-4'>
+                      <div class='row mb-4' value='$price_after'>
                       <div class='col-md-5 col-lg-3 col-xl-3'>
-                          <div class='view zoom overlay z-depth-1 rounded mb-3 mb-md-0'>
-                          <img class='img-fluid w-100'
-                              src='images/$type/$name.jpg' alt='Sample'>
+                          <div class='cart_product_img view zoom overlay z-depth-1 rounded mb-3 mb-md-0'>
+                          <img 
+                              src='images/$type/$name.jpg' alt='Sample'>";
+                      if (date('Y-m-d', time())== $posted_date) {
+                          echo "<span class='product-new-label'>New</span>";
+                      }
+                      if ($discount != 0.0) {
+                          echo "<span class='product-discount-label'>-$discount%</span>";
+                      }
+                      echo "
                           <a href='#!'>
                           </a>
                           </div>
@@ -211,9 +241,12 @@
                               <input readonly class='quantity' min='1' name='quantity' value='$quantity_in_cart' type='number' >
                               <span class='fas fa-plus-circle' onclick='add_quantity()'>
                               </span>
+                              <span class='total_price_for_current_product'>
+                                  $$total_price_for_current_product
+                              </span>
                           </div>
-                          <div class='d-flex justify-content-between align-items-center'>
-                              <p class='mb-0'><span><strong>$$price_after</strong></span></p>
+                          <div class='d-flex justify-content-between align-items-center mt-1'>
+                              <p class='mb-0 ml-4'><span style='text-decoration: line-through' >$price_before_modified</span><span ><strong>$$price_after</strong></span></p>
                           </div>
                       </div>
 
@@ -276,20 +309,20 @@
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
                     Temporary amount
-                    <span id="totalprice">$<?php echo $total_price;?></span>
+                    <span id="total_price_for_all_products">$<?php echo $total_price;?></span>
                   </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                  <li class="list-group-item d-flex justify-content-between align-items-center px-0" >
                     Shipping
-                    <span>Gratis</span>
+                    <span id="shipping">$<?php echo $shipping;?></span>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
                     <div>
                       <strong>The total amount of</strong>
                       <strong>
-                        <p class="mb-0">(including VAT)</p>
+                        <p class="mb-0"></p>
                       </strong>
                     </div>
-                    <span><strong>$53.98</strong></span>
+                    <span class="font-weight-bold" id="total_price_for_all_products_with_shipping">$<?php echo $total_price_with_shipping;?></span>
                   </li>
                 </ul>
 
@@ -336,54 +369,74 @@
   <!--Main layout-->
 
   <script>
-      function XHR_send(user_id, product_id, quantity) {
+      function XHR_send(user_id, product_id, quantity, quantity_change) {
         //Send an AJAX request to update_user.php to update the cart of user in database
+        //Also send to update-user.php to update the product qty in database, quantity_change is needed to reflect
+        //whether it's +1 or -1 to the qty
         var request = new XMLHttpRequest();  
         request.onreadystatechange = function() {    
             if (this.readyState == 4 && this.status == 200) {
-                console.log(this.responseText);  
+                console.log(this.responseText);
+                return (this.responseText);
             }  
         };  
         request.open('POST', 'update_user.php', true);
         request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded'); 
-        request.send("user_id="+user_id+"&product_id="+product_id+"&quantity="+quantity);
+        request.send("user_id="+user_id+"&product_id="+product_id+"&quantity="+quantity+"&quantity_change="+quantity_change);
       }
 
       function minus_quantity() {
           //Decrease the quantity
           if (event.target.parentNode.children[2].value > 1) {
-            event.target.parentNode.children[2].value -= 1;
-            //Update the total price
-            current_price = parseFloat(document.getElementById("totalprice").innerText.slice(1))
-            //Use .slice(1) yo ignore the $ sign in front
-            current_price -= parseFloat(event.target.parentNode.parentNode.lastElementChild.children[0].innerText.slice(1));
-            //Round price to two decimal places
-            document.getElementById("totalprice").innerText = "$" + current_price.toFixed(2);
+            current_quantity = parseInt(event.target.parentNode.children[2].value)
+            event.target.parentNode.children[2].value = current_quantity - 1;
+            var total_price_product_display = event.target.parentNode.children[4];
+            total_price_product = parseFloat(total_price_product_display.innerText.slice(1)) / current_quantity * (current_quantity - 1);
+            total_price_product = Math.round((total_price_product + Number.EPSILON) * 100) / 100
+            total_price_product_display.innerText = "$" + total_price_product
+            //Update the total price of all products
+            total_price_for_all_products = 0
+
+            for (total_price_product of document.getElementsByClassName("total_price_for_current_product")) {
+              total_price_for_all_products +=  parseFloat(total_price_product.innerText.slice(1));
+            }
+            document.getElementById("total_price_for_all_products").innerText = "$" + total_price_for_all_products.toFixed(2);
+            document.getElementById("total_price_for_all_products_with_shipping").innerText = "$" + (total_price_for_all_products+3.00).toFixed(2);               
             //Send the request to the server to update the cart of user in database
             //Need to change hardcoded user_id later!!
             //XHR_send($user_id, $product_id, $quantity)
-            XHR_send(1,event.target.parentNode.children[1].innerText ,event.target.parentNode.children[2].value);            
+            XHR_send(1,event.target.parentNode.children[1].innerText ,event.target.parentNode.children[2].value,-1);            
           }
 
       }
       function add_quantity() {
-          current_quantity = parseInt(event.target.parentNode.children[2].value)
-          event.target.parentNode.children[2].value = current_quantity + 1;
-          //Update the total price
-          current_price = parseFloat(document.getElementById("totalprice").innerText.slice(1))
-          //Use .slice(1) yo ignore the $ sign in front
-          current_price += parseFloat(event.target.parentNode.parentNode.lastElementChild.children[0].innerText.slice(1));
-          //Round price to two decimal places
-          document.getElementById("totalprice").innerText = "$" + current_price.toFixed(2);
-          //Send the request to the server to update the cart of user in database
+
+          //Send the request to the server to update the cart of user in databasetotal
           //Need to change hardcoded user_id later!!
           //XHR_send($user_id, $product_id, $quantity)
-          XHR_send(1,event.target.parentNode.children[1].innerText ,event.target.parentNode.children[2].value);
+          $status = XHR_send(1,event.target.parentNode.children[1].innerText ,event.target.parentNode.children[2].value,1)
+          console.log($status); 
+          if ( $status != "Insufficient product qty in database") {
+              current_quantity = parseInt(event.target.parentNode.children[2].value)
+              event.target.parentNode.children[2].value = current_quantity + 1;
+              var total_price_product_display = event.target.parentNode.children[4];
+              total_price_product = parseFloat(total_price_product_display.innerText.slice(1)) / current_quantity * (current_quantity + 1);
+              total_price_product = Math.round((total_price_product + Number.EPSILON) * 100) / 100
+              total_price_product_display.innerText = "$" + total_price_product
+              //Update the total price of all products
+              total_price_for_all_products = 0
+              for (total_price_product of document.getElementsByClassName("total_price_for_current_product")) {
+                total_price_for_all_products +=  parseFloat(total_price_product.innerText.slice(1));
+              }
+              document.getElementById("total_price_for_all_products").innerText = "$" + total_price_for_all_products.toFixed(2);
+              document.getElementById("total_price_for_all_products_with_shipping").innerText = "$" + (total_price_for_all_products+3.00).toFixed(2);   
+          }
 
       }
 
       function show_confirmation_msg() {
         window.target_element = event.target.parentNode.parentNode.parentNode.parentNode;
+        
         window.target_product_id= event.target.parentNode.children[0].innerText;
         $('#delete_confirmation_msg').modal('show');
       }
@@ -391,10 +444,24 @@
           //Show the deletion confirmation message
           //Delete a product when the trash icon is pressed
           //event.target.parentNode.parentNode.parentNode.parentNode.remove();
+          console.log(window.target_element.id);
           window.target_element.remove();
+          //Update the total price of all products
+          total_price_for_all_products = 0
+          for (total_price_product of document.getElementsByClassName("total_price_for_current_product")) {
+             total_price_for_all_products +=  parseFloat(total_price_product.innerText.slice(1));
+          }
+          document.getElementById("total_price_for_all_products").innerText = "$" + total_price_for_all_products.toFixed(2);
+          document.getElementById("total_price_for_all_products_with_shipping").innerText = "$" + (total_price_for_all_products+3.00).toFixed(2);   
+          //There is only a shipping cost if there is at least 1 product
+          if (document.getElementsByClassName("total_price_for_current_product").length == 0) {
+            document.getElementById("total_price_for_all_products_with_shipping").innerText = "$0.00";
+            document.getElementById("shipping").innerText = "$0.00";
+            
+          }  
           //Update the number of items in cart
           document.getElementById("cartsize").innerText -= 1;
-
+          
           //Update the database
           //XHR_send(1,event.target.parentNode.children[0].innerText ,0);
           XHR_send(1,window.target_product_id ,0);

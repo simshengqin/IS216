@@ -188,7 +188,7 @@ h3.h3 {
   border-radius: 50%;
   position: absolute;
   left: 10px;
-  top: 15px;
+  top: 30px;
   transition: all 0.3s;
 }
 .product-grid .product-discount-label {
@@ -266,6 +266,28 @@ h3.h3 {
   .product-grid {
     margin-bottom: 30px;
   }
+}
+/********************* shoppingcart.php **********************/
+.cart_product_img .product-discount-label, .cart_product_img .product-new-label {
+  color: #fff;
+  background-color: #16a085;
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 45px;
+  height: 45px;
+  width: 45px;
+  border-radius: 50%;
+  position: absolute;
+  left: 10px;
+  top: 5px;
+  transition: all 0.3s;
+}
+.cart_product_img .product-discount-label {
+  left: auto;
+  right: 20px;
+  background-color: #d7292a;
 }
 /********************* view_product.php **********************/
 /**** Product grid ****/

@@ -1,12 +1,14 @@
 <?php
 require_once 'include/common.php';
 require_once 'include/protect.php';
-if(isset($_POST['user_id']) && isset($_POST['product_id']) && isset($_POST['quantity'])){
+if(isset($_POST['user_id']) && isset($_POST['product_id']) && isset($_POST['quantity']) && isset($_POST['quantity_change'])){
     $user_id = $_POST['user_id'];
     $target_product_id = $_POST['product_id'];
     $new_quantity = $_POST['quantity'];
+    $quantity_change = $_POST['quantity_change'];
     //Retreive the cart first
     $userDAO = new userDAO();
+    $productDAO = new productDAO();
     $user = $userDAO-> retrieve_user($user_id);
     $cart = $user -> get_cart();
     if (strlen($cart) ==0) {
@@ -40,15 +42,26 @@ if(isset($_POST['user_id']) && isset($_POST['product_id']) && isset($_POST['quan
     }
     if ($item_in_cart == false) {
         //Add the item if it does not exist in the cart currently
-        $cart_arr[] = $target_product_id . ":" . $new_quantity;;
+        $cart_arr[] = $target_product_id . ":" . $new_quantity;
     }
     $updated_cart = implode(",",$cart_arr);
     
-    if ($userDAO -> update_user_cart($user_id, $updated_cart)) {
-        echo "Succsessfully updated the user's cart in database!";
+    #When user adds an item to their cart, the product qty in database decrease by 1!
+    $quantity_change = -$quantity_change;
+    if ($productDAO -> update_product_qty($target_product_id,$quantity_change)) {
+        echo "Succsessfully updated the product's qty in database!";
+        //Only update the user cart if thhere is enough product qty in the database
+        if ($userDAO -> update_user_cart($user_id, $updated_cart)) {
+            echo "Succsessfully updated the user's cart in database!";
+
+        }
+        else {
+            echo "Failed to update user's cart in database";
+        }
     }
-
-
+    else {
+        echo "Insufficient product qty in database";
+    }
 }
 
 ?>
