@@ -72,7 +72,7 @@
           <a class="nav-link" href="company_post_product.php"> Post </a>
         </li>
         <li class="nav-item mr-4">
-          <a class="nav-link" href="#"> Edit </a>
+          <a class="nav-link" href="company_edit_product.php"> Edit </a>
         </li>
       </ul>
     </div>
@@ -107,7 +107,7 @@
                       <label for="companyDescription">Description</label>
                       <textarea rows="4" cols="50" class="form-control form-control-lg" name="companyDescription" id="companyDescription"><?php echo $company_description?></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary"> Update </button>
+                    <button type="submit" class="btn btn-primary btn-lg"> Update </button>
                   </form>
                 </div>
 
@@ -164,7 +164,7 @@
                 <p class='card-text font-weight-light'> Before Price: $ {$product->get_price_after()}</p>
                 <p class='card-text font-weight-light'> After Price: $ {$product->get_price_before()}</p>
                 <p class='card-text'> Quantity Left: {$product->get_quantity()}</p>
-                <button type='button' class='btn btn-info' href='#'> EDIT </button>
+                <a class='btn btn-info btn-lg btn-block' role='button' href='company_edit_product.php'> Edit </a>
               </div>
             </div>
           </div>

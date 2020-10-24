@@ -2,20 +2,32 @@
 
 class productDAO {
 
-    public function add($userid, $password, $name, $school, $edollar) {
-        $sql = 'INSERT INTO student (userid, password, name, school, edollar) 
-                    VALUES (:userid, :password, :name, :school, :edollar)';
+    /*public function add($product_id, $company_id, $decay_date, $decay_time, $name, $posted_date, $posted_time, $price_after, $price_before, $quantity, $type, $mode_of_collection) */
+    public function add($company_id, $decay_date, $decay_time, $name, $posted_date, $posted_time, $price_after, $price_before, $quantity, $type, $mode_of_collection){
+        /*$sql = 'INSERT INTO product (product_id, company_id, decay_date, decay_time, name, posted_date, posted_time, price_after, price_before, quantity, type, mode_of_collection) 
+                    VALUES (:product_id, :company_id, :decay_date, :decay_time, :name, :posted_date, :posted_time, :price_after, :price_before, :quantity, :type, :mode_of_collection)';*/
         
+        $sql = 'INSERT INTO product (company_id, decay_date, decay_time, name, posted_date, posted_time, price_after, price_before, quantity, type, mode_of_collection) 
+                    VALUES (:company_id, :decay_date, :decay_time, :name, :posted_date, :posted_time, :price_after, :price_before, :quantity, :type, :mode_of_collection)';
+        
+
         $connMgr = new ConnectionManager();       
         $conn = $connMgr->getConnection();
          
         $stmt = $conn->prepare($sql); 
 
-        $stmt->bindParam(':userid', $userid, PDO::PARAM_STR);
-        $stmt->bindParam(':password', $password, PDO::PARAM_STR);
+        //$stmt->bindParam(':product_id', $company_id, PDO::PARAM_INT);
+        $stmt->bindParam(':company_id', $company_id, PDO::PARAM_INT);
+        $stmt->bindParam(':decay_date', $decay_date, PDO::PARAM_STR);
+        $stmt->bindParam(':decay_time', $decay_time, PDO::PARAM_STR);
         $stmt->bindParam(':name', $name, PDO::PARAM_STR);
-        $stmt->bindParam(':school', $school, PDO::PARAM_STR);
-        $stmt->bindParam(':edollar', $edollar, PDO::PARAM_STR);
+        $stmt->bindParam(':posted_date', $posted_date, PDO::PARAM_STR);
+        $stmt->bindParam(':posted_time', $posted_time, PDO::PARAM_STR);
+        $stmt->bindParam(':price_after', $price_after, PDO::PARAM_STR);
+        $stmt->bindParam(':price_before', $price_before, PDO::PARAM_STR);
+        $stmt->bindParam(':quantity', $quantity, PDO::PARAM_INT);
+        $stmt->bindParam(':type', $type, PDO::PARAM_STR);
+        $stmt->bindParam(':mode_of_collection', $mode_of_collection, PDO::PARAM_STR);
 
         $isAddOK = False;
         if ($stmt->execute()) {
