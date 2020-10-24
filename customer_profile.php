@@ -49,7 +49,12 @@
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>  -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.js" integrity="sha256-2JRzNxMJiS0aHOJjG+liqsEOuBb6++9cY4dSOyiijX4=" crossorigin="anonymous"></script>
 
-
+  <!-- font -->
+  <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+  <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet'>
+  <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+  <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+  
 </head>
 
 <body>
@@ -111,7 +116,24 @@
             <div class="mx-md-5" >
             <h2 style="margin-bottom: 30px; margin-top: 50px;">Notification Preferences</h2>
                 <p>Conditions for when you prefer to receive notifications on new food product listings.</p>
-                <div id="success"></div>
+                <!-- <div id="success"></div> -->
+
+
+                <div name="toastdiv" id="toastdiv"style="display: none;">
+                    <!--Toast, which is a message pop-up for successful update -->
+
+                        <!-- Then put toasts within -->
+                        <div class="toast" id="success_popup"  style="margin: 10px;" aria-live="assertive" aria-atomic="true">
+                            <!-- <div class="toast-body"> -->
+                                <div class='alert alert-success alert-dismissible fade show' style="margin: 0px;" role='alert'>
+                                    Successfully updated your preferences!
+                                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>      
+                                </div>
+                            </div>   
+                </div>
+
+                
+
       
                     <?php 
                         $counter = 0;
@@ -140,7 +162,7 @@
                         }
                     ?>
         
-                <p><button type="submit" class="btn btn-primary" onclick="changePreferences()">Change Preferences</button></p>
+                <p style="margin-top: 10px;"><button type="submit" class="btn btn-primary" onclick="changePreferences()" >Change Preferences</button></p>
 
               
             </div>
@@ -258,8 +280,11 @@
                 //Add check for success here?
                 var success = JSON.stringify(this.responseText);
                 // console.log(this.responseText);  
-                document.getElementById('success').innerHTML =  "<div class='alert alert-success alert-dismissible fade show' role='alert' onload='setTimeout(function(){ getElementsByClassName('alert')[0].hide(); }, 2000);'>" + success + "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
-              
+                // document.getElementById('success').innerHTML =  "<div class='alert alert-success alert-dismissible fade show' role='alert'>" + success + "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
+                document.getElementById('toastdiv').setAttribute("style","display: block;");
+                $("#success_popup").toast({ delay: 2000 });
+                $("#success_popup").toast('show');
+                
             }  
         
         };
@@ -272,15 +297,15 @@
         
     }
   
-    function timeout() {
-        var duration = 3000; //2 seconds
-        setTimeout(function () { $('.alert').hide(); }, duration);
-    }
-          // window.onload = function() {
-          //     var duration = 3000; //2 seconds
-          //     setTimeout(function () { $('.alert').hide(); }, duration);
-          // };
+  
 
+    //****Add to cart message popup****//
+    $(document).ready(function(){
+    $(".success_popup").click(function(){
+            //$("#add_to_cart_message").toast({ delay: 7000 });
+            //$("#add_to_cart_message").toast('show');
+        }); 
+    });
 
 </script>
 
