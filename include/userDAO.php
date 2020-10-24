@@ -2,7 +2,7 @@
 
 class userDAO {
 
-    public function add( $password, $name, $email, $phoneNumber, $cart, $preferences) {
+    public function add( $password, $name, $email, $phoneNumber, $cart, $cart_company_id, $preferences) {
         $sql = 'INSERT INTO user ( password, name, email, phoneNumber, cart, preferences) 
                     VALUES ( :password, :name, :email, :phoneNumber, :cart, :preferences)';
         
@@ -17,6 +17,7 @@ class userDAO {
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->bindParam(':phoneNumber', $phoneNumber, PDO::PARAM_STR);
         $stmt->bindParam(':cart', $cart, PDO::PARAM_STR);
+        $stmt->bindParam(':cart_company_id', $cart_company_id, PDO::PARAM_STR);
         $stmt->bindParam(':preferences', $preferences, PDO::PARAM_STR);
 
         $isAddOK = False;
@@ -72,7 +73,7 @@ class userDAO {
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $stmt->execute();
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $result = new user($row['user_id'], $row['cart'], $row['name'], $row['email'], $row['phoneNumber'], $row['preferences']);
+            $result = new user($row['user_id'], $row['cart'], $row['cart_company_id'], $row['name'], $row['email'], $row['phoneNumber'], $row['preferences']);
         }
         return $result;
     }
@@ -99,6 +100,16 @@ class userDAO {
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':user_id', $userid, PDO::PARAM_STR);
         $stmt->bindParam(':cart', $cart, PDO::PARAM_STR);
+        $status = $stmt->execute();
+        return $status;
+    }
+    public function update_user_cart_company_id($userid, $cart_company_id){
+        $sql = "UPDATE user SET cart_company_id =:cart_company_id WHERE user_id =:user_id";
+        $connMgr = new ConnectionManager();    
+        $conn = $connMgr->getConnection();
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':user_id', $userid, PDO::PARAM_STR);
+        $stmt->bindParam(':cart_company_id', $cart_company_id, PDO::PARAM_STR);
         $status = $stmt->execute();
         return $status;
     }

@@ -239,12 +239,12 @@ h3.h3 {
   border-radius: 4px;
   transition: all 0.3s;
 }
-.product-grid:hover .add-to-cart {
+.product-grid:hover .add-to-cart-hover {
   border: 1px solid transparent;
   background: #16a085;
   color: #fff;
 }
-.product-grid .add-to-cart:hover {
+.product-grid .add-to-cart-hover:hover {
   background-color: #505050;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }

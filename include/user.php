@@ -4,15 +4,17 @@ class user {
     // property declaration
     private $user_id;
     private $cart;
+    private $cart_company_id;
     private $name;
     private $email;
     private $phoneNumber;
     private $preferences;
  
-    public function __construct($user_id, $cart, $name, $email, $phoneNumber, $preferences)
+    public function __construct($user_id, $cart, $cart_company_id, $name, $email, $phoneNumber, $preferences)
     {
         $this->user_id = $user_id;
         $this->cart = $cart;
+        $this->cart_company_id = $cart_company_id;
         $this->name = $name;
         $this->email = $email;
         $this->phoneNumber = $phoneNumber;
@@ -25,6 +27,10 @@ class user {
     public function get_cart()
     { 
         return $this->cart;
+    }
+    public function get_cart_company_id()
+    { 
+        return $this->cart_company_id;
     }
     public function get_name()
     { 
