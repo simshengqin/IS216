@@ -4,7 +4,7 @@ class transaction_history {
     // property declaration
     private $transaction_id;
     private $userid;
-    private $product_id;
+    private $cart;
     private $company_id;
     private $order_date;
     private $order_time;
@@ -15,11 +15,11 @@ class transaction_history {
     
     
     
-    public function __construct($transaction_id, $userid, $product_id, $company_id, $order_date, $order_time, $amount, $collection_type, $review, $rating)
+    public function __construct($transaction_id, $userid, $cart, $company_id, $order_date, $order_time, $amount, $collection_type, $review, $rating)
     {
         $this->transaction_id = $transaction_id;
         $this->userid = $userid;
-        $this->product_id = $product_id;
+        $this->cart = $cart;
         $this->company_id = $company_id;
         $this->order_date = $order_date;
         $this->order_time = $order_time;
@@ -40,9 +40,9 @@ class transaction_history {
     { 
         return $this->userid;
     }
-    public function get_product_id()
+    public function get_cart()
     { 
-        return $this->product_id;
+        return $this->cart;
     }
    
     public function get_order_date()
