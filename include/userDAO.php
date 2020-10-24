@@ -2,9 +2,15 @@
 
 class userDAO {
 
+<<<<<<< HEAD
     public function add( $password, $name, $email, $phoneNumber, $cart, $preferances) {
         $sql = 'INSERT INTO user ( password, name, email, phoneNumber, cart, preferances) 
                     VALUES ( :password, :name, :email, :phoneNumber, :cart, :preferances)';
+=======
+    public function add( $password, $name, $email, $phoneNumber, $cart, $cart_company_id, $preferences) {
+        $sql = 'INSERT INTO user ( password, name, email, phoneNumber, cart, preferences) 
+                    VALUES ( :password, :name, :email, :phoneNumber, :cart, :preferences)';
+>>>>>>> b618f26f411b2199ed4a5fece58414668bdc4bd0
         
         $connMgr = new ConnectionManager();       
         $conn = $connMgr->getConnection();
@@ -17,7 +23,12 @@ class userDAO {
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->bindParam(':phoneNumber', $phoneNumber, PDO::PARAM_STR);
         $stmt->bindParam(':cart', $cart, PDO::PARAM_STR);
+<<<<<<< HEAD
         $stmt->bindParam(':preferances', $preferances, PDO::PARAM_STR);
+=======
+        $stmt->bindParam(':cart_company_id', $cart_company_id, PDO::PARAM_STR);
+        $stmt->bindParam(':preferences', $preferences, PDO::PARAM_STR);
+>>>>>>> b618f26f411b2199ed4a5fece58414668bdc4bd0
 
         $isAddOK = False;
         if ($stmt->execute()) {
@@ -72,7 +83,7 @@ class userDAO {
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $stmt->execute();
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $result = new user($row['user_id'], $row['cart'], $row['name'], $row['email'], $row['phoneNumber'], $row['preferences']);
+            $result = new user($row['user_id'], $row['cart'], $row['cart_company_id'], $row['name'], $row['email'], $row['phoneNumber'], $row['preferences']);
         }
         return $result;
     }
@@ -102,8 +113,18 @@ class userDAO {
         $status = $stmt->execute();
         return $status;
     }
+    public function update_user_cart_company_id($userid, $cart_company_id){
+        $sql = "UPDATE user SET cart_company_id =:cart_company_id WHERE user_id =:user_id";
+        $connMgr = new ConnectionManager();    
+        $conn = $connMgr->getConnection();
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':user_id', $userid, PDO::PARAM_STR);
+        $stmt->bindParam(':cart_company_id', $cart_company_id, PDO::PARAM_STR);
+        $status = $stmt->execute();
+        return $status;
+    }
 
-    public function update_user_preferences($userid, $preferences){
+    public function update_preferences($userid, $preferences){
         $sql = "UPDATE user SET preferences =:preferences WHERE user_id =:user_id";
         $connMgr = new ConnectionManager();    
         $conn = $connMgr->getConnection();

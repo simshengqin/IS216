@@ -7,6 +7,8 @@
     
     $productDAO = new productDAO();
     $productType = $productDAO->retrieve_product_type();
+    $newProductId = count($productDAO->retrieve_all());
+    var_dump($newProductId);
     
     if (isset($_GET["company_id"])) {
         $company_id = $_GET["company_id"];   
@@ -67,7 +69,7 @@
           <a class="nav-link" href="company_post_product.php"> Post <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item mr-4">
-          <a class="nav-link" href="#"> Edit </a>
+          <a class="nav-link" href="company_edit_product.php"> Edit </a>
         </li>
       </ul>
     </div>
@@ -83,7 +85,7 @@
         <h1 class="font-weight-light text-center"> Create Promotion </h1>
         </br>
 
-        <form>
+        <form >
             <div class="form-row">
 
                     
@@ -167,7 +169,7 @@
                     <div class="form-group col-md-6" style="margin-bottom: -10px;">
                         <!-- <label for="dateInput" class="col-form-label"><h5>End Date: </h5></label> -->
                         <span> Promotional End Date</span>
-                        <input id="dateInput" class="form-control form-control-lg" type="date">
+                        <input id="dateInput" class="form-control form-control-lg datepicker" type="date" placeholder="dd-mm-yyyy" min="2000-01-01" max="2100-12-31"> 
                         <p id='errorPromotionEndDate' style='visibility: hidden; color: red;'> Please indicate a promotion end date </p>
                     </div>
 
@@ -178,12 +180,12 @@
                     <!-- promotion end time -->
                     <div class="form-group col-md-6" style="margin-bottom: -10px;">
                         <span> Promotional End Time</span>
-                        <input id="timeInput" class="form-control form-control-lg" type="time">
+                        <input id="timeInput" class="form-control form-control-lg" type="time" min="00:00:00" max="23:59:59">
                         <p id='errorPromotionEndTime' style='visibility: hidden; color: red;'> Please indicate a promotion end time </p>
                     </div>
 
                     <div class="form-group col-md-12" style="margin-top: 25px;">
-                        <button type="button" class="btn btn-success btn-lg inline" onclick='validate()'> Create </button>
+                        <button type="button" class="btn btn-success btn-lg inline" onclick='return validate()'> Create </button>
                         <button type="button" class="btn btn-danger btn-lg inline"> Cancel </button>
                     </div>
              </div>
@@ -230,6 +232,42 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
   <script>
+
+      //var asiaTime = new Date().toLocaleString("en-US", {timeZone: "Asia/Singapore"}).split('T')[1];
+      //console.log("Singapore time: " + asiaTime);
+      
+      var singaporeDateUnmodified = new Date().toLocaleString("en-US", {timeZone: "Asia/Singapore"}).split(',')[0];
+      var singaporeTimeUnmodified = new Date().toLocaleString("en-US", {timeZone: "Asia/Singapore"}).split(',')[1];
+      
+      var singaporeDate = "";
+      singaporeDate += singaporeDateUnmodified.split('/')[2]; // Year
+      singaporeDate += "-";                         
+      singaporeDate += singaporeDateUnmodified.split('/')[0]; // Month
+      singaporeDate += "-";   
+      singaporeDate += singaporeDateUnmodified.split('/')[1]; // Date
+      
+      //console.log("Singapore Date: " + singaporeDate);
+      //console.log("Singapore Time (Unmodified): " + singaporeTimeUnmodified);
+
+      var tempTime = singaporeTimeUnmodified.split(' ')[1];
+      var hourClock = singaporeTimeUnmodified.split(' ')[2];
+
+      var singaporeTime = tempTime; // if time is before PM
+
+      if(hourClock == "PM"){
+          var tempHour = tempTime.split(':')[0];
+          tempHour = parseInt(tempHour) + 12; // convert to 24 hour clock
+          var tempMin = tempTime.split(':')[1];
+          var tempSecond = tempTime.split(':')[2];
+          singaporeTime = tempHour + ":" + tempMin + ":" + tempSecond;
+      } 
+      
+      console.log("Singapore Time: " + singaporeTime);
+      console.log("Singapore Time: " + singaporeDate);
+
+      document.getElementById("dateInput").setAttribute('min', singaporeDate);
+
+      
       function addNewType(){
 
         var newItem = document.getElementById('newFoodType').value
@@ -260,9 +298,16 @@
         var productModeOfCollection = document.getElementById('modeOfCollection').value
         var productBeforePrice = document.getElementById('beforePrice').value
         var productAfterPrice = document.getElementById('afterPrice').value
-        var productImage = document.getElementById('productImageUpload').value
+        
+        var productImagePathSource = document.getElementById('productImageUpload').value // Get the file path 
+        var productImage = "";
+        if(productImagePathSource!=""){
+          productImage = document.getElementById('productImageUpload').files[0].name // Get the file name
+        }
+
         var productDateInput = document.getElementById('dateInput').value
         var productTimeInput = document.getElementById('timeInput').value
+
 
         // validate product name 
         if(productName==""){
@@ -323,7 +368,7 @@
           document.getElementById("errorProductImageUpload").style.visibility = "visible";
           noError = false;
         } else {
-          data["productImage"] = productImage;
+          data["productImage"] = productImage; // To get the filename
           document.getElementById("errorProductImageUpload").style.visibility = "hidden";
         }
 
@@ -332,7 +377,7 @@
           document.getElementById("errorPromotionEndDate").style.visibility = "visible";
           noError = false;
         } else {
-          data["productDateInput"] = productDateInput;
+          data["decay_date"] = productDateInput;
           document.getElementById("errorPromotionEndDate").style.visibility = "hidden";
         }
 
@@ -341,15 +386,30 @@
           document.getElementById("errorPromotionEndTime").style.visibility = "visible";
           noError = false;
         } else {
-          data["productTimeInput"] = productTimeInput;
+          data["decay_time"] = productTimeInput;
           document.getElementById("errorPromotionEndTime").style.visibility = "hidden";
         }
 
-        console.log(data);
-        console.log(noError);
+        //data["product_id"] = <?php echo $newProductId ?>;
+        data["company_id"] = <?php echo $company_id ?>;
+        data["posted_date"] = singaporeDate;
+        data["posted_time"] = singaporeTime;
+        data["image_path_source"] = productImagePathSource;
+        console.log(productImagePathSource)
+
+        //console.log(singaporeDate);
+        //console.log(singaporeTime);
+
+        //console.log(data);
+        //console.log(noError);
 
         if(noError){
           processToServer(data)
+          console.log("Sent")
+          return true
+        } else {
+          console.log("Did not sent")
+          return false
         }
 
       }
@@ -359,6 +419,7 @@
         var request = new XMLHttpRequest();
                 request.onreadystatechange = function() {
                   if(this.readyState == 4 && this.status == 200) {
+                    console.log(this.responseText);
                     //dataObj = JSON.parse(this.responseText);
                     //console.log(dataObj);
                     console.log("it works!!");
@@ -366,22 +427,16 @@
                     //console.log("Error in transition to database")
                   }
                 }
-        var jsObj = {"data": data,};
+        var jsObj = {"result": data};
         var jsonObj = JSON.stringify(jsObj);
         console.log(jsonObj);
-        request.open("POST", "company_post_product.php", true);
+        request.open("POST", "company_post_product_transition.php", true);
         request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        request.send("c=" + jsonObj);
+        request.send("data=" + jsonObj);
       }
+
   </script>
 
-<?php
-    if(isset($_POST['c'])) 
-    {
-      $query = $_POST["c"];
-      var_dump($query);
-    }
-?>
 
 </body>
 
