@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Oct 20, 2020 at 04:54 PM
--- Server version: 5.7.23
--- PHP Version: 7.2.10
+-- Generation Time: Oct 24, 2020 at 03:11 AM
+-- Server version: 5.7.31
+-- PHP Version: 7.3.21
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -71,14 +70,16 @@ CREATE TABLE IF NOT EXISTS `message` (
   `to_type` varchar(1000) CHARACTER SET utf8mb4 NOT NULL,
   `type` varchar(1000) CHARACTER SET utf8mb4 NOT NULL,
   PRIMARY KEY (`message_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `message`
 --
 
 INSERT INTO `message` (`message_id`, `body`, `date`, `from_id`, `from_type`, `seen`, `time`, `to_id`, `to_type`, `type`) VALUES
-(1, 'nnnnnnnnnnnnn', '2020-10-05 16:55:46', 1, 'user', 'false', '', 1, 'company', '');
+(1, 'nnnnnnnnnnnnn', '2020-10-05 16:55:46', 1, 'user', 'false', '', 1, 'company', ''),
+(2, 'hi', '2020-10-24 03:30:25', 1, 'user', 'false', '', 1, 'company', ''),
+(3, 'okk', '2020-10-24 03:30:28', 1, 'user', 'false', '', 1, 'company', '');
 
 -- --------------------------------------------------------
 
@@ -108,16 +109,16 @@ CREATE TABLE IF NOT EXISTS `product` (
 --
 
 INSERT INTO `product` (`product_id`, `company_id`, `decay_date`, `decay_time`, `name`, `posted_date`, `posted_time`, `price_after`, `price_before`, `quantity`, `type`, `mode_of_collection`) VALUES
-(1, 1, '2020-12-01', '15:07:21.000000', 'chocolate_cake', '2020-09-26', '15:09:27.000000', 9.55, 11.87, 5, 'cake', 'delivery'),
-(2, 1, '2020-10-01', '15:07:21.000000', 'churros', '2020-09-27', '15:40:24.000000', 14.33, 15.77, 100, 'dessert', 'pickup'),
-(3, 2, '2020-12-01', '15:07:21.000000', 'apple_pie', '2020-09-27', '15:40:24.000000', 8.77, 8.77, 100, 'dessert', 'pickup'),
-(4, 2, '2020-12-01', '15:07:21.000000', 'baklava', '2020-09-27', '16:32:45.000000', 10.33, 10.33, 533, 'dessert', 'pickup'),
-(5, 2, '2020-10-21', '15:07:21.000000', 'carrot_cake', '2020-09-27', '16:33:17.000000', 5.89, 5.89, 533, 'dessert', 'pickup'),
-(6, 2, '2020-12-01', '15:07:21.000000', 'cheesecake', '2020-09-27', '16:33:17.000000', 12.43, 13.56, 134, 'dessert', 'pickup'),
-(7, 2, '2020-12-01', '15:07:21.000000', 'waffles', '2020-09-27', '16:34:20.000000', 5.33, 8.99, 1099, 'dessert', 'pickup'),
-(8, 2, '2020-12-01', '15:07:21.000000', 'dumplings', '2020-09-27', '16:34:20.000000', 4.77, 4.77, 100, 'dimsum', 'pickup'),
-(9, 2, '2020-10-02', '15:07:21.000000', 'sushi', '2020-09-27', '16:34:20.000000', 5.1, 5.76, 100, 'japanese_food', 'delivery'),
-(10, 2, '2020-12-01', '15:07:21.000000', 'edamame', '2020-09-27', '16:35:56.000000', 8.77, 8.77, 100, 'vegetables', 'pickup');
+(1, 1, '2020-12-01', '15:07:21.000000', 'chocolate_cake', '2020-09-26', '15:09:27.000000', 9.55, 11.87, 0, 'cake', 'delivery'),
+(2, 1, '2020-10-01', '15:07:21.000000', 'churros', '2020-09-27', '15:40:24.000000', 14.33, 15.77, 86, 'dessert', 'pickup'),
+(3, 1, '2020-12-01', '15:07:21.000000', 'apple_pie', '2020-09-27', '15:40:24.000000', 8.77, 8.77, 0, 'dessert', 'pickup'),
+(4, 1, '2020-12-01', '15:07:21.000000', 'baklava', '2020-09-27', '16:32:45.000000', 10.33, 10.33, 0, 'dessert', 'pickup'),
+(5, 1, '2020-10-21', '15:07:21.000000', 'carrot_cake', '2020-09-27', '16:33:17.000000', 5.89, 5.89, 450, 'dessert', 'pickup'),
+(6, 1, '2020-12-01', '15:07:21.000000', 'cheesecake', '2020-09-27', '16:33:17.000000', 12.43, 13.56, 130, 'dessert', 'pickup'),
+(7, 2, '2020-12-01', '15:07:21.000000', 'waffles', '2020-09-27', '16:34:20.000000', 5.33, 8.99, 0, 'dessert', 'pickup'),
+(8, 2, '2020-12-01', '15:07:21.000000', 'dumplings', '2020-09-27', '16:34:20.000000', 4.77, 4.77, 74, 'dimsum', 'pickup'),
+(9, 2, '2020-10-02', '15:07:21.000000', 'sushi', '2020-09-27', '16:34:20.000000', 5.1, 5.76, 91, 'japanese_food', 'delivery'),
+(10, 2, '2020-12-01', '15:07:21.000000', 'edamame', '2020-09-27', '16:35:56.000000', 8.77, 8.77, 186, 'vegetables', 'pickup');
 
 -- --------------------------------------------------------
 
@@ -158,6 +159,7 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
   `user_id` int(255) NOT NULL AUTO_INCREMENT,
   `cart` varchar(9999) CHARACTER SET utf8mb4 NOT NULL,
+  `cart_company_id` int(255) NOT NULL,
   `password` varchar(100) NOT NULL,
   `name` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
@@ -170,9 +172,9 @@ CREATE TABLE IF NOT EXISTS `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`user_id`, `cart`, `password`, `name`, `email`, `phoneNumber`, `preferences`) VALUES
-(1, '1:1,3:1,4:2,5:1,7:1,10:1', 'open123', 'John Doe', 'johndoe@hotmail.com', '98444432', 'true,false,200'),
-(2, '', 'uicnJD6S1!', 'Jane Lim', 'jane.lim@sis.smu.edu.sg', '90895157', 'false,true,200');
+INSERT INTO `user` (`user_id`, `cart`, `cart_company_id`, `password`, `name`, `email`, `phoneNumber`, `preferences`) VALUES
+(1, '8:1', 2, 'open123', 'John Doe', 'johndoe@hotmail.com', '98444432', 'true,false,200'),
+(2, '', 0, 'uicnJD6S1!', 'Jane Lim', 'jane.lim@sis.smu.edu.sg', '90895157', 'false,true,200');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
