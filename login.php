@@ -1,6 +1,6 @@
 <?php
-    session_start();
-    if(isset($_SESSION['login'])) {
+    //session_start();
+    if(isset($_SESSION['userlogin'])) {
         header("Location: registration.php");
     }
 ?>
@@ -96,23 +96,22 @@
                     url: "jslogin.php",
                     data: {username:username, password:password},
                     success:function(data){
-                        if( $.trim(data) ===  "1" ) {
-                            setTimeout('window.location.href = "registration.php"', 2000 )
-        
+                        alert(data)
+                        if( $.trim(data) === "1" ){
+                            setTimeout( 'window.location.href = "registration.php"', 1000)
                         } else {
                               Swal.fire({
                                     "title" : "Errors",
-                                    "text": "Please Enter Your Credentials Correctly!",
+                                    "text": "Please Enter Your Credentials Correctly",
                                     "type": "success",
                                 })
+                 
                         }
-                       
-                    
                     },
                     error:function(data){
-                    
+                        alert("there were trouble!");
                     }
-                })
+                });
             })
            
         });

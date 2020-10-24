@@ -15,7 +15,7 @@ if(isset($_POST['user_id']) && isset($_POST['preferences'])){
     //     $preferences_arr = explode(",",$preferences);
     //   }  
     
-    echo "Successfully updated your preferences!";
+    // echo "Successfully updated your preferences!";
 }
 
 ?>

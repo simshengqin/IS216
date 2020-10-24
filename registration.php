@@ -24,25 +24,39 @@
     <body>
         <div>
             <?php
-                if(isset($_POST['submitted'])) {
+                if(isset($_POST['submit'])) {
 
                         $name              =$_POST['name'];
                         $email             =$_POST['email'];
                         $phoneNumber       =$_POST['phoneNumber'];
-                        $password          = sha1($_POST['password']);
+                        $password          =$_POST['password'];
                         $reEnterPassword   =$_POST['reEnterPassword'];
                         $cart              ="";
+                        if(!isset($_POST['preferances'])){
+                            $preferances = "";
+                            $userDAO = new userDAO();
+                            $result = $userDAO->add( $password, $name, $email, $phoneNumber, $cart, $preferances );
+                            if($result){
+                                echo"hi";
+                            }
+                        } else {
+                            $preferances = $_POST['preferances'];
+                            $userDAO = new userDAO();
+                            $result = $userDAO->add( $password, $name, $email, $phoneNumber, $cart, $preferances );
+                             if($result){
+                                echo"hi";
+                            }
+                        }
                         
-                        $userDAO = new userDAO();
-                        $result = $userDAO->add( $password, $name, $email, $phoneNumber, $cart );
-                
+                        
                        
-                }
+                } 
+            
             ?>
         </div>
 
         <div>
-            <form action="registration.php" method="post">
+            <form action="registration.php" method="post" name="myform">
                 <div class="container">
                     <div class="col-sm-3">
                         <h1>CREATE ACCOUNT</h1>
@@ -62,56 +76,42 @@
                         <input class="form_control" type="password" name="password" required>
 
                         <label for="reEnterPassword"><b>re-enter Password</b></label>
-                        <input class="form_control" type="password" name="reEnterPassword" required>
+                        <input class="form_control" type="password" name="reEnterPassword" required><br>
+
+                        <label for="prefer"><b>Preferances</b></label><br>
+                        <input type="checkbox" id="vegetarian" value="vegetarian" name="preferance[]">
+                        <label for="vegetarian">vegetarian</label><br>
+                        <input type="checkbox" id="halal" value="halal" name="preferance[]">
+                        <label for="halal">Halal</label><br>
+                        <input type="checkbox" id="proxi" value="halal" name="preferance[]">
+                        <label for="halal">Within a proximity range from current location (m):</label>
+                        <input type="text" name="preferance[]">
 
                         <hr class = "mb-4">
-                        <input class="btn btn-primary" type="submit" name="submitted" id="register" value="Register">
+                        <input class="btn btn-primary" type="submit" name="submit" id="register" value="submit">
                     </div>
 
                     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
                     <script type="text/javascript" >
                         $( '#register').click(function(e) {
-
                             var valid = this.form.checkValidity();
-                            
+                            console.log("hi");
                             if( valid ) {
-                                var name = $("#name").val();
-                                var email = $("email").val();
-                                var phoneNumber = $("phoneNumber").val();
-                                var password = $("password").val();
-                                var reEnterPassword = $("reEnterPassword").val();
-
-                                e.preventDefault();
-
-                                $.ajax({
-                                    type: "POST",
-                                    url: "Registration.php" ,
-                                    data : { name: name, email: email, phoneNumber: phoneNumber, password: password, reEnterPassword: reEnterPassword},
-                                    success: function( data ) {
-                                        Swal.fire({
-                                                    "title" : "Successful",
-                                                    "text": "Thank you for registering an account",
-                                                    "type": "success",
-                                                })
-                                        alert("success");
-                                     },
-                                error: function( data ) {
-                                    Swal.fire({
-                                                    "title" : "Errors",
-                                                    "text": "",
-                                                    "type": "success",
-                                                })
-                                    }   
-                                });
+                                alert("success");
+                                Swal.fire({
+                                            "title" : "Successful",
+                                            "text": "Thank you for registering an account",
+                                            "type": "success",
+                                        })
+                                
+                                
                             } else {
                                 Swal.fire({
                                     "title" : "Errors",
                                     "text": "Please Enter Your Fields",
                                     "type": "success",
                                 })
-                            }
-                            //alert( "hello" );
-                            
+                            }   
                         });
                     </script>
 
