@@ -126,8 +126,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `name` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `phoneNumber` varchar(100) NOT NULL,
-  `edollar` int(255) NOT NULL,
-  `school` varchar(100) NOT NULL,
+  `preferences` varchar(100) NOT NULL,
   PRIMARY KEY (`user_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
 
@@ -135,24 +134,24 @@ CREATE TABLE IF NOT EXISTS `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`user_id`, `cart`, `password`, `name`, `email`, `phoneNumber`, `edollar`, `school`) VALUES
-(1, '1:3,3:1,4:2,5:1,7:1,10:1,6:1', '', '', '', '', 0, ''),
-(5, '', 'uicnJD6S1!', 'Tan Lin Ming', 'linming.tan.2017@sis.smu.edu.sg', '90895157', 0, 'smu'),
-(6, '', 'uicnJD6S1!', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', 0, 'smu'),
-(7, '', 'uicnJD6S1!', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', 0, 'smu'),
-(8, '', 'uicnJD6S1!', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', 0, 'smu'),
-(9, '', 'uicnJD6S1!', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', 0, 'smu'),
-(10, '', 'uicnJD6S1!', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', 0, 'smu'),
-(20, '', 'sdf', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', 0, 'smu'),
-(21, '', 'sdf', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', 0, 'smu'),
-(22, '', 'sdf', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', 0, 'smu'),
-(23, '', 'sdf', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', 0, 'smu'),
-(24, '', 'sdf', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', 0, 'smu'),
-(25, '', 'sdf', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', 0, 'smu'),
-(26, '', 'sdf', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', 0, 'smu'),
-(27, '', 'sdf', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', 0, 'smu'),
-(28, '', 'sdf', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', 0, 'smu'),
-(29, '', '9a6747fc6259aa374ab4e1bb03074b6ec672cf99', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', 0, 'smu');
+INSERT INTO `user` (`user_id`, `cart`, `password`, `name`, `email`, `phoneNumber`, `preferences`) VALUES
+(1, '1:3,3:1,4:2,5:1,7:1,10:1,6:1', '', '', '', '', ''),
+(5, '', 'uicnJD6S1!', 'Tan Lin Ming', 'linming.tan.2017@sis.smu.edu.sg', '90895157', ''),
+(6, '', 'uicnJD6S1!', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', ''),
+(7, '', 'uicnJD6S1!', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', ''),
+(8, '', 'uicnJD6S1!', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', ''),
+(9, '', 'uicnJD6S1!', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', ''),
+(10, '', 'uicnJD6S1!', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', ''),
+(20, '', 'sdf', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', ''),
+(21, '', 'sdf', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', ''),
+(22, '', 'sdf', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', ''),
+(23, '', 'sdf', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', ''),
+(24, '', 'sdf', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', ''),
+(25, '', 'sdf', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', ''),
+(26, '', 'sdf', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', ''),
+(27, '', 'sdf', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', ''),
+(28, '', 'sdf', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', ''),
+(29, '', '9a6747fc6259aa374ab4e1bb03074b6ec672cf99', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', '');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
