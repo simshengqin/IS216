@@ -125,6 +125,25 @@
             </div>
           </div>
         </div>
+      </div>        
+      <!--Modal to inform not enough product qty in database-->
+      <div class="modal fade" id="insufficint_product_qty_msg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Error</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+            Sorry! There is insufficient quantity for this product.
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-success" data-dismiss="modal" >Okay</button>
+            </div>
+          </div>
+        </div>
       </div>
       <!--Section: Block Content-->
       <section class="mt-5 mb-4">
@@ -143,6 +162,7 @@
                 <!--List of items in the cart -->
                 <?php
                 $userDAO = new userDAO();
+                $companyDAO = new companyDAO();
                 //Hardcoded as 1 first. Need to change to check who is currently logged in!
                 $user_id = 1;
                 $user = $userDAO->retrieve_user($user_id);
@@ -150,17 +170,28 @@
                 #cart is in the format "product_id:quantity, product_id: quantity"
                 #Convert it to an array first, then loop through each of this product qty pair
                 if (strlen($cart) ==0) {
-                  $cart_arr = [];
-                }
-                else {
-                  $cart_arr = explode(",",$cart);
-                }               
-                echo "<h5 class='mb-4' >Cart (<span id='cartsize'>" . sizeof($cart_arr) . "</span> items)</h5>";
-                $total_price = 0;
+                    $cart_arr = [];
+                  }
+                  else {
+                    $cart_arr = explode(",",$cart);
+                }             
+                $userDAO = new userDAO();
+                //HARDCODED user_id here, need to change
+                $user_id = 1;
+                $user = $userDAO-> retrieve_user($user_id);
+                $cart_company_id = $user->get_cart_company_id(); 
+                $company_name = $companyDAO -> retrieve_company_name($cart_company_id);
+                $company_address = $companyDAO -> retrieve_company_address($cart_company_id);
+                
+                $total_price = "0.00";
                 if (strlen($cart) ==0) {
+                  echo "<h5 class='mb-4' >Cart (<span id='cartsize'>" . sizeof($cart_arr) . "</span> items)</h5>";
                   echo "<div class='text-danger'>No items in cart currently!</div>";
+                  $total_price_with_shipping = "0.00";
+                  $shipping = "0.00";
                 }
                 else {
+                  echo "<h5 class='mb-4' >Cart (<span id='cartsize'>" . sizeof($cart_arr) . "</span> items) - " . ucwords($company_name) . "</h5>";
                   foreach ($cart_arr as $productqty) {
                       #Split it to an arr, where the 1st element is product_id and 2nd element is quantity
                       $productqty_arr = explode(":",$productqty);
@@ -180,14 +211,42 @@
                       $price_before = $product->get_price_before();
                       $quantity = $product->get_quantity();
                       $type = $product->get_type();
+                      $discount = round((($price_before-$price_after)/$price_before)*100,0);
+                      $total_price_for_current_product = $price_after * $quantity_in_cart;
+                      //set timezone to singapore so the time will be correct
+                      date_default_timezone_set('Asia/Singapore');
+                      //if there is no discount, do not show the -% label and the crossed out price
+                      if ($discount == 0.0) {
+                          $price_before_modified = "";                 
+                      }     
+                      else {
+                          $price_before_modified = "$" . $price_before . "&nbsp;";
+                      }     
                       #Calculates the total price of current cart
                       $total_price += round($price_after * $quantity_in_cart,2);
+                      #There is only a shippping cost if there is at least 1 product
+                      if ($total_price == 0) {
+                        $total_price_with_shipping = "0.00";
+                      }
+                      else {
+                        $shipping = 3.00;
+                        $total_price_with_shipping = $total_price + 3.00;
+                        
+                      }
+                      
                       echo "
-                      <div class='row mb-4'>
+                      <div class='row mb-4' value='$price_after'>
                       <div class='col-md-5 col-lg-3 col-xl-3'>
-                          <div class='view zoom overlay z-depth-1 rounded mb-3 mb-md-0'>
-                          <img class='img-fluid w-100'
-                              src='images/$type/$name.jpg' alt='Sample'>
+                          <div class='cart_product_img view zoom overlay z-depth-1 rounded mb-3 mb-md-0'>
+                          <img 
+                              src='images/$type/$name.jpg' alt='Sample'>";
+                      if (date('Y-m-d', time())== $posted_date) {
+                          echo "<span class='product-new-label'>New</span>";
+                      }
+                      if ($discount != 0.0) {
+                          echo "<span class='product-discount-label'>-$discount%</span>";
+                      }
+                      echo "
                           <a href='#!'>
                           </a>
                           </div>
@@ -211,9 +270,12 @@
                               <input readonly class='quantity' min='1' name='quantity' value='$quantity_in_cart' type='number' >
                               <span class='fas fa-plus-circle' onclick='add_quantity()'>
                               </span>
+                              <span class='total_price_for_current_product'>
+                                  $$total_price_for_current_product
+                              </span>
                           </div>
-                          <div class='d-flex justify-content-between align-items-center'>
-                              <p class='mb-0'><span><strong>$$price_after</strong></span></p>
+                          <div class='d-flex justify-content-between align-items-center mt-1'>
+                              <p class='mb-0 ml-4'><span style='text-decoration: line-through' >$price_before_modified</span><span ><strong>$$price_after</strong></span></p>
                           </div>
                       </div>
 
@@ -238,6 +300,15 @@
                 <h5 class="mb-4">Expected shipping delivery</h5>
 
                 <p class="mb-0"> Thu., 12.03. - Mon., 16.03.</p>
+              </div>
+            </div>
+            <!-- Card -->
+            <div class="card mb-4">
+              <div class="card-body">
+
+                <h5 class="mb-4">Self-pickup Location</h5>
+
+                <p class="mb-0"> <?php echo ucwords($company_name) . " - " . $company_address ?></p>
               </div>
             </div>
             <!-- Card -->
@@ -276,20 +347,20 @@
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
                     Temporary amount
-                    <span id="totalprice">$<?php echo $total_price;?></span>
+                    <span id="total_price_for_all_products">$<?php echo $total_price;?></span>
                   </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                  <li class="list-group-item d-flex justify-content-between align-items-center px-0" >
                     Shipping
-                    <span>Gratis</span>
+                    <span id="shipping">$<?php echo $shipping;?></span>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
                     <div>
                       <strong>The total amount of</strong>
                       <strong>
-                        <p class="mb-0">(including VAT)</p>
+                        <p class="mb-0"></p>
                       </strong>
                     </div>
-                    <span><strong>$53.98</strong></span>
+                    <span class="font-weight-bold" id="total_price_for_all_products_with_shipping">$<?php echo $total_price_with_shipping;?></span>
                   </li>
                 </ul>
 
@@ -336,68 +407,115 @@
   <!--Main layout-->
 
   <script>
-      function XHR_send(user_id, product_id, quantity) {
+      function XHR_send(user_id, product_id, quantity, quantity_change,event_target) {
         //Send an AJAX request to update_user.php to update the cart of user in database
+        //Also send to update-user.php to update the product qty in database, quantity_change is needed to reflect
+        //whether it's +1 or -1 to the qty
         var request = new XMLHttpRequest();  
         request.onreadystatechange = function() {    
             if (this.readyState == 4 && this.status == 200) {
-                console.log(this.responseText);  
+                console.log(this.responseText);
+                //Only needs to check for user adding more items to their cart. If there is not enough item, the user should not be able to add at all
+                //Note that AJAX CANNOT return a value to another function as it has some lag, so need to do the changes here
+                if ( quantity_change == 1 && this.responseText != "Insufficient product qty in database") {
+                  current_quantity = parseInt(event_target.parentNode.children[2].value)
+                  event_target.parentNode.children[2].value = current_quantity + 1;
+                  var total_price_product_display = event_target.parentNode.children[4];
+                  total_price_product = parseFloat(total_price_product_display.innerText.slice(1)) / current_quantity * (current_quantity + 1);
+                  total_price_product = Math.round((total_price_product + Number.EPSILON) * 100) / 100
+                  total_price_product_display.innerText = "$" + total_price_product
+                  //Update the total price of all products
+                  total_price_for_all_products = 0
+                  for (total_price_product of document.getElementsByClassName("total_price_for_current_product")) {
+                    total_price_for_all_products +=  parseFloat(total_price_product.innerText.slice(1));
+                  }
+                  document.getElementById("total_price_for_all_products").innerText = "$" + total_price_for_all_products.toFixed(2);
+                  document.getElementById("total_price_for_all_products_with_shipping").innerText = "$" + (total_price_for_all_products+3.00).toFixed(2);   
+                }
+                else if (this.responseText == "Insufficient product qty in database") {
+                  document.getElementById("insufficient_product_qty_msg").getElementsByClassName("modal-body")[0].innerText = "Sorry! There is insufficient quantity for this product.";
+                  $('#insufficient_product_qty_msg').modal('show');
+                  //alert("Insufficient product qty in database");
+                }
+                //return (this.responseText);
             }  
         };  
         request.open('POST', 'update_user.php', true);
         request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded'); 
-        request.send("user_id="+user_id+"&product_id="+product_id+"&quantity="+quantity);
+        request.send("user_id="+user_id+"&product_id="+product_id+"&quantity="+quantity+"&quantity_change="+quantity_change);
       }
 
       function minus_quantity() {
           //Decrease the quantity
           if (event.target.parentNode.children[2].value > 1) {
-            event.target.parentNode.children[2].value -= 1;
-            //Update the total price
-            current_price = parseFloat(document.getElementById("totalprice").innerText.slice(1))
-            //Use .slice(1) yo ignore the $ sign in front
-            current_price -= parseFloat(event.target.parentNode.parentNode.lastElementChild.children[0].innerText.slice(1));
-            //Round price to two decimal places
-            document.getElementById("totalprice").innerText = "$" + current_price.toFixed(2);
+            current_quantity = parseInt(event.target.parentNode.children[2].value)
+            event.target.parentNode.children[2].value = current_quantity - 1;
+            var total_price_product_display = event.target.parentNode.children[4];
+            total_price_product = parseFloat(total_price_product_display.innerText.slice(1)) / current_quantity * (current_quantity - 1);
+            total_price_product = Math.round((total_price_product + Number.EPSILON) * 100) / 100
+            total_price_product_display.innerText = "$" + total_price_product
+            //Update the total price of all products
+            total_price_for_all_products = 0
+
+            for (total_price_product of document.getElementsByClassName("total_price_for_current_product")) {
+              total_price_for_all_products +=  parseFloat(total_price_product.innerText.slice(1));
+            }
+            document.getElementById("total_price_for_all_products").innerText = "$" + total_price_for_all_products.toFixed(2);
+            document.getElementById("total_price_for_all_products_with_shipping").innerText = "$" + (total_price_for_all_products+3.00).toFixed(2);               
             //Send the request to the server to update the cart of user in database
             //Need to change hardcoded user_id later!!
             //XHR_send($user_id, $product_id, $quantity)
-            XHR_send(1,event.target.parentNode.children[1].innerText ,event.target.parentNode.children[2].value);            
+            XHR_send(1,event.target.parentNode.children[1].innerText ,event.target.parentNode.children[2].value,-1);            
           }
 
       }
       function add_quantity() {
-          current_quantity = parseInt(event.target.parentNode.children[2].value)
-          event.target.parentNode.children[2].value = current_quantity + 1;
-          //Update the total price
-          current_price = parseFloat(document.getElementById("totalprice").innerText.slice(1))
-          //Use .slice(1) yo ignore the $ sign in front
-          current_price += parseFloat(event.target.parentNode.parentNode.lastElementChild.children[0].innerText.slice(1));
-          //Round price to two decimal places
-          document.getElementById("totalprice").innerText = "$" + current_price.toFixed(2);
-          //Send the request to the server to update the cart of user in database
+
+          //Send the request to the server to update the cart of user in databasetotal
           //Need to change hardcoded user_id later!!
           //XHR_send($user_id, $product_id, $quantity)
-          XHR_send(1,event.target.parentNode.children[1].innerText ,event.target.parentNode.children[2].value);
-
+          //Only allows user to buy up to 10 products
+          if ( event.target.parentNode.children[2].value >= 10) {
+              document.getElementById("insufficient_product_qty_msg").getElementsByClassName("modal-body")[0].innerText = "Sorry! You can only buy up to 10 of this product.";
+              $('#insufficient_product_qty_msg').modal('show');
+          }
+          else {
+            XHR_send(1,event.target.parentNode.children[1].innerText ,event.target.parentNode.children[2].value,1, event.target);
+          }
       }
 
       function show_confirmation_msg() {
         window.target_element = event.target.parentNode.parentNode.parentNode.parentNode;
+        
         window.target_product_id= event.target.parentNode.children[0].innerText;
+        window.target_quantity = event.target.parentNode.parentNode.parentNode.children[1].children[2].value;
         $('#delete_confirmation_msg').modal('show');
       }
       function delete_product() {
           //Show the deletion confirmation message
           //Delete a product when the trash icon is pressed
           //event.target.parentNode.parentNode.parentNode.parentNode.remove();
+          console.log(window.target_element.id);
           window.target_element.remove();
+          //Update the total price of all products
+          total_price_for_all_products = 0
+          for (total_price_product of document.getElementsByClassName("total_price_for_current_product")) {
+             total_price_for_all_products +=  parseFloat(total_price_product.innerText.slice(1));
+          }
+          document.getElementById("total_price_for_all_products").innerText = "$" + total_price_for_all_products.toFixed(2);
+          document.getElementById("total_price_for_all_products_with_shipping").innerText = "$" + (total_price_for_all_products+3.00).toFixed(2);   
+          //There is only a shipping cost if there is at least 1 product
+          if (document.getElementsByClassName("total_price_for_current_product").length == 0) {
+            document.getElementById("total_price_for_all_products_with_shipping").innerText = "$0.00";
+            document.getElementById("shipping").innerText = "$0.00";
+            
+          }  
           //Update the number of items in cart
           document.getElementById("cartsize").innerText -= 1;
-
+          
           //Update the database
           //XHR_send(1,event.target.parentNode.children[0].innerText ,0);
-          XHR_send(1,window.target_product_id ,0);
+          XHR_send(1,window.target_product_id ,0,-window.target_quantity);
           
 
       }

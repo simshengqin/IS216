@@ -86,6 +86,42 @@ class productDAO {
         }
         return $result;
     }
+
+    public function update_product_qty($product_id,$quantity){
+        //Checks whether there is sufficient quantity in the database
+        $sql = 'SELECT * FROM product WHERE product_id =:product_id';
+        $connMgr = new ConnectionManager();      
+        $conn = $connMgr->getConnection();
+
+        $stmt = $conn->prepare($sql);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->bindParam(':product_id', $product_id, PDO::PARAM_STR);
+        $stmt->execute();
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            //return $row['quantity'];
+            $current_quantity = $row['quantity'];
+
+        }
+        $current_quantity = intval($current_quantity);
+        $quantity = intval($quantity);
+        if (($current_quantity + $quantity) < 0) {
+            #Not enough quantity
+            return false;
+        } 
+        else {
+            $quantity = strval($current_quantity + $quantity);
+            //return $quantity . " " . $product_id;
+            $sql2 = "UPDATE product SET quantity =:quantity WHERE product_id =:product_id";
+            $connMgr2 = new ConnectionManager();    
+            $conn2 = $connMgr2->getConnection();
+            $stmt2 = $conn2->prepare($sql2);
+            $stmt2->bindParam(':quantity', $quantity, PDO::PARAM_STR);
+            $stmt2->bindParam(':product_id', $product_id, PDO::PARAM_STR);
+            return $stmt2->execute();   
+                    
+        }
+
+    }
     public function remove_product($product_id){
         $sql = "DELETE * FROM product WHERE product_id = :product_id";
         $connMgr = new ConnectionManager();      
