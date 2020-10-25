@@ -24,9 +24,9 @@ if(isset($_POST["productName"]) && isset($_POST["productType"]) && isset($_POST[
   $posted_date = $_POST["posted_date"];
   $posted_time = $_POST["posted_time"];
 
-  var_dump($_POST["image_path_source"]);
-  var_dump($_POST["image_Name"]);
-  var_dump($_FILES["productImageUpload"]["tmp_name"]);
+  //var_dump($_POST["image_path_source"]);
+  //var_dump($_POST["image_Name"]);
+  //var_dump($_FILES["productImageUpload"]["tmp_name"]);
 }
 
 // Check if the directory exsit, else create new directory
@@ -57,6 +57,9 @@ if(isset($_POST["productName"]) && isset($_POST["productType"]) && isset($_POST[
       $posted_date, $posted_time, $afterPrice, $beforePrice, $qty, $type, $modeOfCollection);
 
   var_dump($output);
+
+header("Location: company_edit_product.php");
+exit();
 
 
 

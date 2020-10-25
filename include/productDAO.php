@@ -2,15 +2,11 @@
 
 class productDAO {
 
-    /*public function add($product_id, $company_id, $decay_date, $decay_time, $name, $posted_date, $posted_time, $price_after, $price_before, $quantity, $type, $mode_of_collection) */
+    
     public function add($company_id, $decay_date, $decay_time, $name, $posted_date, $posted_time, $price_after, $price_before, $quantity, $type, $mode_of_collection){
-        /*$sql = 'INSERT INTO product (product_id, company_id, decay_date, decay_time, name, posted_date, posted_time, price_after, price_before, quantity, type, mode_of_collection) 
-                    VALUES (:product_id, :company_id, :decay_date, :decay_time, :name, :posted_date, :posted_time, :price_after, :price_before, :quantity, :type, :mode_of_collection)';*/
-        
         $sql = 'INSERT INTO product (company_id, decay_date, decay_time, name, posted_date, posted_time, price_after, price_before, quantity, type, mode_of_collection) 
                     VALUES (:company_id, :decay_date, :decay_time, :name, :posted_date, :posted_time, :price_after, :price_before, :quantity, :type, :mode_of_collection)';
         
-
         $connMgr = new ConnectionManager();       
         $conn = $connMgr->getConnection();
          
@@ -37,6 +33,19 @@ class productDAO {
         return $isAddOK;
     }
 
+    public function update_product_by_productid($id, $decay_date, $decay_time, $price_after, $quantity){
+        $sql = "UPDATE product SET decay_date =:decay_date, decay_time =:decay_time, price_after =:price_after, quantity =:quantity  WHERE product_id =:id";
+        $connMgr = new ConnectionManager();      
+        $conn = $connMgr->getConnection();
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':decay_date', $decay_date, PDO::PARAM_STR);
+        $stmt->bindParam(':decay_time', $decay_time, PDO::PARAM_STR);
+        $stmt->bindParam(':price_after', $price_after, PDO::PARAM_STR);
+        $stmt->bindParam(':quantity', $quantity, PDO::PARAM_INT);
+        return $stmt->execute();   
+    }
+
 
     public function retrieve_all(){
         $sql = 'select * from product';
@@ -57,7 +66,7 @@ class productDAO {
     }
 
     public function retrieve_product($product_id){
-        $sql = "SELECT * FROM product WHERE product_id = :product_id";
+        $sql = "SELECT * FROM product WHERE product_id = :product_id"; 
         $connMgr = new ConnectionManager();      
         $conn = $connMgr->getConnection();
 
@@ -134,6 +143,8 @@ class productDAO {
         return $status;
     }
 
+    /* can we delete this tables ? 
+
     public function removeAll(){
         $sql = 'TRUNCATE TABLE student';
         
@@ -156,6 +167,7 @@ class productDAO {
         $stmt->bindParam(':edollar', $edollar, PDO::PARAM_STR);
         $stmt->execute();
     }
+    */
 
 
     public function retrieve_product_type(){

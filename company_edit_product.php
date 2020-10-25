@@ -10,6 +10,14 @@
     else {
       $company_id = "1";
     }
+
+    if(isset($_POST)){
+      var_dump(count($_POST));
+      foreach($_POST as $key => $value)
+      {
+          var_dump("the key: $key and it's vlaue: $value");
+      }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -32,6 +40,8 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700&display=swap">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+
+  <link rel="stylesheet" href="css/maincss.css">
 
   <style>
 
@@ -136,52 +146,57 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
         <div class='col-md-6'>
         <form action='company_edit_product.php' method='POST'>
-            <h3 class='card-title font-weight-light'> ".strtoupper(str_replace('_', ' ', $product->get_name()))."</h3>
 
-            <!-- <div class='form-group'> -->
+            <h3 class='card-title font-weight-light'>".strtoupper(str_replace('_', ' ', $product->get_name()))."</h3>
+
+            <input type='hidden' name='errorBugBlock' value={$product->get_product_id()}>
+
+            <input type='hidden' name='productid' value={$product->get_product_id()}>
+
+            <div class='form-group'>
                 <div class='input-group mb-3'>
                     <div class='input-group-prepend'>
                         <span class='input-group-text' id='{$product->get_product_id()}date'> End Date </span>
                     </div>
-                    <input class='form-control form-control-lg dateInput' id='{$product->get_product_id()}_decay_date' name='{$product->get_product_id()}_decay_date' type='date' value='{$product->get_decay_date()}' aria-describedby='{$product->get_product_id()}date'>
+                    <input class='form-control form-control-lg' id='{$product->get_product_id()}_decay_date' name='decay_date' type='date' value='{$product->get_decay_date()}' aria-describedby='{$product->get_product_id()}date'>
                     <p id='errorQuantity' style='visibility: hidden; color: red;'> </p>
                 </div>
-            <!-- </div> -->
+            </div>
 
-            <!-- <div class='form-group'> -->
+            <div class='form-group'>
                 <div class='input-group mb-3'>
                     <div class='input-group-prepend'>
                         <span class='input-group-text' id='{$product->get_product_id()}time'> End Time </span>
                     </div>
-                    <input class='form-control form-control-lg' id='{$product->get_product_id()}_decay_time' name='{$product->get_product_id()}_decay_time' type='time' value='{$time}' aria-describedby='{$product->get_product_id()}time'>
+                    <input class='form-control form-control-lg' id='{$product->get_product_id()}_decay_time' name='decay_time' type='time' value='{$time}' aria-describedby='{$product->get_product_id()}time'>
                     <p id='errorQuantity' style='visibility: hidden; color: red;'> </p>
                 </div>
-            <!-- </div> -->
+            </div>
 
             
             <h4 class='card-text font-weight-light'> Before Price: $ {$product->get_price_before()}</h4>
 
 
-            <!-- <div class='form-group'> -->
+            <div class='form-group'>
                 <div class='input-group mb-3'>
                     <div class='input-group-prepend'>
                         <span class='input-group-text' id='{$product->get_product_id()}afterprice'> After Price $</span>
                     </div>
-                    <input class='form-control form-control-lg' id='{$product->get_product_id()}_price_after' name='{$product->get_product_id()}_price_after' type='number' placeholder='{$product->get_price_after()}' aria-describedby='{$product->get_product_id()}afterprice'>
+                    <input class='form-control form-control-lg' id='{$product->get_product_id()}_price_after' name='price_after' type='number' value='{$product->get_price_after()}' aria-describedby='{$product->get_product_id()}afterprice'>
                     <p id='errorQuantity' style='visibility: hidden; color: red;'> </p>
                 </div>
-            <!-- </div> -->
+            </div>
 
 
-            <!-- <div class='form-group'> -->
+            <div class='form-group'>
                 <div class='input-group mb-3'>
                     <div class='input-group-prepend'>
                         <span class='input-group-text' id='{$product->get_product_id()}qty'> Quantity </span>
                     </div>
-                    <input class='form-control form-control-lg' id='{$product->get_product_id()}_quantity' name='{$product->get_product_id()}_quantity' type='number' placeholder='{$product->get_quantity()}' aria-describedby='{$product->get_product_id()}qty'>
+                    <input class='form-control form-control-lg' id='{$product->get_product_id()}_quantity' name='quantity' type='double' value='{$product->get_quantity()}' aria-describedby='{$product->get_product_id()}qty'>
                     <p id='errorQuantity' style='visibility: hidden; color: red;'> </p>
                 </div>
-            <!-- </div> -->
+            </div>
 
 
             <button type='submit' class='btn btn-info btn-lg btn-block'> Update </button>
