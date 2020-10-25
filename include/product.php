@@ -6,18 +6,17 @@ class product {
     private $company_id;
     private $decay_date;
     private $decay_time;
-    private $image_url;
     private $name;
     private $posted_date;
     private $posted_time;
     private $price_after;
     private $price_before;
     private $quantity;
-    private $type;
+    private $category;
     private $mode_of_collection;
+    private $image_url;
     
-    
-    public function __construct($product_id, $company_id, $decay_date, $decay_time, $name, $posted_date, $posted_time, $price_after, $price_before, $quantity, $type, $mode_of_collection)
+    public function __construct($product_id, $company_id, $decay_date, $decay_time, $name, $posted_date, $posted_time, $price_after, $price_before, $quantity, $category, $mode_of_collection, $image_url)
     {
         $this->product_id = $product_id;
         $this->company_id = $company_id;
@@ -29,8 +28,9 @@ class product {
         $this->price_after = $price_after;
         $this->price_before = $price_before;
         $this->quantity = $quantity;
-        $this->type = $type;
+        $this->category = $category;
         $this->mode_of_collection = $mode_of_collection;
+        $this->image_url = $image_url;
     }
     public function get_product_id()
     { 
@@ -72,15 +72,18 @@ class product {
     { 
         return $this->quantity;
     }
-    public function get_type()
+    public function get_category()
     { 
-        return $this->type;
+        return $this->category;
     }
     public function get_mode_of_collection()
     {
         return $this->mode_of_collection;
     }
-
+    public function get_image_url()
+    {
+        return $this->image_url;
+    }
     
 }
 
