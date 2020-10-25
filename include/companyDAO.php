@@ -43,7 +43,19 @@ class companyDAO {
         }
         return $result;
     }
+    public function retrieve_companies(){
+        $sql = "SELECT * FROM company";
+        $connMgr = new ConnectionManager();      
+        $conn = $connMgr->getConnection();
 
+        $stmt = $conn->prepare($sql);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->execute();
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $result = new company($row['company_id'], $row['address'], $row['description'], $row['following'], $row['joined_date'], $row['name'], $row['password'], $row['rating']);
+        }
+        return $result;
+    }
     public function retrieve_company($company_id){
         $sql = "SELECT * FROM company WHERE company_id = :company_id";
         $connMgr = new ConnectionManager();      
