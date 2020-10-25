@@ -21,10 +21,11 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <!--Link to main.css files while contains all the css of this project-->
   <link rel='stylesheet' href='css\maincss.css'>
+  <style>
+  </style>
   </head>
 
 <body class="skin-light">
-
   <!--Main Navigation-->
   <header>
 
@@ -91,7 +92,7 @@
       </div>
     </nav>
     <!-- Navbar -->
-
+    <!--
     <div class="jumbotron color-grey-light mt-70">
       <div class="d-flex align-items-center h-20">
         <div class="container text-center py-5">
@@ -99,6 +100,7 @@
         </div>
       </div>
     </div>
+    -->
 
   </header>
   <!--Main Navigation-->
@@ -127,7 +129,7 @@
         </div>
       </div>        
       <!--Modal to inform not enough product qty in database-->
-      <div class="modal fade" id="insufficint_product_qty_msg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal fade" id="insufficent_product_qty_msg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -144,6 +146,31 @@
             </div>
           </div>
         </div>
+      </div>
+      <!--Modal to input postal code-->
+      <div class="modal fade" id="input_postal_code" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Delivery Address</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+                  </div>
+                  <div class="modal-body">
+                      <form>
+                          <div class="form-group">
+                              <label for="postal_code" class="col-form-label">Enter your postal code:</label>
+                              <input type="number" minlength="6" maxlength="6" class="form-control" id="postal_code">
+                              <div class="mt-3" id="invalid_postal_code_warning"></div>
+                          </div>
+                      </form>
+                  </div>
+                  <div class="modal-footer">
+                  <button type="button" class="btn btn-success" id="input_postal_code_confirm" onclick="validate_postal_code()">Confirm</button>
+                  </div>
+              </div>
+          </div>
       </div>
       <!--Section: Block Content-->
       <section class="mt-5 mb-4">
@@ -182,11 +209,13 @@
                 $cart_company_id = $user->get_cart_company_id(); 
                 $company_name = $companyDAO -> retrieve_company_name($cart_company_id);
                 $company_address = $companyDAO -> retrieve_company_address($cart_company_id);
-                
+                $company = $companyDAO->retrieve_company($cart_company_id);
+                $company_latitude = $company-> get_latitude();
+                $company_longtitude = $company-> get_longtitude();
                 $total_price = "0.00";
                 if (strlen($cart) ==0) {
                   echo "<h5 class='mb-4' >Cart (<span id='cartsize'>" . sizeof($cart_arr) . "</span> items)</h5>";
-                  echo "<div class='text-danger'>No items in cart currently!</div>";
+                  echo "<div class='alert alert-danger'>No items in cart currently!</div>";
                   $total_price_with_shipping = "0.00";
                   $shipping = "0.00";
                 }
@@ -210,7 +239,11 @@
                       $price_after = $product->get_price_after();
                       $price_before = $product->get_price_before();
                       $quantity = $product->get_quantity();
-                      $type = $product->get_type();
+                      $category = $product->get_category();
+                      $image_url = $product->get_image_url();
+                      if ($image_url == "") {
+                          $image_url ="images/$category/$name.jpg";
+                      }
                       $discount = round((($price_before-$price_after)/$price_before)*100,0);
                       $total_price_for_current_product = $price_after * $quantity_in_cart;
                       //set timezone to singapore so the time will be correct
@@ -239,7 +272,7 @@
                       <div class='col-md-5 col-lg-3 col-xl-3'>
                           <div class='cart_product_img view zoom overlay z-depth-1 rounded mb-3 mb-md-0'>
                           <img 
-                              src='images/$type/$name.jpg' alt='Sample'>";
+                              src='$image_url' alt='Sample'>";
                       if (date('Y-m-d', time())== $posted_date) {
                           echo "<span class='product-new-label'>New</span>";
                       }
@@ -308,7 +341,10 @@
 
                 <h5 class="mb-4">Self-pickup Location</h5>
 
-                <p class="mb-0"> <?php echo ucwords($company_name) . " - " . $company_address ?></p>
+                <p class="mb-19"> <?php if (strlen($cart) !=0) {echo ucwords($company_name) . " - " . $company_address;} ?></p>                  
+                <!--The following is a placeholder for the map.-->
+                <?php $items_in_cart_count = strlen($cart)?>
+                <div id="map" name='<?php echo "$company_latitude,$company_longtitude,$items_in_cart_count"; ?>'></div>
               </div>
             </div>
             <!-- Card -->
@@ -433,8 +469,8 @@
                   document.getElementById("total_price_for_all_products_with_shipping").innerText = "$" + (total_price_for_all_products+3.00).toFixed(2);   
                 }
                 else if (this.responseText == "Insufficient product qty in database") {
-                  document.getElementById("insufficient_product_qty_msg").getElementsByClassName("modal-body")[0].innerText = "Sorry! There is insufficient quantity for this product.";
-                  $('#insufficient_product_qty_msg').modal('show');
+                  document.getElementById("insufficent_product_qty_msg").getElementsByClassName("modal-body")[0].innerText = "Sorry! There is insufficient quantity for this product.";
+                  $('#insufficent_product_qty_msg').modal('show');
                   //alert("Insufficient product qty in database");
                 }
                 //return (this.responseText);
@@ -476,8 +512,8 @@
           //XHR_send($user_id, $product_id, $quantity)
           //Only allows user to buy up to 10 products
           if ( event.target.parentNode.children[2].value >= 10) {
-              document.getElementById("insufficient_product_qty_msg").getElementsByClassName("modal-body")[0].innerText = "Sorry! You can only buy up to 10 of this product.";
-              $('#insufficient_product_qty_msg').modal('show');
+              document.getElementById("insufficent_product_qty_msg").getElementsByClassName("modal-body")[0].innerText = "Sorry! You can only buy up to 10 of this product.";
+              $('#insufficent_product_qty_msg').modal('show');
           }
           else {
             XHR_send(1,event.target.parentNode.children[1].innerText ,event.target.parentNode.children[2].value,1, event.target);
@@ -519,6 +555,206 @@
           
 
       }
+
+</script>
+<script>    
+      //////////////Loads the Google Map/////////////////////
+      function parseURLParams(url) {
+        //Works similar to $_GET, retrieve parameters from the url
+        var queryStart = url.indexOf("?") + 1,
+            queryEnd   = url.indexOf("#") + 1 || url.length + 1,
+            query = url.slice(queryStart, queryEnd - 1),
+            pairs = query.replace(/\+/g, " ").split("&"),
+            parms = {}, i, n, v, nv;
+
+        if (query === url || query === "") return;
+
+        for (i = 0; i < pairs.length; i++) {
+            nv = pairs[i].split("=", 2);
+            n = decodeURIComponent(nv[0]);
+            v = decodeURIComponent(nv[1]);
+
+            if (!parms.hasOwnProperty(n)) parms[n] = [];
+            parms[n].push(nv.length === 2 ? v : null);
+        }
+        return parms;
+      }    
+      var map, infoWindow;
+      //Prevents the form from submitting when pressing enter while inputting postal code
+      $('form').submit(function(e){
+          e.preventDefault();
+      });
+      //Allows user to press enter to submit the postal code
+      $("form").on('keyup', function (e) {
+      if (e.key === 'Enter' || e.keyCode === 13) {
+          validate_postal_code();
+      }
+      });
+      function validate_postal_code() {
+        postal_code_input = document.getElementById("postal_code");
+        if (postal_code_input.value.length != 6) {
+            document.getElementById("invalid_postal_code_warning").innerHTML="<div class='alert alert-danger'>Postal code needs to be 6 digits</div>";              
+        }
+        else {
+            //Hides the modal
+            $('#input_postal_code').modal('hide');
+            initMap();
+        }
+        
+      }
+      function initMap() {
+        //Dont load the map if no items in cart
+        var items_in_cart_count = document.getElementById("map").getAttribute("name").split(",")[2];  
+        if (items_in_cart_count != 0)    {
+          //Get the latitude and longtitude using a postal code (from the url)
+          //if the user enters his postal code in the modal on top, this will have a value
+          var start = document.getElementById("postal_code").value;
+          if (start == "") {
+              if(parseURLParams(window.location.href) !== undefined && "postal_code" in parseURLParams(window.location.href)) {
+                  //console.log(typeof  parseURLParams(window.location.href));
+                  start = parseURLParams(window.location.href)["postal_code"];   
+              }
+              else {
+                  //if user never provides a postalcode, ask for it
+                  $('#input_postal_code').modal('show');
+                  return;               
+              }    
+          }   
+          //Sets the height of the map
+          document.getElementById('map').setAttribute("style", "height: 400px;")       
+          map = new google.maps.Map(document.getElementById('map'), {
+              //center: {lat: -34.397, lng: 150.644},
+              zoom: 6
+            });
+            /*
+            // info window is the one showing "Location found" message
+            infoWindow = new google.maps.InfoWindow;
+    
+            // this attempts to get user permission to access location
+            // Try HTML5 geolocation.
+            if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(function(position) {
+                var pos = {
+                  lat: position.coords.latitude,
+                  lng: position.coords.longitude
+                };
+                // set user position to infoWindow
+                infoWindow.setPosition(pos);
+                infoWindow.setContent('Location found.');
+                infoWindow.open(map);
+                map.setCenter(pos);
+              }, function() {
+                handleLocationError(true, infoWindow, map.getCenter());
+              });
+            } else { // error handling
+              // Browser doesn't support Geolocation
+              handleLocationError(false, infoWindow, map.getCenter());
+            }
+            */
+            calcRoute();          
+        }         
+
+        }
+
+      function calcRoute() {
+          //Calculates the distance between start and end point
+          //Get the latitude and longtitude using a postal code (from the url)
+          //if the user enters his postal code in the modal on top, this will have a value
+          var start = document.getElementById("postal_code").value;
+          if (start == "") {
+              if(parseURLParams(window.location.href) !== undefined && "postal_code" in parseURLParams(window.location.href)) {
+                  //console.log(typeof  parseURLParams(window.location.href));
+                  start = parseURLParams(window.location.href)["postal_code"];   
+              }
+              else {
+                  //if user never provides a postalcode, ask for it
+                  $('#input_postal_code').modal('show');
+                  return;               
+              }    
+          }
+          //console.log(start[0]);
+          var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + start + "&key=AIzaSyATVWK0xQi5HrgEwmmkWT78hBe0h2P9bA0";
+                
+          try { 
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    // following code may throw error if user input is invalid address
+                    // so we use try-catch block to handle errors
+                    // expected response is JSON data
+                    var data = JSON.parse(this.responseText);
+                    console.log(data);
+                    if ( data["status"] == "ZERO_RESULTS") {
+                        document.getElementById("map").innerHTML = "<div class='alert alert-danger'>Invalid postal code. Please refresh the page.</div>";
+                    }
+                    var addr = data["results"][0]["formatted_address"];
+                    var loc = data["results"][0]["geometry"]["location"];
+                    start_latitude = loc["lat"];
+                    start_longtitude = loc["lng"];
+                    console.log(start_latitude, start_longtitude);
+                    //Retrieves the company latitude and longtitude                        
+                    end_latlng_arr = document.getElementById("map").getAttribute("name").split(",");                
+                    end_latitude = end_latlng_arr[0]/10000000;
+                    end_longtitude = end_latlng_arr[1]/10000000;
+                    console.log("End:", end_latitude, end_longtitude);  
+                    //console.log(window.latitude, window.longtitude);            
+                    var directionsService = new google.maps.DirectionsService();
+                    var directionsRenderer = new google.maps.DirectionsRenderer();
+                    var start = new google.maps.LatLng(start_latitude,start_longtitude);
+                    var end = new google.maps.LatLng(end_latitude, end_longtitude);
+                    directionsRenderer.setMap(map);
+                    //var selectedMode = document.getElementById('mode').value;
+                    var request = {
+                        origin: start,
+                        destination: end,
+                        // Note that JavaScript allows us to access the constant
+                        // using square brackets and a string value as its
+                        // "property."
+                        travelMode: 'DRIVING' //google.maps.TravelMode[selectedMode]
+                    };
+                    console.log(start);
+                    console.log(end);
+
+                    directionsService.route(request, function(response, status) {
+                        if (status == 'OK') {
+                        directionsRenderer.setDirections(response);
+                        }
+                        else {
+                          document.getElementById("map").innerHTML = "<div class='alert alert-danger'>Invalid postal code. Please refresh the page./div>";
+                        }
+                        console.log(response);
+                    });  
+                }
+            };
+          } catch(err) { // show error message
+                  // not a good idea to directly show err.message 
+                  // as it may contain sensitive info
+                  // show a predefined error message string
+                  console.log("Sorry, invalid address. Please try again!");  
+                  
+                  document.getElementById("map").innerHTML = "<div class='alert alert-warning'>Invalid postal code. Please refresh the page.</div>";
+                  document.getElementById("map").setAttribute("style","height: 10px;");
+                  //document.getElementById("display").innerHTML = "Sorry, invalid address. Please try again!";
+              }
+          xhttp.open("GET", url, true);
+          xhttp.send();
+
+      }
+
+      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(browserHasGeolocation ?
+                              'Error: The Geolocation service failed.' :
+                              'Error: Your browser doesn\'t support geolocation.');
+        infoWindow.open(map);
+      }
+  </script>
+  <!-- load the map asynchronously, i.e., load data soon as it becomes available -->
+  <!-- replace the API key with yours -->
+    <!-- load the map asynchronously, i.e., load data soon as it becomes available -->
+    <!-- replace the API key with yours -->
+  <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATVWK0xQi5HrgEwmmkWT78hBe0h2P9bA0&callback=initMap">
   </script>
 </body>
 
