@@ -10,7 +10,7 @@ class ConnectionManager {
             $password = '6LNDUXQRTKCb';
         else
             $password = "";  
-        $dbname = "is216";
+        $db_name = "is216";
         $port = 3306;
         /*
         $host = "is216.cotlwptbe0ig.ap-southeast-1.rds.amazonaws.com";
