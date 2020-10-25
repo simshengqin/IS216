@@ -39,6 +39,8 @@
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
 
+  <link rel="stylesheet" href="css/maincss.css">
+
 </head>
 
 
@@ -123,34 +125,26 @@
 
 
                     <!-- Before Price -->
-                    <div class="form-group col-md-6 input-group" style="margin-bottom: -10px;">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">$</span>
-                        </div>
-                        <input type="number" id="beforePrice" name="beforePrice" class="form-control form-control-lg" placeholder="Before Price"> 
+                    <div class="form-group col-md-6" style="margin-bottom: -10px;">
+                        <input type="double" id="beforePrice" name="beforePrice" class="form-control form-control-lg" placeholder="Price Before: $0.00"> 
                         <p id='errorBeforePrice' style='visibility: hidden; color: red;'> Please indicate a before price </p> 
                     </div>
                     
 
                     <!-- After Price -->
-                    <div class="input-group form-group col-md-6" style="margin-bottom: -10px;">
-                        <div class="input-group-prepend">
-                                <span class="input-group-text">$</span>
-                        </div>
-                        <input type="number" id="afterPrice" name="afterPrice" class="form-control form-control-lg" placeholder="After Price"> 
+                    <div class="form-group col-md-6" style="margin-bottom: -10px;">
+                        <input type="double" id="afterPrice" name="afterPrice" class="form-control form-control-lg" placeholder="Price Discounted: $0.00"> 
                         <p id='errorAfterPrice' style='visibility: hidden; color: red;'> Please indicate a after price </p> 
                     </div>
                     
 
-
-
                     <!-- Upload Image -->
                     <div class="form-group col-md-6" style="margin-top: 50px;">
                         <div class="form-group">
-                            <label for="productImageUpload">Select Image to upload ( jpg & png only )</label>
-                            <input type="file" class="form-control-file form-control-lg" id="productImageUpload" name="productImageUpload">
+                            <label for="productImageUpload">Select Image to upload ( jpg / jpeg image files only )</label>
+                            <input type="file" accept="image/jpeg,image/jpg" class="form-control-file form-control-lg" id="productImageUpload" name="productImageUpload">
                         </div>
-                        <p id='errorProductImageUpload' style='visibility: hidden; color: red;'> Please insert an image file with correct file extension </p>  
+                        <p id='errorProductImageUpload' style='visibility: hidden; color: red;'>  </p>  
                     </div>
 
                     <div class="form-group col-md-6">
@@ -365,11 +359,21 @@
 
         // validate image upload
         if(productImage==""){
+          // Check if the value is not empty
+          document.getElementById("errorProductImageUpload").innerHTML = "Please insert an image file with correct file extension."
           document.getElementById("errorProductImageUpload").style.visibility = "visible";
           noError = false;
         } else {
-          data["productImage"] = productImage; // To get the filename
-          document.getElementById("errorProductImageUpload").style.visibility = "hidden";
+          // Check image file extension, only allow jpg or jpeg formats 
+          checkFileextension = productImage.split(".")
+          if(checkFileextension.slice(-1)[0] == "jpg" || checkFileextension.slice(-1)[0] == "jpeg"){
+            data["productImage"] = productImage; // To get the filename
+            document.getElementById("errorProductImageUpload").style.visibility = "hidden";
+          } else {
+            document.getElementById("errorProductImageUpload").innerHTML = "Please upload an jpg / jpeg file image only."
+            document.getElementById("errorProductImageUpload").style.visibility = "visible";
+            noError = false;
+          }
         }
 
         // validate promotion end date

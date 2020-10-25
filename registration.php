@@ -57,38 +57,72 @@
 
         <div>
             <form action="registration.php" method="post" name="myform">
-                <div class="container">
-                    <div class="col-sm-3">
+                
+                <div class="container"> 
+
+                    <!--form header-->
+                    <div id="form-header" class="form-header">
                         <h1>CREATE ACCOUNT</h1>
-                        <hr class = "mb-4">
+                    </div>
 
-                        <label for="name"><b>Name</b></label>
-                        <br>
-                        <input class="form_control" type="text" name="name" required>
-                        <br>
-                        <label for="email"><b>Email</b></label><br>
-                        <input class="form_control" type="email" name="email" required>
+                    <div class="form-body">
+                        <div class="horizontal-group">
+                            <div class="form-group left"> 
+                                <label for="name" class="label-title"><b>Name*</b></label>
+                                <input class="form-input" type="text" name="name" required>
+                            </div>
+                            <div class="form-group right">
+                               <label for="phoneNumber" class="label-title"><b>Phone Number</b></label>
+                                <input class="form-input" type="text" name="phoneNumber" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="label-title">Email</label>
+                            <input class="form-input" type="email" name="email" required>
+                        </div>
+                        <div class="horizontal-group">
+                            <div class="form-group left">
+                                <label for="password" class="label-title"><b>Password</b></label>
+                                <input class="form-input" type="password" name="password" required>
+                            </div>
+                            <div class="form-group right">
+                                <label for="reEnterPassword" class="label-title"><b>re-enter Password</b></label>
+                                <input class="form-input" type="password" name="reEnterPassword" required><br>
+                            </div>
+                        </div>
+                        <div class="horizontal-group">
+                            <div class="form-group left">
+                                <label for="prefer" class="label-title"><b>Preferances</b></label><br><br>
+                                <input  type="checkbox" id="vegetarian" value="vegetarian" name="preferance[]" >
+                                <label for="vegetarian">Vegetarian</label><br><br>
+                                <input  type="checkbox" id="halal" value="halal" name="preferance[]">
+                                <label for="halal">Halal</label>
+                            </div>
+                            <div class="form-group right">
+                                    <label for="experience" class="label-title">Within a proximity range from current location</label>
+                                    <input type="range" min="1" max="25" step="5" value="0" id="experience" class="form-input" onChange="change();" style="height: 28px; width: 78%; padding: 0;" />
+                                    <span id="range-label">1KM</span>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="form-footer">
+                            <input class="btn btn-primary" type="submit" name="submit" id="register" value="submit">
+                        </div>
 
-                        <label for="phoneNumber"><b>Phone Number</b></label>
-                        <input class="form_control" type="text" name="phoneNumber" required>
 
-                        <label for="password"><b>Password</b></label>
-                        <input class="form_control" type="password" name="password" required>
 
-                        <label for="reEnterPassword"><b>re-enter Password</b></label>
-                        <input class="form_control" type="password" name="reEnterPassword" required><br>
+                       
+                        
 
-                        <label for="prefer"><b>Preferances</b></label><br>
-                        <input type="checkbox" id="vegetarian" value="vegetarian" name="preferance[]">
-                        <label for="vegetarian">vegetarian</label><br>
-                        <input type="checkbox" id="halal" value="halal" name="preferance[]">
-                        <label for="halal">Halal</label><br>
-                        <input type="checkbox" id="proxi" value="halal" name="preferance[]">
-                        <label for="halal">Within a proximity range from current location (m):</label>
-                        <input type="text" name="preferance[]">
+                     
 
-                        <hr class = "mb-4">
-                        <input class="btn btn-primary" type="submit" name="submit" id="register" value="submit">
+                        
+
+                       
+
+                
+
                     </div>
 
                     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
@@ -113,6 +147,14 @@
                                 })
                             }   
                         });
+                    </script>
+                    <!-- Script for range input label -->
+                    <script>
+                    var rangeLabel = document.getElementById("range-label");
+                    var experience = document.getElementById("experience");
+                    function change() {
+                    rangeLabel.innerText = experience.value + "K";
+                    }
                     </script>
 
                    
