@@ -17,7 +17,7 @@ class transactionDAO {
         $result = [];
 
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $result[] = new transaction_history($row['transaction_id'], $row['userid'], $row['product_id'], $row['company_id'], $row['order_date'], $row['order_time'], $row['amount'], $row['collection_type'], $row['review'], $row['rating']);
+            $result[] = new transaction_history($row['transaction_id'], $row['userid'], $row['cart'], $row['company_id'], $row['order_date'], $row['order_time'], $row['amount'], $row['collection_type'], $row['review'], $row['rating']);
         }
         return $result;
     }

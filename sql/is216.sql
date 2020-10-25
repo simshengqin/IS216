@@ -172,9 +172,30 @@ CREATE TABLE IF NOT EXISTS `user` (
 -- Dumping data for table `user`
 --
 
+<<<<<<< HEAD
+INSERT INTO `user` (`user_id`, `cart`, `password`, `name`, `email`, `phoneNumber`, `preferences`) VALUES
+(1, '1:3,3:1,4:2,5:1,7:1,10:1,6:1', '', '', '', '', ''),
+(5, '', 'uicnJD6S1!', 'Tan Lin Ming', 'linming.tan.2017@sis.smu.edu.sg', '90895157', ''),
+(6, '', 'uicnJD6S1!', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', ''),
+(7, '', 'uicnJD6S1!', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', ''),
+(8, '', 'uicnJD6S1!', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', ''),
+(9, '', 'uicnJD6S1!', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', ''),
+(10, '', 'uicnJD6S1!', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', ''),
+(20, '', 'sdf', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', ''),
+(21, '', 'sdf', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', ''),
+(22, '', 'sdf', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', ''),
+(23, '', 'sdf', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', ''),
+(24, '', 'sdf', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', ''),
+(25, '', 'sdf', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', ''),
+(26, '', 'sdf', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', ''),
+(27, '', 'sdf', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', ''),
+(28, '', 'sdf', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', ''),
+(29, '', '9a6747fc6259aa374ab4e1bb03074b6ec672cf99', 'Tan Lin ming', 'Linming.Tan@really.sg', '6590895157', '');
+=======
 INSERT INTO `user` (`user_id`, `cart`, `cart_company_id`, `password`, `name`, `email`, `phoneNumber`, `preferences`) VALUES
 (1, '8:1', 2, 'open123', 'John Doe', 'johndoe@hotmail.com', '98444432', 'true,false,200'),
 (2, '', 0, 'uicnJD6S1!', 'Jane Lim', 'jane.lim@sis.smu.edu.sg', '90895157', 'false,true,200');
+>>>>>>> b618f26f411b2199ed4a5fece58414668bdc4bd0
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

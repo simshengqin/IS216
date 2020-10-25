@@ -17,16 +17,7 @@
       $company_id = "1";
     }
 
-    // After vlaidtaion is Ok, will JSON to this page.
-    if(isset($_POST['companyAddress']) && isset($_POST['companyDescription'])) 
-    {
-      $update_company_address = $_POST['companyAddress'];
-      $update_company_description =$_POST['companyDescription'];
-      $companyDAO->updateCompanyProfile($company_id, $update_company_description, $update_company_address);
-      header("Refresh:0");
-    }
-
-  ?>
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -53,6 +44,8 @@
 
 <body>
 
+
+
 <!-- Navigation Bar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <div class="container">
@@ -76,8 +69,6 @@
     </div>
   </nav>
 
-
-
   <!--Company profile  -->
     <div class="jumbotron jumbotron-fluid bg-light">
         <div class="container">
@@ -85,42 +76,43 @@
         <h1 class="font-weight-light text-center"> Create Promotion </h1>
         </br>
 
-        <form >
+        <form method='POST' action='company_post_product_transition.php' enctype='multipart/form-data'>
             <div class="form-row">
-
-                    
                     <!-- Product Name -->
+                
                     <div class="form-group col-md-6" style="margin-bottom: -10px;">
-                        <input class="form-control form-control-lg" id="productName" type="text" placeholder="Product Name">
+                        <input class="form-control form-control-lg" id="productName" name="productName" type="text" placeholder="Product Name">
                         <p id='errorProductName' style='visibility: hidden; color: red;'> Please specify a Product Name </p>
-                    </div>
+                    </div> 
 
                     <!-- Product Type -->
                     <div class="form-group col-md-5" style="margin-bottom: -10px;">
-                        <select class="form-control form-control-lg inline" id="productType">
+                        <select class="form-control form-control-lg inline" id="productType" name="productType">
                             <option disabled selected value=""> Select Product's type </option>
                             <?php
+                                
                                 foreach($productType as $type){
                                   echo "<option value='".$type."'> ".$type." </option>";
                                 }
+                                
                             ?>
                         </select>
                         <p id='errorProductType' style='visibility: hidden; color: red;'> Please select a type </p>
                     </div>
-
+                   
                     <div class="form-group col-md-1" style="margin-bottom: -10px;">
                       <button type="button" class="btn btn-outline-secondary btn-lg"  data-toggle="modal" data-target="#foodTypeModal">  <b> + </b> </button> 
                     </div>
 
                     <!-- Qty -->
                     <div class="form-group col-md-6" style="margin-bottom: -10px;">
-                        <input class="form-control form-control-lg" id="productQuantity" type="number" placeholder="Quantity">
+                        <input class="form-control form-control-lg" id="productQuantity" name="productQuantity" type="number" placeholder="Quantity">
                         <p id='errorQuantity' style='visibility: hidden; color: red;'> Please input quantity </p>
                     </div>
 
                     <!-- Mode of Collection -->
                     <div class="form-group col-md-6" style="margin-bottom: -10px;">
-                        <select class="form-control form-control-lg" id="modeOfCollection">
+                        <select class="form-control form-control-lg" id="modeOfCollection" name="modeOfCollection">
                             <option disabled selected value=""> Mode Of Collection</option>
                             <option value="selfcollect"> Self-Collect Only</option>
                             <option value="delivery"> Delivery Only</option>
@@ -135,7 +127,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">$</span>
                         </div>
-                        <input type="number" id="beforePrice" class="form-control form-control-lg" placeholder="Before Price"> 
+                        <input type="number" id="beforePrice" name="beforePrice" class="form-control form-control-lg" placeholder="Before Price"> 
                         <p id='errorBeforePrice' style='visibility: hidden; color: red;'> Please indicate a before price </p> 
                     </div>
                     
@@ -145,7 +137,7 @@
                         <div class="input-group-prepend">
                                 <span class="input-group-text">$</span>
                         </div>
-                        <input type="number" id="afterPrice" class="form-control form-control-lg" placeholder="After Price"> 
+                        <input type="number" id="afterPrice" name="afterPrice" class="form-control form-control-lg" placeholder="After Price"> 
                         <p id='errorAfterPrice' style='visibility: hidden; color: red;'> Please indicate a after price </p> 
                     </div>
                     
@@ -156,7 +148,7 @@
                     <div class="form-group col-md-6" style="margin-top: 50px;">
                         <div class="form-group">
                             <label for="productImageUpload">Select Image to upload ( jpg & png only )</label>
-                            <input type="file" class="form-control-file form-control-lg" id="productImageUpload">
+                            <input type="file" class="form-control-file form-control-lg" id="productImageUpload" name="productImageUpload">
                         </div>
                         <p id='errorProductImageUpload' style='visibility: hidden; color: red;'> Please insert an image file with correct file extension </p>  
                     </div>
@@ -169,23 +161,28 @@
                     <div class="form-group col-md-6" style="margin-bottom: -10px;">
                         <!-- <label for="dateInput" class="col-form-label"><h5>End Date: </h5></label> -->
                         <span> Promotional End Date</span>
-                        <input id="dateInput" class="form-control form-control-lg datepicker" type="date" placeholder="dd-mm-yyyy" min="2000-01-01" max="2100-12-31"> 
+                        <input id="dateInput" class="form-control form-control-lg datepicker" name="dateInput" type="date" placeholder="dd-mm-yyyy" min="2000-01-01" max="2100-12-31"> 
                         <p id='errorPromotionEndDate' style='visibility: hidden; color: red;'> Please indicate a promotion end date </p>
                     </div>
 
                     <div class="form-group col-md-6">
                         <!-- empty -->
+                        <input type="hidden" id="company_id" name="company_id" >
+                        <input type="hidden" id="posted_date" name="posted_date">
+                        <input type="hidden" id="posted_time" name="posted_time">
+                        <input type="hidden" id="image_path_source" name="image_path_source">
+                        <input type="hidden" id="image_Name" name="image_Name">
                     </div>
 
                     <!-- promotion end time -->
                     <div class="form-group col-md-6" style="margin-bottom: -10px;">
                         <span> Promotional End Time</span>
-                        <input id="timeInput" class="form-control form-control-lg" type="time" min="00:00:00" max="23:59:59">
+                        <input id="timeInput" class="form-control form-control-lg" name="timeInput" type="time" min="00:00:00" max="23:59:59">
                         <p id='errorPromotionEndTime' style='visibility: hidden; color: red;'> Please indicate a promotion end time </p>
                     </div>
 
                     <div class="form-group col-md-12" style="margin-top: 25px;">
-                        <button type="button" class="btn btn-success btn-lg inline" onclick='return validate()'> Create </button>
+                        <button type="submit" class="btn btn-success btn-lg inline" onclick='return validate()'> Create </button>
                         <button type="button" class="btn btn-danger btn-lg inline"> Cancel </button>
                     </div>
              </div>
@@ -300,6 +297,9 @@
         var productAfterPrice = document.getElementById('afterPrice').value
         
         var productImagePathSource = document.getElementById('productImageUpload').value // Get the file path 
+        console.log(productImagePathSource);
+        //var productImagePathSource = document.getElementById("productImageUpload").files[0].path
+        //console.log("Source path " + productImagePathSource);
         var productImage = "";
         if(productImagePathSource!=""){
           productImage = document.getElementById('productImageUpload').files[0].name // Get the file name
@@ -390,7 +390,12 @@
           document.getElementById("errorPromotionEndTime").style.visibility = "hidden";
         }
 
-        //data["product_id"] = <?php echo $newProductId ?>;
+        document.getElementById("company_id").value = <?php echo $company_id ?>;
+        document.getElementById("posted_date").value = singaporeDate;
+        document.getElementById("posted_time").value = singaporeTime;
+        document.getElementById("image_path_source").value = productImagePathSource;
+        document.getElementById("image_path_source").value = productImage;
+
         data["company_id"] = <?php echo $company_id ?>;
         data["posted_date"] = singaporeDate;
         data["posted_time"] = singaporeTime;
@@ -404,7 +409,7 @@
         //console.log(noError);
 
         if(noError){
-          processToServer(data)
+          //processToServer(data)
           console.log("Sent")
           return true
         } else {

@@ -11,14 +11,7 @@ class ConnectionManager {
         else
             $password = "";  
         $dbname = "is216";
-        $port = 3308;    
-
-        $url  = "mysql:host={$host};dbname={$dbname};port={$port}";
-        
-        $conn = new PDO($url, $username, $password);
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
-        return $conn;  
-        
+        $port = 3306;
         /*
         $host = "is216.cotlwptbe0ig.ap-southeast-1.rds.amazonaws.com";
         $username = "admin";
