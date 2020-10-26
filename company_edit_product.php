@@ -3,6 +3,7 @@
     require_once 'include/protect.php';
 
     $companyDAO = new companyDAO();
+    $productDAO = new productDAO();
     
     if (isset($_GET["company_id"])) {
         $company_id = $_GET["company_id"];   
@@ -11,11 +12,16 @@
       $company_id = "1";
     }
 
-    if(isset($_POST)){
-      var_dump(count($_POST));
-      foreach($_POST as $key => $value)
-      {
-          var_dump("the key: $key and it's vlaue: $value");
+    if(isset($_POST["productid"]) && isset($_POST["decay_date"]) && isset($_POST["decay_time"]) && isset($_POST["price_after"]) && isset($_POST["quantity"]))
+    {
+      $id = $_POST["productid"];
+      $decay_date = $_POST["decay_date"];
+      $decay_time = $_POST["decay_time"];
+      $price_after = $_POST["price_after"];
+      $quantity = $_POST["quantity"];
+      $result = $productDAO->update_product_by_productid($id, $decay_date, $decay_time, $price_after, $quantity);
+      if($result){
+        header("Location: company_edit_product.php");
       }
     }
 ?>
@@ -140,8 +146,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
       foreach($products as $product){
         $time = convertTime($product->get_decay_time());
         echo"
-        <div class='col-md-6 text-center'>
-            <img class='.img-fluid' style='max-width: 60%; height: auto' src='images/{$product->get_type()}/{$product->get_name()}.jpg'>
+        <div class='col-md-6 text-center' style='padding-bottom: 30px;'>
+            <img class='.img-fluid' style='max-width: 75%; height: auto' src='images/{$product->get_type()}/{$product->get_name()}.jpg'>
         </div>
 
         <div class='col-md-6'>
@@ -168,7 +174,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                     <div class='input-group-prepend'>
                         <span class='input-group-text' id='{$product->get_product_id()}time'> End Time </span>
                     </div>
-                    <input class='form-control form-control-lg' id='{$product->get_product_id()}_decay_time' name='decay_time' type='time' value='{$time}' aria-describedby='{$product->get_product_id()}time'>
+                    <input class='form-control form-control-lg' id='{$product->get_product_id()}_decay_time' name='decay_time' type='time' value='{$time}' min='00:00:00' max='23:59:59' aria-describedby='{$product->get_product_id()}time'>
                     <p id='errorQuantity' style='visibility: hidden; color: red;'> </p>
                 </div>
             </div>
@@ -182,7 +188,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                     <div class='input-group-prepend'>
                         <span class='input-group-text' id='{$product->get_product_id()}afterprice'> After Price $</span>
                     </div>
-                    <input class='form-control form-control-lg' id='{$product->get_product_id()}_price_after' name='price_after' type='number' value='{$product->get_price_after()}' aria-describedby='{$product->get_product_id()}afterprice'>
+                    <input class='form-control form-control-lg' id='{$product->get_product_id()}_price_after' name='price_after' type='double' value='{$product->get_price_after()}' aria-describedby='{$product->get_product_id()}afterprice'>
                     <p id='errorQuantity' style='visibility: hidden; color: red;'> </p>
                 </div>
             </div>
