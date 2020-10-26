@@ -109,7 +109,7 @@
                       <label for="companyDescription">Description</label>
                       <textarea rows="4" cols="50" class="form-control form-control-lg" name="companyDescription" id="companyDescription"><?php echo $company_description?></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-lg"> Update </button>
+                    <button type="submit" class="btn btn-primary btn-lg btn-block"> Update </button>
                   </form>
                 </div>
 

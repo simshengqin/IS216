@@ -102,8 +102,8 @@
                         <p id='errorProductType' style='visibility: hidden; color: red;'> Please select a type </p>
                     </div>
                    
-                    <div class="form-group col-md-1" style="margin-bottom: -10px;">
-                      <button type="button" class="btn btn-outline-secondary btn-lg"  data-toggle="modal" data-target="#foodTypeModal">  <b> + </b> </button> 
+                    <div class="form-group col-md-1" style="margin-bottom: 20px;">
+                      <button type="button" class="btn btn-secondary btn-lg"  data-toggle="modal" data-target="#foodTypeModal">  <b>Add</b> </button> 
                     </div>
 
                     <!-- Qty -->
@@ -176,9 +176,12 @@
                     </div>
 
                     <div class="form-group col-md-12" style="margin-top: 25px;">
-                        <button type="submit" class="btn btn-success btn-lg inline" onclick='return validate()'> Create </button>
-                        <button type="button" class="btn btn-danger btn-lg inline"> Cancel </button>
+                          
                     </div>
+
+                    <div class="col-md-6">
+                        <button type="submit" class="btn btn-primary btn-lg btn-block" onclick='return validate()'> Add Promotion </button>
+                    </diV>
              </div>
         </form>
 

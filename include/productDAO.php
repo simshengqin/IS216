@@ -39,6 +39,7 @@ class productDAO {
         $conn = $connMgr->getConnection();
 
         $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->bindParam(':decay_date', $decay_date, PDO::PARAM_STR);
         $stmt->bindParam(':decay_time', $decay_time, PDO::PARAM_STR);
         $stmt->bindParam(':price_after', $price_after, PDO::PARAM_STR);
