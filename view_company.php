@@ -1070,7 +1070,7 @@
 <!-- To calculate distance between 2 points-->
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&v=3&libraries=geometry"></script>
 <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATVWK0xQi5HrgEwmmkWT78hBe0h2P9bA0">
+    src="https://maps.googleapis.com/maps/api/js?key=AAIzaSyDcIUwwXfLUWzMAE1WspewghH9f-vmSkzc">
 </script>
 </body>
 </html>
