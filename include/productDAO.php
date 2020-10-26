@@ -2,10 +2,9 @@
 
 class productDAO {
 
-    
-    public function add($company_id, $decay_date, $decay_time, $name, $posted_date, $posted_time, $price_after, $price_before, $quantity, $type, $mode_of_collection){
-        $sql = 'INSERT INTO product (company_id, decay_date, decay_time, name, posted_date, posted_time, price_after, price_before, quantity, type, mode_of_collection) 
-                    VALUES (:company_id, :decay_date, :decay_time, :name, :posted_date, :posted_time, :price_after, :price_before, :quantity, :type, :mode_of_collection)';
+    public function add($company_id, $decay_date, $decay_time, $name, $posted_date, $posted_time, $price_after, $price_before, $quantity, $category, $mode_of_collection, $image_url){       
+        $sql = 'INSERT INTO product (company_id, decay_date, decay_time, name, posted_date, posted_time, price_after, price_before, quantity, category, mode_of_collection, image_url) 
+                    VALUES (:company_id, :decay_date, :decay_time, :name, :posted_date, :posted_time, :price_after, :price_before, :quantity, :category, :mode_of_collection, :image_url)';
         
         $connMgr = new ConnectionManager();       
         $conn = $connMgr->getConnection();
@@ -22,8 +21,9 @@ class productDAO {
         $stmt->bindParam(':price_after', $price_after, PDO::PARAM_STR);
         $stmt->bindParam(':price_before', $price_before, PDO::PARAM_STR);
         $stmt->bindParam(':quantity', $quantity, PDO::PARAM_INT);
-        $stmt->bindParam(':type', $type, PDO::PARAM_STR);
+        $stmt->bindParam(':category', $category, PDO::PARAM_STR);
         $stmt->bindParam(':mode_of_collection', $mode_of_collection, PDO::PARAM_STR);
+        $stmt->bindParam(':image_url', $mode_of_collection, PDO::PARAM_STR);
 
         $isAddOK = False;
         if ($stmt->execute()) {
@@ -49,7 +49,7 @@ class productDAO {
 
 
     public function retrieve_all(){
-        $sql = 'select * from product';
+        $sql = 'SELECT * FROM product';
 
         $connMgr = new ConnectionManager();      
         $conn = $connMgr->getConnection();
@@ -61,11 +61,44 @@ class productDAO {
         $result = [];
 
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $result[] = new product($row['product_id'], $row['company_id'], $row['decay_date'], $row['decay_time'], $row['name'], $row['posted_date'], $row['posted_time'], $row['price_after'], $row['price_before'], $row['quantity'], $row['type'], $row['mode_of_collection']);
+            $result[] = new product($row['product_id'], $row['company_id'], $row['decay_date'], $row['decay_time'], $row['name'], $row['posted_date'], $row['posted_time'], $row['price_after'], $row['price_before'], $row['quantity'], $row['category'], $row['mode_of_collection'], $row['image_url']);
         }
         return $result;
     }
 
+    public function retrieve_unique_categories_by_company_id($company_id){
+        $sql = 'SELECT DISTINCT category FROM product WHERE company_id = :company_id';
+
+        $connMgr = new ConnectionManager();      
+        $conn = $connMgr->getConnection();
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':company_id', $company_id, PDO::PARAM_STR);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->execute();
+
+        $result = [];
+
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $result[] = $row['category'];
+        }
+        return $result;
+    }
+    public function retrieve_products_by_category($category){
+        $sql = "SELECT * FROM product WHERE category = :category";
+        $connMgr = new ConnectionManager();      
+        $conn = $connMgr->getConnection();
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':category', $category, PDO::PARAM_STR);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->execute();
+        $result = [];
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $result[] = new product($row['product_id'], $row['company_id'], $row['decay_date'], $row['decay_time'], $row['name'], $row['posted_date'], $row['posted_time'], $row['price_after'], $row['price_before'], $row['quantity'], $row['category'], $row['mode_of_collection'], $row['image_url']);
+        }
+        return $result;
+    }
     public function retrieve_product($product_id){
         $sql = "SELECT * FROM product WHERE product_id = :product_id"; 
         $connMgr = new ConnectionManager();      
@@ -76,7 +109,7 @@ class productDAO {
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $stmt->execute();
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $result = new product($row['product_id'], $row['company_id'], $row['decay_date'], $row['decay_time'], $row['name'], $row['posted_date'], $row['posted_time'], $row['price_after'], $row['price_before'], $row['quantity'], $row['type'], $row['mode_of_collection']);
+            $result = new product($row['product_id'], $row['company_id'], $row['decay_date'], $row['decay_time'], $row['name'], $row['posted_date'], $row['posted_time'], $row['price_after'], $row['price_before'], $row['quantity'], $row['category'], $row['mode_of_collection'], $row['image_url']);
         }
         return $result;
     }
@@ -92,7 +125,7 @@ class productDAO {
         $stmt->execute();
         $result = [];
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $result[] = new product($row['product_id'], $row['company_id'], $row['decay_date'], $row['decay_time'], $row['name'], $row['posted_date'], $row['posted_time'], $row['price_after'], $row['price_before'], $row['quantity'], $row['type'], $row['mode_of_collection']);
+            $result[] = new product($row['product_id'], $row['company_id'], $row['decay_date'], $row['decay_time'], $row['name'], $row['posted_date'], $row['posted_time'], $row['price_after'], $row['price_before'], $row['quantity'], $row['category'], $row['mode_of_collection'], $row['image_url']);
         }
         return $result;
     }
@@ -171,8 +204,8 @@ class productDAO {
     */
 
 
-    public function retrieve_product_type(){
-        $sql = "SELECT DISTINCT type FROM product";
+    public function retrieve_product_category(){
+        $sql = "SELECT DISTINCT category FROM product";
         $connMgr = new ConnectionManager();      
         $conn = $connMgr->getConnection();
 
@@ -183,7 +216,7 @@ class productDAO {
         $result = [];
 
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-            $result[] = $row["type"];
+            $result[] = $row["category"];
         }
         
         return $result;
