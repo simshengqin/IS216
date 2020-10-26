@@ -12,9 +12,9 @@ if(isset($_POST["productName"]) && isset($_POST["productType"]) && isset($_POST[
   isset($_POST["posted_time"]) && isset($_POST["image_path_source"]) && isset($_POST["timeInput"]))
 {
   
-  $companyID = $_POST["company_id"];
+  $company_id = $_POST["company_id"];
   $name = $_POST["productName"];
-  $type = $_POST["productType"];
+  $category = $_POST["productType"];
   $qty = $_POST["productQuantity"];
   $modeOfCollection = $_POST["modeOfCollection"];
   $beforePrice = $_POST["beforePrice"];
@@ -29,6 +29,7 @@ if(isset($_POST["productName"]) && isset($_POST["productType"]) && isset($_POST[
   //var_dump($_FILES["productImageUpload"]["tmp_name"]);
 }
 
+/* No longer required, as directory is made when start
 // Check if the directory exsit, else create new directory
   $dir = 'images/'.$_POST["productType"];
   if(is_dir($dir)){
@@ -37,10 +38,12 @@ if(isset($_POST["productName"]) && isset($_POST["productType"]) && isset($_POST[
     $diplayOutput_directoryExist = "directory does not exist";
     mkdir($dir);
   }
+*/
 
   // Copy the file and rename
   // Php sents a temp file to the www folder, from there it would be use to be uploaded into the Database 
   //$source = "C:/Users/Victor/Desktop/".$_POST["image_path_source"];
+  $dir = 'images/product/'.$company_id;
   $source = $_FILES["productImageUpload"]["tmp_name"];
   $destination = $dir."/".$_POST["image_path_source"];  
 
@@ -51,15 +54,20 @@ if(isset($_POST["productName"]) && isset($_POST["productType"]) && isset($_POST[
     copy($source, $destination);
     //echo $source ." to ".$destination;
     rename($destination, $dir."/".$_POST["productName"].'.jpg');
+    $image_url = "./".$dir."/".$_POST["productName"].'.jpg';
   }
 
-  $output = $productDAO->add( $companyID, $decay_date, $decay_time, $name, 
-      $posted_date, $posted_time, $afterPrice, $beforePrice, $qty, $type, $modeOfCollection);
+  var_dump("directory ". $dir );
+  var_dump("destination". $destination);
+  var_dump("Image url: ".$image_url);
 
-  var_dump($output);
+  $output = $productDAO->add( $company_id, $decay_date, $decay_time, $name, 
+      $posted_date, $posted_time, $afterPrice, $beforePrice, $qty, $category, $modeOfCollection, $image_url);
 
-header("Location: company_edit_product.php");
-exit();
+  //var_dump($output);
+
+//header("Location: company_edit_product.php");
+//exit();
 
 
 

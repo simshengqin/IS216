@@ -23,7 +23,7 @@ class productDAO {
         $stmt->bindParam(':quantity', $quantity, PDO::PARAM_INT);
         $stmt->bindParam(':category', $category, PDO::PARAM_STR);
         $stmt->bindParam(':mode_of_collection', $mode_of_collection, PDO::PARAM_STR);
-        $stmt->bindParam(':image_url', $mode_of_collection, PDO::PARAM_STR);
+        $stmt->bindParam(':image_url', $image_url, PDO::PARAM_STR);
 
         $isAddOK = False;
         if ($stmt->execute()) {

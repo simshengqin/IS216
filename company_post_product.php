@@ -4,18 +4,19 @@
     header("Access-Control-Allow-Origin: *");
 
     $companyDAO = new companyDAO();
-    
     $productDAO = new productDAO();
-    $productType = $productDAO->retrieve_product_type();
+    //$productType = $productDAO->retrieve_product_type();
     $newProductId = count($productDAO->retrieve_all());
     var_dump($newProductId);
     
     if (isset($_GET["company_id"])) {
-        $company_id = $_GET["company_id"];   
+        $company_id = $_GET["company_id"];    
     }
     else {
       $company_id = "1";
     }
+
+    $productType = $productDAO->retrieve_unique_categories_by_company_id($company_id);
 
 ?>
 <!DOCTYPE html>
@@ -103,7 +104,7 @@
                     </div>
                    
                     <div class="form-group col-md-1" style="margin-bottom: 20px;">
-                      <button type="button" class="btn btn-secondary btn-lg"  data-toggle="modal" data-target="#foodTypeModal">  <b>Add</b> </button> 
+                      <button type="button" class="btn btn-secondary btn-lg"  data-toggle="modal" data-target="#foodTypeModal" style="left: 0%;"><b>Add</b> </button> 
                     </div>
 
                     <!-- Qty -->
@@ -180,7 +181,7 @@
                     </div>
 
                     <div class="col-md-6">
-                        <button type="submit" class="btn btn-primary btn-lg btn-block" onclick='return validate()'> Add Promotion </button>
+                        <button type="submit" class="btn btn-primary btn-lg btn-block" style="left: 0%;" onclick='return validate()'> Add Promotion </button>
                     </diV>
              </div>
         </form>
@@ -205,8 +206,10 @@
                       <p id='errorNewFoodType' style='visibility: hidden; color: red;'> Please specify a food type! </p>
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="addNewType()"> Add </button>
+                    <button type="button" class="btn btn-primary" onclick="addNewType()" style="left: 0%;"> Add </button>
+                    &nbsp
+                    &nbsp
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" style="left: 0%;">Close</button>
                   </div>
                   </form>
                 </div>

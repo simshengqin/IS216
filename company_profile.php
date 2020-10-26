@@ -11,6 +11,15 @@
       $company_id = "1";
     }
 
+  // Check if the directory exsit, else create new directory
+  $dir = 'images/product/'.$company_id;
+  if(is_dir($dir)){
+    $diplayOutput_directoryExist = "directory exist";
+  } else{
+    $diplayOutput_directoryExist = "directory does not exist";
+    mkdir($dir);
+  }
+
     $company = $companyDAO->retrieve_company($company_id);
     
     $company_name = $company->get_name();
@@ -39,6 +48,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
+
+  <style>
+  .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #1bba93;
+    font-size: 17px;
+    border: none;
+    border-radius: 5px;
+    color: #bcf5e7;
+    cursor: pointer;
+    margin: 0;
+    position: relative;
+    left: 43%;
+  }
+
+  .btn:hover {
+    background-color: #169c7b;
+    color: white;
+  }
+  </style>
 
   <title>Eco</title>
 
@@ -109,7 +139,7 @@
                       <label for="companyDescription">Description</label>
                       <textarea rows="4" cols="50" class="form-control form-control-lg" name="companyDescription" id="companyDescription"><?php echo $company_description?></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-lg btn-block"> Update </button>
+                    <button type="submit" class="btn btn-primary btn-lg btn-block" style="left: 0%;"> Update </button>
                   </form>
                 </div>
 
@@ -159,14 +189,15 @@
         echo"
           <div class='col-md-4'>
             <div class='card mb-4 shadow-sm'>
-              <img class='card-img-top' src='images/{$product->get_type()}/{$product->get_name()}.jpg' width='100%' height='225'>
+              <!-- <img class='card-img-top' src='images/{$product->get_category()}/{$product->get_name()}.jpg' width='100%' height='225'> -->
+              <img class='card-img-top' src='{$product->get_image_url()}' width='100%' height='225'>
               <div class='card-body'>
                 <h4 class='card-title'> ".str_replace('_', ' ', $product->get_name())."</h4>
                 <p class='card-text'> Promotion End: {$product->get_decay_date()}, at {$product->get_decay_time()}</p>
                 <p class='card-text font-weight-light'> Before Price: $ {$product->get_price_after()}</p>
                 <p class='card-text font-weight-light'> After Price: $ {$product->get_price_before()}</p>
                 <p class='card-text'> Quantity Left: {$product->get_quantity()}</p>
-                <a class='btn btn-info btn-lg btn-block' role='button' href='company_edit_product.php'> Edit </a>
+                <a class='btn btn-info btn-lg btn-block' role='button' href='company_edit_product.php' style='left: 0%;'> Edit </a>
               </div>
             </div>
           </div>
