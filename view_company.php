@@ -36,10 +36,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="x-ua-compatible" content="ie=edge"> 
 <title>View Company</title>
+<!-- Poppins font -->
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
   <!-- Roboto Font -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700&display=swap">
+  <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700&display=swap"> -->
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css"> -->
   <!--Bootstrap 4 and AJAX-->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -67,14 +69,15 @@
     $company_joined_days_ago = ceil(abs($end - $start) / 86400);
     $company_following_arr = explode(",", $company_following);
     $company_following_count = count($company_following_arr);
-
-
+    
 ?>
-<div class="jumbotron bg-white" style="background-color: #FFFFFF" name="companyinfo">
+
+<?php include 'include/customer_navbar.php';?>
+<div class="jumbotron  mt-3" style="background-color: #FFFFFF" name="companyinfo">
     <div class="row text-capitalize mb-3">
 
         <div class="col-md-8">
-            <h1 class="font-weight-bold "><?php echo $company_name ?>            
+            <h1 class="font-weight-bold;"><?php echo $company_name ?>            
                 <button type="button" onclick="location.href='inbox.php?user_id=1&user_type=user&target_id=<?php echo $company_id?>&target_type=company&target_name=<?php echo $company_name?>'" class="btn btn-outline-info ml-2"><i class="fas fa-comment mr-2"></i>Chat</button>
                 <button type="button" onclick="show_map_modal()" class="btn btn-outline-info ml-2"><i class="fa fa-map-marker mr-2"></i>View Map</button>
             </h1>         
@@ -500,7 +503,7 @@
         </div>
     </div>
 </div>
-<hr>
+<?php include 'include/footer.php';?>
 
 <script>
     //***Follow button****//
