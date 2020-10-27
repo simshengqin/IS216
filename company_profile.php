@@ -50,24 +50,7 @@
   <meta name="author" content="">
 
   <style>
-  .btn {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #1bba93;
-    font-size: 17px;
-    border: none;
-    border-radius: 5px;
-    color: #bcf5e7;
-    cursor: pointer;
-    margin: 0;
-    position: relative;
-    left: 43%;
-  }
 
-  .btn:hover {
-    background-color: #169c7b;
-    color: white;
-  }
   </style>
 
   <title>Eco</title>
@@ -87,6 +70,50 @@
 
 
 <body>
+
+<script>
+  //document.addEventListener("DOMContentLoaded", function(event) { 
+function countDown(product_id, date, time){
+  console.log("test");
+  setInterval(function(){ 
+    // Date
+    var DateUnmodified = date.split('-');
+    var year = DateUnmodified[0];
+    var month = DateUnmodified[1];
+    var day = DateUnmodified[2];
+    // Time
+    var totalTimeUnmodified = time.split('.');
+    var timeUnmodifiedWithoutMilliSeconds = totalTimeUnmodified[0];
+    var timeUnmodified = timeUnmodifiedWithoutMilliSeconds.split(':');
+    var hour = timeUnmodified[0];
+    var mins = timeUnmodified[1];
+    var secs = timeUnmodified[2];
+
+    var countDownDate = new Date(month, day, year, hour,mins,secs).getTime();
+
+    var now = new Date().getTime();
+
+    var timeRemaining = countDownDate - now;
+
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+
+
+    document.getElementById(product_id).innerHTML = days + "d " + hours + "h "+ minutes + "m " + seconds + "s ";
+
+    if (distance < 0) {
+      document.getElementById(product_id).innerHTML = "EXPIRED";
+    }
+
+  }, 1000);
+}
+
+      
+//});
+</script>
 
 <!-- Navigation Bar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
@@ -127,6 +154,10 @@
                   <h3> <?php echo $company_name ?></h3>
                   <div> <i class="fas fa-star mr-2"></i> <span> Ratings: <?php echo $company_rating ?></span> </div>
                   <div> <i class="fas fa-users mr-2"></i> <span> Followings: <?php echo $numOfFollowing ?></span> </div>
+                  </br>
+                  <div class="text-center mx-auto">
+                    <button style="left: 0%;" type="button" onclick="location.href='inbox.php?user_id=1&user_type=user&target_id=<?php echo $company_id?>&target_type=company&target_name=<?php echo $company_name?>'" class="btn btn-outline-info ml-2"><i class="fas fa-comment mr-2"></i>Chat</button>
+                  </div>
                 </div>
                 
                 <div class="col-md-6">
@@ -142,6 +173,8 @@
                     <button type="submit" class="btn btn-primary btn-lg btn-block" style="left: 0%;"> Update </button>
                   </form>
                 </div>
+
+                <p id='a1' onload="countDown(a1,'2020-09-27','16:35:56.000000')">  0:00:00 </p>
 
             </div>
             <!-- Company active products  -->
@@ -174,6 +207,7 @@
     <!-- /.container -->
   </footer>
 
+
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
@@ -194,10 +228,11 @@
               <div class='card-body'>
                 <h4 class='card-title'> ".str_replace('_', ' ', $product->get_name())."</h4>
                 <p class='card-text'> Promotion End: {$product->get_decay_date()}, at {$product->get_decay_time()}</p>
+                <p class='card-text' id='{$product->get_product_id()}' onload='countDown('{$product->get_product_id()}','{$product->get_decay_date()}','{$product->get_decay_time()}')>  0:00:00 </p>
                 <p class='card-text font-weight-light'> Before Price: $ {$product->get_price_after()}</p>
                 <p class='card-text font-weight-light'> After Price: $ {$product->get_price_before()}</p>
                 <p class='card-text'> Quantity Left: {$product->get_quantity()}</p>
-                <a class='btn btn-info btn-lg btn-block' role='button' href='company_edit_product.php' style='left: 0%;'> Edit </a>
+                <a class='btn btn-info btn-lg btn-block' role='button' href='company_edit_product.php#{$product->get_product_id()}' style='left: 0%;'> Edit </a>
               </div>
             </div>
           </div>
@@ -206,3 +241,7 @@
     }
 
 ?>
+
+<script>
+
+</script>

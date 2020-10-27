@@ -12,7 +12,8 @@
       $company_id = "1";
     }
 
-    if(isset($_POST["productid"]) && isset($_POST["decay_date"]) && isset($_POST["decay_time"]) && isset($_POST["price_after"]) && isset($_POST["quantity"]))
+    //if(isset($_POST["productid"]) && isset($_POST["decay_date"]) && isset($_POST["decay_time"]) && isset($_POST["price_after"]) && isset($_POST["quantity"]))
+    if(isset($_POST['editProduct']))
     {
       $id = $_POST["productid"];
       $decay_date = $_POST["decay_date"];
@@ -20,6 +21,14 @@
       $price_after = $_POST["price_after"];
       $quantity = $_POST["quantity"];
       $result = $productDAO->update_product_by_productid($id, $decay_date, $decay_time, $price_after, $quantity);
+      if($result){
+        header("Location: company_edit_product.php#{$id}");
+      }
+    }
+    if(isset($_POST['deleteProduct']))
+    {
+      $id = $_POST["productid"];
+      $result = $productDAO->remove_product($id);;
       if($result){
         header("Location: company_edit_product.php");
       }
@@ -50,7 +59,6 @@
   <link rel="stylesheet" href="css/maincss.css">
 
   <style>
-
 
   </style>
 
@@ -129,6 +137,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
       for(var ele of results){
         ele.setAttribute('min', singaporeDate);
       }
+
+      var time = document.getElementsByClassName("timeInput");
+      for(var ele of time){
+        var timeUnmodified = ele.getAttribute('value')
+        var hour = timeUnmodified.split(':')[0];
+        var min = timeUnmodified.split(':')[1];
+        var newTime = hour + ":" + min;
+        ele.setAttribute('value', newTime);
+      }
+
 });
 
 
@@ -146,6 +164,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
       foreach($products as $product){
         $time = convertTime($product->get_decay_time());
         echo"
+        <div class='col-md-12 text-center' id='{$product->get_product_id()}'>
+          <h1 style='visibility: hidden;'>  - </h1>
+        </div>
+
         <div class='col-md-6 text-center' style='padding-bottom: 30px;'>
             <!-- <img class='.img-fluid' style='max-width: 75%; height: auto' src='images/{$product->get_category()}/{$product->get_name()}.jpg'> -->
             <img class='.img-fluid' style='max-width: 75%; height: auto' src='{$product->get_image_url()}'>
@@ -165,7 +187,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                     <div class='input-group-prepend'>
                         <span class='input-group-text' id='{$product->get_product_id()}date'> End Date </span>
                     </div>
-                    <input class='form-control form-control-lg' id='{$product->get_product_id()}_decay_date' name='decay_date' type='date' value='{$product->get_decay_date()}' aria-describedby='{$product->get_product_id()}date'>
+                    <input class='form-control form-control-lg dateInput' id='{$product->get_product_id()}_decay_date' name='decay_date' type='date' value='{$product->get_decay_date()}' aria-describedby='{$product->get_product_id()}date'>
                     <p id='errorQuantity' style='visibility: hidden; color: red;'> </p>
                 </div>
             </div>
@@ -175,7 +197,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                     <div class='input-group-prepend'>
                         <span class='input-group-text' id='{$product->get_product_id()}time'> End Time </span>
                     </div>
-                    <input class='form-control form-control-lg' id='{$product->get_product_id()}_decay_time' name='decay_time' type='time' value='{$time}' min='00:00:00' max='23:59:59' aria-describedby='{$product->get_product_id()}time'>
+                    <input class='form-control form-control-lg timeInput' id='{$product->get_product_id()}_decay_time' name='decay_time' type='time' value='{$time}' min='00:00:00' max='23:59:59' aria-describedby='{$product->get_product_id()}time'>
                     <p id='errorQuantity' style='visibility: hidden; color: red;'> </p>
                 </div>
             </div>
@@ -206,7 +228,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
             </div>
 
 
-            <button type='submit' class='btn btn-info btn-lg btn-block' style='left: 0%;'> Update </button>
+            <button type='submit' class='btn btn-info btn-lg btn-block' name='editProduct' style='left: 0%;'> Update </button>
+            <button type='submit' class='btn btn-info btn-lg btn-block' name='deleteProduct'style='left: 0%;'> Delete </button>
         </form>
         </div>
 
