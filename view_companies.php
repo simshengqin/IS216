@@ -6,6 +6,14 @@
   require_once 'include/common.php';
   require_once 'include/protect.php';
 
+  if(!isset($_SESSION)) { 
+    session_start(); 
+  } 
+
+  $_SESSION["postal_code"] = $_GET['postal_code'];
+  print_r($_SESSION);
+
+
 ?>
 <html>
 <head>
