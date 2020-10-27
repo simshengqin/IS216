@@ -49,9 +49,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <style>
 
-  </style>
 
   <title>Eco</title>
 
@@ -72,47 +70,55 @@
 <body>
 
 <script>
-  //document.addEventListener("DOMContentLoaded", function(event) { 
-function countDown(product_id, date, time){
-  console.log("test");
+document.addEventListener("DOMContentLoaded", function(event) { 
   setInterval(function(){ 
-    // Date
-    var DateUnmodified = date.split('-');
-    var year = DateUnmodified[0];
-    var month = DateUnmodified[1];
-    var day = DateUnmodified[2];
-    // Time
-    var totalTimeUnmodified = time.split('.');
-    var timeUnmodifiedWithoutMilliSeconds = totalTimeUnmodified[0];
-    var timeUnmodified = timeUnmodifiedWithoutMilliSeconds.split(':');
-    var hour = timeUnmodified[0];
-    var mins = timeUnmodified[1];
-    var secs = timeUnmodified[2];
-
-    var countDownDate = new Date(month, day, year, hour,mins,secs).getTime();
-
-    var now = new Date().getTime();
-
-    var timeRemaining = countDownDate - now;
-
-    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-
-
-    document.getElementById(product_id).innerHTML = days + "d " + hours + "h "+ minutes + "m " + seconds + "s ";
-
-    if (distance < 0) {
-      document.getElementById(product_id).innerHTML = "EXPIRED";
-    }
-
-  }, 1000);
-}
-
+    var data = document.getElementsByClassName("dateTimeInputLeft");
+    for(var ele of data){
+      var id_Date_Time = ele.getAttribute('value');
+    
+      var productid = id_Date_Time.split("*")[0];
+      var decay_date_Unmodified = id_Date_Time.split("*")[1];
+      var decay_time_Unmodified = id_Date_Time.split("*")[2];
+      // date
+      var year = decay_date_Unmodified.split("-")[0];
+      var month = decay_date_Unmodified.split("-")[1];
+      var day = decay_date_Unmodified.split("-")[2];
+      // convert month num into month text
+      var monthList = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
+      month = month -1;
+      var monthText = "";
+      for(var i = 0; i < monthList.length; i++){
+        if(month == i){
+          monthText = monthList[i];
+        }
+      }
+      // time
+      var decay_time_Unmodified_without_milliseconds = decay_time_Unmodified.split(".")[0];
+      var hour = decay_time_Unmodified_without_milliseconds.split(':')[0];
+      var min = decay_time_Unmodified_without_milliseconds.split(':')[1];
+      var sec = decay_time_Unmodified_without_milliseconds.split(':')[2];
+      // date time input into string format
+      var newTime = " " + monthText + " " + day + ", " + year + " " + hour + ":" + min + ":" + sec + "";
       
-//});
+      var countDownDate = new Date(newTime).getTime();
+      var now = new Date().getTime();
+      var timeRemaining =  countDownDate - now;
+
+      var days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+      document.getElementById(productid).innerHTML = days + "d " + hours + "h "+ minutes + "m " + seconds + "s ";
+
+      if (timeRemaining < 0) {
+        document.getElementById(productid).innerHTML = "EXPIRED";
+      }
+    }
+  }, 1000);
+
+});
+
 </script>
 
 <!-- Navigation Bar -->
@@ -174,8 +180,6 @@ function countDown(product_id, date, time){
                   </form>
                 </div>
 
-                <p id='a1' onload="countDown(a1,'2020-09-27','16:35:56.000000')">  0:00:00 </p>
-
             </div>
             <!-- Company active products  -->
             <div class="row">
@@ -226,11 +230,12 @@ function countDown(product_id, date, time){
               <!-- <img class='card-img-top' src='images/{$product->get_category()}/{$product->get_name()}.jpg' width='100%' height='225'> -->
               <img class='card-img-top' src='{$product->get_image_url()}' width='100%' height='225'>
               <div class='card-body'>
-                <h4 class='card-title'> ".str_replace('_', ' ', $product->get_name())."</h4>
-                <p class='card-text'> Promotion End: {$product->get_decay_date()}, at {$product->get_decay_time()}</p>
-                <p class='card-text' id='{$product->get_product_id()}' onload='countDown('{$product->get_product_id()}','{$product->get_decay_date()}','{$product->get_decay_time()}')>  0:00:00 </p>
-                <p class='card-text font-weight-light'> Before Price: $ {$product->get_price_after()}</p>
-                <p class='card-text font-weight-light'> After Price: $ {$product->get_price_before()}</p>
+                <h4 class='card-title'> ".strtoupper(str_replace('_', ' ', $product->get_name()))."</h4>
+                <p class='card-text'> Promotion End: </p>
+                <input type='hidden' class='dateTimeInputLeft' value='{$product->get_product_id()}*{$product->get_decay_date()}*{$product->get_decay_time()}'>
+                <p class='card-text text-center' style='font-size: 22px;' id='{$product->get_product_id()}' onload='countDown('{$product->get_product_id()}','{$product->get_decay_date()}','{$product->get_decay_time()}')>  0:00:00 </p>
+                <!-- <p class='card-text font-weight-light' style='margin-bottom: -5px; font-size: 18px;'> Before Price: $  {$product->get_price_after()}</p> -->
+                <p class='card-text font-weight-light' style='font-size: 18px;'> Sale's Price: $ {$product->get_price_before()} </p>
                 <p class='card-text'> Quantity Left: {$product->get_quantity()}</p>
                 <a class='btn btn-info btn-lg btn-block' role='button' href='company_edit_product.php#{$product->get_product_id()}' style='left: 0%;'> Edit </a>
               </div>
