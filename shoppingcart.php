@@ -490,12 +490,6 @@
   <!-- add footer -->
   <?php include 'include/footer.php';?>
 
-  <?php // set session variables
-      //$_SESSION['uni_amount'] = $total_price_with_shipping;
-      
-
-  ?>
-
   <script>
       function XHR_send(user_id, product_id, quantity, quantity_change,event_target) {
         //Send an AJAX request to update_user.php to update the cart of user in database
