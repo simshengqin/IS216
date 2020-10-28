@@ -2,7 +2,8 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
-
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
 
 <html>
 <head>
@@ -161,45 +162,45 @@
 </head>
 <body>
 <div class="container">
-<h3 class=" text-center">Messaging</h3>
-<div class="messaging">
-    <!--inbox_msg contains both the left sidebar and right sidebar-->
-    <div class="inbox_msg">
-        <!--Main leftsidebar, contains both searchbar and chat previews to other people-->
-        <div class="inbox_people">
-            <!--The leftsidebar containing the searchbar-->
-            <div class="headind_srch">
-                <div class="recent_heading">
-                    <h4>Recent</h4>
+    <h4><button><i class="fas fa-chevron-circle-left"></i></button>Go back</h4>
+    <div class="messaging">
+        <!--inbox_msg contains both the left sidebar and right sidebar-->
+        <div class="inbox_msg">
+            <!--Main leftsidebar, contains both searchbar and chat previews to other people-->
+            <div class="inbox_people">
+                <!--The leftsidebar containing the searchbar-->
+                <div class="headind_srch">
+                    <div class="recent_heading">
+                        <h4>Recent</h4>
+                    </div>
+                    <!--Search bar-->
+                    <div class="srch_bar">
+                        <div class="stylish-input-group">
+                        <input type="text" class="search-bar"  placeholder="Search" >
+                        <span class="input-group-addon">
+                        <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
+                        </span> </div>
+                    </div>
                 </div>
-                <!--Search bar-->
-                <div class="srch_bar">
-                    <div class="stylish-input-group">
-                    <input type="text" class="search-bar"  placeholder="Search" >
-                    <span class="input-group-addon">
-                    <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
-                    </span> </div>
+                <!--The left sidebar below the searchbar containing all the chat previews to other people -->
+                <div class="inbox_chat" id="inbox_chat">
                 </div>
-            </div>
-            <!--The left sidebar below the searchbar containing all the chat previews to other people -->
-            <div class="inbox_chat" id="inbox_chat">
-            </div>
 
-        </div>
-        <!-- Rightsidebar Contains the messages to the currently selected person/company -->
-        <div class="mesgs">
-            <div class="msg_history">
-                <div id="selected_messages">                    
-                </div>
             </div>
-            <div class="type_msg" id="type_msg">
-                <div class="input_msg_write d-none" id="input_msg_write" >
-                    <input type="text" class="write_msg" id="sent_message" placeholder="Type a message" />
-                    <button class="msg_send_btn" id="msg_send_btn" type="button" onclick='send_message()'><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+            <!-- Rightsidebar Contains the messages to the currently selected person/company -->
+            <div class="mesgs">
+                <div class="msg_history">
+                    <div id="selected_messages">                    
+                    </div>
                 </div>
-            </div>       
+                <div class="type_msg" id="type_msg">
+                    <div class="input_msg_write d-none" id="input_msg_write" >
+                        <input type="text" class="write_msg" id="sent_message" placeholder="Type a message" />
+                        <button class="msg_send_btn" id="msg_send_btn" type="button" onclick='send_message()'><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+                    </div>
+                </div>       
+            </div>
         </div>
-    </div>
     </div>
       
     </div></div>
