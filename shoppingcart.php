@@ -27,27 +27,27 @@
 
 <body class="skin-light">
   <!--Main Navigation-->
-  <header>
+  <!-- <header> -->
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-md navbar-light fixed-top scrolling-navbar">
-      <div class="container-fluid">
+    <!-- <nav class="navbar navbar-expand-md navbar-light fixed-top scrolling-navbar">
+      <div class="container-fluid"> -->
 
         <!-- Brand -->
-        <a class="navbar-brand" href="">
-        </a>
+        <!-- <a class="navbar-brand" href="">
+        </a> -->
 
         <!-- Collapse button -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
+        <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
           aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
-        </button>
+        </button> -->
 
         <!-- Links -->
-        <div class="collapse navbar-collapse" id="basicExampleNav">
+        <!-- <div class="collapse navbar-collapse" id="basicExampleNav"> -->
 
           <!-- Right -->
-          <ul class="navbar-nav ml-auto">
+          <!-- <ul class="navbar-nav ml-auto">
             <li class="nav-item">
               <a href="#!" class="nav-link navbar-link-2 waves-effect">
                 <span class="badge badge-pill red">1</span>
@@ -87,10 +87,10 @@
             </li>
           </ul>
 
-        </div>
+        </div> -->
         <!-- Links -->
-      </div>
-    </nav>
+      <!-- </div>
+    </nav> -->
     <!-- Navbar -->
     <!--
     <div class="jumbotron color-grey-light mt-70">
@@ -102,9 +102,9 @@
     </div>
     -->
 
-  </header>
+  <!-- </header> -->
   <!--Main Navigation-->
-
+  
   <!--Main layout-->
   <main>
     <div class="container">
@@ -167,13 +167,15 @@
                       </form>
                   </div>
                   <div class="modal-footer">
-                  <button type="button" class="btn btn-success" id="input_postal_code_confirm" onclick="validate_postal_code()">Confirm</button>
+                  <button type="button" style="left:0%" class="btn btn-success" id="input_postal_code_confirm" onclick="validate_postal_code()">Confirm</button>
                   </div>
               </div>
           </div>
       </div>
+      <?php include 'include/customer_navbar.php';?>
       <!--Section: Block Content-->
-      <section class="mt-5 mb-4">
+      
+      <section class="mt-5 mb-4" style="padding-top:25px;">
 
         <!--Grid row-->
         <div class="row">
@@ -400,7 +402,7 @@
                   </li>
                 </ul>
 
-                <button type="button" class="btn btn-primary btn-block waves-effect waves-light">go to
+                <button type="button" style="left:0%" class="btn btn-primary btn-block waves-effect waves-light">go to
                   checkout</button>
 
               </div>
@@ -441,6 +443,8 @@
     </div>
   </main>
   <!--Main layout-->
+  <!-- add footer -->
+  <?php include 'include/footer.php';?>
 
   <script>
       function XHR_send(user_id, product_id, quantity, quantity_change,event_target) {
