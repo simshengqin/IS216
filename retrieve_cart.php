@@ -9,7 +9,7 @@ if(isset($_POST['user_id'])) {
     $cart = $userDAO -> retrieve_user_cart($user_id);
     
   
-    echo "$cart_company_id|$cart";
+    echo "$cart";
 
 }
 
