@@ -50,6 +50,7 @@
 
 
 <!-- Navigation Bar -->
+<!--
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <div class="container">
     <a class="navbar-brand" href="mainpage.html">Eco</a>
@@ -71,7 +72,8 @@
     </div>
     </div>
   </nav>
-
+  -->
+  <?php include 'include/company_navbar.php';?>
   <!--Company profile  -->
     <div class="jumbotron jumbotron-fluid bg-light">
         <div class="container">
@@ -104,7 +106,7 @@
                     </div>
                    
                     <div class="form-group col-md-1" style="margin-bottom: 20px;">
-                      <button type="button" class="btn btn-secondary btn-lg"  data-toggle="modal" data-target="#foodTypeModal" style="left: 0%;"><b>Add</b> </button> 
+                      <button type="button" class="btn btn-info btn-lg"  data-toggle="modal" data-target="#foodTypeModal" style="left: 0%;"> Add </button> 
                     </div>
 
                     <!-- Qty -->
@@ -116,10 +118,10 @@
                     <!-- Mode of Collection -->
                     <div class="form-group col-md-6" style="margin-bottom: -10px;">
                         <select class="form-control form-control-lg" id="modeOfCollection" name="modeOfCollection">
-                            <option disabled selected value=""> Mode Of Collection</option>
-                            <option value="selfcollect"> Self-Collect Only</option>
-                            <option value="delivery"> Delivery Only</option>
-                            <option value="both"> Self-Collect / Delivery </option>
+                            <!-- <option disabled selected value=""> Mode Of Collection</option> -->
+                            <option selected value="selfcollect"> Self-Collect Only</option>
+                            <!-- <option value="delivery"> Delivery Only</option> -->
+                            <!-- <option value="both"> Self-Collect / Delivery </option> -->
                         </select>
                         <p id='errorCollection' style='visibility: hidden; color: red;'>  </p>
                     </div>
@@ -181,7 +183,7 @@
                     </div>
 
                     <div class="col-md-6">
-                        <button type="submit" class="btn btn-primary btn-lg btn-block" style="left: 0%;" onclick='return validate()'> Add Promotion </button>
+                        <button type="submit" class="btn btn-info btn-lg btn-block" style="left: 0%;" onclick='return validate()'> Add Promotion </button>
                     </diV>
              </div>
         </form>
@@ -206,7 +208,7 @@
                       <p id='errorNewFoodType' style='visibility: hidden; color: red;'> Please specify a food type! </p>
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="addNewType()" style="left: 0%;"> Add </button>
+                    <button type="button" class="btn btn-info" onclick="addNewType()" style="left: 0%;"> Add </button>
                     &nbsp
                     &nbsp
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" style="left: 0%;">Close</button>

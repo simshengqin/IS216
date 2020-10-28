@@ -67,6 +67,7 @@
 <body>
 
 <!-- Navigation Bar -->
+<!--
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <div class="container">
     <a class="navbar-brand" href="mainpage.html">Eco</a>
@@ -88,7 +89,8 @@
     </div>
     </div>
   </nav>
-
+-->
+<?php include 'include/company_navbar.php';?>
 
   <!--Company profile  -->
   <div class="jumbotron jumbotron-fluid bg-light">
@@ -229,7 +231,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 
             <button type='submit' class='btn btn-info btn-lg btn-block' name='editProduct' style='left: 0%;'> Update </button>
-            <button type='submit' class='btn btn-info btn-lg btn-block' name='deleteProduct'style='left: 0%;'> Delete </button>
+            <button type='submit' class='btn btn-danger btn-lg btn-block ' name='deleteProduct'style='left: 0%;'> Delete </button>
         </form>
         </div>
 
