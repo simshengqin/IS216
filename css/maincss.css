@@ -441,6 +441,9 @@ h3.h3 {
   right: 20px;
   background-color: #d7292a;
 }
+#checkout-button:hover {
+   color: #fff !important;
+}
 /********************* view_product.php **********************/
 /**** Product grid ****/
 .single_product_image_grid {
