@@ -61,36 +61,7 @@
 <body>
 
 <!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-    <div class="container">
-    <a class="navbar-brand" href="mainpage.html"><img src="images/logo/rsz_e (1).png">    <img src="images/logo/rsz_shadow_eco.png"></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarResponsive">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item active mr-4">
-          <a class="nav-link" href="mainpage.html">Home</a>
-        </li>
-        <li class="nav-item mr-4">
-          <a class="nav-link" href="view_products.php">Food</a>
-        </li>
-        <li class="nav-item mr-4">
-          <a class="nav-link" href="#">Order</a>
-        </li>
-        <li class="nav-item mr-4">
-            <a class="nav-link" href="#">About</a>
-        </li>
-        <li class="nav-item mr-4">
-            <a class="nav-link" href="#">Contact</a>
-        </li>
-        <li class="nav-item mr-4">
-            <a class="nav-link" href="customer_profile.php"><?php echo $user_name ?><span class="sr-only">(current)</span></a>
-        </li>
-      </ul>
-    </div>
-    </div>
-  </nav>
+<?php include 'include/customer_navbar.php';?>
 
   <!-- <header class="py-5 mb-5 header-img">
 

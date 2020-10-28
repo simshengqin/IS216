@@ -4,8 +4,8 @@ class transactionDAO {
   
     public function retrieve_transactions_by_user_id($userid){
         $sql = "SELECT * FROM transactions WHERE 
-        userid = :userid";
-
+        userid = :userid ORDER BY order_date, order_time DESC";
+        
         $connMgr = new ConnectionManager();      
         $conn = $connMgr->getConnection();
 
@@ -37,7 +37,7 @@ class transactionDAO {
         $stmt->bindParam(':company_id', $company_id, PDO::PARAM_INT);
         $stmt->bindParam(':order_date', $order_date, PDO::PARAM_STR);
         $stmt->bindParam(':order_time', $order_time, PDO::PARAM_STR);
-        $stmt->bindParam(':amount', $amount, PDO::PARAM_INT);
+        $stmt->bindParam(':amount', $amount, PDO::PARAM_STR);
         $stmt->bindParam(':collection_type', $collection_type, PDO::PARAM_STR);
         $stmt->bindParam(':review', $review, PDO::PARAM_STR);
         $stmt->bindParam(':rating', $rating, PDO::PARAM_INT);
