@@ -58,13 +58,12 @@
 
   <link rel="stylesheet" href="css/maincss.css">
 
-  <style>
-
-  </style>
 
 </head>
 
 <body>
+
+   
 
 <!-- Navigation Bar -->
 <!--
@@ -93,6 +92,9 @@
 <?php include 'include/company_navbar.php';?>
 
   <!--Company profile  -->
+
+
+
   <div class="jumbotron jumbotron-fluid bg-light">
         <div class="container">
             <div class="row">
@@ -101,10 +103,8 @@
                   <h1 class="text-center font-weight-light"> Edit </h1>
                   </br>
                   </br>
-                </div>
-            </div>
 
-            <div class='row'>
+                    <!-- End of Modal -->
 
                     <?php displayProducts($company_id) ?>
 
@@ -112,6 +112,9 @@
 
         </div>
     </div>
+
+
+
 
     <!-- Footer -->
   <footer class="py-5">
@@ -149,10 +152,31 @@ document.addEventListener("DOMContentLoaded", function(event) {
         ele.setAttribute('value', newTime);
       }
 
+      var beforePrice = document.getElementsByName("before_Price");
+      for(var ele of beforePrice){
+        console.log("test");
+        var num = ele.getAttribute('value');
+        num = parseFloat(num);
+        num = num.toFixed(2)
+        console.log(num);
+        ele.setAttribute('value', num);
+      }
+
+      var afterPrice = document.getElementsByName("price_after");
+      for(var ele of afterPrice){
+        var num = ele.getAttribute('value');
+        num = parseFloat(num);
+        num = num.toFixed(2)
+        console.log(num);
+        ele.setAttribute('value', num);
+      }
+
 });
 
 
-
+function deleteModal(){
+      console.log("Test");
+  }
 
 
   </script>    
@@ -166,79 +190,90 @@ document.addEventListener("DOMContentLoaded", function(event) {
       foreach($products as $product){
         $time = convertTime($product->get_decay_time());
         echo"
-        <div class='col-md-12 text-center' id='{$product->get_product_id()}'>
-          <h1 style='visibility: hidden;'>  - </h1>
+        
+        <h1 style='visibility: hidden;' id='{$product->get_product_id()}'> - </h1>
+        
+        <div class='row shadow-sm bg-white rounded text-dark' >
+
+          <div class='col-md-12 text-center'>
+            <p style='visibility: hidden;'>  - </p>
+          </div>
+
+          <div class='col-md-6 text-center ' style='padding-bottom: 30px;'>
+              <!-- <img class='.img-fluid' style='max-width: 75%; height: auto' src='images/{$product->get_category()}/{$product->get_name()}.jpg'> -->
+              <img class='.img-fluid rounded shadow-sm' style='max-width: 90%; height: auto' src='{$product->get_image_url()}'>
+              </br>
+              </br>
+              </br>
+              <h3 class='card-title font-weight-light'>".strtoupper(str_replace('_', ' ', $product->get_name()))."</h3>
+          </div>
+
+          <div class='col-md-6'>
+            <form action='company_edit_product.php' method='POST'>
+                
+
+                <input type='hidden' name='errorBugBlock' value={$product->get_product_id()}>
+
+                <input type='hidden' name='productid' value={$product->get_product_id()}>
+
+                <div class='form-group'>
+                    <div class='input-group mb-3'>
+                        <div class='input-group-prepend'>
+                            <span class='input-group-text' id='{$product->get_product_id()}date'> End Date </span>
+                        </div>
+                        <input class='form-control form-control-lg dateInput' id='{$product->get_product_id()}_decay_date' name='decay_date' type='date' value='{$product->get_decay_date()}' aria-describedby='{$product->get_product_id()}date'>
+                        <p id='errorQuantity' style='visibility: hidden; color: red;'> </p>
+                    </div>
+                </div>
+
+                <div class='form-group'>
+                    <div class='input-group mb-3'>
+                        <div class='input-group-prepend'>
+                            <span class='input-group-text' id='{$product->get_product_id()}time'> End Time </span>
+                        </div>
+                        <input class='form-control form-control-lg timeInput' id='{$product->get_product_id()}_decay_time' name='decay_time' type='time' value='{$time}' min='00:00:00' max='23:59:59' aria-describedby='{$product->get_product_id()}time'>
+                        <p id='errorQuantity' style='visibility: hidden; color: red;'> </p>
+                    </div>
+                </div>
+
+                <div class='form-group' style='margin-bottom:-15px;'>
+                  <div class='input-group mb-3'>
+                    <label for='beforePrice_{$product->get_product_id()}' class='col-form-label' style='font-size: 20px;'> Before Price : $  </label>
+                    <input type='text' readonly class='form-control-plaintext' name='before_Price' id='beforePrice_{$product->get_product_id()}' value='{$product->get_price_before()}' style='font-size: 20px;'>
+                  </div>
+                </div>
+
+
+                <div class='form-group'>
+                    <div class='input-group mb-3'>
+                        <div class='input-group-prepend'>
+                            <span class='input-group-text' id='{$product->get_product_id()}afterprice'> After Price $</span>
+                        </div>
+                        <input class='form-control form-control-lg' id='{$product->get_product_id()}_price_after' name='price_after' type='double' value='{$product->get_price_after()}' aria-describedby='{$product->get_product_id()}afterprice'>
+                        <p id='errorQuantity' style='visibility: hidden; color: red;'> </p>
+                    </div>
+                </div>
+
+                <div class='form-group'>
+                    <div class='input-group mb-3'>
+                        <div class='input-group-prepend'>
+                            <span class='input-group-text' id='{$product->get_product_id()}qty'> Quantity </span>
+                        </div>
+                        <input class='form-control form-control-lg' id='{$product->get_product_id()}_quantity' name='quantity' type='double' value='{$product->get_quantity()}' aria-describedby='{$product->get_product_id()}qty'>
+                        <p id='errorQuantity' style='visibility: hidden; color: red;'> </p>
+                    </div>
+                </div>
+
+                <button type='submit' class='btn btn-info btn-lg btn-block' name='editProduct' style='left: 0%;'> Update </button>
+                <button type='submit' class='btn btn-danger btn-lg btn-block' name='deleteProduct' style='left: 0%;'> Delete </button>
+
+                </br>
+                </br>
+
+            </form>
+          </div>
+        
         </div>
-
-        <div class='col-md-6 text-center' style='padding-bottom: 30px;'>
-            <!-- <img class='.img-fluid' style='max-width: 75%; height: auto' src='images/{$product->get_category()}/{$product->get_name()}.jpg'> -->
-            <img class='.img-fluid' style='max-width: 75%; height: auto' src='{$product->get_image_url()}'>
-        </div>
-
-        <div class='col-md-6'>
-        <form action='company_edit_product.php' method='POST'>
-
-            <h3 class='card-title font-weight-light'>".strtoupper(str_replace('_', ' ', $product->get_name()))."</h3>
-
-            <input type='hidden' name='errorBugBlock' value={$product->get_product_id()}>
-
-            <input type='hidden' name='productid' value={$product->get_product_id()}>
-
-            <div class='form-group'>
-                <div class='input-group mb-3'>
-                    <div class='input-group-prepend'>
-                        <span class='input-group-text' id='{$product->get_product_id()}date'> End Date </span>
-                    </div>
-                    <input class='form-control form-control-lg dateInput' id='{$product->get_product_id()}_decay_date' name='decay_date' type='date' value='{$product->get_decay_date()}' aria-describedby='{$product->get_product_id()}date'>
-                    <p id='errorQuantity' style='visibility: hidden; color: red;'> </p>
-                </div>
-            </div>
-
-            <div class='form-group'>
-                <div class='input-group mb-3'>
-                    <div class='input-group-prepend'>
-                        <span class='input-group-text' id='{$product->get_product_id()}time'> End Time </span>
-                    </div>
-                    <input class='form-control form-control-lg timeInput' id='{$product->get_product_id()}_decay_time' name='decay_time' type='time' value='{$time}' min='00:00:00' max='23:59:59' aria-describedby='{$product->get_product_id()}time'>
-                    <p id='errorQuantity' style='visibility: hidden; color: red;'> </p>
-                </div>
-            </div>
-
-            
-            <h4 class='card-text font-weight-light'> Before Price: $ {$product->get_price_before()}</h4>
-
-
-            <div class='form-group'>
-                <div class='input-group mb-3'>
-                    <div class='input-group-prepend'>
-                        <span class='input-group-text' id='{$product->get_product_id()}afterprice'> After Price $</span>
-                    </div>
-                    <input class='form-control form-control-lg' id='{$product->get_product_id()}_price_after' name='price_after' type='double' value='{$product->get_price_after()}' aria-describedby='{$product->get_product_id()}afterprice'>
-                    <p id='errorQuantity' style='visibility: hidden; color: red;'> </p>
-                </div>
-            </div>
-
-
-            <div class='form-group'>
-                <div class='input-group mb-3'>
-                    <div class='input-group-prepend'>
-                        <span class='input-group-text' id='{$product->get_product_id()}qty'> Quantity </span>
-                    </div>
-                    <input class='form-control form-control-lg' id='{$product->get_product_id()}_quantity' name='quantity' type='double' value='{$product->get_quantity()}' aria-describedby='{$product->get_product_id()}qty'>
-                    <p id='errorQuantity' style='visibility: hidden; color: red;'> </p>
-                </div>
-            </div>
-
-
-            <button type='submit' class='btn btn-info btn-lg btn-block' name='editProduct' style='left: 0%;'> Update </button>
-            <button type='submit' class='btn btn-danger btn-lg btn-block ' name='deleteProduct'style='left: 0%;'> Delete </button>
-        </form>
-        </div>
-
-        <div class='col-md-12'>
-            </br>
-            </br>
-        </div>  
       ";
       }
     }
@@ -248,4 +283,5 @@ document.addEventListener("DOMContentLoaded", function(event) {
         $newTime = $tempTime[0];
         return $newTime;
     }
+
 ?>
