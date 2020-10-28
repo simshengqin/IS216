@@ -1,6 +1,6 @@
 <?php
 
-class transaction_history {
+class transactions {
     // property declaration
     private $transaction_id;
     private $userid;
