@@ -36,6 +36,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700&display=swap">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  
   <!--Bootstrap 4 and AJAX-->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -245,14 +246,16 @@
                 $company_latitude = $company-> get_latitude();
                 $company_longtitude = $company-> get_longtitude();
                 $total_price = "0.00";
+                $company_id="";
                 if (strlen($cart) ==0) {
-                  echo "<h5 class='mb-4' >Cart (<span id='cartsize'>" . sizeof($cart_arr) . "</span> items)</h5>";
+                  echo "<h5 class='mb-4 font-weight-bold' >Cart (<span id='cartsize'>" . sizeof($cart_arr) . "</span> items)</h5>";
                   echo "<div class='alert alert-danger'>No items in cart currently!</div>";
-                  $total_price_with_shipping = "0.00";
-                  $shipping = "0.00";
+                  $total_price_with_gst = "0.00";
+                  $gst = "0.00";
                 }
                 else {
-                  echo "<h5 class='mb-4' >Cart (<span id='cartsize'>" . sizeof($cart_arr) . "</span> items) - " . ucwords($company_name) . "</h5>";
+                  echo "<h5 class='mb-4 font-weight-bold' >Cart (<span id='cartsize'>" . sizeof($cart_arr) . "</span> items) - " . ucwords($company_name) . "</h5>";
+                  
                   foreach ($cart_arr as $productqty) {
                       #Split it to an arr, where the 1st element is product_id and 2nd element is quantity
                       $productqty_arr = explode(":",$productqty);
@@ -276,8 +279,6 @@
                       if ($image_url == "") {
                           $image_url ="images/$category/$name.jpg";
                       }
-                      $time = '1pm';
-                      $date = '28/10/2020';
                       $discount = round((($price_before-$price_after)/$price_before)*100,0);
                       $total_price_for_current_product = $price_after * $quantity_in_cart;
                       //set timezone to singapore so the time will be correct
@@ -293,11 +294,11 @@
                       $total_price += round($price_after * $quantity_in_cart,2);
                       #There is only a shippping cost if there is at least 1 product
                       if ($total_price == 0) {
-                        $total_price_with_shipping = "0.00";
+                        $total_price_with_gst = "0.00";
                       }
                       else {
-                        $shipping = 3.00;
-                        $total_price_with_shipping = $total_price + 3.00;
+                        $gst = round($total_price * 0.07, 2); 
+                        $total_price_with_gst = round($total_price * 1.07, 2);
                         
                       }
                       
@@ -331,11 +332,11 @@
                               </div>
                           </div>
                           <div class='def-number-input number-input safari_only mb-0 w-100'>
-                              <span class='fas fa-minus-circle check-checkout' onmousedown='minus_quantity()'>
+                              <span onmousedown='minus_quantity()'><button class='btn btn-link change_qty_btn' style='font-size: 25px;'>-</button>
                               </span>
-                              <span class='d-none'>$product_id</span>
-                              <input readonly class='quantity' min='1' name='quantity' value='$quantity_in_cart' type='number' >
-                              <span class='fas fa-plus-circle check-checkout' onclick='add_quantity()'>
+                              <span class='d-none check-checkout'>$product_id</span>
+                              <input readonly class='quantity check-checkout' min='1' name='quantity' value='$quantity_in_cart' type='number' >
+                              <span onclick='add_quantity()'><button class='btn btn-link change_qty_btn' style='font-size: 25px;'>+</button>
                               </span>
                               <span class='total_price_for_current_product'>
                                   $$total_price_for_current_product
@@ -364,12 +365,15 @@
             <div class="card mb-4">
               <div class="card-body">
 
-                <h5 class="mb-4">Collection time</h5>
+                <h5 class="mb-4">Self-pickup Timing</h5>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text">Delivery time:</span>
+                    <span class="input-group-text">Date:</span>
                   </div>
                   <input type="date" class="form-control check-checkout"  id="collection_date" aria-label="collection_date">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Time:</span>
+                  </div>
                   <input type="time" class="form-control check-checkout"  id="collection_time" aria-label="collection_time">
                 </div>
                 <p class="mb-0"></p>
@@ -379,7 +383,7 @@
             <div class="card mb-4">
               <div class="card-body">
 
-                <h5 class="mb-4">Self-pickup Location</h5>
+                <h5 class="mb-4">Self-pickup Address</h5>
 
                 <p class="mb-19"> <?php if (strlen($cart) !=0) {echo ucwords($company_name) . " - " . $company_address;} ?></p>                  
                 <!--The following is a placeholder for the map.-->
@@ -389,6 +393,48 @@
             </div>
             <!-- Card -->
 
+          </div>
+          <!--Grid column-->
+
+          <!--Grid column-->
+          <div class="col-lg-4">
+
+            <!-- Card -->
+            <div class="card mb-4">
+              <div class="card-body">
+
+                <h5 class="mb-3 font-weight-bold">Order Summary</h5>
+
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                    Subtotal
+                    <span id="total_price_for_all_products">$<?php echo $total_price;?></span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center px-0" >
+                    Including GST
+                    <span id="gst_amount">$<?php echo $gst;?></span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                    <div>
+                      <strong>Total (Incl. GST)</strong>
+                      <strong>
+                        <p class="mb-0"></p>
+                      </strong>
+                    </div>
+                    <span class="font-weight-bold" id="total_price_for_all_products_with_gst">$<?php echo $total_price_with_gst;?></span>
+                  </li>
+                </ul>
+
+                
+
+                <button type="button" class="btn btn-primary btn-block waves-effect waves-light" id="checkout-button" onclick="get_current_cart()" disabled>Checkout</button>
+
+              
+                
+                <input type='hidden' value='<?php echo "$user_id,$company_id"; ?>' id="checkout-info">
+
+              </div>
+            </div>
             <!-- Card -->
             <div class="card mb-4">
               <div class="card-body">
@@ -406,53 +452,6 @@
                   alt="Mastercard">
               </div>
             </div>
-            <!-- Card -->
-
-          </div>
-          <!--Grid column-->
-
-          <!--Grid column-->
-          <div class="col-lg-4">
-
-            <!-- Card -->
-            <div class="card mb-4">
-              <div class="card-body">
-
-                <h5 class="mb-3">The total amount of</h5>
-
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
-                    Temporary amount
-                    <span id="total_price_for_all_products">$<?php echo $total_price;?></span>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center px-0" >
-                    Shipping
-                    <span id="shipping">$<?php echo $shipping;?></span>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
-                    <div>
-                      <strong>The total amoun't of</strong>
-                      <strong>
-                        <p class="mb-0"></p>
-                      </strong>
-                    </div>
-                    <span class="font-weight-bold" id="total_price_for_all_products_with_shipping">$<?php echo $total_price_with_shipping;?></span>
-                  </li>
-                </ul>
-
-                
-
-                <button type="button" class="btn btn-primary btn-block waves-effect waves-light" id="checkout-button" onclick="get_current_cart()" disabled>go to
-                  checkout</button>
-
-              
-                
-                <input type='hidden' value='<?php echo "$user_id,$company_id,$time,$date,$total_price_with_shipping"; ?>' id="checkout-info">
-
-              </div>
-            </div>
-            <!-- Card -->
-
             <!-- Card -->
             <div class="card mb-4">
               <div class="card-body">
@@ -502,9 +501,9 @@
                 //Only needs to check for user adding more items to their cart. If there is not enough item, the user should not be able to add at all
                 //Note that AJAX CANNOT return a value to another function as it has some lag, so need to do the changes here
                 if ( quantity_change == 1 && this.responseText != "Insufficient product qty in database") {
-                  current_quantity = parseInt(event_target.parentNode.children[2].value)
-                  event_target.parentNode.children[2].value = current_quantity + 1;
-                  var total_price_product_display = event_target.parentNode.children[4];
+                  current_quantity = parseInt(event_target.parentNode.parentNode.children[2].value)
+                  event_target.parentNode.parentNode.children[2].value = current_quantity + 1;
+                  var total_price_product_display = event_target.parentNode.parentNode.children[4];
                   total_price_product = parseFloat(total_price_product_display.innerText.slice(1)) / current_quantity * (current_quantity + 1);
                   total_price_product = Math.round((total_price_product + Number.EPSILON) * 100) / 100
                   total_price_product_display.innerText = "$" + total_price_product
@@ -514,7 +513,8 @@
                     total_price_for_all_products +=  parseFloat(total_price_product.innerText.slice(1));
                   }
                   document.getElementById("total_price_for_all_products").innerText = "$" + total_price_for_all_products.toFixed(2);
-                  document.getElementById("total_price_for_all_products_with_shipping").innerText = "$" + (total_price_for_all_products+3.00).toFixed(2);   
+                  document.getElementById("total_price_for_all_products_with_gst").innerText = "$" + (total_price_for_all_products*1.07).toFixed(2); 
+                  document.getElementById("gst_amount").innerText = "$" + (total_price_for_all_products*0.07).toFixed(2);   
                 }
                 else if (this.responseText == "Insufficient product qty in database") {
                   document.getElementById("insufficent_product_qty_msg").getElementsByClassName("modal-body")[0].innerText = "Sorry! There is insufficient quantity for this product.";
@@ -531,10 +531,10 @@
 
       function minus_quantity() {
           //Decrease the quantity
-          if (event.target.parentNode.children[2].value > 1) {
-            current_quantity = parseInt(event.target.parentNode.children[2].value)
-            event.target.parentNode.children[2].value = current_quantity - 1;
-            var total_price_product_display = event.target.parentNode.children[4];
+          if (event.target.parentNode.parentNode.children[2].value > 1) {
+            current_quantity = parseInt(event.target.parentNode.parentNode.children[2].value)
+            event.target.parentNode.parentNode.children[2].value = current_quantity - 1;
+            var total_price_product_display = event.target.parentNode.parentNode.children[4];
             total_price_product = parseFloat(total_price_product_display.innerText.slice(1)) / current_quantity * (current_quantity - 1);
             total_price_product = Math.round((total_price_product + Number.EPSILON) * 100) / 100
             total_price_product_display.innerText = "$" + total_price_product
@@ -545,11 +545,12 @@
               total_price_for_all_products +=  parseFloat(total_price_product.innerText.slice(1));
             }
             document.getElementById("total_price_for_all_products").innerText = "$" + total_price_for_all_products.toFixed(2);
-            document.getElementById("total_price_for_all_products_with_shipping").innerText = "$" + (total_price_for_all_products+3.00).toFixed(2);               
+            document.getElementById("total_price_for_all_products_with_gst").innerText = "$" + (total_price_for_all_products*1.07).toFixed(2);               
+            document.getElementById("gst_amount").innerText = "$" + (total_price_for_all_products*0.07).toFixed(2);  
             //Send the request to the server to update the cart of user in database
             //Need to change hardcoded user_id later!!
             //XHR_send($user_id, $product_id, $quantity)
-            XHR_send(1,event.target.parentNode.children[1].innerText ,event.target.parentNode.children[2].value,-1);            
+            XHR_send(1,event.target.parentNode.parentNode.children[1].innerText ,event.target.parentNode.parentNode.children[2].value,-1);            
           }
 
       }
@@ -559,12 +560,13 @@
           //Need to change hardcoded user_id later!!
           //XHR_send($user_id, $product_id, $quantity)
           //Only allows user to buy up to 10 products
-          if ( event.target.parentNode.children[2].value >= 10) {
+          console.log(event.target.parentNode.parentNode);
+          if ( event.target.parentNode.parentNode.children[2].value >= 10) {
               document.getElementById("insufficent_product_qty_msg").getElementsByClassName("modal-body")[0].innerText = "Sorry! You can only buy up to 10 of this product.";
               $('#insufficent_product_qty_msg').modal('show');
           }
           else {
-            XHR_send(1,event.target.parentNode.children[1].innerText ,event.target.parentNode.children[2].value,1, event.target);
+            XHR_send(1,event.target.parentNode.parentNode.children[1].innerText ,event.target.parentNode.parentNode.children[2].value,1, event.target);
           }
       }
 
@@ -587,11 +589,12 @@
              total_price_for_all_products +=  parseFloat(total_price_product.innerText.slice(1));
           }
           document.getElementById("total_price_for_all_products").innerText = "$" + total_price_for_all_products.toFixed(2);
-          document.getElementById("total_price_for_all_products_with_shipping").innerText = "$" + (total_price_for_all_products+3.00).toFixed(2);   
+          document.getElementById("total_price_for_all_products_with_gst").innerText = "$" + (total_price_for_all_products*1.07).toFixed(2);   
+          document.getElementById("gst_amount").innerText = "$" + (total_price_for_all_products*0.07).toFixed(2);
           //There is only a shipping cost if there is at least 1 product
           if (document.getElementsByClassName("total_price_for_current_product").length == 0) {
-            document.getElementById("total_price_for_all_products_with_shipping").innerText = "$0.00";
-            document.getElementById("shipping").innerText = "$0.00";
+            document.getElementById("total_price_for_all_products_with_gst").innerText = "$0.00";
+            document.getElementById("gst_amount").innerText = "$0.00";
             
           }  
           //Update the number of items in cart
@@ -721,7 +724,7 @@
               }    
           }
           //console.log(start[0]);
-          var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + start + "&key=AIzaSyATVWK0xQi5HrgEwmmkWT78hBe0h2P9bA0";
+          var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + start + "&key=AIzaSyDcIUwwXfLUWzMAE1WspewghH9f-vmSkzc";
                 
           try { 
             var xhttp = new XMLHttpRequest();
@@ -805,7 +808,7 @@
       // check if all criteria is fulfilled to enable checkout button
       document.querySelectorAll('.check-checkout').forEach(item => {item.addEventListener('change', event => {
             //handle click
-            if (document.getElementById("collection_time").value !== '' && document.getElementById("collection_date").value !== '' && document.getElementById("total_price_for_all_products_with_shipping").innerText !== '$0.00') {
+            if (document.getElementById("collection_time").value !== '' && document.getElementById("collection_date").value !== '' && document.getElementById("total_price_for_all_products_with_gst").innerText !== '$0.00') {
                 document.getElementById('checkout-button').disabled = false;
             } else {
                 document.getElementById('checkout-button').disabled = true;
@@ -865,7 +868,7 @@
             xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             data = document.getElementById('checkout-info').value;
             data = data.split(','); // array
-            var senddata = "user_id=" + data[0]+ "&company_id=" + data[1]+ "&time=" + String(document.getElementById("collection_time").value) + "&date=" +String( document.getElementById("collection_date").value) + "&price=" + document.getElementById("total_price_for_all_products_with_shipping").innerText.slice(1) + "&cart=" + current_cart;
+            var senddata = "user_id=" + data[0]+ "&company_id=" + data[1]+ "&time=" + String(document.getElementById("collection_time").value) + "&date=" +String( document.getElementById("collection_date").value) + "&price=" + document.getElementById("total_price_for_all_products_with_gst").innerText.slice(1) + "&cart=" + current_cart;
             console.log(senddata);
             xhttp.send(senddata); // query parameters
             xhttp.send();

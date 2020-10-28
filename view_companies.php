@@ -163,7 +163,7 @@
             <!--Search bar-->
             <div class="row" name="search_for_companies">    
                 <div class="form-group col-12">
-                    <input type="text" class="form-control mt-5" name="x" id="search_for_company" oninput ='search_filter()' placeholder="Search for companies">
+                    <input type="text" class="form-control" style="margin-top: 100px;" name="x" id="search_for_company" oninput ='search_filter()' placeholder="Search for companies">
                     <span class="input-group-btn">
                         <button class="btn btn-default" type="button">
                         <span class="glyphicon glyphicon-search"></span>
@@ -174,57 +174,9 @@
             <span id="no_items_warning"></span>
             <div class="row" id="main_company_grid">               
                 <?php
-                    echo "<div class='col-12'>";
-                    //Print top rated restaurants
-                    echo "  <div class='row' style='margin-left: 5px; margin-bottom: 20px;'>
-                                <h1 class='font-weight-bold'>Top-rated restaurants</h1>
-                            </div>";                        
-                    $top_rated_companies = $companyDAO->retrieve_top_rated_companies();
-                    //echo '<pre>'; print_r($company_products_by_category); echo '</pre>';
-                    echo "<div class='row'>";
-                    foreach ($top_rated_companies as $company) {
-                        //echo $company->get_name();
-                        $company_id = $company->get_company_id();
-                        $company_address = $company->get_address();
-                        $company_latitude = $company-> get_latitude();
-                        $company_longtitude = $company-> get_longtitude();
-                        $company_description = $company->get_description();
-                        $company_following = $company->get_following();
-                        $company_joined_date = $company->get_joined_date();
-                        $company_mode_of_collection = ucwords($company->get_mode_of_collection());
-                        $company_name = $company->get_name();
-                        //$company_password = $company->get_password();
-                        $company_rating = $company->get_rating();
-                            echo "
-                            <div class='col-xl-2 col-lg-4 col-sm-6 single_company_grid' id ='single_company_grid' name='$company_id|$company_address|$company_description|$company_following|$company_joined_date|$company_mode_of_collection|$company_name|$company_rating'>
-                                <div class='company-grid'>
-                                    <a class='product_link' href='http://localhost/is216/view_company.php?company_name=" . $company_name . "'>                               
-                                        <div class='company-image d-flex w-100'>
-                                            <img class='pic-1 my-auto'  src='images/company_profile_image/$company_id.jpeg'></img>";
-                                            
-                                            echo "
-                                        </div>
-                                        <div class='company-content'>
-                                            
-                                            <span class='title font-weight-bold'>" . str_replace('_',' ',$company_name) ."</span> <li class='fa fa-star' style='margin-left: 10px;'></li>" . "<span class='font-weight-bold'>" . $company_rating . "</span><span>/5</span>"  . "
-                                            <h3 class='description'>" . $company_description . "</h3>
-                                            <h3 class='description'>" . $company_mode_of_collection . "</h3> <h3 class='description distance_obj' name='$company_latitude,$company_longtitude'></h3>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                            ";                            
-                    }
-                    echo "</div>";
-                    // Print special description (of the food product) by special description
-                    foreach ($unique_special_descriptions as $unique_special_description) {
-                        echo "  <div class='row' style='margin-left: 5px; margin-bottom: 20px;'>
-                                    <h1 class='font-weight-bold'>$unique_special_description</h1>
-                                </div>";
-                        $company_products_by_special_description = $companyDAO->retrieve_products_by_special_description($unique_special_description);
-                        //echo '<pre>'; print_r($company_products_by_category); echo '</pre>';
+                    function display_company_grids($data) {
                         echo "<div class='row'>";
-                        foreach ($company_products_by_special_description as $company) {
+                        foreach ($data as $company) {
                             //echo $company->get_name();
                             $company_id = $company->get_company_id();
                             $company_address = $company->get_address();
@@ -238,8 +190,8 @@
                             //$company_password = $company->get_password();
                             $company_rating = $company->get_rating();
                                 echo "
-                                <div class='col-xl-2 col-lg-4 col-sm-6 single_company_grid' id ='single_company_grid' name='$company_id|$company_address|$company_description|$company_following|$company_joined_date|$company_mode_of_collection|$company_name|$company_rating'>
-                                    <div class='company-grid'>
+                                <div class='col-xl-4 col-lg-4 col-sm-6 single_company_grid' id ='single_company_grid' name='$company_id|$company_address|$company_description|$company_following|$company_joined_date|$company_mode_of_collection|$company_name|$company_rating'>
+                                    <div class='company-grid shadow p-3 mb-5 bg-white rounded'>
                                         <a class='product_link' href='http://localhost/is216/view_company.php?company_name=" . $company_name . "'>                               
                                             <div class='company-image d-flex w-100'>
                                                 <img class='pic-1 my-auto'  src='images/company_profile_image/$company_id.jpeg'></img>";
@@ -256,54 +208,30 @@
                                     </div>
                                 </div>
                                 ";                            
-                            
-    
                         }
-                        echo "</div>";
+                        echo "</div>";                   
+                    }
+                    echo "<div class='col-12'>";
+                    //Print top rated restaurants
+                    echo "  <div class='row' style='margin-left: 5px; margin-bottom: 20px;'>
+                                <h2 class='font-weight-bold'>Top-rated restaurants</h2>
+                            </div>";                        
+                    $top_rated_companies = $companyDAO->retrieve_top_rated_companies();
+                    echo display_company_grids($top_rated_companies);
+                    // Print special description (of the food product) by special description
+                    foreach ($unique_special_descriptions as $unique_special_description) {
+                        echo "  <div class='row' style='margin-left: 5px; margin-bottom: 20px;'>
+                                    <h2 class='font-weight-bold'>$unique_special_description</h2>
+                                </div>";
+                        $company_products_by_special_description = $companyDAO->retrieve_products_by_special_description($unique_special_description);
+                        echo display_company_grids($company_products_by_special_description);
                     }
                     //Print all the restaurants
                     echo "  <div class='row' style='margin-left: 5px; margin-bottom: 20px;'>
-                                <h1 class='font-weight-bold'>All restaurants</h1>
+                                <h2 class='font-weight-bold'>All restaurants</h2>
                             </div>";
                     $companies = $companyDAO->retrieve_companies();
-                    echo "<div class='row'>";
-                    foreach ($companies as $company) {
-                        //echo $company->get_name();
-                        $company_id = $company->get_company_id();
-                        $company_address = $company->get_address();
-                        $company_latitude = $company-> get_latitude();
-                        $company_longtitude = $company-> get_longtitude();
-                        $company_description = $company->get_description();
-                        $company_following = $company->get_following();
-                        $company_joined_date = $company->get_joined_date();
-                        $company_mode_of_collection = ucwords($company->get_mode_of_collection());
-                        $company_name = $company->get_name();
-                        //$company_password = $company->get_password();
-                        $company_rating = $company->get_rating();
-                            echo "
-                            <div class='col-xl-2 col-lg-4 col-sm-6 single_company_grid' id ='single_company_grid' name='$company_id|$company_address|$company_description|$company_following|$company_joined_date|$company_mode_of_collection|$company_name|$company_rating'>
-                                <div class='company-grid'>
-                                    <a class='product_link' href='http://localhost/is216/view_company.php?company_name=" . $company_name . "'>                               
-                                        <div class='company-image d-flex w-100'>
-                                            <img class='pic-1 my-auto'  src='images/company_profile_image/$company_id.jpeg'></img>";
-                                            
-                                            echo "
-                                        </div>
-                                        <div class='company-content'>
-                                            
-                                            <span class='title font-weight-bold'>" . str_replace('_',' ',$company_name) ."</span> <li class='fa fa-star' style='margin-left: 10px;'></li>" . "<span class='font-weight-bold'>" . $company_rating . "</span><span>/5</span>"  . "
-                                            <h3 class='description'>" . $company_description . "</h3>
-                                            <h3 class='description'>" . $company_mode_of_collection . "</h3> <h3 class='description distance_obj' name='$company_latitude,$company_longtitude'></h3>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                            ";                            
-                        
-
-                    }
-                    echo "</div>";
-
+                    echo display_company_grids($companies);
                     echo "</div>";
                 ?>
             </div>
@@ -426,7 +354,7 @@
             product_link.setAttribute("href", product_link.getAttribute("href") + "&postal_code=" + start);
         }
 
-        var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + start + "&key=AIzaSyATVWK0xQi5HrgEwmmkWT78hBe0h2P9bA0";              
+        var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + start + "&key=AIzaSyDcIUwwXfLUWzMAE1WspewghH9f-vmSkzc";              
         //Retrieves the company latitude and longtitude 
         var all_distances = document.getElementsByClassName("distance_obj");
         for (distance_obj of all_distances) {

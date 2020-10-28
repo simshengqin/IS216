@@ -158,6 +158,7 @@ h3.h3 {
 }
 
 /********************* view_companyies.php **********************/
+
 /**** Company grid ****/
 .company-grid,
 .company-grid .company-image {
@@ -170,6 +171,14 @@ h3.h3 {
   overflow: hidden;
   z-index: 1;
   transition: all 0.3s ease 0s;
+  background-color: white;
+  height: 380px; 
+  margin-bottom: 15px; 
+  padding: 20px 20px 0px 20px;
+}
+
+.company-grid a {
+  color: black;
 }
 .company-grid a:hover {
   text-decoration: none;
@@ -217,7 +226,7 @@ h3.h3 {
   background-color: #d7292a;
 }
 .company-grid .company-content {
-  padding: 25px;
+  padding: 25px 0px 25px 0px;
 }
 .company-grid .title {
   font-size: 16px;
@@ -305,12 +314,17 @@ h3.h3 {
   position: relative;
 }
 .product-grid {
+  
   font-family: Poppins, sans-serif;
   text-align: center;
   border-radius: 5px;
   overflow: hidden;
   z-index: 1;
   transition: all 0.3s ease 0s;
+  background-color: white;
+  height: 380px; 
+  margin-bottom: 15px; 
+  padding: 20px 20px 0px 20px;
 }
 .product-grid:hover {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
@@ -446,6 +460,12 @@ h3.h3 {
   cursor: not-allowed;
 }
 
+.change_qty_btn:hover {
+  text-decoration: none !important;
+}
+.change_qty_btn:visited {
+  text-decoration: none !important;
+}
 /********************* view_product.php **********************/
 /**** Product grid ****/
 .single_product_image_grid {
