@@ -45,7 +45,10 @@ if(isset($_POST["productName"]) && isset($_POST["productType"]) && isset($_POST[
   //$source = "C:/Users/Victor/Desktop/".$_POST["image_path_source"];
   $dir = 'images/product/'.$company_id;
   $source = $_FILES["productImageUpload"]["tmp_name"];
-  $destination = $dir."/".$_POST["image_path_source"];  
+  $destination = $dir."/".$_POST["image_path_source"]; 
+  
+  var_dump($source);
+  var_dump($destination);
 
   if(!copy($source, $destination)){
     $diplayOutput_copy = "was not able to copy file to destination";
