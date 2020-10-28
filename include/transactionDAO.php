@@ -17,10 +17,41 @@ class transactionDAO {
         $result = [];
 
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $result[] = new transaction_history($row['transaction_id'], $row['userid'], $row['cart'], $row['company_id'], $row['order_date'], $row['order_time'], $row['amount'], $row['collection_type'], $row['review'], $row['rating']);
+            $result[] = new transaction_history($row['transaction_id'], $row['userid'], $row['cart'], $row['company_id'], $row['order_date'], $row['order_time'], $row['amount'], $row['collection_type'], $row['review'], $row['rating'], $row['collected']);
         }
         return $result;
     }
+
+    public function add($userid, $cart, $company_id, $order_date, $order_time, $amount, $collection_type, $review, $rating, $collected){       
+        $sql = 'INSERT INTO transaction_history (userid, cart, company_id, order_date, order_time, amount, collection_type, review, rating, collected) 
+                    VALUES (:userid, :cart, :company_id, :order_date, :order_time, :amount, :collection_type, :review, :rating, :collected)';
+        
+        $connMgr = new ConnectionManager();       
+        $conn = $connMgr->getConnection();
+         
+        $stmt = $conn->prepare($sql); 
+
+        //$stmt->bindParam(':product_id', $company_id, PDO::PARAM_INT);
+        $stmt->bindParam(':userid', $userid, PDO::PARAM_INT);
+        $stmt->bindParam(':cart', $cart, PDO::PARAM_STR);
+        $stmt->bindParam(':company_id', $company_id, PDO::PARAM_INT);
+        $stmt->bindParam(':order_date', $order_date, PDO::PARAM_STR);
+        $stmt->bindParam(':order_time', $order_time, PDO::PARAM_STR);
+        $stmt->bindParam(':amount', $amount, PDO::PARAM_INT);
+        $stmt->bindParam(':collection_type', $collection_type, PDO::PARAM_STR);
+        $stmt->bindParam(':review', $review, PDO::PARAM_STR);
+        $stmt->bindParam(':rating', $rating, PDO::PARAM_INT);
+        $stmt->bindParam(':collected', $collected, PDO::PARAM_STR);
+        
+
+        $isAddOK = False;
+        if ($stmt->execute()) {
+            $isAddOK = True;
+        }
+
+        return $isAddOK;
+    }
+
 
     
     public function remove_transaction($transaction_id){
@@ -46,6 +77,7 @@ class transactionDAO {
         $stmt->execute();
         $count = $stmt->rowCount();
     }
+
 
     
 }
