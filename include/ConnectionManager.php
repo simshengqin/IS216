@@ -11,7 +11,7 @@ class ConnectionManager {
         else
             $password = "";  
         $dbname = "is216";
-        $port = 3308;    
+        $port = 3306;    
 
         $url  = "mysql:host={$host};dbname={$dbname};port={$port}";
         
