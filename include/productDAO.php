@@ -49,7 +49,7 @@ class productDAO {
 
 
     public function retrieve_all(){
-        $sql = 'SELECT * FROM product';
+        $sql = 'SELECT * FROM product WHERE (decay_date > CURRENT_DATE()) OR (decay_time > CURRENT_TIME())';
 
         $connMgr = new ConnectionManager();      
         $conn = $connMgr->getConnection();
@@ -85,7 +85,7 @@ class productDAO {
         return $result;
     }
     public function retrieve_products_by_category($category){
-        $sql = "SELECT * FROM product WHERE category = :category";
+        $sql = "SELECT * FROM product WHERE category = :category AND (decay_date > CURRENT_DATE()) OR (decay_time > CURRENT_TIME())";
         $connMgr = new ConnectionManager();      
         $conn = $connMgr->getConnection();
 
@@ -100,7 +100,7 @@ class productDAO {
         return $result;
     }
     public function retrieve_product($product_id){
-        $sql = "SELECT * FROM product WHERE product_id = :product_id"; 
+        $sql = "SELECT * FROM product WHERE product_id = :product_id AND (decay_date > CURRENT_DATE()) OR (decay_time > CURRENT_TIME())"; 
         $connMgr = new ConnectionManager();      
         $conn = $connMgr->getConnection();
 
@@ -115,7 +115,7 @@ class productDAO {
     }
     
     public function retrieve_product_by_company($company_id){
-        $sql = "SELECT * FROM product WHERE company_id = :company_id";
+        $sql = "SELECT * FROM product WHERE company_id = :company_id AND (decay_date > CURRENT_DATE()) OR (decay_time > CURRENT_TIME())";
         $connMgr = new ConnectionManager();      
         $conn = $connMgr->getConnection();
 

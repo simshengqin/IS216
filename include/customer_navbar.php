@@ -57,6 +57,12 @@
         <li class="nav-item mr-4">
             <a class="nav-link" href="#">Login/Register</a>
         </li>
+        <li class="nav-item">
+              <a href="shoppingcart.php" class="nav-link navbar-link-2 waves-effect">
+                <span class="badge badge-pill red">1</span>
+                <i class="fas fa-shopping-cart pl-0"></i>
+              </a>
+            </li>
       </ul>
     </div>
     </div>

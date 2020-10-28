@@ -39,14 +39,17 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item active mr-4">
-          <a class="nav-link" href="company_profile.php">Dashboard <span class="sr-only">(current)</span></a>
+        <li class="nav-item mr-4">
+          <a class="nav-link" href="company_profile.php">Dashboard </a>
         </li>
         <li class="nav-item mr-4" >
         <a class="nav-link" href="company_post_product.php">Post</a>
         </li>
         <li class="nav-item mr-4">
           <a class="nav-link" href="company_edit_product.php">Edit</a>
+        </li>
+        <li class="nav-item mr-4">
+          <a class="nav-link" href="#">Logout</a>
         </li>
       </ul>
     </div>
