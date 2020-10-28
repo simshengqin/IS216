@@ -1,6 +1,6 @@
 <?php
 
-class transaction_history {
+class transactions {
     // property declaration
     private $transaction_id;
     private $userid;
@@ -12,10 +12,11 @@ class transaction_history {
     private $collection_type;
     private $review;
     private $rating;
+    private $collected;
     
     
     
-    public function __construct($transaction_id, $userid, $cart, $company_id, $order_date, $order_time, $amount, $collection_type, $review, $rating)
+    public function __construct($transaction_id, $userid, $cart, $company_id, $order_date, $order_time, $amount, $collection_type, $review, $rating,$collected)
     {
         $this->transaction_id = $transaction_id;
         $this->userid = $userid;
@@ -27,6 +28,7 @@ class transaction_history {
         $this->collection_type = $collection_type;
         $this->review = $review;
         $this->rating = $rating;
+        $this->collected = $collected;
     }
     public function get_transaction_id()
     { 
@@ -68,6 +70,10 @@ class transaction_history {
     public function get_rating()
     { 
         return $this->rating;
+    }
+    public function get_collected()
+    { 
+        return $this->collected;
     }
     
 }

@@ -93,6 +93,22 @@ class userDAO {
         return $result;
     }
 
+    public function retrieve_cart_company_id($user_id){
+        $sql = "SELECT * FROM user WHERE user_id = :user_id";
+
+        $connMgr = new ConnectionManager();      
+        $conn = $connMgr->getConnection();
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->execute();
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $result = $row['cart_company_id'];
+        }
+        return $result;
+    }
+
     public function update_user_cart($userid, $cart){
         $sql = "UPDATE user SET cart =:cart WHERE user_id =:user_id";
         $connMgr = new ConnectionManager();    

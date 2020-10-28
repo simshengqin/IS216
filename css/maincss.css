@@ -441,6 +441,9 @@ h3.h3 {
   right: 20px;
   background-color: #d7292a;
 }
+#checkout-button:hover {
+   color: #fff !important;
+}
 /********************* view_product.php **********************/
 /**** Product grid ****/
 .single_product_image_grid {
@@ -757,7 +760,7 @@ img {
     margin-bottom: 20px;
 }
 .form-body .label-title {
-    color: #0062cc;
+    color: black;
     font-size: 22px;
     font-weight: bold;
 }
@@ -827,7 +830,7 @@ input[type="file"] {
     font-style: italic;
     font-weight: thin;
 }
-.btn {
+.btn-registration {
     display: inline-block;
     padding: 10px 20px;
     background-color: #1bba93;
@@ -842,7 +845,7 @@ input[type="file"] {
     left: 43%;
   
 }
-.btn:hover {
+.btn-registration:hover {
 
     background-color: #169c7b;
     color: white;

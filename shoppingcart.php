@@ -1,6 +1,28 @@
 <?php
   require_once 'include/common.php';
   require_once 'include/protect.php';
+  
+  if(!isset($_SESSION)) { 
+    session_start(); 
+  } 
+
+  // print_r($_SESSION);
+
+  // header('Set-Cookie: cross-site-cookie=bar; SameSite=None; Secure');
+
+  // $arr_cookie_options = array (
+  //   // 'expires' => time() + 60*60*24*30,
+  //   // 'path' => '/',
+  //   // 'domain' => '.example.com', // leading dot for compatibility or use subdomain
+  //   'secure' => true,     // or false
+  //   // 'httponly' => true,    // or false
+  //   'samesite' => 'None' // None || Lax  || Strict
+  // );
+
+  // setcookie('TestCookie', 'The Cookie Value', $arr_cookie_options); 
+
+  // setcookie('key', 'value', ['samesite' => 'None', 'secure' => true]);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,33 +43,41 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <!--Link to main.css files while contains all the css of this project-->
   <link rel='stylesheet' href='css\maincss.css'>
+
+  <!-- font -->
+  <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+
+  <!-- <link rel="stylesheet" href="style.css"> -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+  <script src="https://js.stripe.com/v3/"></script>
+
   <style>
   </style>
   </head>
 
 <body class="skin-light">
   <!--Main Navigation-->
-  <header>
+  <!-- <header> -->
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-md navbar-light fixed-top scrolling-navbar">
-      <div class="container-fluid">
+    <!-- <nav class="navbar navbar-expand-md navbar-light fixed-top scrolling-navbar">
+      <div class="container-fluid"> -->
 
         <!-- Brand -->
-        <a class="navbar-brand" href="">
-        </a>
+        <!-- <a class="navbar-brand" href="">
+        </a> -->
 
         <!-- Collapse button -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
+        <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
           aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
-        </button>
+        </button> -->
 
         <!-- Links -->
-        <div class="collapse navbar-collapse" id="basicExampleNav">
+        <!-- <div class="collapse navbar-collapse" id="basicExampleNav"> -->
 
           <!-- Right -->
-          <ul class="navbar-nav ml-auto">
+          <!-- <ul class="navbar-nav ml-auto">
             <li class="nav-item">
               <a href="#!" class="nav-link navbar-link-2 waves-effect">
                 <span class="badge badge-pill red">1</span>
@@ -87,10 +117,10 @@
             </li>
           </ul>
 
-        </div>
+        </div> -->
         <!-- Links -->
-      </div>
-    </nav>
+      <!-- </div>
+    </nav> -->
     <!-- Navbar -->
     <!--
     <div class="jumbotron color-grey-light mt-70">
@@ -102,9 +132,9 @@
     </div>
     -->
 
-  </header>
+  <!-- </header> -->
   <!--Main Navigation-->
-
+  
   <!--Main layout-->
   <main>
     <div class="container">
@@ -167,13 +197,15 @@
                       </form>
                   </div>
                   <div class="modal-footer">
-                  <button type="button" class="btn btn-success" id="input_postal_code_confirm" onclick="validate_postal_code()">Confirm</button>
+                  <button type="button" style="left:0%" class="btn btn-success" id="input_postal_code_confirm" onclick="validate_postal_code()">Confirm</button>
                   </div>
               </div>
           </div>
       </div>
+      <?php include 'include/customer_navbar.php';?>
       <!--Section: Block Content-->
-      <section class="mt-5 mb-4">
+      
+      <section class="mt-5 mb-4" style="padding-top:25px;">
 
         <!--Grid row-->
         <div class="row">
@@ -244,6 +276,8 @@
                       if ($image_url == "") {
                           $image_url ="images/$category/$name.jpg";
                       }
+                      $time = '1pm';
+                      $date = '28/10/2020';
                       $discount = round((($price_before-$price_after)/$price_before)*100,0);
                       $total_price_for_current_product = $price_after * $quantity_in_cart;
                       //set timezone to singapore so the time will be correct
@@ -297,11 +331,11 @@
                               </div>
                           </div>
                           <div class='def-number-input number-input safari_only mb-0 w-100'>
-                              <span class='fas fa-minus-circle' onmousedown='minus_quantity()'>
+                              <span class='fas fa-minus-circle check-checkout' onmousedown='minus_quantity()'>
                               </span>
                               <span class='d-none'>$product_id</span>
                               <input readonly class='quantity' min='1' name='quantity' value='$quantity_in_cart' type='number' >
-                              <span class='fas fa-plus-circle' onclick='add_quantity()'>
+                              <span class='fas fa-plus-circle check-checkout' onclick='add_quantity()'>
                               </span>
                               <span class='total_price_for_current_product'>
                                   $$total_price_for_current_product
@@ -330,9 +364,15 @@
             <div class="card mb-4">
               <div class="card-body">
 
-                <h5 class="mb-4">Expected shipping delivery</h5>
-
-                <p class="mb-0"> Thu., 12.03. - Mon., 16.03.</p>
+                <h5 class="mb-4">Collection time</h5>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Delivery time:</span>
+                  </div>
+                  <input type="date" class="form-control check-checkout"  id="collection_date" aria-label="collection_date">
+                  <input type="time" class="form-control check-checkout"  id="collection_time" aria-label="collection_time">
+                </div>
+                <p class="mb-0"></p>
               </div>
             </div>
             <!-- Card -->
@@ -391,7 +431,7 @@
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
                     <div>
-                      <strong>The total amount of</strong>
+                      <strong>The total amoun't of</strong>
                       <strong>
                         <p class="mb-0"></p>
                       </strong>
@@ -400,8 +440,14 @@
                   </li>
                 </ul>
 
-                <button type="button" class="btn btn-primary btn-block waves-effect waves-light">go to
+                
+
+                <button type="button" class="btn btn-primary btn-block waves-effect waves-light" id="checkout-button" onclick="get_current_cart()" disabled>go to
                   checkout</button>
+
+              
+                
+                <input type='hidden' value='<?php echo "$user_id,$company_id,$time,$date,$total_price_with_shipping"; ?>' id="checkout-info">
 
               </div>
             </div>
@@ -441,6 +487,8 @@
     </div>
   </main>
   <!--Main layout-->
+  <!-- add footer -->
+  <?php include 'include/footer.php';?>
 
   <script>
       function XHR_send(user_id, product_id, quantity, quantity_change,event_target) {
@@ -748,7 +796,85 @@
                               'Error: Your browser doesn\'t support geolocation.');
         infoWindow.open(map);
       }
+
+      
   </script>
+
+  <!-- go to stripe checkout page -->
+  <script type="text/javascript">
+      // check if all criteria is fulfilled to enable checkout button
+      document.querySelectorAll('.check-checkout').forEach(item => {item.addEventListener('change', event => {
+            //handle click
+            if (document.getElementById("collection_time").value !== '' && document.getElementById("collection_date").value !== '' && document.getElementById("total_price_for_all_products_with_shipping").innerText !== '$0.00') {
+                document.getElementById('checkout-button').disabled = false;
+            } else {
+                document.getElementById('checkout-button').disabled = true;
+            }
+           
+            
+          })
+        });
+
+
+      //var checkoutButton = document.getElementById("checkout-button");      
+      //checkoutButton.addEventListener("click", get_current_cart());
+      
+      function get_current_cart() {
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() { // callback aka anonymous function
+          if (this.readyState == 4) {
+              if (this.status == 200) {
+                  // process response
+                    console.log( this.responseText );
+                    checkout(this.responseText);
+                }
+            }
+          };
+        
+        xhr.open("POST", "retrieve_cart.php", true);
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        //HARDCODED need to change later
+        xhr.send("user_id=1"); // query parameters
+
+      }
+
+      function checkout(current_cart) {
+        var url = "create-session.php";
+        // Create an instance of the Stripe object with your publishable API key
+        var stripe = Stripe("pk_test_51HgOY8AgaC3WCXUJIaOFunkJxpIXJwKHuu6CeHk4NGB1esqvHIwVGXTTuxaZIebOuKhnSfqQDZTsBB5wOBn9D5RC00BlIAWB0d");            
+            try { 
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        // following code may throw error if user input is invalid address
+                        // so we use try-catch block to handle errors
+                        // expected response is JSON data
+                        
+                        var response = JSON.parse(this.responseText);
+                        console.log(response);
+                        return stripe.redirectToCheckout({ sessionId: response.id
+                        });  
+                    
+                };
+              }
+            } catch(err) { // show error message
+    
+                console.log("Sorry, invalid address. Please try again!");
+            }
+            xhttp.open("POST", url, true);
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            data = document.getElementById('checkout-info').value;
+            data = data.split(','); // array
+            var senddata = "user_id=" + data[0]+ "&company_id=" + data[1]+ "&time=" + String(document.getElementById("collection_time").value) + "&date=" +String( document.getElementById("collection_date").value) + "&price=" + document.getElementById("total_price_for_all_products_with_shipping").innerText.slice(1) + "&cart=" + current_cart;
+            console.log(senddata);
+            xhttp.send(senddata); // query parameters
+            xhttp.send();
+          }
+
+      
+  </script>
+
+
   <!-- load the map asynchronously, i.e., load data soon as it becomes available -->
   <!-- replace the API key with yours -->
     <!-- load the map asynchronously, i.e., load data soon as it becomes available -->
