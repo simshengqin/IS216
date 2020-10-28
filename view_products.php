@@ -16,16 +16,18 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <!--Link to main.css files while contains all the css of this project-->
 <link rel='stylesheet' href='css\maincss.css'>
-<div class="jumbotron color-grey-light">
+
+<?php include 'include/customer_navbar.php';?>
+<!-- <div class="jumbotron color-grey-light">
     <div class="d-flex align-items-center h-20">
         <div class="container text-center py-5">
         <h3 class="mb-0">List of products</h3>
         </div>
     </div>
-</div>
+</div> -->
 </head>
 <body>
-<div class='container-fluid'>
+<div class='container-fluid' style="background-color:white;">
     <div class='row'>
         <div name="toastdiv">
             <!--Toast, which is a message pop-up whenever an item is added to the cart-->
@@ -321,7 +323,7 @@
         </div>
     </div>
 </div>
-<hr>
+<?php include 'include/footer.php';?>
 
 <script>
     //****Search bar****//

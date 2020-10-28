@@ -12,6 +12,7 @@
 
          <!-- Roboto Font -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700&display=swap">
+        <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -107,7 +108,7 @@
                             
                         </div>
                         <div class="form-footer">
-                            <input class="btn btn-primary" type="submit" name="submit" id="register" value="submit">
+                            <input class="btn-registration btn-primary" type="submit" name="submit" id="register" value="submit">
                         </div>
 
 

@@ -23,7 +23,7 @@ class productDAO {
         $stmt->bindParam(':quantity', $quantity, PDO::PARAM_INT);
         $stmt->bindParam(':category', $category, PDO::PARAM_STR);
         $stmt->bindParam(':mode_of_collection', $mode_of_collection, PDO::PARAM_STR);
-        $stmt->bindParam(':image_url', $mode_of_collection, PDO::PARAM_STR);
+        $stmt->bindParam(':image_url', $image_url, PDO::PARAM_STR);
 
         $isAddOK = False;
         if ($stmt->execute()) {
@@ -166,12 +166,12 @@ class productDAO {
 
     }
     public function remove_product($product_id){
-        $sql = "DELETE * FROM product WHERE product_id = :product_id";
+        $sql = "DELETE FROM product WHERE product_id =:product_id";
         $connMgr = new ConnectionManager();      
         $conn = $connMgr->getConnection();
 
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':product_id', $product_id, PDO::PARAM_STR);
+        $stmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $status = $stmt->execute();
         return $status;

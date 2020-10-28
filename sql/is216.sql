@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Oct 25, 2020 at 08:03 PM
--- Server version: 5.7.31
--- PHP Version: 7.3.21
+-- Generation Time: Oct 28, 2020 at 07:46 AM
+-- Server version: 5.7.23
+-- PHP Version: 7.2.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -98,6 +99,21 @@ INSERT INTO `message` (`message_id`, `body`, `date`, `from_id`, `from_type`, `se
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `payment`
+--
+
+DROP TABLE IF EXISTS `payment`;
+CREATE TABLE IF NOT EXISTS `payment` (
+  `user_id` int(11) NOT NULL,
+  `date` datetime NOT NULL,
+  `payment_id` int(11) NOT NULL,
+  `amount` float NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`amount`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `product`
 --
 
@@ -125,7 +141,7 @@ CREATE TABLE IF NOT EXISTS `product` (
 
 INSERT INTO `product` (`product_id`, `company_id`, `decay_date`, `decay_time`, `name`, `posted_date`, `posted_time`, `price_after`, `price_before`, `quantity`, `category`, `mode_of_collection`, `image_url`) VALUES
 (100, 1, '2020-12-01', '15:07:21.000000', 'Mushroom Soup', '2020-09-27', '16:35:56.000000', 3.5, 3.5, 8, 'Soup', 'pickup', 'https://d1sag4ddilekf6.cloudfront.net/compressed/items/4-CZDVSF61V7BZLX-CZDVTAVHN3CYAA/photo/100144a05658482da7ac552e2f92712d_1588590841087774518.jpeg'),
-(101, 1, '2020-12-01', '15:07:21.000000', 'Corn Cream Soup', '2020-09-27', '16:35:56.000000', 3.2, 3.5, 12, 'Soup', 'pickup', 'https://d1sag4ddilekf6.cloudfront.net/compressed/items/4-CZDVSF61V7BZLX-CZDVTAVHSB5DDE/photo/86832bfd73ef4b66a0d5923055d5f4b8_1587280339313730651.jpeg'),
+(101, 1, '2020-12-01', '15:07:21.000000', 'Corn Cream Soup', '2020-09-27', '16:35:56.000000', 3.2, 3.5, 9, 'Soup', 'pickup', 'https://d1sag4ddilekf6.cloudfront.net/compressed/items/4-CZDVSF61V7BZLX-CZDVTAVHSB5DDE/photo/86832bfd73ef4b66a0d5923055d5f4b8_1587280339313730651.jpeg'),
 (102, 1, '2020-12-01', '15:07:21.000000', 'Pumpkin Soup', '2020-09-27', '16:35:56.000000', 3.9, 3.9, 12, 'Soup', 'pickup', 'https://d1sag4ddilekf6.cloudfront.net/compressed/items/4-CZDVSF61V7BZLX-CZDVTAVHT8NWLN/photo/5d3de900a8504a3186b8edbdc783c226_1587280356396237621.jpeg'),
 (103, 1, '2020-12-01', '15:07:21.000000', 'Chicken Wing 8pcs', '2020-09-27', '16:35:56.000000', 9, 9.5, 11, 'Appetizer', 'pickup', 'https://d1sag4ddilekf6.cloudfront.net/compressed/items/4-CZDVSF61V7BZLX-CZDVTAVJA8EWN2/photo/9f8a894b1bc44139ad3dcc30fc40cf73_1587280632252386316.jpeg'),
 (104, 1, '2020-12-01', '15:07:21.000000', 'Beddar Cheddar Sausage', '2020-09-27', '16:35:56.000000', 4, 4.7, 12, 'Appetizer', 'pickup', 'https://d1sag4ddilekf6.cloudfront.net/compressed/items/4-CZDVSF61V7BZLX-CZDVTAVJC3T1TE/photo/1825c98a3d1f4e7eaa4df723e487e5ce_1588590751192003635.jpeg'),
@@ -137,11 +153,11 @@ INSERT INTO `product` (`product_id`, `company_id`, `decay_date`, `decay_time`, `
 (110, 1, '2020-12-01', '15:07:21.000000', 'Original Focaccia', '2020-09-27', '16:35:56.000000', 1, 2.3, 12, 'Appetizer', 'pickup', 'https://d1sag4ddilekf6.cloudfront.net/compressed/items/4-CZDVSF61V7BZLX-CZDVTAVKCLNJVA/photo/12b9e8bc23b142469b1ef4b72d67dfff_1588590860949473805.jpeg'),
 (111, 1, '2020-12-01', '15:07:21.000000', 'Garlic Focaccia', '2020-09-27', '16:35:56.000000', 2.3, 2.7, 12, 'Appetizer', 'pickup', 'https://d1sag4ddilekf6.cloudfront.net/compressed/items/4-CZDVSF61V7BZLX-CZDVTAVKEJCXR2/photo/34034b911c9041d1917c3fe3956adaf4_1588590818401148381.jpeg'),
 (112, 1, '2020-12-01', '15:07:21.000000', 'Cheese Focaccia', '2020-09-27', '16:35:56.000000', 2.5, 2.9, 12, 'Appetizer', 'pickup', 'https://d1sag4ddilekf6.cloudfront.net/compressed/items/4-CZDVSF61V7BZLX-CZDVTAVKFGJYAX/photo/f12960ac372345b3b811ad0d2456f3ec_1587280740331479131.jpeg'),
-(113, 1, '2020-12-01', '15:07:21.000000', 'Pineapple & Bacon Pizza', '2020-09-27', '16:35:56.000000', 8.3, 8.3, 11, 'Pizza', 'pickup', 'https://d1sag4ddilekf6.cloudfront.net/compressed/items/4-CZDVSF61V7BZLX-CZDVTAVKHGEXG2/photo/421d37d25760462aa9c14c46810991fb_1588590883560123186.jpeg'),
+(113, 1, '2020-12-01', '15:07:21.000000', 'Pineapple & Bacon Pizza', '2020-09-27', '16:35:56.000000', 8.3, 8.3, 7, 'Pizza', 'pickup', 'https://d1sag4ddilekf6.cloudfront.net/compressed/items/4-CZDVSF61V7BZLX-CZDVTAVKHGEXG2/photo/421d37d25760462aa9c14c46810991fb_1588590883560123186.jpeg'),
 (114, 1, '2020-12-01', '15:07:21.000000', 'Margherita Pizza', '2020-09-27', '16:35:56.000000', 9.5, 9.5, 12, 'Pizza', 'pickup', 'https://d1sag4ddilekf6.cloudfront.net/compressed/items/4-CZDVSF61V7BZLX-CZDVTAVKLENKE2/photo/5ff1a413b5bf45418ec50275db65eeb1_1587280770621703132.jpeg'),
 (115, 1, '2020-12-01', '15:07:21.000000', 'Mushroom & Bacon Pizza', '2020-09-27', '16:35:56.000000', 9.5, 9.5, 12, 'Pizza', 'pickup', 'https://d1sag4ddilekf6.cloudfront.net/compressed/items/4-CZDVSF61V7BZLX-CZDVTAVKNB5TVN/photo/508ceb1989914f4e83094898a7dd11d2_1587280783833378732.jpeg'),
-(116, 1, '2020-12-01', '15:07:21.000000', 'Pepperoni Pizza', '2020-09-27', '16:35:56.000000', 9.5, 9.5, 11, 'Pizza', 'pickup', 'https://d1sag4ddilekf6.cloudfront.net/compressed/items/4-CZDVSF61V7BZLX-CZDVTAVKPEMGRT/photo/9303b32964434e57bb5c627a74722d4e_1587280795107198232.jpeg'),
-(117, 1, '2020-12-01', '15:07:21.000000', 'Sausage Mayo Pizza', '2020-09-27', '16:35:56.000000', 9.9, 9.9, 11, 'Pizza', 'pickup', 'https://d1sag4ddilekf6.cloudfront.net/compressed/items/4-CZDVSF61V7BZLX-CZDVTAVKR6EYN2/photo/f9dfd4fc4df64a8a9acaf1df42d3f49e_1587280807993270512.jpeg'),
+(116, 1, '2020-12-01', '15:07:21.000000', 'Pepperoni Pizza', '2020-09-27', '16:35:56.000000', 9.5, 9.5, 12, 'Pizza', 'pickup', 'https://d1sag4ddilekf6.cloudfront.net/compressed/items/4-CZDVSF61V7BZLX-CZDVTAVKPEMGRT/photo/9303b32964434e57bb5c627a74722d4e_1587280795107198232.jpeg'),
+(117, 1, '2020-12-01', '15:07:21.000000', 'Sausage Mayo Pizza', '2020-09-27', '16:35:56.000000', 9.9, 9.9, 12, 'Pizza', 'pickup', 'https://d1sag4ddilekf6.cloudfront.net/compressed/items/4-CZDVSF61V7BZLX-CZDVTAVKR6EYN2/photo/f9dfd4fc4df64a8a9acaf1df42d3f49e_1587280807993270512.jpeg'),
 (118, 1, '2020-12-01', '15:07:21.000000', 'Nacho Bacon Pizza', '2020-09-27', '16:35:56.000000', 9.5, 9.5, 12, 'Pizza', 'pickup', 'https://d1sag4ddilekf6.cloudfront.net/compressed/items/4-CZDVSF61V7BZLX-CZDVTAVKT2KDNA/photo/207e16077b0f4a4aba04ce296fa98f6a_1587280818203180723.jpeg'),
 (119, 1, '2020-12-01', '15:07:21.000000', 'Vongole Spicy Tomato Soup Pasta', '2020-09-27', '16:35:56.000000', 7, 7, 12, 'Pasta', 'pickup', 'https://d1sag4ddilekf6.cloudfront.net/compressed/items/4-CZDVSF61V7BZLX-CZDVTAVKVUAAGA/photo/cffc338327ad442cac91dc9340c795bd_1587280829102558936.jpeg'),
 (120, 1, '2020-12-01', '15:07:21.000000', 'Black Pepper Chicken Pasta', '2020-09-27', '16:35:56.000000', 7, 7, 12, 'Pasta', 'pickup', 'https://d1sag4ddilekf6.cloudfront.net/compressed/items/4-CZDVSF61V7BZLX-CZDVTAVTA24ZV2/photo/ee7159a70e744f8d964150289957f9b5_1587280839882094657.jpeg'),
@@ -254,14 +270,14 @@ INSERT INTO `product` (`product_id`, `company_id`, `decay_date`, `decay_time`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `transaction_history`
+-- Table structure for table `transactions`
 --
 
-DROP TABLE IF EXISTS `transaction_history`;
-CREATE TABLE IF NOT EXISTS `transaction_history` (
+DROP TABLE IF EXISTS `transactions`;
+CREATE TABLE IF NOT EXISTS `transactions` (
   `transaction_id` int(255) NOT NULL AUTO_INCREMENT,
   `userid` int(255) NOT NULL,
-  `product_id` int(100) NOT NULL,
+  `cart` varchar(255) NOT NULL,
   `company_id` int(255) NOT NULL,
   `order_date` varchar(10) NOT NULL,
   `order_time` varchar(10) NOT NULL,
@@ -269,16 +285,17 @@ CREATE TABLE IF NOT EXISTS `transaction_history` (
   `collection_type` text NOT NULL,
   `review` varchar(255) NOT NULL,
   `rating` int(1) NOT NULL,
+  `collected` varchar(100) NOT NULL,
   PRIMARY KEY (`transaction_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `transaction_history`
+-- Dumping data for table `transactions`
 --
 
-INSERT INTO `transaction_history` (`transaction_id`, `userid`, `product_id`, `company_id`, `order_date`, `order_time`, `amount`, `collection_type`, `review`, `rating`) VALUES
-(1, 1, 1, 1, '2020/08/08', '21:00 PM', 3, 'Pickup', 'Value for money!', 4),
-(2, 1, 2, 2, '2020/08/08', '20:30 PM', 5, 'Pickup', 'Convenient to pick up during the evenings and easy to use! The food was nice and really happy to get it at a very cheap price! :)', 3);
+INSERT INTO `transactions` (`transaction_id`, `userid`, `cart`, `company_id`, `order_date`, `order_time`, `amount`, `collection_type`, `review`, `rating`, `collected`) VALUES
+(1, 1, '113:1,117:1,116:1,100:1', 1, '2020/08/08', '21:00 PM', 3, 'Pickup', 'Value for money!', 4, 'true'),
+(2, 1, '100:1', 2, '2020/08/08', '20:30 PM', 5, 'Pickup', 'Convenient to pick up during the evenings and easy to use! The food was nice and really happy to get it at a very cheap price! :)', 3, 'true');
 
 -- --------------------------------------------------------
 
@@ -304,7 +321,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`user_id`, `cart`, `cart_company_id`, `password`, `name`, `email`, `phoneNumber`, `preferences`) VALUES
-(1, '113:1,117:1,116:1', 1, 'open123', 'John Doe', 'johndoe@hotmail.com', '98444432', 'true,false,200'),
+(1, '101:3', 1, 'open123', 'John Doe', 'johndoe@hotmail.com', '98444432', 'true,true,200'),
 (2, '', 0, 'uicnJD6S1!', 'Jane Lim', 'jane.lim@sis.smu.edu.sg', '90895157', 'false,true,200');
 COMMIT;
 
