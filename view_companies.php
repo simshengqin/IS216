@@ -52,7 +52,7 @@
 <body>
 </head>
 <body>
-<div class='container-fluid'>
+<div class='container-fluid' style="background-color:white;">
     <div class='row'>
         <div name="toastdiv">
             <!--Toast, which is a message pop-up whenever an item is added to the cart-->
@@ -154,6 +154,9 @@
                 </div>
             </div>
         </div>
+        <!-- add navbar at the top -->
+        <?php include 'include/customer_navbar.php';?>
+
         <!--company grid displaying all food companys-->
         <!-- The col-12 IS SUPER IMPORTANT HERE. ALWAYS ensure col followes after row, THEN u can use col-->
         <div class="col-12" style="padding-left: 40px; padding-right: 40px; w-100">    
@@ -307,7 +310,7 @@
         </div>
     </div>
 </div>
-<hr>
+<?php include 'include/footer.php';?>
 
 <script>
     //****Search bar****//
