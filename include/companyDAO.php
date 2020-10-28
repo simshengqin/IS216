@@ -39,7 +39,55 @@ class companyDAO {
         $result = [];
 
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $result[] = new company($row['company_id'], $row['address'], $row['description'], $row['following'], $row['joined_date'], $row['name'], $row['password'], $row['rating']);
+            $result[] = new company($row['company_id'], $row['address'], $row['latitude'],$row['longtitude'], $row['description'], $row['following'], $row['joined_date'], $row['mode_of_collection'], $row['name'], $row['password'], $row['rating'],  $row['special_description']);
+        }
+        return $result;
+    }
+    public function retrieve_unique_special_description(){
+        $sql = 'SELECT DISTINCT special_description FROM company';
+
+        $connMgr = new ConnectionManager();      
+        $conn = $connMgr->getConnection();
+
+        $stmt = $conn->prepare($sql);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->execute();
+
+        $result = [];
+
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            if ($row['special_description'] != "") {
+                $result[] = $row['special_description'];
+            }           
+        }
+        return $result;
+    }
+    public function retrieve_products_by_special_description($special_description){
+        $sql = "SELECT * FROM company WHERE special_description = :special_description";
+        $connMgr = new ConnectionManager();      
+        $conn = $connMgr->getConnection();
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':special_description', $special_description, PDO::PARAM_STR);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->execute();
+        $result = [];
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $result[] = new company($row['company_id'], $row['address'], $row['latitude'],$row['longtitude'], $row['description'], $row['following'], $row['joined_date'], $row['mode_of_collection'], $row['name'], $row['password'], $row['rating'],  $row['special_description']);
+        }
+        return $result;
+    }
+    public function retrieve_top_rated_companies(){
+        $sql = "SELECT * FROM company WHERE rating > 4.69";
+        $connMgr = new ConnectionManager();      
+        $conn = $connMgr->getConnection();
+
+        $stmt = $conn->prepare($sql);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->execute();
+        $result = [];
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $result[] = new company($row['company_id'], $row['address'], $row['latitude'],$row['longtitude'], $row['description'], $row['following'], $row['joined_date'], $row['mode_of_collection'], $row['name'], $row['password'], $row['rating'],  $row['special_description']);
         }
         return $result;
     }
@@ -51,8 +99,9 @@ class companyDAO {
         $stmt = $conn->prepare($sql);
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $stmt->execute();
+        $result = [];
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $result = new company($row['company_id'], $row['address'], $row['description'], $row['following'], $row['joined_date'], $row['name'], $row['password'], $row['rating']);
+            $result[] = new company($row['company_id'], $row['address'], $row['latitude'],$row['longtitude'], $row['description'], $row['following'], $row['joined_date'], $row['mode_of_collection'], $row['name'], $row['password'], $row['rating'],  $row['special_description']);
         }
         return $result;
     }
@@ -66,7 +115,7 @@ class companyDAO {
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $stmt->execute();
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $result = new company($row['company_id'], $row['address'], $row['description'], $row['following'], $row['joined_date'], $row['name'], $row['password'], $row['rating']);
+            $result = new company($row['company_id'], $row['address'], $row['latitude'],$row['longtitude'], $row['description'], $row['following'], $row['joined_date'], $row['mode_of_collection'], $row['name'], $row['password'], $row['rating'],  $row['special_description']);
         }
         return $result;
     }
@@ -108,7 +157,7 @@ class companyDAO {
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $stmt->execute();
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $result = new company($row['company_id'], $row['address'], $row['description'], $row['following'], $row['joined_date'], $row['name'], $row['password'], $row['rating']);
+            $result = new company($row['company_id'], $row['address'], $row['latitude'],$row['longtitude'], $row['description'], $row['following'], $row['joined_date'], $row['mode_of_collection'], $row['name'], $row['password'], $row['rating'],  $row['special_description']);
         }
         return $result;
     }

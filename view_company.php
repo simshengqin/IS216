@@ -19,6 +19,8 @@
   $company = $companyDAO->retrieve_company_from_company_name($company_name);
   $company_id = $company-> get_company_id();
   $company_address = $company-> get_address();
+  $company_latitude = $company-> get_latitude();
+  $company_longtitude = $company-> get_longtitude();
   $company_description = $company-> get_description();
   $company_following = $company-> get_following();
   $company_joined_date = $company-> get_joined_date();
@@ -34,10 +36,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="x-ua-compatible" content="ie=edge"> 
 <title>View Company</title>
+<!-- Poppins font -->
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
   <!-- Roboto Font -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700&display=swap">
+  <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700&display=swap"> -->
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css"> -->
   <!--Bootstrap 4 and AJAX-->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -49,6 +53,9 @@
 <?php
     //Process the database into info to be displayed
     $productDAO = new productDAO();
+    //Retrieve all the unique categories, then we will retrieve all thep roducts category by category
+    $unique_categories = $productDAO->retrieve_unique_categories_by_company_id($company_id);
+    //echo '<pre>'; print_r($unique_categories); echo '</pre>'; 
     $company_products = $productDAO->retrieve_product_by_company($company_id);
     $company_products_count = count($company_products);
     //TO BE UPDATED
@@ -62,37 +69,41 @@
     $company_joined_days_ago = ceil(abs($end - $start) / 86400);
     $company_following_arr = explode(",", $company_following);
     $company_following_count = count($company_following_arr);
-
-
+    
 ?>
-<div class="jumbotron bg-light" name="companyinfo">
-    <div class="row text-dark text-capitalize mb-3">
+
+<?php include 'include/customer_navbar.php';?>
+<div class="jumbotron  mt-3" style="background-color: #FFFFFF" name="companyinfo">
+    <div class="row text-capitalize mb-3">
+
+        <div class="col-md-8">
+            <h1 class="font-weight-bold;"><?php echo $company_name ?>            
+                <button type="button" onclick="location.href='inbox.php?user_id=1&user_type=user&target_id=<?php echo $company_id?>&target_type=company&target_name=<?php echo $company_name?>'" class="btn btn-outline-info ml-2"><i class="fas fa-comment mr-2"></i>Chat</button>
+                <button type="button" onclick="show_map_modal()" class="btn btn-outline-info ml-2"><i class="fa fa-map-marker mr-2"></i>View Map</button>
+            </h1>         
+            <div>
+                <li class='fa fa-star'></li>
+                <span class='font-weight-bold'><?php echo $company_rating ?></span>
+                <span>/5</span><span style="margin-left: 10px;" id="distance" name='<?php echo "$company_latitude,$company_longtitude"?>'></span>
+            </div>   
+            <div class="company-description"> <?php echo $company_description?></div>
+            <div class="company-description"> <?php echo $company_address?></div>
+
+        </div>        
+     
         <div class="col-md-4">
+            <img class="mr-2 mb-2" width="100%" src="images/company_profile_image/<?php echo $company_id ?>.jpeg"></img>
+
+
             
-        </div>
-        <div class="col-md-2">
-            <img class="mr-2 mb-2" width="120px" src="images/profile_picture/company/<?php echo $company_id ?>.png"></img>
-            <span class="font-weight-bold "><?php echo $company_name ?></span>
-            <button type="button" id="follow_button" class="btn btn-outline-success ml-2 mt-3 mb-3" onclick='process_follow()'><i class="fas fa-user-plus mr-2"></i>Follow</button>
-            <!--To be UPDATED the user_id is hardcoded -->
-            <button type="button" onclick="location.href='inbox.php?user_id=1&user_type=user&target_id=<?php echo $company_id?>&target_type=company&target_name=<?php echo $company_name?>'" class="btn btn-outline-info ml-2"><i class="fas fa-comment mr-2"></i>Chat</button>
-            
-        </div>
-        <div class="col-sm-6 col-md-2">
-            <div class="mb-3"><i class="fas fa-utensils mr-2"></i>Products: <?php echo $company_products_count ?></div>
-            <div class="mb-3"><i class="fas fa-users mr-2"></i>Followers: <div id='followers_count'><?php echo $company_followers_count ?></div></div>
-            <div class="mb-3"><i class="fas fa-calendar-alt mr-2"></i>Joined: <?php echo $company_joined_days_ago ." Days Ago" ?></div>
-        </div>
-        <div class="col-sm-6 col-md-2">
-            <div class="mb-3"><i class="fas fa-star mr-2"></i>Rating: <?php echo $company_rating ?></div>
-            <div class="mb-3"><i class="fas fa-user-friends mr-2"></i>Following: <?php echo $company_following_count ?></div>
-            <div><?php echo "" ?></div>
         </div>
         <div class="col-sm-6 col-md-2">
         </div>
     </div>
     <!--<div class="d-flex align-items-center h-20"></div>-->
 </div>
+
+
 </head>
 <body>
 <div class='container-fluid'>
@@ -114,7 +125,7 @@
                     </button>
                 </div>
                 <div class="toast-body">
-                    <span id="cart_message_body">was successfully added to your cart. </span><a href="shoppingcart.php" target="_blank" >Click here</a> to view.
+                    <span id="cart_message_body">was successfully added to your cart. </span><a href="shoppingcart.php" id="added_to_cart_msg" target="_blank" >Click here</a> to view.
                 </div>
                 </div>
 
@@ -134,6 +145,7 @@
             </div>
             </div>
         </div>
+        <!--Modal to warn users of change in cart-->
         <div class="modal fade" id="change_company_id_in_cart_msg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -172,8 +184,51 @@
                 </div>
             </div>
         </div>
+        <!--Modal to input postal code-->
+        <div class="modal fade" id="input_postal_code" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Delivery Address</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                    <label for="postal_code" class="col-form-label">Enter your postal code:</label>
+                                    <input type="number" minlength="6" maxlength="6" class="form-control" id="postal_code">
+                                <div class="mt-3" id="invalid_postal_code_warning"></div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="input_postal_code_confirm" onclick="validate_postal_code()">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Modal to show map-->
+        <div class="modal fade" id="map_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">View Map</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="map"></div>
 
-        
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="close_input_postal_code" data-dismiss="modal" >Okay</button>
+                    </div>
+                </div>
+            </div>
+        </div>        
         <div name="filterform" class="col-md-4">
             <div><!--class="position-fixed"-->
                 <div class="form-row ">
@@ -235,10 +290,11 @@
                     </div>
                 </div>
                 <hr>
-                
+                <!--
                 <div class="form-row mb-2">
                     Categories
                 </div>
+               
                 <div class="form-row">
                     <div class="form-group col-12">
                         <input type="checkbox" id="categories_dessert" onchange ='search_filter()'> Dessert
@@ -247,6 +303,7 @@
 
                     </div>
                 </div>
+                -->
             </div>
 
         </div>
@@ -304,7 +361,7 @@
                     </span>
                 </div>
             </div>
-            <span id="no_items_warning"></span>
+            <h3 id="no_items_warning"></h3>
             <div class="row" id="main_product_grid">               
                 <?php
                     $productDAO = new productDAO();
@@ -338,97 +395,115 @@
                         
                         $i += 1;
                     }
-                    foreach ($company_products as $product) {
-                        //echo $product->get_name();
-                        $product_id = $product->get_product_id();
-                        $company_id = $product->get_company_id();
-                        $decay_date = $product->get_decay_date();
-                        $decay_time = $product->get_decay_time();
-                        $name = $product->get_name();
-                        $posted_date = $product->get_posted_date();
-                        $posted_time = $product->get_posted_time();
-                        $price_after = $product->get_price_after();
-                        $price_before = $product->get_price_before();
-                        $quantity = $product->get_quantity();
-                        $type = $product->get_type();
-                        $mode_of_collection = $product->get_mode_of_collection();
-                        $discount = round((($price_before-$price_after)/$price_before)*100,0);
+                    echo "<div class='col-12'>";
+                    // Print category (of the food product) by category
+                    foreach ($unique_categories as $category) {
+                        echo "  <div class='row' style='margin-left: 5px; margin-bottom: 20px;'>
+                                    <h1 class='font-weight-bold'>$category</h1>
+                                </div>";
+                        $company_products_by_category = $productDAO->retrieve_products_by_category($category);
+                        //echo '<pre>'; print_r($company_products_by_category); echo '</pre>';
+                        echo "<div class='row'>";
+                        foreach ($company_products_by_category as $product) {
+                            //echo $product->get_name();
+                            $product_id = $product->get_product_id();
+                            $company_id = $product->get_company_id();
+                            $decay_date = $product->get_decay_date();
+                            $decay_time = $product->get_decay_time();
+                            $name = $product->get_name();
+                            $posted_date = $product->get_posted_date();
+                            $posted_time = $product->get_posted_time();
+                            $price_after = $product->get_price_after();
+                            $price_before = $product->get_price_before();
+                            $quantity = $product->get_quantity();
+                            $category = $product->get_category();
+                            $mode_of_collection = $product->get_mode_of_collection();
+                            $image_url = $product->get_image_url();
+                            if ($image_url == "") {
+                                $image_url ="images/$category/$name.jpg";
+                            }
+                            $discount = round((($price_before-$price_after)/$price_before)*100,0);
 
-                        //checks whether this product is in the user cart. If so, it should display added to cart                        
-                        $product = $productDAO -> retrieve_product($product_id);
-                        $product_quantity_in_database = $product -> get_quantity();
-                        if (in_array($product_id, $cart_product_ids, true)) {
-                            $add_to_cart_btn_text = "ADDED TO CART";
-                            $add_to_cart_btn_class = "add-to-cart add-to-cart-hover";
-                        }
-                        //checks whether the product still has stocks left
-                        //this is after added to cart, as the user might be the person to hold on to the stocks so no more stocks left
+                            //checks whether this product is in the user cart. If so, it should display added to cart                        
+                            $product = $productDAO -> retrieve_product($product_id);
+                            $product_quantity_in_database = $product -> get_quantity();
+                            if (in_array($product_id, $cart_product_ids, true)) {
+                                $add_to_cart_btn_text = "ADDED TO CART";
+                                $add_to_cart_btn_class = "add-to-cart add-to-cart-hover";
+                            }
+                            //checks whether the product still has stocks left
+                            //this is after added to cart, as the user might be the person to hold on to the stocks so no more stocks left
 
-                        elseif ($product_quantity_in_database == 0) {
-                            $add_to_cart_btn_text = "OUT OF STOCK";
-                            #do not have the hover class, so no hover animation
-                            $add_to_cart_btn_class = "add-to-cart";
-                        }
-                        else {
-                            $add_to_cart_btn_text = "ADD TO CART";
-                            $add_to_cart_btn_class = "add-to-cart add-to-cart-hover";
-                        }
-                        //if there is no discount, do not show the -% label and the crossed out price
-                        if ($discount == 0.0) {
-                            $price_before_modified = "";                 
-                        }     
-                        else {
-                            $price_before_modified = "$" . $price_before;
-                        }           
-                        //set timezone to singapore so the time will be correct
-                        date_default_timezone_set('Asia/Singapore');
-                        //$datetime = date('m/d/Y h:i:s a', time());
-                        if ($product_quantity_in_database != 0) {
-                            echo "
-                            <div class='col-xl-3 col-lg-4 col-sm-6 single_product_grid' id ='single_product_grid' name='$product_id,$company_id,$decay_date,$decay_time,$name,$posted_date,$posted_time,$price_after,$price_before,$quantity,$type,$mode_of_collection'>
-                            <div class='product-grid'>
-                                
-                                <div class='product-image d-flex w-100'>
-                                    <img class='pic-1 my-auto'  src='images/$type/$name.jpg'>";
-                                    //only add a new label if the product is posted today 
-                                    //Need to follow sql format, which is Y-m-d
-                                    if (date('Y-m-d', time())== $posted_date) {
-                                        echo "<span class='product-new-label'>New</span>";
-                                    }
-                                    
-                                    if ($discount != 0.0) {
-                                        echo "<span class='product-discount-label'>-$discount%</span>";
-                                    }
-                                    
-                                    echo "
-                                </div>
-                                <div class='product-content'>
-                                    <ul class='rating'>
-                                        <li class='fa fa-star'></li>
-                                        <li class='fa fa-star'></li>
-                                        <li class='fa fa-star'></li>
-                                        <li class='fa fa-star'></li>
-                                        <li class='fa fa-star'></li>
-                                    </ul>
-                                    <h3 class='title'>" . str_replace('_',' ',$name) . "</h3>
-                                    <div class='price'>
-                                        $$price_after
-                                        <span>$price_before_modified</span>
+                            elseif ($product_quantity_in_database == 0) {
+                                $add_to_cart_btn_text = "OUT OF STOCK";
+                                #do not have the hover class, so no hover animation
+                                $add_to_cart_btn_class = "add-to-cart";
+                            }
+                            else {
+                                $add_to_cart_btn_text = "ADD TO CART";
+                                $add_to_cart_btn_class = "add-to-cart add-to-cart-hover";
+                            }
+                            //if there is no discount, do not show the -% label and the crossed out price
+                            if ($discount == 0.0) {
+                                $price_before_modified = "";                 
+                            }     
+                            else {
+                                $price_before_modified = "$" . $price_before;
+                            }           
+                            //set timezone to singapore so the time will be correct
+                            date_default_timezone_set('Asia/Singapore');
+                            //$datetime = date('m/d/Y h:i:s a', time());
+                            if ($product_quantity_in_database != 0) {
+                                echo "
+                                <div class='col-xl-3 col-lg-4 col-sm-6 single_product_grid' id ='single_product_grid' name='$product_id,$company_id,$decay_date,$decay_time,$name,$posted_date,$posted_time,$price_after,$price_before,$quantity,$category,$mode_of_collection'>
+                                    <div class='product-grid'>
+                                        
+                                        <div class='product-image d-flex w-100'>
+                                            <img class='pic-1 my-auto'  src='$image_url'>";
+                                            //only add a new label if the product is posted today 
+                                            //Need to follow sql format, which is Y-m-d
+                                            if (date('Y-m-d', time())== $posted_date) {
+                                                echo "<span class='product-new-label'>New</span>";
+                                            }
+                                            
+                                            if ($discount != 0.0) {
+                                                echo "<span class='product-discount-label'>-$discount%</span>";
+                                            }
+                                            
+                                            echo "
+                                        </div>
+                                        <div class='product-content'>
+                                            <!--
+                                            <ul class='rating'>
+                                                <li class='fa fa-star'></li>
+                                                <li class='fa fa-star'></li>
+                                                <li class='fa fa-star'></li>
+                                                <li class='fa fa-star'></li>
+                                                <li class='fa fa-star'></li>
+                                            </ul>
+                                            -->
+                                            <h3 class='title'>" . str_replace('_',' ',$name) . "</h3>
+                                            <div class='price'>
+                                                $$price_after
+                                                <span>$price_before_modified</span>
+                                            </div>
+                                            <button class='" . $add_to_cart_btn_class . "' href='#' id='" . $product_id . "," . str_replace('_',' ',$name) . "' onclick='add_to_cart(this)'>" . $add_to_cart_btn_text . "</button>
+                                        </div>
                                     </div>
-                                    <button class='" . $add_to_cart_btn_class . "' href='#' id='" . $product_id . "," . str_replace('_',' ',$name) . "' onclick='add_to_cart(this)'>" . $add_to_cart_btn_text . "</button>
                                 </div>
-                            </div>
-                        </div>
-                            ";                            
-                        }
+                                    ";                            
+                            }
 
+                        }
+                        echo "</div>";
                     }
+                    echo "</div>";
                 ?>
             </div>
         </div>
     </div>
 </div>
-<hr>
+<?php include 'include/footer.php';?>
 
 <script>
     //***Follow button****//
@@ -449,7 +524,7 @@
     function search_filter(){
         //Change the display to none for products that do not meet the filter criteria, else change the display to block
         var product_grids = document.getElementsByClassName("single_product_grid");
-        var search_for_products = document.getElementById("search_for_products").value;
+        var search_for_products = document.getElementById("search_for_products").value.toLowerCase();
         if (document.getElementById("mode_of_collection_delivery").checked) {
             mode_of_collection = "delivery";
         }
@@ -464,9 +539,9 @@
         var offers_free_delivery = document.getElementById("offers_free_delivery").checked;
         var offers_has_discount = document.getElementById("offers_has_discount").checked;
         var freshness_min_days_to_expiry = document.getElementById("freshness_min_days_to_expiry").value;
-        var categories_dessert = document.getElementById("categories_dessert").checked;
-        var categories_vegetables = document.getElementById("categories_vegetables").checked;
-        var categories_meal = document.getElementById("categories_meal").checked;
+        //var categories_dessert = document.getElementById("categories_dessert").checked;
+        //var categories_vegetables = document.getElementById("categories_vegetables").checked;
+        //var categories_meal = document.getElementById("categories_meal").checked;
         var has_at_least_one_value = false;
         for (var i=0; i < product_grids.length; i++) {
             var product_grid = product_grids[i];
@@ -478,13 +553,13 @@
             company_id = product_info_arr[1];
             decay_date = product_info_arr[2];
             decay_time = product_info_arr[3];
-            name = product_info_arr[4];
+            name = product_info_arr[4].toLowerCase();
             posted_date = product_info_arr[5];
             posted_time = product_info_arr[6];
             price_after = parseFloat(product_info_arr[7]);
             price_before = parseFloat(product_info_arr[8]);
             quantity = product_info_arr[9];
-            type = product_info_arr[10];
+            category = product_info_arr[10];
             mode_of_collection_user = product_info_arr[11];
             //Gets today date and the date of decay in a date object
             var now = new Date();
@@ -497,23 +572,23 @@
             //Checks whether the product meets all filter criteria. As long as the product does not meet one of the criteria, it wont be displayed
             //Display the product as long as it fufills 1 of the categories. Hence, if both dessert and vegeatables are checked, it will display products with either dessert or vegetables
             //console.log(price_before);
-            if ((!categories_dessert && !categories_vegetables && !categories_meal) || (categories_dessert && type == "dessert") || (categories_vegetables && type == "vegetables") || (categories_meal && type == "japanese_food"))
-            {
-                if (name.includes(search_for_products) && (mode_of_collection == "" || mode_of_collection == mode_of_collection_user) && (price_max == "" || price_after <= parseFloat(price_max)) && (price_min == "" || price_after >= parseFloat(price_min)) && (!offers_has_discount|| price_before != price_after) && (freshness_min_days_to_expiry == "" || difference_in_days >= freshness_min_days_to_expiry)) {
-                    product_grid.setAttribute("style", "display: block;");
-                    has_at_least_one_value = true;
-                }    
-                else {
-                product_grid.setAttribute("style", "display: none;");
-                }           
-            }
+            //if ((!categories_dessert && !categories_vegetables && !categories_meal) || (categories_dessert && category == "dessert") || (categories_vegetables && category == "vegetables") || (categories_meal && category == //"japanese_food"))
+            //{
+            if (name.includes(search_for_products) && (mode_of_collection == "" || mode_of_collection == mode_of_collection_user) && (price_max == "" || price_after <= parseFloat(price_max)) && (price_min == "" || price_after >= parseFloat(price_min)) && (!offers_has_discount|| price_before != price_after) && (freshness_min_days_to_expiry == "" || difference_in_days >= freshness_min_days_to_expiry)) {
+                product_grid.setAttribute("style", "display: block;");
+                has_at_least_one_value = true;
+            }    
             else {
-                product_grid.setAttribute("style", "display: none;");
-            }
+            product_grid.setAttribute("style", "display: none;");
+            }           
+            //}
+            //else {
+            //    product_grid.setAttribute("style", "display: none;");
+            //}
         }
         //Display warning message if no products match the filter criteria
         if (!has_at_least_one_value) {
-            document.getElementById("no_items_warning").innerHTML = "<span class='text-danger font-weight-bold'>No results match the filter criteria</span>";
+            document.getElementById("no_items_warning").innerHTML = "<div class='alert alert-danger'>No results match the filter criteria</div>";
         }
         else {
             document.getElementById("no_items_warning").innerHTML = "";
@@ -531,9 +606,9 @@
         var offers_free_delivery = document.getElementById("offers_free_delivery").checked;
         var offers_has_discount = document.getElementById("offers_has_discount").checked;
         var freshness_min_days_to_expiry = document.getElementById("freshness_min_days_to_expiry").value;
-        var categories_dessert = document.getElementById("categories_dessert").checked;
-        var categories_vegetables = document.getElementById("categories_vegetables").checked;
-        var categories_meal = document.getElementById("categories_meal").checked;
+        //var categories_dessert = document.getElementById("categories_dessert").checked;
+        //var categories_vegetables = document.getElementById("categories_vegetables").checked;
+        //var categories_meal = document.getElementById("categories_meal").checked;
         var has_at_least_one_value = false;
         if (selected_option == "Price: Low to high") {
             var product_grids_sorted = product_grids.sort(function(a, b){return parseFloat(a.getAttribute("name").split(",")[7])-parseFloat(b.getAttribute("name").split(",")[7])});
@@ -572,7 +647,7 @@
 
             }
         */
-            //productinfo = $product_id, $company_id, $decay_date, $decay_time, $name, $posted_date, $posted_time, $price_after, $price_before, $quantity, $type, $mode_of_collection
+            //productinfo = $product_id, $company_id, $decay_date, $decay_time, $name, $posted_date, $posted_time, $price_after, $price_before, $quantity, $category, $mode_of_collection
             //To retrieve the name, need to split by , and find the 5th element
             //product_info_arr = product_grid.getAttribute("name").split(",");
             //product_id = product_info_arr[0];
@@ -585,7 +660,7 @@
             //price_after = parseFloat(product_info_arr[7]);
             //price_before = parseFloat(product_info_arr[8]);
             //quantity = product_info_arr[9];
-            //type = product_info_arr[10];
+            //category = product_info_arr[10];
             //mode_of_collection_user = product_info_arr[11];    
     }
     //****Add to cart message popup****//
@@ -704,6 +779,301 @@
         //$("#add_to_cart_message").toast('show');
         //alert('Successfully added ' + name + ' to cart!');
     }
+    function parseURLParams(url) {
+        //Works similar to $_GET, retrieve parameters from the url
+        var queryStart = url.indexOf("?") + 1,
+            queryEnd   = url.indexOf("#") + 1 || url.length + 1,
+            query = url.slice(queryStart, queryEnd - 1),
+            pairs = query.replace(/\+/g, " ").split("&"),
+            parms = {}, i, n, v, nv;
+
+        if (query === url || query === "") return;
+
+        for (i = 0; i < pairs.length; i++) {
+            nv = pairs[i].split("=", 2);
+            n = decodeURIComponent(nv[0]);
+            v = decodeURIComponent(nv[1]);
+
+            if (!parms.hasOwnProperty(n)) parms[n] = [];
+            parms[n].push(nv.length === 2 ? v : null);
+        }
+        return parms;
+    }
+    function show_map_modal() { 
+        //Only show the map modal if postal code is entered
+        if(document.getElementById("postal_code").value == "") {            
+            //Ask the modal to show the map modal once the user enters in a postal code
+            document.getElementById("close_input_postal_code").setAttribute("onclick", "show_map_modal()");
+            $('#input_postal_code').modal('show');
+
+             
+        }
+        else {
+            $('#map_modal').modal('show');
+            //Need to only init map after showing modal for it to zoom in properly
+            initMap();             
+        }
+
+                        
+
+    }
+    function show_postal_code_modal() { 
+        $('#input_postal_code').modal('show');
+    }
+    //run this function when this page loads
+
+    window.onload = calculates_distance("");
+    function calculates_distance() {
+            //This functions calculate distance from provided postal code to this company location
+            //Get the latitude and longtitude using a postal code (from the url)
+            //if the user enters his postal code in the modal on top, this will have a value
+            var start = document.getElementById("postal_code").value;
+            if (start == "") {
+                if(parseURLParams(window.location.href) !== undefined && "postal_code" in parseURLParams(window.location.href)) {
+                    //console.log(typeof  parseURLParams(window.location.href));
+                    start = parseURLParams(window.location.href)["postal_code"];
+                    document.getElementById("postal_code").value = start;   
+                }
+                else {
+                    //if user never provides a postalcode, ask for it
+                    $('#input_postal_code').modal('show');
+                    return;               
+                }    
+            }                     
+            var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + start + "&key=AIzaSyATVWK0xQi5HrgEwmmkWT78hBe0h2P9bA0";       
+            //Retrieves the company latitude and longtitude                        
+            end_latlng_arr = document.getElementById("distance").getAttribute("name").split(",");
+      
+            end_latitude = end_latlng_arr[0]/10000000;
+            end_longtitude = end_latlng_arr[1]/10000000;
+            //console.log("End:", end_latitude, end_longtitude);                        
+            try {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        // following code may throw error if user input is invalid address
+                        // so we use try-catch block to handle errors
+                        
+                            // expected response is JSON data
+                            var data = JSON.parse(this.responseText);
+                            var loc = data["results"][0]["geometry"]["location"];
+                            start_latitude = loc["lat"];
+                            start_longtitude = loc["lng"];
+                            //console.log("Start:",start_latitude, start_longtitude);
+                            //After getting current latitude and longtitude, calculates distance from this point to this company's longtitude and latitude
+                            var distance = google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(start_latitude,start_longtitude), new google.maps.LatLng(end_latitude, end_longtitude))/1000; 
+                            //console.log("Distance between start and end:", distance, "km");
+                            //round to 2 dp
+                            var distance = Math.round(distance * 100) / 100;               
+                            document.getElementById("distance").innerText = distance + " km away";    
+                            //If the user provides his postal code through the modal, saves it in the added to cart msg so he dont need to enter it again 
+                            added_to_cart_msg = document.getElementById("added_to_cart_msg");
+                            added_to_cart_msg.setAttribute("href", added_to_cart_msg.getAttribute("href") + "?postal_code=" + start);   
+                    }
+                };
+                xhttp.open("GET", url, true);
+                xhttp.send();
+            }
+            catch(err) { // show error message
+                                // not a good idea to directly show err.message 
+                                // as it may contain sensitive info
+                                // show a predefined error message string
+                                console.log("Sorry, invalid address. Please try again!");
+                                document.getElementById("map").innerHTML = "<div class='alert alert-danger'>Invalid postal code. Please refresh the page.</div>";
+
+                                //if user never provides a postalcode, ask for it
+                                $('#input_postal_code').modal('show');
+
+            }
+}
+</script>
+<script>    
+    //////////////Loads the Google Map/////////////////////
+    function parseURLParams(url) {
+    //Works similar to $_GET, retrieve parameters from the url
+    var queryStart = url.indexOf("?") + 1,
+        queryEnd   = url.indexOf("#") + 1 || url.length + 1,
+        query = url.slice(queryStart, queryEnd - 1),
+        pairs = query.replace(/\+/g, " ").split("&"),
+        parms = {}, i, n, v, nv;
+
+    if (query === url || query === "") return;
+
+    for (i = 0; i < pairs.length; i++) {
+        nv = pairs[i].split("=", 2);
+        n = decodeURIComponent(nv[0]);
+        v = decodeURIComponent(nv[1]);
+
+        if (!parms.hasOwnProperty(n)) parms[n] = [];
+        parms[n].push(nv.length === 2 ? v : null);
+    }
+    return parms;
+    }    
+    var map, infoWindow;
+    //Prevents the form from submitting when pressing enter while inputting postal code
+    $('form').submit(function(e){
+        e.preventDefault();
+    });
+    //Allows user to press enter to submit the postal code
+    $("form").on('keyup', function (e) {
+    if (e.key === 'Enter' || e.keyCode === 13) {
+        validate_postal_code();
+    }
+    });
+    function validate_postal_code() {
+        postal_code_input = document.getElementById("postal_code");
+        if (postal_code_input.value.length != 6) {
+            document.getElementById("invalid_postal_code_warning").innerHTML="<div class='alert alert-danger'>Postal code needs to be 6 digits</div>";              
+        }
+        else {
+            //Hides the modal
+            $('#input_postal_code').modal('hide');
+            //document.getElementById("input_postal_code_confirm").setAttribute("data-dismiss","modal");
+            calculates_distance();
+        }
+    }
+    function initMap() {
+    //alert(document.getElementById('map').getAttribute("style"));
+    
+    if (document.getElementById('map').getAttribute("style") == "height: 400px; position: relative; overflow: hidden;") {
+        //if the map is already rendered, dont render it again
+    }
+    else {
+    //Get the latitude and longtitude using a postal code (from the url)
+    //if the user enters his postal code in the modal on top, this will have a value
+    var start = document.getElementById("postal_code").value;
+    if (start == "") {
+        if(parseURLParams(window.location.href) !== undefined && "postal_code" in parseURLParams(window.location.href)) {
+            //console.log(typeof  parseURLParams(window.location.href));
+            start = parseURLParams(window.location.href)["postal_code"];
+            document.getElementById("postal_code").value = start;   
+        }
+        else {
+            //if user never provides a postalcode, ask for it
+            $('#input_postal_code').modal('show');
+            return;               
+        }    
+    }   
+    //Sets the height of the map
+    document.getElementById('map').setAttribute("style", "height: 400px;")       
+    map = new google.maps.Map(document.getElementById('map'), {
+        //center: {lat: -34.397, lng: 150.644},
+        zoom: 6
+        });
+        calcRoute();               
+    }
+                        
+    }
+
+    function calcRoute() {
+        //Calculates the distance between start and end point
+        //Get the latitude and longtitude using a postal code (from the url)
+        //if the user enters his postal code in the modal on top, this will have a value
+        var start = document.getElementById("postal_code").value;
+        if (start == "") {
+            if(parseURLParams(window.location.href) !== undefined && "postal_code" in parseURLParams(window.location.href)) {
+                //console.log(typeof  parseURLParams(window.location.href));
+                start = parseURLParams(window.location.href)["postal_code"];  
+                document.getElementById("postal_code").value = start; 
+            }
+            else {
+                //if user never provides a postalcode, ask for it
+                $('#input_postal_code').modal('show');
+                return;               
+            }    
+        }
+        //console.log(start[0]);
+        var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + start + "&key=AIzaSyATVWK0xQi5HrgEwmmkWT78hBe0h2P9bA0";
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+            // following code may throw error if user input is invalid address
+            // so we use try-catch block to handle errors
+            // expected response is JSON data
+            var data = JSON.parse(this.responseText);
+                                
+            try { 
+                var addr = data["results"][0]["formatted_address"];
+            if ( data["status"] == "ZERO_RESULTS") {
+                    document.getElementById("map").innerHTML = "<div class='alert alert-danger'>Invalid postal code. Please refresh the page.</div>";
+            }
+            var loc = data["results"][0]["geometry"]["location"];
+            start_latitude = loc["lat"];
+            start_longtitude = loc["lng"];
+            //console.log("Start:",start_latitude, start_longtitude);
+            //Retrieves the company latitude and longtitude                        
+            end_latlng_arr = document.getElementById("distance").getAttribute("name").split(",");
+    
+            end_latitude = end_latlng_arr[0]/10000000;
+            end_longtitude = end_latlng_arr[1]/10000000;
+            //console.log("End:", end_latitude, end_longtitude);    
+            //console.log(window.latitude, window.longtitude);            
+            var directionsService = new google.maps.DirectionsService();
+            var directionsRenderer = new google.maps.DirectionsRenderer();
+            var start = new google.maps.LatLng(start_latitude,start_longtitude);
+            var end = new google.maps.LatLng(end_latitude, end_longtitude);
+            directionsRenderer.setMap(map);
+            //var selectedMode = document.getElementById('mode').value;
+            var request = {
+                origin: start,
+                destination: end,
+                // Note that JavaScript allows us to access the constant
+                // using square brackets and a string value as its
+                // "property."
+                travelMode: 'DRIVING' //google.maps.TravelMode[selectedMode]
+            };
+            //console.log(start);
+            //console.log(end);
+
+            directionsService.route(request, function(response, status) {
+                if (status == 'OK') {
+                    directionsRenderer.setDirections(response);
+                    //No need to enter postal code if map is rendered successfully
+                    document.getElementById("close_input_postal_code").setAttribute("onclick","");
+                    //If the user provides his postal code through the modal, saves it in the added to cart msg so he dont need to enter it again 
+                    added_to_cart_msg = document.getElementById("added_to_cart_msg");
+                    var currrent_link = added_to_cart_msg.getAttribute("href");
+                    if (current_link.includes("?postal_code=") == false) {
+                        added_to_cart_msg.setAttribute("href", current_link + "?postal_code=" + start);  
+                    }
+                   
+                }
+                else {
+                        document.getElementById("map").innerHTML = "<div class='alert alert-danger'>Invalid postal code</div>";
+                }
+                //console.log(response);
+            }); 
+            } catch(err) { // show error message
+                // not a good idea to directly show err.message 
+                // as it may contain sensitive info
+                // show a predefined error message string
+                console.log("Sorry, invalid address. Please try again!");
+                document.getElementById("map").innerHTML = "<div class='alert alert-danger'>Invalid postal code. Please enter the postal code again.</div>";
+                //Prompts user to enter th ecorrect postal code again
+                document.getElementById("close_input_postal_code").setAttribute("onclick","show_postal_code_modal()");
+                //Need to reset the style of map so it will generate again
+                document.getElementById('map').setAttribute("style","height: 25px;");
+                //document.getElementById("display").innerHTML = "Sorry, invalid address. Please try again!";
+            }
+        }
+        };
+        xhttp.open("GET", url, true);
+        xhttp.send();
+
+    }
+
+    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+    infoWindow.setPosition(pos);
+    infoWindow.setContent(browserHasGeolocation ?
+                            'Error: The Geolocation service failed.' :
+                            'Error: Your browser doesn\'t support geolocation.');
+    infoWindow.open(map);
+    }
+</script>
+<!-- To calculate distance between 2 points-->
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&v=3&libraries=geometry"></script>
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcIUwwXfLUWzMAE1WspewghH9f-vmSkzc">
 </script>
 </body>
 </html>

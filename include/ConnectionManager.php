@@ -6,14 +6,19 @@ class ConnectionManager {
         
         $host = "localhost";
         $username = "root";
-        if (PHP_OS == 'Linux'){
+        if (PHP_OS == 'Linux')
             $password = '6LNDUXQRTKCb';
-        }
-        else{
-            $password = ""; 
-        } 
-        $db_name = "is216";
-        $port = 3306;
+        else
+            $password = "";  
+        $dbname = "is216";
+        $port = 3306;    
+
+        $url  = "mysql:host={$host};dbname={$dbname};port={$port}";
+        
+        $conn = new PDO($url, $username, $password);
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
+        return $conn;  
+        
         /*
         $host = "is216.cotlwptbe0ig.ap-southeast-1.rds.amazonaws.com";
         $username = "admin";

@@ -157,6 +157,147 @@ h3.h3 {
   font-size: 1.7em;
 }
 
+/********************* view_companyies.php **********************/
+/**** Company grid ****/
+.company-grid,
+.company-grid .company-image {
+  position: relative;
+}
+.company-grid {
+  font-family: Poppins, sans-serif;
+  text-align: left;
+  border-radius: 5px;
+  overflow: hidden;
+  z-index: 1;
+  transition: all 0.3s ease 0s;
+}
+.company-grid a:hover {
+  text-decoration: none;
+  color: inherit;
+
+}
+.company-grid:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+.company-grid .company-image {
+  height: 50%;
+}
+.company-grid .company-image a {
+  display: block;
+}
+.company-grid .company-image img {
+  width: 100%;
+  height: auto;
+  max-height: 100%;
+}
+.company-grid .company-content {
+  width: 100%;
+  height: auto;
+  max-height: 100%;
+}
+.company-grid .company-discount-label,
+.company-grid .company-new-label {
+  color: #fff;
+  background-color: #16a085;
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: 45px;
+  height: 45px;
+  width: 45px;
+  border-radius: 50%;
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  transition: all 0.3s;
+}
+.company-grid .company-discount-label {
+  left: auto;
+  right: 10px;
+  background-color: #d7292a;
+}
+.company-grid .company-content {
+  padding: 25px;
+}
+.company-grid .title {
+  font-size: 16px;
+  font-weight: 400;
+  text-transform: capitalize;
+  margin: 0 0 7px;
+  transition: all 0.3s ease 0s;
+}
+.company-description {
+  font-size: 16px;
+  color: #707070;
+}
+.description {
+  font-size: 14px;
+  color: #707070;
+}
+.company-grid .title a {
+  color: #222;
+}
+.company-grid .title a:hover {
+  color: #16a085;
+}
+.company-grid .price {
+  color: #16a085;
+  font-size: 17px;
+  font-weight: 700;
+  margin: 0 2px 15px 0;
+  display: block;
+}
+.company-grid .price span {
+  color: #909090;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-decoration: line-through;
+  text-align: left;
+  vertical-align: middle;
+  display: inline-block;
+}
+.company-grid .add-to-cart {
+  border: 1px solid #e5e5e5;
+  display: inline-block;
+  padding: 10px 20px;
+  color: #888;
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: 4px;
+  transition: all 0.3s;
+}
+.company-grid:hover .add-to-cart-hover {
+  border: 1px solid transparent;
+  background: #16a085;
+  color: #fff;
+}
+.company-grid .add-to-cart-hover:hover {
+  background-color: #505050;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.company-content .rating {
+  padding: 0;
+  margin: 0 0 7px;
+  list-style: none;
+}
+.fa-star {
+  /*color: #ffd200;*/
+}
+.company-grid .rating li {
+  font-size: 12px;
+  color: #fcad03;
+  transition: all 0.3s ease 0s;
+}
+.company-grid .rating li.disable {
+  color: rgba(0, 0, 0, 0.2);
+}
+@media only screen and (max-width: 990px) {
+  .company-grid {
+    margin-bottom: 30px;
+  }
+}
 /********************* view_products.php **********************/
 /**** Product grid ****/
 .product-grid,
@@ -197,8 +338,8 @@ h3.h3 {
   width: 45px;
   border-radius: 50%;
   position: absolute;
-  left: 10px;
-  top: 30px;
+  left: 5px;
+  top: 10px;
   transition: all 0.3s;
 }
 .product-grid .product-discount-label {

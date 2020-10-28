@@ -16,16 +16,18 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <!--Link to main.css files while contains all the css of this project-->
 <link rel='stylesheet' href='css\maincss.css'>
-<div class="jumbotron color-grey-light">
+
+<?php include 'include/customer_navbar.php';?>
+<!-- <div class="jumbotron color-grey-light">
     <div class="d-flex align-items-center h-20">
         <div class="container text-center py-5">
         <h3 class="mb-0">List of products</h3>
         </div>
     </div>
-</div>
+</div> -->
 </head>
 <body>
-<div class='container-fluid'>
+<div class='container-fluid' style="background-color:white;">
     <div class='row'>
         <div name="toastdiv">
             <!--Toast, which is a message pop-up whenever an item is added to the cart-->
@@ -238,8 +240,13 @@
                         $price_after = $product->get_price_after();
                         $price_before = $product->get_price_before();
                         $quantity = $product->get_quantity();
-                        $type = $product->get_type();
+                        $category = $product->get_category();
                         $mode_of_collection = $product->get_mode_of_collection();
+                        $product_image_url = $product->get_image_url();
+                        if ($product_image_url == "") {
+                            $product_image_url ="images/$category/$name.jpg";
+                        }
+                        
                         $discount = round((($price_before-$price_after)/$price_before)*100,0);
 
                         //checks whether this product is in the user cart. If so, it should display added to cart                        
@@ -273,11 +280,11 @@
                         //$datetime = date('m/d/Y h:i:s a', time());
                         if ($product_quantity_in_database != 0) {
                             echo "
-                            <div class='col-xl-3 col-lg-4 col-sm-6 single_product_grid' id ='single_product_grid' name='$product_id,$company_id,$decay_date,$decay_time,$name,$posted_date,$posted_time,$price_after,$price_before,$quantity,$type,$mode_of_collection'>
+                            <div class='col-xl-3 col-lg-4 col-sm-6 single_product_grid' id ='single_product_grid' name='$product_id,$company_id,$decay_date,$decay_time,$name,$posted_date,$posted_time,$price_after,$price_before,$quantity,$category,$mode_of_collection'>
                             <div class='product-grid'>
                                 
                                 <div class='product-image d-flex w-100'>
-                                    <img class='pic-1 my-auto'  src='images/$type/$name.jpg'>";
+                                    <img class='pic-1 my-auto'  src='$product_image_url'>";
                                     //only add a new label if the product is posted today 
                                     //Need to follow sql format, which is Y-m-d
                                     if (date('Y-m-d', time())== $posted_date) {
@@ -316,7 +323,7 @@
         </div>
     </div>
 </div>
-<hr>
+<?php include 'include/footer.php';?>
 
 <script>
     //****Search bar****//
@@ -345,7 +352,7 @@
         for (var i=0; i < product_grids.length; i++) {
             var product_grid = product_grids[i];
 
-            //productinfo = $product_id, $company_id, $decay_date, $decay_time, $name, $posted_date, $posted_time, $price_after, $price_before, $quantity, $type, $mode_of_collection
+            //productinfo = $product_id, $company_id, $decay_date, $decay_time, $name, $posted_date, $posted_time, $price_after, $price_before, $quantity, $category, $mode_of_collection
             //To retrieve the name, need to split by , and find the 5th element
             product_info_arr = product_grid.getAttribute("name").split(",");
             product_id = product_info_arr[0];
@@ -358,7 +365,7 @@
             price_after = parseFloat(product_info_arr[7]);
             price_before = parseFloat(product_info_arr[8]);
             quantity = product_info_arr[9];
-            type = product_info_arr[10];
+            category = product_info_arr[10];
             mode_of_collection_user = product_info_arr[11];
             //Gets today date and the date of decay in a date object
             var now = new Date();
@@ -371,7 +378,7 @@
             //Checks whether the product meets all filter criteria. As long as the product does not meet one of the criteria, it wont be displayed
             //Display the product as long as it fufills 1 of the categories. Hence, if both dessert and vegeatables are checked, it will display products with either dessert or vegetables
             //console.log(price_before);
-            if ((!categories_dessert && !categories_vegetables && !categories_meal) || (categories_dessert && type == "dessert") || (categories_vegetables && type == "vegetables") || (categories_meal && type == "japanese_food"))
+            if ((!categories_dessert && !categories_vegetables && !categories_meal) || (categories_dessert && category == "dessert") || (categories_vegetables && category == "vegetables") || (categories_meal && category == "japanese_food"))
             {
                 if (name.includes(search_for_products) && (mode_of_collection == "" || mode_of_collection == mode_of_collection_user) && (price_max == "" || price_after <= parseFloat(price_max)) && (price_min == "" || price_after >= parseFloat(price_min)) && (!offers_has_discount|| price_before != price_after) && (freshness_min_days_to_expiry == "" || difference_in_days >= freshness_min_days_to_expiry)) {
                     product_grid.setAttribute("style", "display: block;");
@@ -446,7 +453,7 @@
 
             }
         */
-            //productinfo = $product_id, $company_id, $decay_date, $decay_time, $name, $posted_date, $posted_time, $price_after, $price_before, $quantity, $type, $mode_of_collection
+            //productinfo = $product_id, $company_id, $decay_date, $decay_time, $name, $posted_date, $posted_time, $price_after, $price_before, $quantity, $category, $mode_of_collection
             //To retrieve the name, need to split by , and find the 5th element
             //product_info_arr = product_grid.getAttribute("name").split(",");
             //product_id = product_info_arr[0];
@@ -459,7 +466,7 @@
             //price_after = parseFloat(product_info_arr[7]);
             //price_before = parseFloat(product_info_arr[8]);
             //quantity = product_info_arr[9];
-            //type = product_info_arr[10];
+            //category = product_info_arr[10];
             //mode_of_collection_user = product_info_arr[11];    
     }
     //****Add to cart message popup****//
