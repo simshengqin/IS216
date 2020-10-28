@@ -842,7 +842,7 @@ input[type="file"] {
     left: 43%;
   
 }
-.btn:hover {
+.btn-registration:hover {
 
     background-color: #169c7b;
     color: white;
