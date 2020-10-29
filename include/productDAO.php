@@ -131,7 +131,7 @@ class productDAO {
     }
     
     public function retrieve_product_by_company($company_id){
-        $sql = "SELECT * FROM product WHERE company_id = :company_id AND (decay_date > CURRENT_DATE()) OR (decay_time > CURRENT_TIME())";
+        $sql = "SELECT * FROM product WHERE company_id = :company_id #AND (decay_date > CURRENT_DATE()) OR (decay_time > CURRENT_TIME())";
         $connMgr = new ConnectionManager();      
         $conn = $connMgr->getConnection();
 

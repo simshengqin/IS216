@@ -7,7 +7,6 @@
     $productDAO = new productDAO();
     //$productType = $productDAO->retrieve_product_type();
     $newProductId = count($productDAO->retrieve_all());
-    var_dump($newProductId);
     
     if (isset($_GET["company_id"])) {
         $company_id = $_GET["company_id"];    
@@ -97,9 +96,8 @@
                             <?php
                                 
                                 foreach($productType as $type){
-                                  echo "<option value='".$type."'> ".$type." </option>";
+                                  echo "<option value='".ucfirst(str_replace('_', ' ', $type))."'> ".ucfirst(str_replace('_', ' ', $type))." </option>";
                                 }
-                                
                             ?>
                         </select>
                         <p id='errorProductType' style='visibility: hidden; color: red;'>  </p>
@@ -188,8 +186,13 @@
              </div>
         </form>
 
-
         </div>
+        <!-- Footer -->
+        <footer class="py-5">
+          <div class="container">
+            <p class="text-center">Copyright &copy; Eco G5T4 2020</p>
+          </div>
+        </footer>
     </div>
 
     <!-- Modal for Adding new food type-->
@@ -218,13 +221,7 @@
               </div>
             </div>
 
-  <!-- Footer -->
-  <footer class="py-5">
-    <div class="container">
-      <p class="text-center">Copyright &copy; Eco G5T4 2020</p>
-    </div>
-    <!-- /.container -->
-  </footer>
+
 
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

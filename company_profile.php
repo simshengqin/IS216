@@ -112,7 +112,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
       document.getElementById(productid).innerHTML = days + "d " + hours + "h "+ minutes + "m " + seconds + "s ";
 
       if (timeRemaining < 0) {
-        document.getElementById(productid).innerHTML = "EXPIRED";
+        document.getElementById(productid).innerHTML = "<p style='color:red'> EXPIRED </p>";
       }
     }
   }, 1000);
@@ -160,7 +160,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 
                 <div class="col-md-6 text-center">
                   <img class="mr-2 mb-2" width="200px" src="images/profile_picture/company/<?php echo $company_id ?>.png"></img>
-                  <h3> <?php echo $company_name ?></h3>
+                  <h3> <?php echo ucfirst(str_replace('_', ' ', $company_name))?></h3>
                   <div> <i class="fas fa-star mr-2"></i> <span> Ratings: <?php echo $company_rating ?></span> </div>
                   <div> <i class="fas fa-users mr-2"></i> <span> Followings: <?php echo $numOfFollowing ?></span> </div>
                   </br>
@@ -233,13 +233,29 @@ document.addEventListener("DOMContentLoaded", function(event) {
               <!-- <img class='card-img-top' src='images/{$product->get_category()}/{$product->get_name()}.jpg' width='100%' height='225'> -->
               <img class='card-img-top' src='{$product->get_image_url()}' width='100%' height='225'>
               <div class='card-body'>
-                <h4 class='card-title'> ".strtoupper(str_replace('_', ' ', $product->get_name()))."</h4>
+                <h4 class='card-title'> ".ucfirst(str_replace('_', ' ', $product->get_name()))."</h4>
                 <p class='card-text'> Promotion End: </p>
                 <input type='hidden' class='dateTimeInputLeft' value='{$product->get_product_id()}*{$product->get_decay_date()}*{$product->get_decay_time()}'>
-                <p class='card-text text-center' style='font-size: 22px;' id='{$product->get_product_id()}' onload='countDown('{$product->get_product_id()}','{$product->get_decay_date()}','{$product->get_decay_time()}')>  0:00:00 </p>
+                <p class='card-text text-center' style='font-size: 22px;' id='{$product->get_product_id()}')>  0:00:00 </p>
                 <!-- <p class='card-text font-weight-light' style='margin-bottom: -5px; font-size: 18px;'> Before Price: $  {$product->get_price_after()}</p> -->
-                <p class='card-text font-weight-light' style='font-size: 18px;'> Sale's Price: $ {$product->get_price_before()} </p>
-                <p class='card-text'> Quantity Left: {$product->get_quantity()}</p>
+                <!-- <p class='card-text font-weight-light' style='font-size: 18px;' value=''> Sale's Price: $ {$product->get_price_before()} </p> -->
+                
+                <div class='form-group' style='margin-bottom:-30px;'>
+                  <div class='input-group mb-3'>
+                    <label for='salePrice_{$product->get_product_id()}' class='col-form-label' style='font-size: 20px;'> Sale's Price : $  </label>
+                    <input type='text' readonly class='form-control-plaintext' name='salePrice' id='salePrice_{$product->get_product_id()}' value='{$product->get_price_before()}' style='font-size: 20px;'>
+                  </div>
+                </div>
+
+                <div class='form-group' style='margin-bottom:-15px;'>
+                <div class='input-group mb-3'>
+                  <label for='Remaining_{$product->get_product_id()}' class='col-form-label' style='font-size: 20px;'> Qty: &nbsp </label>
+                  <input type='text' readonly class='form-control-plaintext' id='Remaining_{$product->get_product_id()}' value='{$product->get_quantity()}' style='font-size: 20px;'>
+                </div>
+              </div>
+
+                <!-- <p class='card-text'> Remaining: {$product->get_quantity()}</p> -->
+
                 <a class='btn btn-info btn-lg btn-block' role='button' href='company_edit_product.php#{$product->get_product_id()}' style='left: 0%;'> Edit </a>
               </div>
             </div>
@@ -251,5 +267,17 @@ document.addEventListener("DOMContentLoaded", function(event) {
 ?>
 
 <script>
+
+
+
+
+var salesPrice = document.getElementsByName("salePrice");
+for(var ele of salesPrice){
+  var num = ele.getAttribute('value');
+  num = parseFloat(num);
+  num = num.toFixed(2)
+  console.log(num);
+  ele.setAttribute('value', num);
+}
 
 </script>
