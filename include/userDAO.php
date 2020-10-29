@@ -3,8 +3,8 @@
 class userDAO {
 
     public function add( $password, $name, $email, $phoneNumber, $cart, $cart_company_id, $preferences) {
-        $sql = 'INSERT INTO user ( password, name, email, phoneNumber, cart, preferences) 
-                    VALUES ( :password, :name, :email, :phoneNumber, :cart, :preferences)';
+        $sql = 'INSERT INTO user ( password, name, email, phoneNumber, cart, cart_company_id, preferences) 
+                    VALUES ( :password, :name, :email, :phoneNumber, :cart, :cart_company_id ,:preferences)';
         
         $connMgr = new ConnectionManager();       
         $conn = $connMgr->getConnection();
@@ -17,7 +17,7 @@ class userDAO {
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->bindParam(':phoneNumber', $phoneNumber, PDO::PARAM_STR);
         $stmt->bindParam(':cart', $cart, PDO::PARAM_STR);
-        $stmt->bindParam(':cart_company_id', $cart_company_id, PDO::PARAM_STR);
+        $stmt->bindParam(':cart_company_id', $cart_company_id, PDO::PARAM_INT);
         $stmt->bindParam(':preferences', $preferences, PDO::PARAM_STR);
 
         $isAddOK = False;
