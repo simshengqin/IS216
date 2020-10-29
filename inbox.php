@@ -162,7 +162,13 @@
 </head>
 <body>
 <div class="container">
-    <h4><button><i class="fas fa-chevron-circle-left"></i></button>Go back</h4>
+    <!-- add navbar at the top -->
+    <?php include 'include/customer_navbar.php';?>
+    <?php 
+        //go back to previous page on history
+        echo "<a id='go_back_btn' href='javascript:history.go(-1)'><h4 class='m-2'><button class='mr-2' onClick='header(\'Location: view_company.php?company_name=target_name\');'><i class='fas fa-chevron-circle-left'></i></button>Go back</h4></a>";
+
+    ?>
     <div class="messaging">
         <!--inbox_msg contains both the left sidebar and right sidebar-->
         <div class="inbox_msg">

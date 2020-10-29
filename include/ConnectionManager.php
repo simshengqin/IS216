@@ -12,8 +12,8 @@ class ConnectionManager {
             $password = "";  
         $dbname = "is216";
         $port = 3306;    
-
-        $url  = "mysql:host={$host};dbname={$dbname};port={$port}";
+        //Need to put uft8 to support chinese and latin characters!
+        $url  = "mysql:host={$host};dbname={$dbname};port={$port};charset=utf8";
         
         $conn = new PDO($url, $username, $password);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 

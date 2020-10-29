@@ -9,9 +9,11 @@
   if(!isset($_SESSION)) { 
     session_start(); 
   } 
+  if (isset($_GET['postal_code'])) {
+    $_SESSION["postal_code"] = $_GET['postal_code'];
+    //print_r($_SESSION);      
+  }
 
-  $_SESSION["postal_code"] = $_GET['postal_code'];
-  print_r($_SESSION);
 
 
 ?>
