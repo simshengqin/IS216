@@ -503,6 +503,13 @@ h3.h3 {
   color: black;
   text-decoration: none;
 }
+#message_body {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* number of lines to show */
+  -webkit-box-orient: vertical;
+}
 img {
   max-width: 100%;
 }
@@ -512,6 +519,10 @@ img {
   overflow: hidden;
   width: 40%;
   border-right: 1px solid #c4c4c4;
+}
+.inbox_people2 {
+  overflow: scroll;
+  height: 550px;
 }
 .inbox_msg {
   border: 1px solid #c4c4c4;
@@ -593,10 +604,7 @@ img {
   margin: 0;
   padding: 18px 16px 10px;
 }
-.inbox_chat {
-  height: 550px;
-  overflow-y: scroll;
-}
+
 
 .active_chat {
   background: #ebebeb;
