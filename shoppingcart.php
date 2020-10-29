@@ -212,7 +212,7 @@
         <div class="row">
 
           <!--Grid column-->
-          <div class="col-lg-8">
+          <div class="col-md-8">
 
             <!-- Card -->
             <div class="card wish-list mb-4">
@@ -304,48 +304,47 @@
                       
                       echo "
                       <div class='row mb-4' value='$price_after'>
-                      <div class='col-md-5 col-lg-3 col-xl-3'>
-                          <div class='cart_product_img view zoom overlay z-depth-1 rounded mb-3 mb-md-0'>
-                          <img 
-                              src='$image_url' alt='Sample'>";
-                      if (date('Y-m-d', time())== $posted_date) {
-                          echo "<span class='product-new-label'>New</span>";
-                      }
-                      if ($discount != 0.0) {
-                          echo "<span class='product-discount-label'>-$discount%</span>";
-                      }
-                      echo "
-                          <a href='#!'>
-                          </a>
-                          </div>
-                      </div>
-                      
-                      <div class='col-md-7 col-lg-9 col-xl-9'>
-                          <div class='d-flex justify-content-between'>
-                              <div>
-                              <h5>" . str_replace('_',' ',$name) . "</h5>
-                              </div>
-                              <div>
-                                <span class='d-none'>$product_id</span>
-                                <a href='#!' type='button' class='card-link-secondary small text-uppercase mr-3' onmousedown='show_confirmation_msg()'><i
-                                    class='fas fa-trash-alt mr-1'></i>DELETE</a>
-                              </div>
-                          </div>
-                          <div class='def-number-input number-input safari_only mb-0 w-100'>
-                              <span onmousedown='minus_quantity()'><button class='btn btn-link change_qty_btn' style='font-size: 25px;'>-</button>
-                              </span>
-                              <span class='d-none check-checkout'>$product_id</span>
-                              <input readonly class='quantity check-checkout' min='1' name='quantity' value='$quantity_in_cart' type='number' >
-                              <span onclick='add_quantity()'><button class='btn btn-link change_qty_btn' style='font-size: 25px;'>+</button>
-                              </span>
-                              <span class='total_price_for_current_product'>
-                                  $$total_price_for_current_product
-                              </span>
-                          </div>
-                          <div class='d-flex justify-content-between align-items-center mt-1'>
-                              <p class='mb-0 ml-4'><span style='text-decoration: line-through' >$price_before_modified</span><span ><strong>$$price_after</strong></span></p>
-                          </div>
-                      </div>
+                        <div class='col-md-3 col-lg-3 col-xl-3'> 
+                            <div class='cart_product_img view zoom overlay z-depth-1 rounded mb-3 mb-md-0'>
+                              <img class='d-block mx-auto'
+                                  src='$image_url' alt='Sample'>";
+                          if (date('Y-m-d', time())== $posted_date) {
+                              echo "<span class='product-new-label'>New</span>";
+                          }
+                          if ($discount != 0.0) {
+                              #echo "<span class='product-discount-label'>-$discount%</span>";
+                          }                                  
+                          //<a href='#!' type='button' class='card-link-secondary small text-uppercase mr-3 float-right' onmousedown='show_confirmation_msg()'><i
+                                      //class='fas fa-trash-alt mr-1'></i>DELETE</a>
+                          //    <div class='row justify-content-center w-50 mt-2'>
+                          //    <div class='square centered' style='text-decoration: line-through' >$price_before_modified</div><div class='square centered font-weight-bold'>$$price_after</div>
+                          //</div>
+                          echo "
+                              <a href='#!'>
+                              </a>
+                            </div>
+                        </div>
+                        
+                        <div class='col-md-9 col-lg-9 col-xl-9'>
+                            <div class='row d-flex justify-content-center'>
+                                <div class='col-12 mb-2 d-flex justify-content-md-start justify-content-center'>
+                                  <span>" . str_replace('_',' ',$name) . "</span>                                  <span class='d-none'>$product_id</span>
+
+                                </div>
+                            </div>
+                            <div class='row def-number-input number-input safari_only mb-0 w-100' style='height: 40px;'>
+                                <span onmousedown='minus_quantity()'><button class='btn btn-link change_qty_btn pt-0' style='font-size: 25px;'>-</button>
+                                </span>
+                                <span class='d-none check-checkout'>$product_id</span>
+                                <input readonly class='col h-100 quantity check-checkout' style='padding: 10px;' min='1' name='quantity' value='$quantity_in_cart' type='number' >
+                                <span onclick='add_quantity()'><button class='btn btn-link change_qty_btn pt-0' style='font-size: 25px;'>+</button>
+                                </span>
+                                <span class='total_price_for_current_product pt-2' style='width: 2.8em;'>
+                                    $$total_price_for_current_product
+                                </span>
+                            </div>
+
+                        </div>
 
                       </div>
                       ";
@@ -367,14 +366,22 @@
 
                 <h5 class="mb-4">Self-pickup Timing</h5>
                 <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">Date:</span>
+                  <div class="col-md-6">
+                    <div class="row mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">Date:</span>
+                      </div>
+                      <input type="date" class="col form-control check-checkout"  id="collection_date" aria-label="collection_date">
+                    </div>
                   </div>
-                  <input type="date" class="form-control check-checkout"  id="collection_date" aria-label="collection_date">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">Time:</span>
+                  <div class="col-md-6 mb-3">
+                    <div class="row">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">Time:</span>
+                      </div>                   
+                      <input type="time" class="col form-control check-checkout"  id="collection_time" aria-label="collection_time">
+                    </div>
                   </div>
-                  <input type="time" class="form-control check-checkout"  id="collection_time" aria-label="collection_time">
                 </div>
                 <p class="mb-0"></p>
               </div>
@@ -397,7 +404,7 @@
           <!--Grid column-->
 
           <!--Grid column-->
-          <div class="col-lg-4">
+          <div class="col-md-4">
 
             <!-- Card -->
             <div class="card mb-4">
@@ -552,6 +559,10 @@
             //XHR_send($user_id, $product_id, $quantity)
             XHR_send(1,event.target.parentNode.parentNode.children[1].innerText ,event.target.parentNode.parentNode.children[2].value,-1);            
           }
+          else {
+            //Ask user whether they want to delete if quantity drops below 1
+            show_confirmation_msg(event.target);
+          }
 
       }
       function add_quantity() {
@@ -570,11 +581,12 @@
           }
       }
 
-      function show_confirmation_msg() {
-        window.target_element = event.target.parentNode.parentNode.parentNode.parentNode;
-        
-        window.target_product_id= event.target.parentNode.children[0].innerText;
-        window.target_quantity = event.target.parentNode.parentNode.parentNode.children[1].children[2].value;
+      function show_confirmation_msg(target) {
+        window.target_element = target.parentNode.parentNode.parentNode.parentNode;
+        //target.parentNode.parentNode.children[2].value
+        window.target_product_id= target.parentNode.parentNode.children[1].innerText;
+        window.target_quantity = target.parentNode.parentNode.children[2].value;
+        console.log(window.target_product_id, window.target_quantity);
         $('#delete_confirmation_msg').modal('show');
       }
       function delete_product() {
