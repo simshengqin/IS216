@@ -20,7 +20,7 @@ $cart = $_POST['cart'];
 // header('Content-Type: application/json','Set-Cookie: cross-site-cookie=bar; SameSite=None; Secure');
 header('Content-Type: application/json');
 
-$YOUR_DOMAIN = 'https://localhost/IS216';
+$YOUR_DOMAIN = 'http://localhost/IS216';
 
 $order_info = array(
   "user_id" => $user_id,
@@ -55,7 +55,7 @@ $checkout_session = \Stripe\Checkout\Session::create([
   'line_items' => $line_items,
   'mode' => 'payment',
   'success_url' => $YOUR_DOMAIN . '/success.php?session_id={CHECKOUT_SESSION_ID}',
-  'cancel_url' => $YOUR_DOMAIN . '/cancel.html',
+  'cancel_url' => $YOUR_DOMAIN . '/shoppingcart.php',
   'metadata' => $order_info
 ]);
 

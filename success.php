@@ -124,7 +124,7 @@
                           </div>".
                             "</div>
                             <div class='card-body text-dark'>
-                                  <h5 class='card-title font-weight-bold'>{$companyDAO->retrieve_company($transaction->get_company_id())->get_name()}</h5>
+                                  <h5 class='card-title font-weight-bold text-capitalize'>{$companyDAO->retrieve_company($transaction->get_company_id())->get_name()}</h5>
                                   <p class='card-text'>{$order_details}</p>
                                 </div>
                             </div>
