@@ -175,8 +175,8 @@ h3.h3 {
   z-index: 1;
   transition: all 0.3s ease 0s;
   background-color: white;
-  height: 380px; 
-  margin-bottom: 15px; 
+  height: 380px;
+  margin-bottom: 15px;
   padding: 20px 20px 0px 20px;
 }
 
@@ -315,7 +315,6 @@ h3.h3 {
 }
 
 .product-grid {
-  
   font-family: Poppins, sans-serif;
   text-align: center;
   border-radius: 5px;
@@ -323,8 +322,8 @@ h3.h3 {
   z-index: 1;
   transition: all 0.3s ease 0s;
   background-color: white;
-  height: 420px; 
-  margin-bottom: 15px; 
+  height: 420px;
+  margin-bottom: 15px;
   padding: 20px 20px 0px 20px;
 }
 .product-grid .product-content {
@@ -604,7 +603,6 @@ img {
   margin: 0;
   padding: 18px 16px 10px;
 }
-
 
 .active_chat {
   background: #ebebeb;
@@ -888,5 +886,3 @@ img {
     color: #777;
   }
 }
-
-

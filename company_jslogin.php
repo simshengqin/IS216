@@ -3,22 +3,21 @@
     require_once 'include/common.php';
     require_once 'include/protect.php';
 
-    $username = $_POST["username"];
+    $name = $_POST["name"];
     $password = $_POST["password"];
 
-    $userDAO = new userDAO();
+    $companyDAO = new companyDAO();
     $connMgr = new ConnectionManager();       
     $conn = $connMgr->getConnection();
 
-    $sql = "SELECT * FROM user where email= ? and password = ? limit 1";
+    $sql = "SELECT * FROM company where name= ? and password = ? limit 1";
     $stmt = $conn->prepare($sql);
-    $result = $stmt->execute([$username,$password]);
+    $result = $stmt->execute([$name,$password]);
          
     if( $result ) {
         $user = $stmt->fetch(PDO::FETCH_ASSOC);  
         if( $stmt->rowCount()> 0 ){
-            //$_SESSION['userlogin'] = $user;
-            echo "1";
+            echo"1";
         } else {
             "There is no user";
         }

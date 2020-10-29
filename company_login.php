@@ -1,3 +1,4 @@
+
 <?php
   require_once 'include/common.php';
   require_once 'include/protect.php';
@@ -30,12 +31,12 @@
                 <div class="container">
                 <div class="row">
                     <div class="col-md-9 col-lg-8 mx-auto">
-                    <img class="d-flex justify-content-center" src="images/logo/android-chrome-512x512.png" style="height:400px; width:430px;">
-                    <h3 class="login-heading mb-4">User Sign In</h3>
+                    <img class="d-flex justify-content-center" src="images/profile_picture/user/default.png" style="height:400px; width:460px;">
+                    <h3 class="login-heading mb-4">Company Sign In</h3>
                     <form id="loginForm">
                         <div class="label-form-cluster">
-                        <input id="username" class="form-control" placeholder="Username" required autofocus>
-                        <label for="inputEmail">Email</label>
+                        <input id="name" class="form-control" placeholder="Name" required autofocus>
+                        <label for="inputEmail">Company Name</label>
                         </div>
                         <div class="label-form-cluster">
                         <input type="password" id="password" class="form-control" placeholder="Password" required>
@@ -44,8 +45,7 @@
                         <button id="login" class="btn btn-lg btn-primary btn-block btn-register text-uppercase font-weight-bold mb-2" type="submit">Sign in</button>
                         <div class="text-center">
                         <br> 
-                        <a class="medium font-weight-bold .text-secondary" href="register.php">Don't have an account? Register for an account</a>
-                        <hr>
+                       
                     
                         </div>
                     </form>
@@ -66,7 +66,7 @@
                 $("#login").click(function(e){
                     var valid = this.form.checkValidity();
                     if(valid){
-                        var username = $("#username").val();
+                        var name = $("#name").val();
                         var password = $("#password").val();
                     
                     } else{
@@ -80,14 +80,15 @@
                     e.preventDefault();
                     $.ajax({
                         type: "POST",
-                        url: "user_jslogin.php",
-                        data: {username:username, password:password},
+                        url: "company_jslogin.php",
+                        data: {name:name, password:password},
                         success:function(data){
+                            alert(data);
                             if( $.trim(data) === "1" ){
-                                sessionStorage.setItem('username', data['username']);
+                                sessionStorage.setItem('name', data['name']);
                                 sessionStorage.setItem('password', data['password']);
                                 window.location.href = "register.php";               
-                                setTimeout( 'window.location.href = "register"', 1000)
+                                setTimeout( 'window.location.href = "register.php"', 1000)
                             } else {
                                 Swal.fire({
                                         "title" : "Errors",
