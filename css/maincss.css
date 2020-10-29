@@ -1,5 +1,6 @@
 body {
   background-color: #f7f7f7;
+  /* background-color: #92bdb7; */
   /* font-family: 'Lato'; */
   /* font-family: 'Montserrat'; */
   font-family: "Poppins";
@@ -185,7 +186,6 @@ h3.h3 {
 .company-grid a:hover {
   text-decoration: none;
   color: inherit;
-
 }
 .company-grid:hover {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
@@ -503,6 +503,13 @@ h3.h3 {
   color: black;
   text-decoration: none;
 }
+#message_body {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* number of lines to show */
+  -webkit-box-orient: vertical;
+}
 img {
   max-width: 100%;
 }
@@ -512,6 +519,10 @@ img {
   overflow: hidden;
   width: 40%;
   border-right: 1px solid #c4c4c4;
+}
+.inbox_people2 {
+  overflow: scroll;
+  height: 550px;
 }
 .inbox_msg {
   border: 1px solid #c4c4c4;
@@ -593,10 +604,7 @@ img {
   margin: 0;
   padding: 18px 16px 10px;
 }
-.inbox_chat {
-  height: 550px;
-  overflow-y: scroll;
-}
+
 
 .active_chat {
   background: #ebebeb;
@@ -761,134 +769,124 @@ img {
   background-color: #16a085;
 }
 
-/*---------------------------------------*/
-/* REGISTRATION PAGE */
-/*---------------------------------------*/
+/** Register.php **/
 
-/*---------------------------------------*/
-/* Form HEADER */
-/*---------------------------------------*/
-.signup-form {
-  font-family: "Roboto", sans-serif;
-  width: 650px;
-  margin: 30px auto;
-  background: linear-gradient(to right, #ffffff 0%, #fafafa 50%, #ffffff 99%);
-  border-radius: 10px;
-}
-.form-header {
-  background-color: #eff0f1;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-}
-.form-header {
-  font-size: 30px;
-  text-align: center;
-  color: #666;
-  padding: 20px 0;
-  border-bottom: 1px solid #cccccc;
+:root {
+  --input-padding-x: 1.5rem;
+  --input-padding-y: 0.75rem;
 }
 
-/*---------------------------------------*/
-/* FORM BODY */
-/*---------------------------------------*/
-
-.form-body {
-    padding: 10px 40px;
-    color: #666;
-}
-.form-group {
-    margin-bottom: 20px;
-}
-.form-body .label-title {
-    color: black;
-    font-size: 22px;
-    font-weight: bold;
-}
-.form-body .form-input {
-    font-size: 22px;
-    box-sizing: border-box;
-    width: 100%;
-    height: 34px;
-    padding-left: 10px;
-    padding-right: 10px;
-    color: #333333;
-    text-align: left;
-    border: 1px solid #d6d6d6;
-    border-radius: 4px;
-    background: white;
-    outline: none;
-}
-.horizontal-group .left {
-    float: left;
-    width: 49%;
-}
-.horizontal-group .right {
-    float: right;
-    width: 49%;
-}
-input[type="file"] {
-    outline: none;
-    cursor: pointer;
-    font-size: 17px;
-}
-#range-label {
-    width: 15%;
-    padding: 5px;
-    background-color: #1bba93;
-    color: white;
-    border-radius: 5px;
-    font-size: 17px;
-    position: relative;
-    top: -8px;
-}
-::-webkit-input-placeholder {
-    color: #d9d9d9;
-}
-/*---------------------------------------*/
-/* Form Footer */
-/*---------------------------------------*/
-.form-footer {
-    clear: both;
+.login,
+.image {
+  min-height: 100vh;
 }
 
-/*---------------------------------------*/
-/* Form Footer */
-/*---------------------------------------*/
-.signup-form .form-footer {
-    background-color: #eff0f1;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    padding: 10px 40px;
-    text-align: right;
-    border-top: 1px solid #cccccc;
-     
-  
+.background-login-img {
+  background-image: url("../images/company_profile_image/2.jpeg");
+  background-size: cover;
+  background-position: center;
 }
-.form-footer span {
-    margin-top: 30px;
-    color: #999;
-    font-style: italic;
-    font-weight: thin;
-}
-.btn-registration {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #1bba93;
-    font-size: 17px;
-    border: none;
-    border-radius: 5px;
-    color: #bcf5e7;
-    cursor: pointer;
-    margin: 0;
-    position: relative;
-    
-    left: 43%;
-  
-}
-.btn-registration:hover {
 
-    background-color: #169c7b;
-    color: white;
+.background-img {
+  background-image: url("../images/company_profile_image/1.jpeg");
+  background-size: cover;
+  background-position: center;
+}
+
+.login_header {
+  font-weight: 300;
+}
+
+.btn-register {
+  font-size: 0.9rem;
+  letter-spacing: 0.05rem;
+  padding: 0.75rem 1rem;
+  border-radius: 2rem;
+}
+
+.label-form-cluster {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.label-form-cluster > input,
+.label-form-cluster > label {
+  padding: var(--input-padding-y) var(--input-padding-x);
+  height: auto;
+  border-radius: 2rem;
+}
+
+.label-form-cluster > label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  margin-bottom: 0;
+  /* Override default `<label>` margin */
+  line-height: 1.5;
+  color: #495057;
+  cursor: text;
+  /* Match the input under the label */
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  transition: all 0.1s ease-in-out;
+}
+
+.label-form-cluster input::-webkit-input-placeholder {
+  color: transparent;
+}
+
+.label-form-cluster input:-ms-input-placeholder {
+  color: transparent;
+}
+
+.label-form-cluster input::-ms-input-placeholder {
+  color: transparent;
+}
+
+.label-form-cluster input::-moz-placeholder {
+  color: transparent;
+}
+
+.label-form-cluster input::placeholder {
+  color: transparent;
+}
+
+.label-form-cluster input:not(:placeholder-shown) {
+  padding-top: calc(var(--input-padding-y) + var(--input-padding-y) * (2 / 3));
+  padding-bottom: calc(var(--input-padding-y) / 3);
+}
+
+.label-form-cluster input:not(:placeholder-shown) ~ label {
+  padding-top: calc(var(--input-padding-y) / 3);
+  padding-bottom: calc(var(--input-padding-y) / 3);
+  font-size: 12px;
+  color: #777;
+}
+
+/* Fallback for Edge
+-------------------------------------------------- */
+
+@supports (-ms-ime-align: auto) {
+  .label-form-cluster > label {
+    display: none;
+  }
+  .label-form-cluster input::-ms-input-placeholder {
+    color: #777;
+  }
+}
+
+/* Fallback for IE
+-------------------------------------------------- */
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  .label-form-cluster > label {
+    display: none;
+  }
+  .label-form-cluster input:-ms-input-placeholder {
+    color: #777;
+  }
 }
 
 

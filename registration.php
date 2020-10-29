@@ -23,144 +23,160 @@
     </head>
 
     <body>
-        <div>
-            <?php
-                if(isset($_POST['submit'])) {
+        
+        <?php
+            if(isset($_POST['submit'])) {
 
-                        $name              =$_POST['name'];
-                        $email             =$_POST['email'];
-                        $phoneNumber       =$_POST['phoneNumber'];
-                        $password          =$_POST['password'];
-                        $reEnterPassword   =$_POST['reEnterPassword'];
-                        $cart              ="";
-                        if(!isset($_POST['preferances'])){
-                            $preferances = "";
-                            $userDAO = new userDAO();
-                            $result = $userDAO->add( $password, $name, $email, $phoneNumber, $cart, $preferances );
-                            if($result){
-                                echo"hi";
-                            }
-                        } else {
-                            $preferances = $_POST['preferances'];
-                            $userDAO = new userDAO();
-                            $result = $userDAO->add( $password, $name, $email, $phoneNumber, $cart, $preferances );
-                             if($result){
-                                echo"hi";
-                            }
+                    $name              =$_POST['name'];
+                    $email             =$_POST['email'];
+                    $phoneNumber       =$_POST['phoneNumber'];
+                    $password          =$_POST['password'];
+                    $reEnterPassword   =$_POST['reEnterPassword'];
+                    $cart              ="";
+                    if(!isset($_POST['preferances'])){
+                        $preferances = "";
+                        $userDAO = new userDAO();
+                        $result = $userDAO->add( $password, $name, $email, $phoneNumber, $cart, $preferances );
+                        if($result){
+                            echo"hi";
                         }
-                        
-                        
-                       
-                } 
-            
-            ?>
-        </div>
+                    } else {
+                        $preferances = $_POST['preferances'];
+                        $userDAO = new userDAO();
+                        $result = $userDAO->add( $password, $name, $email, $phoneNumber, $cart, $preferances );
+                            if($result){
+                            echo"hi";
+                        }
+                    }
+                    
+                    
+                    
+            } 
+        
+        ?>
+        
 
-        <div>
-            <form action="registration.php" method="post" name="myform">
-                
-                <div class="container"> 
+        <div class="container-fluid" style="padding:0px;">
+                <div class = "row">
+                    <div class = "col-7">
+                        <div id="branding" class="illustrationClass">
+                    
+                            
+                        </div>      
+                    </div>   
+                    <div class = "col-5">   
+                        <form action="registration.php" method="post" name="myform">
 
-                    <!--form header-->
-                    <div id="form-header" class="form-header">
-                        <h1>CREATE ACCOUNT</h1>
-                    </div>
 
-                    <div class="form-body">
-                        <div class="horizontal-group">
-                            <div class="form-group left"> 
-                                <label for="name" class="label-title"><b>Name*</b></label>
-                                <input class="form-input" type="text" name="name" required>
-                            </div>
-                            <div class="form-group right">
-                               <label for="phoneNumber" class="label-title"><b>Phone Number</b></label>
-                                <input class="form-input" type="text" name="phoneNumber" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="email" class="label-title">Email</label>
-                            <input class="form-input" type="email" name="email" required>
-                        </div>
-                        <div class="horizontal-group">
-                            <div class="form-group left">
-                                <label for="password" class="label-title"><b>Password</b></label>
-                                <input class="form-input" type="password" name="password" required>
-                            </div>
-                            <div class="form-group right">
-                                <label for="reEnterPassword" class="label-title"><b>re-enter Password</b></label>
-                                <input class="form-input" type="password" name="reEnterPassword" required><br>
-                            </div>
-                        </div>
-                        <div class="horizontal-group">
-                            <div class="form-group left">
-                                <label for="prefer" class="label-title"><b>Preferances</b></label><br><br>
-                                <input  type="checkbox" id="vegetarian" value="vegetarian" name="preferance[]" >
-                                <label for="vegetarian">Vegetarian</label><br><br>
-                                <input  type="checkbox" id="halal" value="halal" name="preferance[]">
-                                <label for="halal">Halal</label>
-                            </div>
-                            <div class="form-group right">
-                                    <label for="experience" class="label-title">Within a proximity range from current location</label>
-                                    <input type="range" min="1" max="25" step="5" value="0" id="experience" class="form-input" onChange="change();" style="height: 28px; width: 78%; padding: 0;" />
-                                    <span id="range-label">1KM</span>
-                                </div>
+                            <div id="contentWrapper" class="float">
+                                <div class="container"> 
+
+                                
+                                    <div id="form-header" class="form-header">
+                                        <h1>CREATE ACCOUNT</h1>
+                                    </div>
+
+                                    <div class="form-body">
+                                        <div class="horizontal-group">
+                                            <div class="form-group left"> 
+                                                <label for="name" class="label-title"><b>Name*</b></label>
+                                                <input class="form-input" type="text" name="name" required>
+                                            </div>
+                                            <div class="form-group right">
+                                            <label for="phoneNumber" class="label-title"><b>Phone Number</b></label>
+                                                <input class="form-input" type="text" name="phoneNumber" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email" class="label-title">Email</label>
+                                            <input class="form-input" type="email" name="email" required>
+                                        </div>
+                                        <div class="horizontal-group">
+                                            <div class="form-group left">
+                                                <label for="password" class="label-title"><b>Password</b></label>
+                                                <input class="form-input" type="password" name="password" required>
+                                            </div>
+                                            <div class="form-group right">
+                                                <label for="reEnterPassword" class="label-title"><b>re-enter Password</b></label>
+                                                <input class="form-input" type="password" name="reEnterPassword" required><br>
+                                            </div>
+                                        </div>
+                                        <div class="horizontal-group">
+                                            <div class="form-group left">
+                                                <label for="prefer" class="label-title"><b>Preferances</b></label><br><br>
+                                                <input  type="checkbox" id="vegetarian" value="vegetarian" name="preferance[]" >
+                                                <label for="vegetarian">Vegetarian</label><br><br>
+                                                <input  type="checkbox" id="halal" value="halal" name="preferance[]">
+                                                <label for="halal">Halal</label>
+                                            </div>
+                                            <div class="form-group right">
+                                                    <label for="experience" class="label-title">Within a proximity range from current location</label>
+                                                    <input type="range" min="1" max="25" step="5" value="0" id="experience" class="form-input" onChange="change();" style="height: 28px; width: 78%; padding: 0;" />
+                                                    <span id="range-label">1KM</span>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="form-footer">
+                                            <input class="btn-registration btn-primary" type="submit" name="submit" id="register" value="submit">
+                                        </div> 
                             </div>
                             
-                        </div>
-                        <div class="form-footer">
-                            <input class="btn-registration btn-primary" type="submit" name="submit" id="register" value="submit">
-                        </div>
-
-
-
-                       
+                            
                         
 
-                     
 
-                        
 
-                       
+                                
+                                    
 
-                
+                                
 
+                                    
+
+                                
+
+                            
+
+                                </div>
+
+                                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+                                <script type="text/javascript" >
+                                    $( '#register').click(function(e) {
+                                        var valid = this.form.checkValidity();
+                                        console.log("hi");
+                                        if( valid ) {
+                                            alert("success");
+                                            Swal.fire({
+                                                        "title" : "Successful",
+                                                        "text": "Thank you for registering an account",
+                                                        "type": "success",
+                                                    })
+                                            
+                                            
+                                        } else {
+                                            Swal.fire({
+                                                "title" : "Errors",
+                                                "text": "Please Enter Your Fields",
+                                                "type": "success",
+                                            })
+                                        }   
+                                    });
+                                </script>
+                                <!-- Script for range input label -->
+                                <script>
+                                var rangeLabel = document.getElementById("range-label");
+                                var experience = document.getElementById("experience");
+                                function change() {
+                                rangeLabel.innerText = experience.value + "K";
+                                }
+                                </script>
+
+                            
+                            </div>
+                        </form>
                     </div>
-
-                    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-                    <script type="text/javascript" >
-                        $( '#register').click(function(e) {
-                            var valid = this.form.checkValidity();
-                            console.log("hi");
-                            if( valid ) {
-                                alert("success");
-                                Swal.fire({
-                                            "title" : "Successful",
-                                            "text": "Thank you for registering an account",
-                                            "type": "success",
-                                        })
-                                
-                                
-                            } else {
-                                Swal.fire({
-                                    "title" : "Errors",
-                                    "text": "Please Enter Your Fields",
-                                    "type": "success",
-                                })
-                            }   
-                        });
-                    </script>
-                    <!-- Script for range input label -->
-                    <script>
-                    var rangeLabel = document.getElementById("range-label");
-                    var experience = document.getElementById("experience");
-                    function change() {
-                    rangeLabel.innerText = experience.value + "K";
-                    }
-                    </script>
-
-                   
                 </div>
-            </form>
         </div>
     </body>
 
