@@ -1,6 +1,28 @@
 <?php
   require_once 'include/common.php';
   require_once 'include/protect.php';
+  
+  if(!isset($_SESSION)) { 
+    session_start(); 
+  } 
+
+  // print_r($_SESSION);
+
+  // header('Set-Cookie: cross-site-cookie=bar; SameSite=None; Secure');
+
+  // $arr_cookie_options = array (
+  //   // 'expires' => time() + 60*60*24*30,
+  //   // 'path' => '/',
+  //   // 'domain' => '.example.com', // leading dot for compatibility or use subdomain
+  //   'secure' => true,     // or false
+  //   // 'httponly' => true,    // or false
+  //   'samesite' => 'None' // None || Lax  || Strict
+  // );
+
+  // setcookie('TestCookie', 'The Cookie Value', $arr_cookie_options); 
+
+  // setcookie('key', 'value', ['samesite' => 'None', 'secure' => true]);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,6 +36,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700&display=swap">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  
   <!--Bootstrap 4 and AJAX-->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -21,6 +44,14 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <!--Link to main.css files while contains all the css of this project-->
   <link rel='stylesheet' href='css\maincss.css'>
+
+  <!-- font -->
+  <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+
+  <!-- <link rel="stylesheet" href="style.css"> -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+  <script src="https://js.stripe.com/v3/"></script>
+
   <style>
   </style>
   </head>
@@ -181,7 +212,7 @@
         <div class="row">
 
           <!--Grid column-->
-          <div class="col-lg-8">
+          <div class="col-md-8">
 
             <!-- Card -->
             <div class="card wish-list mb-4">
@@ -215,14 +246,16 @@
                 $company_latitude = $company-> get_latitude();
                 $company_longtitude = $company-> get_longtitude();
                 $total_price = "0.00";
+                $company_id="";
                 if (strlen($cart) ==0) {
-                  echo "<h5 class='mb-4' >Cart (<span id='cartsize'>" . sizeof($cart_arr) . "</span> items)</h5>";
+                  echo "<h5 class='mb-4 font-weight-bold' >Cart (<span id='cartsize'>" . sizeof($cart_arr) . "</span> items)</h5>";
                   echo "<div class='alert alert-danger'>No items in cart currently!</div>";
-                  $total_price_with_shipping = "0.00";
-                  $shipping = "0.00";
+                  $total_price_with_gst = "0.00";
+                  $gst = "0.00";
                 }
                 else {
-                  echo "<h5 class='mb-4' >Cart (<span id='cartsize'>" . sizeof($cart_arr) . "</span> items) - " . ucwords($company_name) . "</h5>";
+                  echo "<h5 class='mb-4 font-weight-bold' >Cart (<span id='cartsize'>" . sizeof($cart_arr) . "</span> items) - " . ucwords($company_name) . "</h5>";
+                  
                   foreach ($cart_arr as $productqty) {
                       #Split it to an arr, where the 1st element is product_id and 2nd element is quantity
                       $productqty_arr = explode(":",$productqty);
@@ -261,58 +294,57 @@
                       $total_price += round($price_after * $quantity_in_cart,2);
                       #There is only a shippping cost if there is at least 1 product
                       if ($total_price == 0) {
-                        $total_price_with_shipping = "0.00";
+                        $total_price_with_gst = "0.00";
                       }
                       else {
-                        $shipping = 3.00;
-                        $total_price_with_shipping = $total_price + 3.00;
+                        $gst = round($total_price * 0.07, 2); 
+                        $total_price_with_gst = round($total_price * 1.07, 2);
                         
                       }
                       
                       echo "
                       <div class='row mb-4' value='$price_after'>
-                      <div class='col-md-5 col-lg-3 col-xl-3'>
-                          <div class='cart_product_img view zoom overlay z-depth-1 rounded mb-3 mb-md-0'>
-                          <img 
-                              src='$image_url' alt='Sample'>";
-                      if (date('Y-m-d', time())== $posted_date) {
-                          echo "<span class='product-new-label'>New</span>";
-                      }
-                      if ($discount != 0.0) {
-                          echo "<span class='product-discount-label'>-$discount%</span>";
-                      }
-                      echo "
-                          <a href='#!'>
-                          </a>
-                          </div>
-                      </div>
-                      
-                      <div class='col-md-7 col-lg-9 col-xl-9'>
-                          <div class='d-flex justify-content-between'>
-                              <div>
-                              <h5>" . str_replace('_',' ',$name) . "</h5>
-                              </div>
-                              <div>
-                                <span class='d-none'>$product_id</span>
-                                <a href='#!' type='button' class='card-link-secondary small text-uppercase mr-3' onmousedown='show_confirmation_msg()'><i
-                                    class='fas fa-trash-alt mr-1'></i>DELETE</a>
-                              </div>
-                          </div>
-                          <div class='def-number-input number-input safari_only mb-0 w-100'>
-                              <span class='fas fa-minus-circle' onmousedown='minus_quantity()'>
-                              </span>
-                              <span class='d-none'>$product_id</span>
-                              <input readonly class='quantity' min='1' name='quantity' value='$quantity_in_cart' type='number' >
-                              <span class='fas fa-plus-circle' onclick='add_quantity()'>
-                              </span>
-                              <span class='total_price_for_current_product'>
-                                  $$total_price_for_current_product
-                              </span>
-                          </div>
-                          <div class='d-flex justify-content-between align-items-center mt-1'>
-                              <p class='mb-0 ml-4'><span style='text-decoration: line-through' >$price_before_modified</span><span ><strong>$$price_after</strong></span></p>
-                          </div>
-                      </div>
+                        <div class='col-md-3 col-lg-3 col-xl-3'> 
+                            <div class='cart_product_img view zoom overlay z-depth-1 rounded mb-3 mb-md-0'>
+                              <img class='d-block mx-auto'
+                                  src='$image_url' alt='Sample'>";
+                          if (date('Y-m-d', time())== $posted_date) {
+                              echo "<span class='product-new-label'>New</span>";
+                          }
+                          if ($discount != 0.0) {
+                              #echo "<span class='product-discount-label'>-$discount%</span>";
+                          }                                  
+                          //<a href='#!' type='button' class='card-link-secondary small text-uppercase mr-3 float-right' onmousedown='show_confirmation_msg()'><i
+                                      //class='fas fa-trash-alt mr-1'></i>DELETE</a>
+                          //    <div class='row justify-content-center w-50 mt-2'>
+                          //    <div class='square centered' style='text-decoration: line-through' >$price_before_modified</div><div class='square centered font-weight-bold'>$$price_after</div>
+                          //</div>
+                          echo "
+                              <a href='#!'>
+                              </a>
+                            </div>
+                        </div>
+                        
+                        <div class='col-md-9 col-lg-9 col-xl-9'>
+                            <div class='row d-flex justify-content-center'>
+                                <div class='col-12 mb-2 d-flex justify-content-md-start justify-content-center'>
+                                  <span>" . str_replace('_',' ',$name) . "</span>                                  <span class='d-none'>$product_id</span>
+
+                                </div>
+                            </div>
+                            <div class='row def-number-input number-input safari_only mb-0 w-100' style='height: 40px;'>
+                                <span onmousedown='minus_quantity()'><button class='btn btn-link change_qty_btn pt-0' style='font-size: 25px;'>-</button>
+                                </span>
+                                <span class='d-none check-checkout'>$product_id</span>
+                                <input readonly class='col h-100 quantity check-checkout' style='padding: 10px;' min='1' name='quantity' value='$quantity_in_cart' type='number' >
+                                <span onclick='add_quantity()'><button class='btn btn-link change_qty_btn pt-0' style='font-size: 25px;'>+</button>
+                                </span>
+                                <span class='total_price_for_current_product pt-2' style='width: 2.8em;'>
+                                    $$total_price_for_current_product
+                                </span>
+                            </div>
+
+                        </div>
 
                       </div>
                       ";
@@ -332,16 +364,33 @@
             <div class="card mb-4">
               <div class="card-body">
 
-                <h5 class="mb-4">Expected shipping delivery</h5>
-
-                <p class="mb-0"> Thu., 12.03. - Mon., 16.03.</p>
+                <h5 class="mb-4">Self-pickup Timing</h5>
+                <div class="input-group mb-3">
+                  <div class="col-md-6">
+                    <div class="row mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">Date:</span>
+                      </div>
+                      <input type="date" class="col form-control check-checkout"  id="collection_date" aria-label="collection_date">
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <div class="row">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">Time:</span>
+                      </div>                   
+                      <input type="time" class="col form-control check-checkout"  id="collection_time" aria-label="collection_time">
+                    </div>
+                  </div>
+                </div>
+                <p class="mb-0"></p>
               </div>
             </div>
             <!-- Card -->
             <div class="card mb-4">
               <div class="card-body">
 
-                <h5 class="mb-4">Self-pickup Location</h5>
+                <h5 class="mb-4">Self-pickup Address</h5>
 
                 <p class="mb-19"> <?php if (strlen($cart) !=0) {echo ucwords($company_name) . " - " . $company_address;} ?></p>                  
                 <!--The following is a placeholder for the map.-->
@@ -351,6 +400,48 @@
             </div>
             <!-- Card -->
 
+          </div>
+          <!--Grid column-->
+
+          <!--Grid column-->
+          <div class="col-md-4">
+
+            <!-- Card -->
+            <div class="card mb-4">
+              <div class="card-body">
+
+                <h5 class="mb-3 font-weight-bold">Order Summary</h5>
+
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                    Subtotal
+                    <span id="total_price_for_all_products">$<?php echo $total_price;?></span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center px-0" >
+                    Including GST
+                    <span id="gst_amount">$<?php echo $gst;?></span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                    <div>
+                      <strong>Total (Incl. GST)</strong>
+                      <strong>
+                        <p class="mb-0"></p>
+                      </strong>
+                    </div>
+                    <span class="font-weight-bold" id="total_price_for_all_products_with_gst">$<?php echo $total_price_with_gst;?></span>
+                  </li>
+                </ul>
+
+                
+
+                <button type="button" class="btn btn-primary btn-block waves-effect waves-light" id="checkout-button" onclick="get_current_cart()" disabled>Checkout</button>
+
+              
+                
+                <input type='hidden' value='<?php echo "$user_id,$company_id"; ?>' id="checkout-info">
+
+              </div>
+            </div>
             <!-- Card -->
             <div class="card mb-4">
               <div class="card-body">
@@ -368,47 +459,6 @@
                   alt="Mastercard">
               </div>
             </div>
-            <!-- Card -->
-
-          </div>
-          <!--Grid column-->
-
-          <!--Grid column-->
-          <div class="col-lg-4">
-
-            <!-- Card -->
-            <div class="card mb-4">
-              <div class="card-body">
-
-                <h5 class="mb-3">The total amount of</h5>
-
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
-                    Temporary amount
-                    <span id="total_price_for_all_products">$<?php echo $total_price;?></span>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center px-0" >
-                    Shipping
-                    <span id="shipping">$<?php echo $shipping;?></span>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
-                    <div>
-                      <strong>The total amount of</strong>
-                      <strong>
-                        <p class="mb-0"></p>
-                      </strong>
-                    </div>
-                    <span class="font-weight-bold" id="total_price_for_all_products_with_shipping">$<?php echo $total_price_with_shipping;?></span>
-                  </li>
-                </ul>
-
-                <button type="button" style="left:0%" class="btn btn-primary btn-block waves-effect waves-light">go to
-                  checkout</button>
-
-              </div>
-            </div>
-            <!-- Card -->
-
             <!-- Card -->
             <div class="card mb-4">
               <div class="card-body">
@@ -458,9 +508,9 @@
                 //Only needs to check for user adding more items to their cart. If there is not enough item, the user should not be able to add at all
                 //Note that AJAX CANNOT return a value to another function as it has some lag, so need to do the changes here
                 if ( quantity_change == 1 && this.responseText != "Insufficient product qty in database") {
-                  current_quantity = parseInt(event_target.parentNode.children[2].value)
-                  event_target.parentNode.children[2].value = current_quantity + 1;
-                  var total_price_product_display = event_target.parentNode.children[4];
+                  current_quantity = parseInt(event_target.parentNode.parentNode.children[2].value)
+                  event_target.parentNode.parentNode.children[2].value = current_quantity + 1;
+                  var total_price_product_display = event_target.parentNode.parentNode.children[4];
                   total_price_product = parseFloat(total_price_product_display.innerText.slice(1)) / current_quantity * (current_quantity + 1);
                   total_price_product = Math.round((total_price_product + Number.EPSILON) * 100) / 100
                   total_price_product_display.innerText = "$" + total_price_product
@@ -470,7 +520,8 @@
                     total_price_for_all_products +=  parseFloat(total_price_product.innerText.slice(1));
                   }
                   document.getElementById("total_price_for_all_products").innerText = "$" + total_price_for_all_products.toFixed(2);
-                  document.getElementById("total_price_for_all_products_with_shipping").innerText = "$" + (total_price_for_all_products+3.00).toFixed(2);   
+                  document.getElementById("total_price_for_all_products_with_gst").innerText = "$" + (total_price_for_all_products*1.07).toFixed(2); 
+                  document.getElementById("gst_amount").innerText = "$" + (total_price_for_all_products*0.07).toFixed(2);   
                 }
                 else if (this.responseText == "Insufficient product qty in database") {
                   document.getElementById("insufficent_product_qty_msg").getElementsByClassName("modal-body")[0].innerText = "Sorry! There is insufficient quantity for this product.";
@@ -487,10 +538,10 @@
 
       function minus_quantity() {
           //Decrease the quantity
-          if (event.target.parentNode.children[2].value > 1) {
-            current_quantity = parseInt(event.target.parentNode.children[2].value)
-            event.target.parentNode.children[2].value = current_quantity - 1;
-            var total_price_product_display = event.target.parentNode.children[4];
+          if (event.target.parentNode.parentNode.children[2].value > 1) {
+            current_quantity = parseInt(event.target.parentNode.parentNode.children[2].value)
+            event.target.parentNode.parentNode.children[2].value = current_quantity - 1;
+            var total_price_product_display = event.target.parentNode.parentNode.children[4];
             total_price_product = parseFloat(total_price_product_display.innerText.slice(1)) / current_quantity * (current_quantity - 1);
             total_price_product = Math.round((total_price_product + Number.EPSILON) * 100) / 100
             total_price_product_display.innerText = "$" + total_price_product
@@ -501,11 +552,16 @@
               total_price_for_all_products +=  parseFloat(total_price_product.innerText.slice(1));
             }
             document.getElementById("total_price_for_all_products").innerText = "$" + total_price_for_all_products.toFixed(2);
-            document.getElementById("total_price_for_all_products_with_shipping").innerText = "$" + (total_price_for_all_products+3.00).toFixed(2);               
+            document.getElementById("total_price_for_all_products_with_gst").innerText = "$" + (total_price_for_all_products*1.07).toFixed(2);               
+            document.getElementById("gst_amount").innerText = "$" + (total_price_for_all_products*0.07).toFixed(2);  
             //Send the request to the server to update the cart of user in database
             //Need to change hardcoded user_id later!!
             //XHR_send($user_id, $product_id, $quantity)
-            XHR_send(1,event.target.parentNode.children[1].innerText ,event.target.parentNode.children[2].value,-1);            
+            XHR_send(1,event.target.parentNode.parentNode.children[1].innerText ,event.target.parentNode.parentNode.children[2].value,-1);            
+          }
+          else {
+            //Ask user whether they want to delete if quantity drops below 1
+            show_confirmation_msg(event.target);
           }
 
       }
@@ -515,20 +571,22 @@
           //Need to change hardcoded user_id later!!
           //XHR_send($user_id, $product_id, $quantity)
           //Only allows user to buy up to 10 products
-          if ( event.target.parentNode.children[2].value >= 10) {
+          console.log(event.target.parentNode.parentNode);
+          if ( event.target.parentNode.parentNode.children[2].value >= 10) {
               document.getElementById("insufficent_product_qty_msg").getElementsByClassName("modal-body")[0].innerText = "Sorry! You can only buy up to 10 of this product.";
               $('#insufficent_product_qty_msg').modal('show');
           }
           else {
-            XHR_send(1,event.target.parentNode.children[1].innerText ,event.target.parentNode.children[2].value,1, event.target);
+            XHR_send(1,event.target.parentNode.parentNode.children[1].innerText ,event.target.parentNode.parentNode.children[2].value,1, event.target);
           }
       }
 
-      function show_confirmation_msg() {
-        window.target_element = event.target.parentNode.parentNode.parentNode.parentNode;
-        
-        window.target_product_id= event.target.parentNode.children[0].innerText;
-        window.target_quantity = event.target.parentNode.parentNode.parentNode.children[1].children[2].value;
+      function show_confirmation_msg(target) {
+        window.target_element = target.parentNode.parentNode.parentNode.parentNode;
+        //target.parentNode.parentNode.children[2].value
+        window.target_product_id= target.parentNode.parentNode.children[1].innerText;
+        window.target_quantity = target.parentNode.parentNode.children[2].value;
+        console.log(window.target_product_id, window.target_quantity);
         $('#delete_confirmation_msg').modal('show');
       }
       function delete_product() {
@@ -543,11 +601,12 @@
              total_price_for_all_products +=  parseFloat(total_price_product.innerText.slice(1));
           }
           document.getElementById("total_price_for_all_products").innerText = "$" + total_price_for_all_products.toFixed(2);
-          document.getElementById("total_price_for_all_products_with_shipping").innerText = "$" + (total_price_for_all_products+3.00).toFixed(2);   
+          document.getElementById("total_price_for_all_products_with_gst").innerText = "$" + (total_price_for_all_products*1.07).toFixed(2);   
+          document.getElementById("gst_amount").innerText = "$" + (total_price_for_all_products*0.07).toFixed(2);
           //There is only a shipping cost if there is at least 1 product
           if (document.getElementsByClassName("total_price_for_current_product").length == 0) {
-            document.getElementById("total_price_for_all_products_with_shipping").innerText = "$0.00";
-            document.getElementById("shipping").innerText = "$0.00";
+            document.getElementById("total_price_for_all_products_with_gst").innerText = "$0.00";
+            document.getElementById("gst_amount").innerText = "$0.00";
             
           }  
           //Update the number of items in cart
@@ -677,7 +736,7 @@
               }    
           }
           //console.log(start[0]);
-          var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + start + "&key=AIzaSyATVWK0xQi5HrgEwmmkWT78hBe0h2P9bA0";
+          var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + start + "&key=AIzaSyDcIUwwXfLUWzMAE1WspewghH9f-vmSkzc";
                 
           try { 
             var xhttp = new XMLHttpRequest();
@@ -752,7 +811,84 @@
                               'Error: Your browser doesn\'t support geolocation.');
         infoWindow.open(map);
       }
+
+      
   </script>
+
+  <!-- go to stripe checkout page -->
+  <script type="text/javascript" async>
+      // check if all criteria is fulfilled to enable checkout button
+      document.querySelectorAll('.check-checkout').forEach(item => {item.addEventListener('change', event => {
+            //handle click
+            if (document.getElementById("collection_time").value !== '' && document.getElementById("collection_date").value !== '' && document.getElementById("total_price_for_all_products_with_gst").innerText !== '$0.00') {
+                document.getElementById('checkout-button').disabled = false;
+            } else {
+                document.getElementById('checkout-button').disabled = true;
+            }
+           
+            
+          })
+        });
+
+
+      //var checkoutButton = document.getElementById("checkout-button");      
+      //checkoutButton.addEventListener("click", get_current_cart());
+      
+      function get_current_cart() {
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() { // callback aka anonymous function
+          if (this.readyState == 4) {
+              if (this.status == 200) {
+                  // process response
+                    console.log( this.responseText );
+                    checkout(this.responseText);
+                }
+            }
+          };
+        
+        xhr.open("POST", "retrieve_cart.php", true);
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        //HARDCODED need to change later
+        xhr.send("user_id=1"); // query parameters
+
+      }
+
+      function checkout(current_cart) {
+        var url = "create-session.php";
+        // Create an instance of the Stripe object with your publishable API key
+        var stripe = Stripe("pk_test_51HgOY8AgaC3WCXUJIaOFunkJxpIXJwKHuu6CeHk4NGB1esqvHIwVGXTTuxaZIebOuKhnSfqQDZTsBB5wOBn9D5RC00BlIAWB0d");            
+            try { 
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        // following code may throw error if user input is invalid address
+                        // so we use try-catch block to handle errors
+                        // expected response is JSON data
+                        console.log(this.responseText);
+                        var response = JSON.parse(this.responseText);
+                        
+                        return stripe.redirectToCheckout({ sessionId: response.id
+                        });  
+                    
+                };
+              }
+            } catch(err) { // show error message
+    
+                console.log("Sorry, invalid address. Please try again!");
+            }
+            xhttp.open("POST", url, true);
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            data = document.getElementById('checkout-info').value;
+            data = data.split(','); // array
+            var senddata = "user_id=" + data[0]+ "&company_id=" + data[1]+ "&time=" + String(document.getElementById("collection_time").value) + "&date=" +String( document.getElementById("collection_date").value) + "&price=" + document.getElementById("total_price_for_all_products_with_gst").innerText.slice(1) + "&cart=" + current_cart;
+            console.log(senddata);
+            xhttp.send(senddata); // query parameters
+          }
+
+      
+  </script>
+
+
   <!-- load the map asynchronously, i.e., load data soon as it becomes available -->
   <!-- replace the API key with yours -->
     <!-- load the map asynchronously, i.e., load data soon as it becomes available -->

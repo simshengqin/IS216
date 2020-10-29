@@ -298,13 +298,6 @@
                                     echo "
                                 </div>
                                 <div class='product-content'>
-                                    <ul class='rating'>
-                                        <li class='fa fa-star'></li>
-                                        <li class='fa fa-star'></li>
-                                        <li class='fa fa-star'></li>
-                                        <li class='fa fa-star'></li>
-                                        <li class='fa fa-star'></li>
-                                    </ul>
                                     <h3 class='title'>" . str_replace('_',' ',$name) . "</h3>
                                     <div class='price'>
                                         $$price_after

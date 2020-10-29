@@ -49,7 +49,7 @@ class productDAO {
 
 
     public function retrieve_all(){
-        $sql = 'SELECT * FROM product';
+        $sql = 'SELECT * FROM product WHERE (decay_date > CURRENT_DATE()) OR (decay_time > CURRENT_TIME())';
 
         $connMgr = new ConnectionManager();      
         $conn = $connMgr->getConnection();
@@ -85,7 +85,7 @@ class productDAO {
         return $result;
     }
     public function retrieve_products_by_category($category){
-        $sql = "SELECT * FROM product WHERE category = :category";
+        $sql = "SELECT * FROM product WHERE category = :category; #AND (decay_date > CURRENT_DATE()) OR (decay_time > CURRENT_TIME())";
         $connMgr = new ConnectionManager();      
         $conn = $connMgr->getConnection();
 
@@ -100,7 +100,7 @@ class productDAO {
         return $result;
     }
     public function retrieve_product($product_id){
-        $sql = "SELECT * FROM product WHERE product_id = :product_id"; 
+        $sql = "SELECT * FROM product WHERE product_id = :product_id#; AND (decay_date > CURRENT_DATE()) OR (decay_time > CURRENT_TIME())"; 
         $connMgr = new ConnectionManager();      
         $conn = $connMgr->getConnection();
 
@@ -113,9 +113,25 @@ class productDAO {
         }
         return $result;
     }
+
+    // for displaying order history
+    public function retrieve_single_product($product_id){
+        $sql = "SELECT * FROM product WHERE product_id = :product_id"; 
+        $connMgr = new ConnectionManager();      
+        $conn = $connMgr->getConnection();
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->execute();
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $result = new product($row['product_id'], $row['company_id'], $row['decay_date'], $row['decay_time'], $row['name'], $row['posted_date'], $row['posted_time'], $row['price_after'], $row['price_before'], $row['quantity'], $row['category'], $row['mode_of_collection'], $row['image_url']);
+        }
+        return $result;
+    }
     
     public function retrieve_product_by_company($company_id){
-        $sql = "SELECT * FROM product WHERE company_id = :company_id";
+        $sql = "SELECT * FROM product WHERE company_id = :company_id AND (decay_date > CURRENT_DATE()) OR (decay_time > CURRENT_TIME())";
         $connMgr = new ConnectionManager();      
         $conn = $connMgr->getConnection();
 

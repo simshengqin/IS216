@@ -74,24 +74,30 @@
 
 <?php include 'include/customer_navbar.php';?>
 <div class="jumbotron  mt-3" style="background-color: #FFFFFF" name="companyinfo">
-    <div class="row text-capitalize mb-3">
+    <div class="row text-capitalize mb-3" style='margin: 25px 30px 10px 0px;'>
 
-        <div class="col-md-8">
-            <h1 class="font-weight-bold;"><?php echo $company_name ?>            
-                <button type="button" onclick="location.href='inbox.php?user_id=1&user_type=user&target_id=<?php echo $company_id?>&target_type=company&target_name=<?php echo $company_name?>'" class="btn btn-outline-info ml-2"><i class="fas fa-comment mr-2"></i>Chat</button>
-                <button type="button" onclick="show_map_modal()" class="btn btn-outline-info ml-2"><i class="fa fa-map-marker mr-2"></i>View Map</button>
+        <div class="col-md-6">
+            <div class="row ml-3">
+            <h1 class="font-weight-bold;"><?php echo $company_name ?>  
+            </div> 
+            <div class="row mb-3 ml-3">         
+                <button type="button" onclick="location.href='inbox.php?user_id=1&user_type=user&target_id=<?php echo $company_id?>&target_type=company&target_name=<?php echo $company_name?>'" class="btn btn-outline-info mr-2"><i class="fas fa-comment mr-2"></i>Chat</button>
+                <button type="button" onclick="show_map_modal()" class="btn btn-outline-info"><i class="fa fa-map-marker"></i>View Map</button>
+            </div>
             </h1>         
-            <div>
+            <div class="row mb-3 ml-3">
                 <li class='fa fa-star'></li>
                 <span class='font-weight-bold'><?php echo $company_rating ?></span>
                 <span>/5</span><span style="margin-left: 10px;" id="distance" name='<?php echo "$company_latitude,$company_longtitude"?>'></span>
-            </div>   
-            <div class="company-description"> <?php echo $company_description?></div>
-            <div class="company-description"> <?php echo $company_address?></div>
+            </div> 
+            <div class="row mb-3 ml-3">  
+                <div class="company-description"> <?php echo $company_description?></div>
+                <div class="company-description"> <?php echo $company_address?></div>
+            </div>
 
         </div>        
      
-        <div class="col-md-4">
+        <div class="col-md-6">
             <img class="mr-2 mb-2" width="100%" src="images/company_profile_image/<?php echo $company_id ?>.jpeg"></img>
 
 
@@ -112,7 +118,7 @@
             <!--Toast, which is a message pop-up whenever an item is added to the cart-->
             <div style="position: relative; min-height: 200px;">
             <!-- Position it -->
-            <div style="position: fixed; top: 0; right: 0;  z-index: 10;" >
+            <div style="position: fixed; top: 0; right: 0;  z-index: 10000;" >
 
                 <!-- Then put toasts within -->
                 <div class="toast" id="add_to_cart_message" role="alert" aria-live="assertive" aria-atomic="true">
@@ -209,6 +215,92 @@
                 </div>
             </div>
         </div>
+        <!--Modal to filter products-->
+        <div class="modal fade" id="filter_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Advanced options</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <div class="form-row m-2">
+                                <div class="form-group col-12">
+                                    <div class="input-group">
+                                        <span class="input-group-prepend">
+                                            <label class="input-group-text" for="inputGroupSelect01">
+                                            Sort by</label>
+                                        </span>
+                                        <select class="form-control custom-select w-100" id="sort_by_bar";"                                                                                                                >
+                                            <option selected value="Posted Date: Newest to oldest">Posted Date: Newest to oldest</option>
+                                            <option selected value="Posted Date: Oldest to newest">Posted Date: Oldest to newest</option>
+                                            <option selected value="Expiry Date: Shorter away to further away">Expiry Date: Shorter away to further away</option>
+                                            <option selected value="Expiry Date: Further away to shorter away">Expiry Date: Further away to shorter away</option>
+                                            <option value="Price: Low to high">Price: Low to high</option>
+                                            <option value="Price: High to low">Price: High to low</option>
+                                        </select>
+                                    </div>  
+                                </div>
+                            </div>  
+                            <hr> 
+                            <div class="form-row ml-3">
+                                Price 
+                            </div>
+                            <div class="form-row m-2">
+                                <div class="form-group col-12">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <input type="text" id="price_min" class="mr-1 w-100" placeholder='Min $'></input>
+                                        </div>
+                                        <div class="col-6">
+                                            <input type="text" id="price_max" class="w-100" placeholder='Max $'></input>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-row m-2">
+                                Offers 
+                            </div>
+                            <div class="form-row m-2">
+                                <div class="form-group">
+                                    <input type="checkbox" id="offers_has_discount"> Has discount 
+                                </div>               
+                            </div>
+                            <hr>
+                            <div class="form-row m-2">
+                                Freshness 
+                            </div>
+                            <div class="form-row ml-2 mr-2">
+                                <div class="form-group col-12">
+                                    <input type="number" id="freshness_min_days_to_expiry" min="1" step="1" placeholder='Min days to expiry'></input>   
+                                </div>
+                            </div>
+                            <!--
+                            <div class="form-row mb-2">
+                                Categories
+                            </div>
+                        
+                            <div class="form-row">
+                                <div class="form-group col-12">
+                                    <input type="checkbox" id="categories_dessert" onchange ='search_filter()'> Dessert
+                                    <input type="checkbox" id="categories_vegetables" onchange ='search_filter()'> Vegetables
+                                    <input type="checkbox" id="categories_meal" onchange ='search_filter()'> Meal
+
+                                </div>
+                            </div>
+                            -->
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="filter_modal_confirm" onclick="search_filter()">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!--Modal to show map-->
         <div class="modal fade" id="map_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -229,84 +321,6 @@
                 </div>
             </div>
         </div>        
-        <div name="filterform" class="col-md-4">
-            <div><!--class="position-fixed"-->
-                <div class="form-row ">
-                    <div class="form-group col-12">
-                        <div class="input-group">
-                            <span class="input-group-prepend">
-                                <label class="input-group-text" for="inputGroupSelect01">
-                                Sort by</label>
-                            </span>
-                            <select class="form-control custom-select " id="sort_by_bar" onchange = "sort_products();"                                                                                                                >
-                                <option selected value="Posted Date: Newest to oldest">Posted Date: Newest to oldest</option>
-                                <option selected value="Posted Date: Oldest to newest">Posted Date: Oldest to newest</option>
-                                <option selected value="Expiry Date: Shorter away to further away">Expiry Date: Shorter away to further away</option>
-                                <option selected value="Expiry Date: Further away to shorter away">Expiry Date: Further away to shorter away</option>
-                                <option value="Price: Low to high">Price: Low to high</option>
-                                <option value="Price: High to low">Price: High to low</option>
-                            </select>
-                        </div>  
-                    </div>
-                </div>  
-                <hr> 
-                <div class="form-row mb-2">
-                    Mode of collection 
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <input type="radio" id="mode_of_collection_delivery" name="mode_of_collection" value="delivery" onchange ='search_filter()'> Delivery
-                        <input type="radio" id="mode_of_collection_pickup" name="mode_of_collection" value="pickup" onchange ='search_filter()'> Pickup
-                    </div>               
-                </div>
-                <hr>
-                <div class="form-row mb-2">
-                    Price 
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-12">
-                        
-                        <input type="text" id="price_min" class="mb-2" oninput ='search_filter()' placeholder='Min $'></input>
-                        <input type="text" id="price_max" oninput ='search_filter()' placeholder='Max $'></input>
-                    </div>
-                </div>
-                <hr>
-                <div class="form-row mb-2">
-                    Offers 
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <input type="checkbox" id="offers_free_delivery" onchange ='search_filter()'> Free delivery
-                        <input type="checkbox" id="offers_has_discount" onchange ='search_filter()'> Has discount 
-                    </div>               
-                </div>
-                <hr>
-                <div class="form-row mb-2">
-                    Freshness 
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-12">
-                        <input type="number" id="freshness_min_days_to_expiry" min="1" step="1" oninput ='search_filter()' placeholder='Min days to expiry'></input>   
-                    </div>
-                </div>
-                <hr>
-                <!--
-                <div class="form-row mb-2">
-                    Categories
-                </div>
-               
-                <div class="form-row">
-                    <div class="form-group col-12">
-                        <input type="checkbox" id="categories_dessert" onchange ='search_filter()'> Dessert
-                        <input type="checkbox" id="categories_vegetables" onchange ='search_filter()'> Vegetables
-                        <input type="checkbox" id="categories_meal" onchange ='search_filter()'> Meal
-
-                    </div>
-                </div>
-                -->
-            </div>
-
-        </div>
         <!--A placeholder to store the user's cart-->
 
         <input type="hidden" id="same_company_id_from_user_cart" value="<?php 
@@ -349,8 +363,10 @@
                                                                 echo $cart_company_name;
                                                             ?>"></input>
         <!--Product grid displaying all food products-->
-        <div class="grid_beside_filterform col-md-8">    
+        <div class="col-2"></div>
+        <div class="grid_beside_filterform col-8">    
             <!--Search bar-->
+            <!--
             <div class="row" name="search_for_products">    
                 <div class="form-group col-12">
                     <input type="text" class="form-control" name="x" id="search_for_products" oninput ='search_filter()' placeholder="Search for products">
@@ -360,9 +376,9 @@
                         </button>
                     </span>
                 </div>
-            </div>
-            <h3 id="no_items_warning"></h3>
-            <div class="row" id="main_product_grid">               
+            </div> -->
+            
+            <div class="row">               
                 <?php
                     $productDAO = new productDAO();
                     #$all_product_info = $productDAO->retrieve_all();                 
@@ -396,14 +412,30 @@
                         $i += 1;
                     }
                     echo "<div class='col-12'>";
+                    //Search bar
+                    echo '<div class="row" name="search_for_products">    
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col">
+                                        <input type="text" class="form-control" name="x" id="search_for_products" oninput ="search_filter()" placeholder="Find products">
+                                    </div>
+                                    <button class="btn btn-outline-info mb-2" id="filter_btn" onclick="show_filter_modal()">Filter</button>
+                                </div>
+                            </div>                 
+                            </div>
+                        </div>';
+                    //warning message
+                    echo '<h5 id="no_items_warning"></h5>';
                     // Print category (of the food product) by category
+                    echo '<div class="row" id="main_product_grid">';
                     foreach ($unique_categories as $category) {
-                        echo "  <div class='row' style='margin-left: 5px; margin-bottom: 20px;'>
+                        echo "  <div class='col-12' style='margin-left: 5px; margin-bottom: 20px;'>
                                     <h1 class='font-weight-bold'>$category</h1>
                                 </div>";
                         $company_products_by_category = $productDAO->retrieve_products_by_category($category);
                         //echo '<pre>'; print_r($company_products_by_category); echo '</pre>';
-                        echo "<div class='row'>";
+                        echo "<div class='col-12' style='margin-left: 5px; margin-bottom: 20px;'>";
+                        echo "  <div class='row'>";
                         foreach ($company_products_by_category as $product) {
                             //echo $product->get_name();
                             $product_id = $product->get_product_id();
@@ -411,6 +443,8 @@
                             $decay_date = $product->get_decay_date();
                             $decay_time = $product->get_decay_time();
                             $name = $product->get_name();
+                            //To escape single quotes
+                            $name = str_replace("'", "&#39;", $name);
                             $posted_date = $product->get_posted_date();
                             $posted_time = $product->get_posted_time();
                             $price_after = $product->get_price_after();
@@ -455,11 +489,11 @@
                             //$datetime = date('m/d/Y h:i:s a', time());
                             if ($product_quantity_in_database != 0) {
                                 echo "
-                                <div class='col-xl-3 col-lg-4 col-sm-6 single_product_grid' id ='single_product_grid' name='$product_id,$company_id,$decay_date,$decay_time,$name,$posted_date,$posted_time,$price_after,$price_before,$quantity,$category,$mode_of_collection'>
+                                <div class='col-xxl-3 col-xl-4 col-lg-4 col-sm-6 single_product_grid' id ='single_product_grid' name='$product_id,$company_id,$decay_date,$decay_time,$name,$posted_date,$posted_time,$price_after,$price_before,$quantity,$category,$mode_of_collection'>
                                     <div class='product-grid'>
                                         
                                         <div class='product-image d-flex w-100'>
-                                            <img class='pic-1 my-auto'  src='$image_url'>";
+                                            <img class='pic-1 my-auto'  style='margin-top: 0px !important' src='$image_url'>";
                                             //only add a new label if the product is posted today 
                                             //Need to follow sql format, which is Y-m-d
                                             if (date('Y-m-d', time())== $posted_date) {
@@ -495,12 +529,15 @@
                             }
 
                         }
+                        echo "  </div>";
                         echo "</div>";
                     }
                     echo "</div>";
+                    echo '</div>';
                 ?>
             </div>
         </div>
+        <div class="col-2"></div>
     </div>
 </div>
 <?php include 'include/footer.php';?>
@@ -520,23 +557,20 @@
             followers_count.innerText = parseInt(followers_count.innerText) - 1;
         }
     }
+    //****Show filter modal  *****//
+    function show_filter_modal() {
+        $('#filter_modal').modal('show');
+    }
     //****Search bar****//
     function search_filter(){
+        sort_products();
+        //Hides the modal
+        $('#filter_modal').modal('hide');
         //Change the display to none for products that do not meet the filter criteria, else change the display to block
         var product_grids = document.getElementsByClassName("single_product_grid");
         var search_for_products = document.getElementById("search_for_products").value.toLowerCase();
-        if (document.getElementById("mode_of_collection_delivery").checked) {
-            mode_of_collection = "delivery";
-        }
-        else if (document.getElementById("mode_of_collection_pickup").checked) {
-            mode_of_collection = "pickup";
-        }
-        else {
-            mode_of_collection = "";
-        }
         var price_min = document.getElementById("price_min").value;
         var price_max = document.getElementById("price_max").value;
-        var offers_free_delivery = document.getElementById("offers_free_delivery").checked;
         var offers_has_discount = document.getElementById("offers_has_discount").checked;
         var freshness_min_days_to_expiry = document.getElementById("freshness_min_days_to_expiry").value;
         //var categories_dessert = document.getElementById("categories_dessert").checked;
@@ -560,7 +594,6 @@
             price_before = parseFloat(product_info_arr[8]);
             quantity = product_info_arr[9];
             category = product_info_arr[10];
-            mode_of_collection_user = product_info_arr[11];
             //Gets today date and the date of decay in a date object
             var now = new Date();
             var decay_date = new Date(decay_date); 
@@ -574,7 +607,7 @@
             //console.log(price_before);
             //if ((!categories_dessert && !categories_vegetables && !categories_meal) || (categories_dessert && category == "dessert") || (categories_vegetables && category == "vegetables") || (categories_meal && category == //"japanese_food"))
             //{
-            if (name.includes(search_for_products) && (mode_of_collection == "" || mode_of_collection == mode_of_collection_user) && (price_max == "" || price_after <= parseFloat(price_max)) && (price_min == "" || price_after >= parseFloat(price_min)) && (!offers_has_discount|| price_before != price_after) && (freshness_min_days_to_expiry == "" || difference_in_days >= freshness_min_days_to_expiry)) {
+            if (name.includes(search_for_products) && (price_max == "" || price_after <= parseFloat(price_max)) && (price_min == "" || price_after >= parseFloat(price_min)) && (!offers_has_discount|| price_before != price_after) && (freshness_min_days_to_expiry == "" || difference_in_days >= freshness_min_days_to_expiry)) {
                 product_grid.setAttribute("style", "display: block;");
                 has_at_least_one_value = true;
             }    
@@ -588,7 +621,7 @@
         }
         //Display warning message if no products match the filter criteria
         if (!has_at_least_one_value) {
-            document.getElementById("no_items_warning").innerHTML = "<div class='alert alert-danger'>No results match the filter criteria</div>";
+            document.getElementById("no_items_warning").innerHTML = "<h5 class='alert alert-danger' style='height: 40%;'>No results match the filter criteria</h5>";
         }
         else {
             document.getElementById("no_items_warning").innerHTML = "";
@@ -603,7 +636,6 @@
         var search_for_products = document.getElementById("search_for_products").value;
         var price_min = document.getElementById("price_min").value;
         var price_max = document.getElementById("price_max").value;
-        var offers_free_delivery = document.getElementById("offers_free_delivery").checked;
         var offers_has_discount = document.getElementById("offers_has_discount").checked;
         var freshness_min_days_to_expiry = document.getElementById("freshness_min_days_to_expiry").value;
         //var categories_dessert = document.getElementById("categories_dessert").checked;
@@ -840,7 +872,7 @@
                     return;               
                 }    
             }                     
-            var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + start + "&key=AIzaSyATVWK0xQi5HrgEwmmkWT78hBe0h2P9bA0";       
+            var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + start + "&key=AIzaSyDcIUwwXfLUWzMAE1WspewghH9f-vmSkzc";       
             //Retrieves the company latitude and longtitude                        
             end_latlng_arr = document.getElementById("distance").getAttribute("name").split(",");
       
@@ -983,7 +1015,7 @@
             }    
         }
         //console.log(start[0]);
-        var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + start + "&key=AIzaSyATVWK0xQi5HrgEwmmkWT78hBe0h2P9bA0";
+        var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + start + "&key=AIzaSyDcIUwwXfLUWzMAE1WspewghH9f-vmSkzc";
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {

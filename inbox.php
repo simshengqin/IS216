@@ -2,7 +2,8 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
-
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
 
 <html>
 <head>
@@ -17,189 +18,58 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet">
     <!--Link to main.css files while contains all the css of this project-->
     <link rel='stylesheet' href='css\maincss.css'>
-    <style>
-        .container{max-width:1170px; margin:auto;}
-        img{ max-width:100%;}
-        .inbox_people {
-        background: #f8f8f8 none repeat scroll 0 0;
-        float: left;
-        /*overflow: hidden;*/
-        width: 40%; border-right:1px solid #c4c4c4;
-        }
-        .inbox_msg {
-        border: 1px solid #c4c4c4;
-        clear: both;
-        overflow: hidden;
-        }
-        .top_spac{ margin: 20px 0 0;}
 
-        .recent_heading {float: left; width:40%;}
-        .srch_bar {
-        display: inline-block;
-        text-align: right;
-        width: 60%; padding:
-        }
-        .headind_srch{ padding:10px 29px 10px 20px; overflow:hidden; border-bottom:1px solid #c4c4c4;}
-
-        .recent_heading h4 {
-        color: #05728f;
-        font-size: 21px;
-        margin: auto;
-        }
-        .srch_bar input{ border:1px solid #cdcdcd; border-width:0 0 1px 0; width:80%; padding:2px 0 4px 6px; background:none;}
-        .srch_bar .input-group-addon button {
-        background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
-        border: medium none;
-        padding: 0;
-        color: #707070;
-        font-size: 18px;
-        }
-        .srch_bar .input-group-addon { margin: 0 0 0 -27px;}
-
-        .chat_ib h5{ font-size:15px; color:#464646; margin:0 0 8px 0;}
-        .chat_ib h5 span{ font-size:13px; float:right;}
-        .chat_ib p{ font-size:14px; color:#989898; margin:auto}
-        .chat_img {
-        float: left;
-        width: 11%;
-        }
-        .chat_ib {
-        float: left;
-        padding: 0 0 0 15px;
-        width: 88%;
-        }
-
-        .chat_people{ overflow:hidden; clear:both;}
-        .chat_list {
-        border-bottom: 1px solid #c4c4c4;
-        margin: 0;
-        padding: 18px 16px 10px;
-        }
-        .inbox_chat { height: 550px; overflow-y: scroll;}
-
-        .active_chat{ background:#ebebeb;}
-
-        .incoming_msg_img {
-        display: inline-block;
-        width: 6%;
-        }
-        .received_msg {
-        display: inline-block;
-        padding: 0 0 0 10px;
-        vertical-align: top;
-        width: 92%;
-        }
-        .received_withd_msg p {
-        background: #ebebeb none repeat scroll 0 0;
-        border-radius: 3px;
-        color: #646464;
-        font-size: 14px;
-        margin: 0;
-        padding: 5px 10px 5px 12px;
-        width: 100%;
-        }
-        .time_date {
-        color: #747474;
-        display: block;
-        font-size: 12px;
-        margin: 8px 0 0;
-        }
-        .received_withd_msg { width: 57%;}
-        .mesgs {
-        float: left;
-        padding: 30px 15px 0 25px;
-        width: 60%;
-        }
-
-        .sent_msg p {
-        background: #05728f none repeat scroll 0 0;
-        border-radius: 3px;
-        font-size: 14px;
-        margin: 0; color:#fff;
-        padding: 5px 10px 5px 12px;
-        width:100%;
-        }
-        .outgoing_msg{ overflow:hidden; margin:26px 0 26px;}
-        .sent_msg {
-        float: right;
-        width: 46%;
-        }
-        .input_msg_write input {
-        background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
-        border: medium none;
-        color: #4c4c4c;
-        font-size: 15px;
-        min-height: 48px;
-        width: 100%;
-        }
-
-        .type_msg {border-top: 1px solid #c4c4c4;position: relative;}
-        .msg_send_btn {
-        background: #05728f none repeat scroll 0 0;
-        border: medium none;
-        border-radius: 50%;
-        color: #fff;
-        cursor: pointer;
-        font-size: 17px;
-        height: 33px;
-        position: absolute;
-        right: 0;
-        top: 11px;
-        width: 33px;
-        }
-        .messaging { padding: 0 0 50px 0;}
-        .msg_history {
-            height: 516px;
-            overflow-y: scroll;
-            overscroll-behavior-y: contain;
-            scroll-snap-type: y proximity;
-        }
-        .msg_history > div:last-child {
-            scroll-snap-align: end;
-        }
-    </style>
 </head>
 <body>
-<div class="container">
-<h3 class=" text-center">Messaging</h3>
-<div class="messaging">
-    <!--inbox_msg contains both the left sidebar and right sidebar-->
-    <div class="inbox_msg">
-        <!--Main leftsidebar, contains both searchbar and chat previews to other people-->
-        <div class="inbox_people">
-            <!--The leftsidebar containing the searchbar-->
-            <div class="headind_srch">
-                <div class="recent_heading">
-                    <h4>Recent</h4>
-                </div>
-                <!--Search bar-->
-                <div class="srch_bar">
-                    <div class="stylish-input-group">
-                    <input type="text" class="search-bar"  placeholder="Search" >
-                    <span class="input-group-addon">
-                    <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
-                    </span> </div>
-                </div>
-            </div>
-            <!--The left sidebar below the searchbar containing all the chat previews to other people -->
-            <div class="inbox_chat" id="inbox_chat">
-            </div>
+<div class="container-fluid ">
+    <!-- add navbar at the top -->
+    <?php include 'include/customer_navbar.php';?>
+    <?php 
+        //go back to previous page on history
+        echo "<a id='go_back_btn' href='javascript:history.go(-1)'><h4 class='m-2'><button class='mt-2 mb-2' style='margin-left: 40px;' onClick='header(\'Location: view_company.php?company_name=target_name\');'><i class='fas fa-chevron-circle-left'></i></button>Go back</h4></a>";
 
-        </div>
-        <!-- Rightsidebar Contains the messages to the currently selected person/company -->
-        <div class="mesgs">
-            <div class="msg_history">
-                <div id="selected_messages">                    
+    ?>
+    <div class="messaging row">
+        <div class="col-12">
+            <!--inbox_msg contains both the left sidebar and right sidebar-->
+            <div class="inbox_msg row" style="margin-left: 40px; margin-right: 40px;">
+                <!--Main leftsidebar, contains both searchbar and chat previews to other people-->
+                <div class="inbox_people2 col-sm-4 p-0" style="border-right: 1px solid #c4c4c4;">
+                    <!--The leftsidebar containing the searchbar-->
+                    <!--
+                    <div class="headind_srch">
+                        <div class="recent_heading">
+                            <h4></h4>
+                        </div>
+                        Search bar
+                        <div class="srch_bar">
+                            <div class="stylish-input-group">
+                            <input type="text" class="search-bar"  placeholder="Search" >
+                            <span class="input-group-addon">
+                            <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
+                            </span> </div>
+                        </div
+                    </div>>-->
+                    <!--The left sidebar below the searchbar containing all the chat previews to other people -->
+                    <div class="inbox_chat" id="inbox_chat">
+                    </div>
+
+                </div>
+                <!-- Rightsidebar Contains the messages to the currently selected person/company -->
+                <div class="mesgs col-sm-8 w-100">
+                    <div class="msg_history">
+                        <div id="selected_messages">                    
+                        </div>
+                    </div>
+                    <div class="type_msg" id="type_msg">
+                        <div class="input_msg_write d-none" id="input_msg_write" >
+                            <input type="text" class="write_msg" id="sent_message" placeholder="Type a message" />
+                            <button class="msg_send_btn" id="msg_send_btn" type="button" onclick='send_message()'><i class="fas fa-paper-plane" aria-hidden="true" name="false"></i></button>
+                        </div>
+                    </div>       
                 </div>
             </div>
-            <div class="type_msg" id="type_msg">
-                <div class="input_msg_write d-none" id="input_msg_write" >
-                    <input type="text" class="write_msg" id="sent_message" placeholder="Type a message" />
-                    <button class="msg_send_btn" id="msg_send_btn" type="button" onclick='send_message()'><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
-                </div>
-            </div>       
         </div>
-    </div>
     </div>
       
     </div></div>
@@ -216,9 +86,11 @@
             sessionStorage.setItem("selected_from_id","");
             sessionStorage.setItem("selected_from_type","");            
         }
+        window.scroll_down = "true";
         //alert(sessionStorage.getItem("selected_from_id") !== "");
         update_selected_messages_leftbar();
         update_selected_messages();
+
 
     };
 
@@ -227,7 +99,7 @@
         update_selected_messages();
          //Update the left side bar messages ever 1 second
         update_selected_messages_leftbar();
-    }, 1000);
+    }, 500);
 
     function update_selected_messages_leftbar() {
         //Update the left sidebar messages
@@ -303,9 +175,9 @@
                         document.getElementById("inbox_chat").innerHTML =document.getElementById("inbox_chat").innerHTML + "\
                                                                                     <div class='incoming_msg'> \
                                                                                         <div class='chat_list active_chat' id='"+from_id_url+","+from_type_url+"' onclick='select_chat()'> \
-                                                                                        <div class='chat_people'> \
-                                                                                            <div class='chat_img'> <img src='" + from_image +"' width='100px'> </div> \
-                                                                                            <div class='chat_ib'> \
+                                                                                        <div class='chat_people2 row'> \
+                                                                                            <div class='chat_img col-md-6'> <img class='d-block mx-auto' src='" + from_image +"' width='100px'> </div> \
+                                                                                            <div class='chat_ib col-md-6'> \
                                                                                                 <h5>" + from_name +" <span class='chat_date'>Today</span></h5> \
                                                                                                 <p></p> \
                                                                                             </div>\
@@ -353,14 +225,18 @@
                         document.getElementById("inbox_chat").innerHTML =document.getElementById("inbox_chat").innerHTML + "\
                                                                                     <div class='incoming_msg'> \
                                                                                         <div class='chat_list" + " " + active_chat + "' id='"+from_id+","+from_type+"' onclick='select_chat()'> \
-                                                                                        <div class='chat_people'> \
-                                                                                            <div class='chat_img'> <img src='" + from_image +"' width='100px'> </div> \
-                                                                                            <div class='chat_ib'> \
-                                                                                                <h5>" + from_name +" <span class='chat_date'>" + message_date +"</span></h5> \
-                                                                                                <p>" + message_body +"</p> \
+                                                                                        <div class='chat_people2 row d-flex justify-content-center'> \
+                                                                                            <div class='chat_img col-xs-4'> <img class='d-block mx-auto' src='" + from_image +"' width='100px'> </div> \
+                                                                                             <div class='chat_ib col-xs-4'> \
+                                                                                                <div class='text-center mt-1'>" + from_name +" </div> <div class='text-center chat_date'>" + message_date +"</div> \
                                                                                             </div>\
-                                                                                        </div>\
-                                                                                    </div>";
+                                                                                            <div class='col-xs-4 mt-1 text-center w-100 overflow-hidden'> \
+                                                                                                <p id='message_body'>" + message_body +"</p> \
+                                                                                            </div>\
+                                                                                            \
+                                                                                             \
+                                                                                        </div> \
+                                                                                    </div>";                                                                                       
 
                     }
  
@@ -400,7 +276,7 @@
                     //Need to figure out whether it's an incoming or outgoing message
                     //Add \ at the end of the line to tell javascript the string continues on the next line
                     if (message["from_id"] == selected_from_id && message["from_type"] == selected_from_type) {
-                        //if the from_id is same as the selected from id, it means it's an ingoing message. else it is outgoing
+                        //if the from_id is same as the selected from id, it means it's an incoming message. else it is outgoing
                        var from_image = "images/profile_picture/"+message["from_type"] + "/" + message["from_id"]+".png";
                        if (message["from_type"] == "user") {
                         var from_image = "images/profile_picture/"+message["from_type"] + "/" + "default"+".png";
@@ -428,7 +304,16 @@
                                                                                         </div> \
                                                                                     </div>  \
                                                                                 ";
+
                     }
+
+
+                }                    
+                //Keeps it scrolled down only when user sends a message
+                if (window.scroll_down == "true") {
+                    var element = document.getElementsByClassName("msg_history")[0];
+                    element.scrollTop = element.scrollHeight;
+                    window.scroll_down = "false";                            
                 }            
             }  
         };  
@@ -479,6 +364,7 @@
         sessionStorage.setItem("selected_from_id", selected_from_id);
         sessionStorage.setItem("selected_from_type", selected_from_type);
         //alert(selected_from_id + selected_from_type);
+        window.scroll_down = "true";
         //Update the right side chat bar
         update_selected_messages();
 
@@ -511,6 +397,8 @@
         }
     });
     function send_message() {
+        //Scrolls down to the end of message
+        window.scroll_down = "true";
         //Retrieves the chat message sent
         body = document.getElementById("sent_message").value;
         if (body != "") {

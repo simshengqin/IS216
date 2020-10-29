@@ -24,6 +24,9 @@ if(isset($_POST["productName"]) && isset($_POST["productType"]) && isset($_POST[
   $posted_date = $_POST["posted_date"];
   $posted_time = $_POST["posted_time"];
 
+  $totalProducts = $productDAO->retrieve_product_by_company($company_id);
+  $uniqueNum = count($totalProducts);
+  $uniqueNum += 1;
   //var_dump($_POST["image_path_source"]);
   //var_dump($_POST["image_Name"]);
   //var_dump($_FILES["productImageUpload"]["tmp_name"]);
@@ -45,7 +48,10 @@ if(isset($_POST["productName"]) && isset($_POST["productType"]) && isset($_POST[
   //$source = "C:/Users/Victor/Desktop/".$_POST["image_path_source"];
   $dir = 'images/product/'.$company_id;
   $source = $_FILES["productImageUpload"]["tmp_name"];
-  $destination = $dir."/".$_POST["image_path_source"];  
+  $destination = $dir."/".$_POST["image_path_source"]; 
+  
+  var_dump("Source: ".$source);
+  var_dump("Destination: ".$destination);
 
   if(!copy($source, $destination)){
     $diplayOutput_copy = "was not able to copy file to destination";
@@ -53,12 +59,13 @@ if(isset($_POST["productName"]) && isset($_POST["productType"]) && isset($_POST[
     $diplayOutput_copy = "file copied to destination";
     copy($source, $destination);
     //echo $source ." to ".$destination;
-    rename($destination, $dir."/".$_POST["productName"].'.jpg');
-    $image_url = "./".$dir."/".$_POST["productName"].'.jpg';
+    rename($destination, $dir."/".$_POST["productName"]."_".$uniqueNum.'.jpg');
+    //$image_url = "./".$dir."/".$_POST["productName"].'.jpg';
+    $image_url = "./".$dir."/".$_POST["productName"]."_".$uniqueNum.'.jpg';
   }
 
-  var_dump("directory ". $dir );
-  var_dump("destination". $destination);
+  var_dump("directory: ". $dir );
+  var_dump("destination:". $destination);
   var_dump("Image url: ".$image_url);
 
   $output = $productDAO->add( $company_id, $decay_date, $decay_time, $name, 
@@ -66,8 +73,8 @@ if(isset($_POST["productName"]) && isset($_POST["productType"]) && isset($_POST[
 
   //var_dump($output);
 
-//header("Location: company_edit_product.php");
-//exit();
+header("Location: company_edit_product.php");
+exit();
 
 
 

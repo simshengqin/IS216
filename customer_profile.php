@@ -22,12 +22,14 @@
     $phoneNumber = $user->get_phoneNumber();
     $preferences = $user->get_preferences();
     $user_id = $user->get_user_id();
+    $cart = $user->get_cart();
 
     $transactionDAO = new transactionDAO();
     $transactions = $transactionDAO->retrieve_transactions_by_user_id($user_id);
     // $company_id = $orders->get_company_id();
 
     $companyDAO = new companyDAO();
+    $productDAO = new productDAO();
     
   ?>
 
@@ -60,51 +62,22 @@
 <body>
 
 <!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-    <div class="container">
-    <a class="navbar-brand" href="mainpage.html"><img src="images/logo/rsz_e (1).png">    <img src="images/logo/rsz_shadow_eco.png"></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarResponsive">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item active mr-4">
-          <a class="nav-link" href="mainpage.html">Home</a>
-        </li>
-        <li class="nav-item mr-4">
-          <a class="nav-link" href="view_products.php">Food</a>
-        </li>
-        <li class="nav-item mr-4">
-          <a class="nav-link" href="#">Order</a>
-        </li>
-        <li class="nav-item mr-4">
-            <a class="nav-link" href="#">About</a>
-        </li>
-        <li class="nav-item mr-4">
-            <a class="nav-link" href="#">Contact</a>
-        </li>
-        <li class="nav-item mr-4">
-            <a class="nav-link" href="customer_profile.php"><?php echo $user_name ?><span class="sr-only">(current)</span></a>
-        </li>
-      </ul>
-    </div>
-    </div>
-  </nav>
+<?php include 'include/customer_navbar.php';?>
 
   <!-- <header class="py-5 mb-5 header-img">
 
   </header> -->
 <div class="container">
     <div class='row'>
-        <div class='col-3 profile rounded' style="margin-top: 120px; margin-bottom: 50px;">
+        <div class='col-3 profile rounded' style="margin-top: 50px; margin-bottom: 50px;">
             <div class="jumbotron jumbotron-fluid" >
                 <!-- <h2 class="display-5 mx-md-5">Customer Profile</h2> -->
                 <!-- <hr class="my-4"> -->
                 <img src="images/profile_picture/user/default.png" class="rounded-circle mx-auto d-block profile-img" style="margin-top: 30px; margin-bottom: 20px;">
                 <!-- <img src="images/profile_picture/user/default.png" class="profile-img mx-auto d-block" style="margin-top: 30px; margin-bottom: 20px;"> -->
                 <div class="personal-details"><h3><?php echo $user_name ?></h3></div>
-                <div class="personal-details"><?php echo $email ?></div>
-                <div class="personal-details"><?php echo $phoneNumber ?></div>
+                <div class="personal-details"><p><?php echo $email ?></p></div>
+                <div class="personal-details"><p><?php echo $phoneNumber ?></p></div>
                 <div id='user_id' hidden><?php echo $user_id ?></div>
                 <div id='preferences' hidden><?php echo $preferences ?></div>
             </div>
@@ -112,7 +85,7 @@
 
         <div style="width:20px;"></div>
   
-        <div class="col profile rounded" style="margin-top: 120px; margin-bottom: 50px;">
+        <div class="col profile rounded" style="margin-top: 50px; margin-bottom: 50px;">
             <div class="mx-md-5" >
             <h2 style="margin-bottom: 30px; margin-top: 50px;">Notification Preferences</h2>
                 <p>Conditions for when you prefer to receive notifications on new food product listings.</p>
@@ -185,6 +158,18 @@
                 foreach ($transactions as $transaction){
                     $rating = $transaction->get_rating();
                     $review = $transaction->get_review();
+                    $cart_string = $transaction->get_cart();
+                    $cart = explode(',', $cart_string);
+                    //var_dump($cart);
+                    $order_details = '';
+                    foreach ($cart as $item) {
+                      $item_array = explode(":",$item);
+                      $product_id = $item_array[0];
+                      $qty = $item_array[1];
+                      $product = $productDAO->retrieve_single_product($product_id);
+                      $product_name = $product->get_name();
+                      $order_details .= $product_name .': ' . $qty . ' pax <br>';
+                    }
                     
                     // if ($rating == ''){
                     //   echo "<button type='submit' class='btn btn-primary btn-sm' onclick="addRating()">Rate</button>"
@@ -199,23 +184,50 @@
                             <div class='card border-dark mb-3'>
                             <div class='card-header'>Order Id #{$transaction->get_transaction_id()}&#8287;&#8287;&#8287;&#8287;&#8287;<br><span class='text-success font-weight-bold'>\${$transaction->get_amount()}</span><small class='float-right'>Date: {$transaction->get_order_date()},  Time: {$transaction->get_order_time()}</small><small class='float-right'>Collection Method: {$transaction->get_collection_type()}&#8287;&#8287;|&#8287;&#8287;</small></div>
                             <div class='card-body text-dark'>
-                                  <h5 class='card-title'>{$companyDAO->retrieve_company($transaction->get_company_id())->get_name()}</h5>
-                                  <p class='card-text'>Collection Method: {$transaction->get_collection_type()}</p>
-                                  <p class='card-text'><button type='submit' class='btn btn-success btn-sm' onclick='addRating()'>Rate</button></p>
-                                  <p class='card-text'><input type='text' name='review' id='review><button type='submit' class='btn btn-info btn-sm' onclick='addReview()'>Review</button></p>
+                                  <h5 class='card-title font-weight-bold text-capitalize'>{$companyDAO->retrieve_company($transaction->get_company_id())->get_name()}</h5>
+                                  <p class='card-text'>{$order_details}</p>
+                                  <p class='card-text'><button type='button' class='btn btn-primary btn-sm float-right' data-toggle='modal' data-target='#exampleModal'>Rate & Review</button></p>
+                                        <div class='modal fade' id='exampleModal' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>
+                                    <div class='modal-dialog' role='document'>
+                                    <div class='modal-content'>
+                                        <div class='modal-header'>
+                                        <h5 class='modal-title' id='exampleModalLabel'>New Review</h5>
+                                        <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                                            <span aria-hidden='true'>&times;</span>
+                                        </button>
+                                        </div>
+                                        <div class='modal-body'>
+                                        <form>
+                                            <div class='form-group'>
+                                            <label for='rating' class='col-form-label'>Rating: ⭐⭐⭐⭐⭐</label>
+                                            <input type='number' class='form-control' placeholder='Enter a number from 1 (Very bad) to 5 (Very good)'  id='rating-score'>
+                                            </div>
+                                            <div class='form-group'>
+                                            <label for='review-text' class='col-form-label'>Review:</label>
+                                            <textarea class='form-control' id='review-text'></textarea>
+                                            </div>
+                                        </form>
+                                        </div>
+                                        <div class='modal-footer'>
+                                        <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
+                                        <button type='button' class='btn btn-primary' onclick='received({$transaction->get_transaction_id()})'>Submit Review</button>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
                                 </div>
                             </div>
                         ";
                     } 
-
+                    
                     else {
 
                         echo "
                           <div class='card border-dark mb-3'>
                               <div class='card-header'>Order Id #{$transaction->get_transaction_id()}&#8287;&#8287;&#8287;&#8287;&#8287;<span class='badge badge-info'>Reviewed</span>&#8287;&#8287;<span class='badge badge-warning'>Rating: {$transaction->get_rating()}</span><br><span class='text-success font-weight-bold'>\${$transaction->get_amount()}</span><small class='float-right'>Date: {$transaction->get_order_date()},  Time: {$transaction->get_order_time()}</small><small class='float-right'>Collection Method: {$transaction->get_collection_type()}&#8287;&#8287;|&#8287;&#8287;</small></div>
                               <div class='card-body text-dark'>
-                                <h5 class='card-title'>{$companyDAO->retrieve_company($transaction->get_company_id())->get_name()}</h5>
-                                <p class='card-text'>Order Details?</p>
+                                <h5 class='card-title font-weight-bold text-capitalize'>{$companyDAO->retrieve_company($transaction->get_company_id())->get_name()}</h5>
+                                <p class='card-text'>{$order_details}</p>
                                 <p class='card-text'>Review: {$transaction->get_review()}</p>
                               </div>
                           </div>
@@ -297,7 +309,37 @@
         
     }
   
-  
+    function received(transaction_id) {
+        var rating = document.getElementById('rating-score').value;
+        if (rating == ''){
+        rating = 0;
+        }
+        
+        var review = document.getElementById('review-text').value;
+        
+        console.log(rating);
+        console.log(review);
+        console.log(transaction_id);
+        //Send an AJAX request to update_review.php to update the transaction
+        var request = new XMLHttpRequest();  
+            request.onreadystatechange = function() {    
+                
+                if (this.readyState == 4 && this.status == 200) {
+                    //Add check for success here?
+                    var success = JSON.stringify(this.responseText);
+                    alert(success);
+                    window.location.href = "customer_profile.php";
+                    
+                }  
+            
+            };
+
+        request.open('POST', 'add_rating_and_review.php', true);
+        request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded'); 
+        request.send("transaction_id="+transaction_id+"&rating="+rating+"&review="+review); 
+
+
+  }
 
     //****Add to cart message popup****//
     $(document).ready(function(){
@@ -313,18 +355,8 @@
   
 
 
-  <!-- Footer -->
-  <footer class="py-5 footer-color">
-    <div class="container">
-      <p class="text-center">Copyright &copy; Eco G5T4 2020</p>
-    </div>
-    <!-- /.container -->
-  </footer>
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <!-- <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script> -->
+<!-- Footer -->
+<?php include 'include/footer.php';?>
 
 </body>
 

@@ -122,6 +122,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 </script>
 
 <!-- Navigation Bar -->
+<!--
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <div class="container">
     <a class="navbar-brand" href="mainpage.html">Eco</a>
@@ -143,6 +144,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
     </div>
     </div>
   </nav>
+  -->
+  <?php include 'include/company_navbar.php';?>
 
   <!--Company profile  -->
     <div class="jumbotron jumbotron-fluid bg-light">
@@ -176,7 +179,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                       <label for="companyDescription">Description</label>
                       <textarea rows="4" cols="50" class="form-control form-control-lg" name="companyDescription" id="companyDescription"><?php echo $company_description?></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-lg btn-block" style="left: 0%;"> Update </button>
+                    <button type="submit" class="btn btn-info btn-lg btn-block" style="left: 0%;"> Update </button>
                   </form>
                 </div>
 

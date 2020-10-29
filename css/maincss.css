@@ -1,5 +1,6 @@
 body {
   background-color: #f7f7f7;
+  /* background-color: #92bdb7; */
   /* font-family: 'Lato'; */
   /* font-family: 'Montserrat'; */
   font-family: "Poppins";
@@ -13,6 +14,8 @@ body {
   margin: 0px;
   padding: 0px;
   overflow-x: hidden;
+  /*To prevent the page top from being hidden by navbar */
+  padding-top: 35px;
 }
 
 .profile-img {
@@ -157,7 +160,8 @@ h3.h3 {
   font-size: 1.7em;
 }
 
-/********************* view_companyies.php **********************/
+/********************* view_companies.php **********************/
+
 /**** Company grid ****/
 .company-grid,
 .company-grid .company-image {
@@ -170,6 +174,14 @@ h3.h3 {
   overflow: hidden;
   z-index: 1;
   transition: all 0.3s ease 0s;
+  background-color: white;
+  height: 380px; 
+  margin-bottom: 15px; 
+  padding: 20px 20px 0px 20px;
+}
+
+.company-grid a {
+  color: black;
 }
 .company-grid a:hover {
   text-decoration: none;
@@ -216,7 +228,7 @@ h3.h3 {
   background-color: #d7292a;
 }
 .company-grid .company-content {
-  padding: 25px;
+  padding: 25px 0px 25px 0px;
 }
 .company-grid .title {
   font-size: 16px;
@@ -297,20 +309,34 @@ h3.h3 {
     margin-bottom: 30px;
   }
 }
-/********************* view_products.php **********************/
-/**** Product grid ****/
-.product-grid,
-.product-grid .product-image {
-  position: relative;
+/********************* view_company.php **********************/
+.product-content .title {
+  height: 65px;
 }
+
 .product-grid {
+  
   font-family: Poppins, sans-serif;
   text-align: center;
   border-radius: 5px;
   overflow: hidden;
   z-index: 1;
   transition: all 0.3s ease 0s;
+  background-color: white;
+  height: 420px; 
+  margin-bottom: 15px; 
+  padding: 20px 20px 0px 20px;
 }
+.product-grid .product-content {
+  padding: 10px 25px 0px 25px;
+}
+/********************* view_products.php **********************/
+/**** Product grid ****/
+.product-grid,
+.product-grid .product-image {
+  position: relative;
+}
+
 .product-grid:hover {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
@@ -345,9 +371,6 @@ h3.h3 {
   left: auto;
   right: 10px;
   background-color: #d7292a;
-}
-.product-grid .product-content {
-  padding: 25px;
 }
 .product-grid .title {
   font-size: 15px;
@@ -440,6 +463,23 @@ h3.h3 {
   right: 20px;
   background-color: #d7292a;
 }
+#checkout-button[disabled] {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.change_qty_btn:hover {
+  text-decoration: none !important;
+}
+.change_qty_btn:active {
+  text-decoration: none !important;
+}
+.change_qty_btn:visited {
+  text-decoration: none !important;
+}
+.change_qty_btn:focus {
+  text-decoration: none !important;
+}
 /********************* view_product.php **********************/
 /**** Product grid ****/
 .single_product_image_grid {
@@ -459,6 +499,17 @@ h3.h3 {
   max-width: 1170px;
   margin: auto;
 }
+#go_back_btn {
+  color: black;
+  text-decoration: none;
+}
+#message_body {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* number of lines to show */
+  -webkit-box-orient: vertical;
+}
 img {
   max-width: 100%;
 }
@@ -468,6 +519,10 @@ img {
   overflow: hidden;
   width: 40%;
   border-right: 1px solid #c4c4c4;
+}
+.inbox_people2 {
+  overflow: scroll;
+  height: 550px;
 }
 .inbox_msg {
   border: 1px solid #c4c4c4;
@@ -531,11 +586,11 @@ img {
   margin: auto;
 }
 .chat_img {
-  float: left;
-  width: 11%;
+  /*float: left;*/
+  width: 50%;
 }
 .chat_ib {
-  float: left;
+  /*float: left;*/
   padding: 0 0 0 15px;
   width: 88%;
 }
@@ -549,10 +604,7 @@ img {
   margin: 0;
   padding: 18px 16px 10px;
 }
-.inbox_chat {
-  height: 550px;
-  overflow-y: scroll;
-}
+
 
 .active_chat {
   background: #ebebeb;
@@ -836,3 +888,5 @@ img {
     color: #777;
   }
 }
+
+

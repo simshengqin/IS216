@@ -50,6 +50,7 @@
 
 
 <!-- Navigation Bar -->
+<!--
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <div class="container">
     <a class="navbar-brand" href="mainpage.html">Eco</a>
@@ -71,7 +72,8 @@
     </div>
     </div>
   </nav>
-
+  -->
+  <?php include 'include/company_navbar.php';?>
   <!--Company profile  -->
     <div class="jumbotron jumbotron-fluid bg-light">
         <div class="container">
@@ -85,7 +87,7 @@
                 
                     <div class="form-group col-md-6" style="margin-bottom: -10px;">
                         <input class="form-control form-control-lg" id="productName" name="productName" type="text" placeholder="Product Name">
-                        <p id='errorProductName' style='visibility: hidden; color: red;'> Please specify a Product Name </p>
+                        <p id='errorProductName' style='visibility: hidden; color: red;'> </p>
                     </div> 
 
                     <!-- Product Type -->
@@ -100,42 +102,42 @@
                                 
                             ?>
                         </select>
-                        <p id='errorProductType' style='visibility: hidden; color: red;'> Please select a type </p>
+                        <p id='errorProductType' style='visibility: hidden; color: red;'>  </p>
                     </div>
                    
                     <div class="form-group col-md-1" style="margin-bottom: 20px;">
-                      <button type="button" class="btn btn-secondary btn-lg"  data-toggle="modal" data-target="#foodTypeModal" style="left: 0%;"><b>Add</b> </button> 
+                      <button type="button" class="btn btn-info btn-lg"  data-toggle="modal" data-target="#foodTypeModal" style="left: 0%;"> Add </button> 
                     </div>
 
                     <!-- Qty -->
                     <div class="form-group col-md-6" style="margin-bottom: -10px;">
                         <input class="form-control form-control-lg" id="productQuantity" name="productQuantity" type="number" placeholder="Quantity">
-                        <p id='errorQuantity' style='visibility: hidden; color: red;'> Please input quantity </p>
+                        <p id='errorQuantity' style='visibility: hidden; color: red;'>  </p>
                     </div>
 
                     <!-- Mode of Collection -->
                     <div class="form-group col-md-6" style="margin-bottom: -10px;">
                         <select class="form-control form-control-lg" id="modeOfCollection" name="modeOfCollection">
-                            <option disabled selected value=""> Mode Of Collection</option>
-                            <option value="selfcollect"> Self-Collect Only</option>
-                            <option value="delivery"> Delivery Only</option>
-                            <option value="both"> Self-Collect / Delivery </option>
+                            <!-- <option disabled selected value=""> Mode Of Collection</option> -->
+                            <option selected value="selfcollect"> Self-Collect Only</option>
+                            <!-- <option value="delivery"> Delivery Only</option> -->
+                            <!-- <option value="both"> Self-Collect / Delivery </option> -->
                         </select>
-                        <p id='errorCollection' style='visibility: hidden; color: red;'> Please select collection mode </p>
+                        <p id='errorCollection' style='visibility: hidden; color: red;'>  </p>
                     </div>
 
 
                     <!-- Before Price -->
                     <div class="form-group col-md-6" style="margin-bottom: -10px;">
                         <input type="double" id="beforePrice" name="beforePrice" class="form-control form-control-lg" placeholder="Price Before: $0.00"> 
-                        <p id='errorBeforePrice' style='visibility: hidden; color: red;'> Please indicate a before price </p> 
+                        <p id='errorBeforePrice' style='visibility: hidden; color: red;'>  </p> 
                     </div>
                     
 
                     <!-- After Price -->
                     <div class="form-group col-md-6" style="margin-bottom: -10px;">
                         <input type="double" id="afterPrice" name="afterPrice" class="form-control form-control-lg" placeholder="Price Discounted: $0.00"> 
-                        <p id='errorAfterPrice' style='visibility: hidden; color: red;'> Please indicate a after price </p> 
+                        <p id='errorAfterPrice' style='visibility: hidden; color: red;'>  </p> 
                     </div>
                     
 
@@ -157,7 +159,7 @@
                         <!-- <label for="dateInput" class="col-form-label"><h5>End Date: </h5></label> -->
                         <span> Promotional End Date</span>
                         <input id="dateInput" class="form-control form-control-lg datepicker" name="dateInput" type="date" placeholder="dd-mm-yyyy" min="2000-01-01" max="2100-12-31"> 
-                        <p id='errorPromotionEndDate' style='visibility: hidden; color: red;'> Please indicate a promotion end date </p>
+                        <p id='errorPromotionEndDate' style='visibility: hidden; color: red;'>  </p>
                     </div>
 
                     <div class="form-group col-md-6">
@@ -173,7 +175,7 @@
                     <div class="form-group col-md-6" style="margin-bottom: -10px;">
                         <span> Promotional End Time</span>
                         <input id="timeInput" class="form-control form-control-lg" name="timeInput" type="time" min="00:00:00" max="23:59:59">
-                        <p id='errorPromotionEndTime' style='visibility: hidden; color: red;'> Please indicate a promotion end time </p>
+                        <p id='errorPromotionEndTime' style='visibility: hidden; color: red;'>  </p>
                     </div>
 
                     <div class="form-group col-md-12" style="margin-top: 25px;">
@@ -181,7 +183,7 @@
                     </div>
 
                     <div class="col-md-6">
-                        <button type="submit" class="btn btn-primary btn-lg btn-block" style="left: 0%;" onclick='return validate()'> Add Promotion </button>
+                        <button type="submit" class="btn btn-info btn-lg btn-block" style="left: 0%;" onclick='return validate()'> Add Promotion </button>
                     </diV>
              </div>
         </form>
@@ -206,7 +208,7 @@
                       <p id='errorNewFoodType' style='visibility: hidden; color: red;'> Please specify a food type! </p>
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="addNewType()" style="left: 0%;"> Add </button>
+                    <button type="button" class="btn btn-info" onclick="addNewType()" style="left: 0%;"> Add </button>
                     &nbsp
                     &nbsp
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" style="left: 0%;">Close</button>
@@ -311,15 +313,17 @@
 
         // validate product name 
         if(productName==""){
+          document.getElementById("errorProductName").innerHTML = "Please specify a Product Name."
           document.getElementById("errorProductName").style.visibility = "visible";
           noError = false;
         } else {
-          data["productName"] = productName;
+          //data["productName"] = productName;
           document.getElementById("errorProductName").style.visibility = "hidden";
         }
 
         // validate product type 
         if(productType==""){
+          document.getElementById("errorProductType").innerHTML = "Please select a type."
           document.getElementById("errorProductType").style.visibility = "visible";
           noError = false;
         } else {
@@ -329,37 +333,53 @@
 
         // validate product Qty 
         if(productQty==""){
+          document.getElementById("errorQuantity").innerHTML = "Please input quantity."
+          document.getElementById("errorQuantity").style.visibility = "visible";
+          noError = false;
+        } else if (productQty < 1){
+          document.getElementById("errorQuantity").innerHTML = "Please input a valid quantity, quantity needs to be above 0.";
           document.getElementById("errorQuantity").style.visibility = "visible";
           noError = false;
         } else {
-          data["productQty"] = productQty;
+          //data["productQty"] = productQty;
           document.getElementById("errorQuantity").style.visibility = "hidden";
         }
 
         // validate Mode Of Collection 
         if(productModeOfCollection==""){
+          document.getElementById("errorCollection").innerHTML = "Please select collection mode.";
           document.getElementById("errorCollection").style.visibility = "visible";
           noError = false;
         } else {
-          data["productModeOfCollection"] = productModeOfCollection;
+          //data["productModeOfCollection"] = productModeOfCollection;
           document.getElementById("errorCollection").style.visibility = "hidden";
         }
 
         // validate before price
         if(productBeforePrice==""){
+          document.getElementById("errorBeforePrice").innerHTML = "Please indicate a price.";
           document.getElementById("errorBeforePrice").style.visibility = "visible";
           noError = false;
-        } else {
-          data["productBeforePrice"] = productBeforePrice;
+        } else if(productBeforePrice < 1) {
+          document.getElementById("errorBeforePrice").innerHTML = "Please input a valid price, price needs to be above $0.00";
+          document.getElementById("errorBeforePrice").style.visibility = "visible";
+          noError = false;
+        } else{
+          //data["productBeforePrice"] = productBeforePrice;
           document.getElementById("errorBeforePrice").style.visibility = "hidden";
         }
 
         // validate After Price 
         if(productAfterPrice==""){
+          document.getElementById("errorAfterPrice").innerHTML = "Please indicate a price.";
+          document.getElementById("errorAfterPrice").style.visibility = "visible";
+          noError = false;
+        } else if(productAfterPrice < 1){
+          document.getElementById("errorAfterPrice").innerHTML = "Please input a valid price, price needs to be above $0.00";
           document.getElementById("errorAfterPrice").style.visibility = "visible";
           noError = false;
         } else {
-          data["productAfterPrice"] = productAfterPrice;
+          //data["productAfterPrice"] = productAfterPrice;
           document.getElementById("errorAfterPrice").style.visibility = "hidden";
         }
 
@@ -384,15 +404,17 @@
 
         // validate promotion end date
         if(productDateInput==""){
+          document.getElementById("errorPromotionEndDate").innerHTML = "Please indicate a promotion end date."
           document.getElementById("errorPromotionEndDate").style.visibility = "visible";
           noError = false;
         } else {
-          data["decay_date"] = productDateInput;
+          //data["decay_date"] = productDateInput;
           document.getElementById("errorPromotionEndDate").style.visibility = "hidden";
         }
 
         // validate promotion end date
         if(productTimeInput==""){
+          document.getElementById("errorPromotionEndTime").innerHTML = "Please indicate a promotion end time."
           document.getElementById("errorPromotionEndTime").style.visibility = "visible";
           noError = false;
         } else {
@@ -400,18 +422,20 @@
           document.getElementById("errorPromotionEndTime").style.visibility = "hidden";
         }
 
+        
         document.getElementById("company_id").value = <?php echo $company_id ?>;
         document.getElementById("posted_date").value = singaporeDate;
         document.getElementById("posted_time").value = singaporeTime;
         document.getElementById("image_path_source").value = productImagePathSource;
         document.getElementById("image_path_source").value = productImage;
 
-        data["company_id"] = <?php echo $company_id ?>;
-        data["posted_date"] = singaporeDate;
-        data["posted_time"] = singaporeTime;
-        data["image_path_source"] = productImagePathSource;
-        console.log(productImagePathSource)
-
+        //data["company_id"] = <?php echo $company_id ?>;
+        //data["posted_date"] = singaporeDate;
+        //data["posted_time"] = singaporeTime;
+        //data["image_path_source"] = productImagePathSource;
+        
+       // console.log(productImagePathSource)
+      
         //console.log(singaporeDate);
         //console.log(singaporeTime);
 
@@ -428,7 +452,7 @@
         }
 
       }
-
+      /*
       function processToServer(data){
         var dataObj;
         var request = new XMLHttpRequest();
@@ -449,6 +473,7 @@
         request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         request.send("data=" + jsonObj);
       }
+      */
 
   </script>
 

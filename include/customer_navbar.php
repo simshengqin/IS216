@@ -31,25 +31,27 @@
 <body>
 
 <!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" style="">
     <div class="container">
     <a class="navbar-brand" href="mainpage.html"><img src="images/logo/rsz_e (1).png">    <img src="images/logo/rsz_shadow_eco.png"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarResponsive">
+    <div class="collapse navbar-collapse mb-20" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item active mr-4">
           <a class="nav-link" href="mainpage.php">Home <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item mr-4" >
-        <a class="nav-link" href="view_products.php">Food</a>
+        
+        <a class="nav-link" href="view_companies.php">Companies</a>
         </li>
         <li class="nav-item mr-4">
-          <a class="nav-link" href="#">Order</a>
+          <!-- Hardcoded user id, need to change -->
+          <a class="nav-link" href="inbox.php?user_id=1&user_type=user">Inbox</a>
         </li>
         <li class="nav-item mr-4">
-            <a class="nav-link" href="#">About</a>
+            <a class="nav-link" href="customer_profile.php">Profile</a>
         </li>
         <li class="nav-item mr-4">
             <a class="nav-link" href="#">Contact</a>
@@ -57,6 +59,12 @@
         <li class="nav-item mr-4">
             <a class="nav-link" href="#">Login/Register</a>
         </li>
+        <li class="nav-item">
+              <a href="shoppingcart.php" class="nav-link navbar-link-2 waves-effect">
+                <span class="badge badge-pill red"></span>
+                <i class="fas fa-shopping-cart pl-0"></i>
+              </a>
+            </li>
       </ul>
     </div>
     </div>
