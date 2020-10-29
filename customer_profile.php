@@ -186,7 +186,7 @@
                             <div class='card-body text-dark'>
                                   <h5 class='card-title font-weight-bold'>{$companyDAO->retrieve_company($transaction->get_company_id())->get_name()}</h5>
                                   <p class='card-text'>{$order_details}</p>
-                                  <p class='card-text'><button type='button' class='btn btn-primary btn-sm float-right' data-toggle='modal' data-target='#exampleModal'>RATE & REVIEW</button></p>
+                                  <p class='card-text'><button type='button' class='btn btn-primary btn-sm float-right' data-toggle='modal' data-target='#exampleModal'>Rate & Review</button></p>
                                         <div class='modal fade' id='exampleModal' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>
                                     <div class='modal-dialog' role='document'>
                                     <div class='modal-content'>
