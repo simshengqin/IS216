@@ -201,7 +201,7 @@ function deleteModal(){
 
           <div class='col-md-6 text-center ' style='padding-bottom: 30px;'>
               <!-- <img class='.img-fluid' style='max-width: 75%; height: auto' src='images/{$product->get_category()}/{$product->get_name()}.jpg'> -->
-              <img class='.img-fluid rounded shadow-sm' style='max-width: 90%; height: auto' src='{$product->get_image_url()}'>
+              <img class='.img-fluid rounded shadow d-flex w-100' style='max-width: 90%; height: auto' src='{$product->get_image_url()}'>
               </br>
               </br>
               </br>
