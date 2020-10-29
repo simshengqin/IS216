@@ -78,6 +78,34 @@ class transactionDAO {
         $count = $stmt->rowCount();
     }
 
+    public function update_transaction($userid, $rating, $review, $collected){
+        $sql = "UPDATE transactions SET rating = :rating, review =:review, collected=:collected WHERE userid =:userid AND (collected='false')";
+        $connMgr = new ConnectionManager();      
+        $conn = $connMgr->getConnection();
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':userid', $userid, PDO::PARAM_INT);
+        $stmt->bindParam(':rating', $rating, PDO::PARAM_STR);
+        $stmt->bindParam(':review', $review, PDO::PARAM_STR);
+        $stmt->bindParam(':collected', $collected, PDO::PARAM_STR);
+        return $stmt->execute();   
+    }
+
+    public function update_transaction_by_transaction_id($transaction_id, $rating, $review){
+        $sql = "UPDATE transactions SET rating = :rating, review =:review WHERE transaction_id =:transaction_id";
+        $connMgr = new ConnectionManager();      
+        $conn = $connMgr->getConnection();
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':transaction_id', $transaction_id, PDO::PARAM_INT);
+        $stmt->bindParam(':rating', $rating, PDO::PARAM_STR);
+        $stmt->bindParam(':review', $review, PDO::PARAM_STR);
+        return $stmt->execute();   
+    }
+
+
+
+
 
     
 }

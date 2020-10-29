@@ -24,6 +24,8 @@
           $cart = $cart_info->cart;
           // add pending order into transactions table
           $transactionDAO->add($user_id, $cart, $company_id, $date, $time, $price, 'Pickup', '', 0, 'false');
+          
+
 
           #amount = session['display_items'][0]['amount']         
       }
@@ -57,9 +59,12 @@
   
 <div style="margin-top: 80px;"></div>
 
+
 <div class="mx-md-5" style="margin-top: 50px; margin-bottom: 50px;">
           <h2 style="margin-bottom: 20px;">Active Orders</h2>
           <i class="fas fa-info-circle"></i><small class="font-weight-bold">&#8287;&#8287;&#8287;&#8287;Click 'Received' button to confirm that order is completed! Leave a rating and review for your order! (optional) &#128540;</small>
+           <!-- pass user_id -->
+           <input type='hidden' value='<?php echo "$user_id" ?>' id="user_id"> 
           <hr>
           <?php
             if ($transactions == []){
@@ -77,9 +82,9 @@
                       $item_array = explode(":",$item);
                       $product_id = $item_array[0];
                       $qty = $item_array[1];
-                      $product = $productDAO->retrieve_product($product_id);
+                      $product = $productDAO->retrieve_single_product($product_id);
                       $product_name = $product->get_name();
-                      $order_details .= $product_name .': ' . $qty . 'pax <br>';
+                      $order_details .= $product_name .': ' . $qty . ' pax <br>';
                     }
 
                   
@@ -88,7 +93,7 @@
                         echo "
                             <div class='card border-dark mb-3'>
                             <div class='card-header'>Order Id #{$transaction->get_transaction_id()}&#8287;&#8287;&#8287;&#8287;&#8287;<small class='float-right'>Date: {$transaction->get_order_date()},  Time: {$transaction->get_order_time()}</small><small class='float-right'>Collection Method: {$transaction->get_collection_type()}&#8287;&#8287;|&#8287;&#8287;</small><br><span class='text-success font-weight-bold'>\${$transaction->get_amount()}</span>" .
-                            "<button type='button' class='btn btn-primary btn-sm float-right' data-toggle='modal' data-target='#exampleModal' data-whatever='Enter a number from 1 (Very bad) to 5 (Very good)' onclick='received()'>Received</button>".
+                            "<button type='button' class='btn btn-primary btn-sm float-right' data-toggle='modal' data-target='#exampleModal'>RECEIVED</button>".
                             "<div class='modal fade' id='exampleModal' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>
                             <div class='modal-dialog' role='document'>
                               <div class='modal-content'>
@@ -102,7 +107,7 @@
                                   <form>
                                     <div class='form-group'>
                                       <label for='rating' class='col-form-label'>Rating: ⭐⭐⭐⭐⭐</label>
-                                      <input type='text' class='form-control' id='rating'>
+                                      <input type='number' class='form-control' placeholder='Enter a number from 1 (Very bad) to 5 (Very good)'  id='rating-score'>
                                     </div>
                                     <div class='form-group'>
                                       <label for='review-text' class='col-form-label'>Review:</label>
@@ -112,14 +117,14 @@
                                 </div>
                                 <div class='modal-footer'>
                                   <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
-                                  <button type='button' class='btn btn-primary'>Submit Review</button>
+                                  <button type='button' class='btn btn-primary' onclick='received()'>Submit Review</button>
                                 </div>
                               </div>
                             </div>
                           </div>".
                             "</div>
                             <div class='card-body text-dark'>
-                                  <h5 class='card-title'>{$companyDAO->retrieve_company($transaction->get_company_id())->get_name()}</h5>
+                                  <h5 class='card-title font-weight-bold'>{$companyDAO->retrieve_company($transaction->get_company_id())->get_name()}</h5>
                                   <p class='card-text'>{$order_details}</p>
                                 </div>
                             </div>
@@ -140,27 +145,35 @@
 </div> 
 
 
-
 <script>
+ 
+
   function received() {
-    //Send an AJAX request to update_user.php to update the cart of user in database
+    var rating = document.getElementById('rating-score').value;
+    if (rating == ''){
+      rating = 0;
+    }
+    
+    var review = document.getElementById('review-text').value;
+    var user_id = document.getElementById('user_id').value;
+    console.log(rating);
+    console.log(review);
+    console.log(user_id);
+    //Send an AJAX request to update_review.php to update the transaction
     var request = new XMLHttpRequest();  
         request.onreadystatechange = function() {    
             
             if (this.readyState == 4 && this.status == 200) {
                 //Add check for success here?
                 var success = JSON.stringify(this.responseText);
-                // console.log(this.responseText);  
-                // document.getElementById('success').innerHTML =  "<div class='alert alert-success alert-dismissible fade show' role='alert'>" + success + "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
-                document.getElementById('toastdiv').setAttribute("style","display: block;");
-                $("#success_popup").toast({ delay: 2000 });
-                $("#success_popup").toast('show');
+                alert(success);
+                window.location.href = "mainpage.php";
                 
             }  
         
         };
 
-        request.open('POST', 'update_reviews.php', true);
+        request.open('POST', 'update_review.php', true);
         request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded'); 
         request.send("user_id="+user_id+"&rating="+rating+"&review="+review); 
 
@@ -169,6 +182,8 @@
 
 
 </script>
+
+
 
 
   <!-- Footer -->
