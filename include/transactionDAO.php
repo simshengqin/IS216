@@ -4,7 +4,7 @@ class transactionDAO {
   
     public function retrieve_transactions_by_user_id($userid){
         $sql = "SELECT * FROM transactions WHERE 
-        userid = :userid ORDER BY order_date, order_time DESC";
+        userid = :userid ORDER BY transaction_id DESC";#order_date, order_time DESC";
         
         $connMgr = new ConnectionManager();      
         $conn = $connMgr->getConnection();
