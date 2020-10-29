@@ -20,7 +20,7 @@ $cart = $_POST['cart'];
 // header('Content-Type: application/json','Set-Cookie: cross-site-cookie=bar; SameSite=None; Secure');
 header('Content-Type: application/json');
 
-$YOUR_DOMAIN = 'http://localhost/eco';
+$YOUR_DOMAIN = 'https://localhost/IS216';
 
 $order_info = array(
   "user_id" => $user_id,

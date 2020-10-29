@@ -51,7 +51,7 @@
           <a class="nav-link" href="inbox.php?user_id=1&user_type=user">Inbox</a>
         </li>
         <li class="nav-item mr-4">
-            <a class="nav-link" href="#">About</a>
+            <a class="nav-link" href="customer_profile.php">Profile</a>
         </li>
         <li class="nav-item mr-4">
             <a class="nav-link" href="#">Contact</a>

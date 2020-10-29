@@ -816,7 +816,7 @@
   </script>
 
   <!-- go to stripe checkout page -->
-  <script type="text/javascript">
+  <script type="text/javascript" async>
       // check if all criteria is fulfilled to enable checkout button
       document.querySelectorAll('.check-checkout').forEach(item => {item.addEventListener('change', event => {
             //handle click
@@ -864,9 +864,9 @@
                         // following code may throw error if user input is invalid address
                         // so we use try-catch block to handle errors
                         // expected response is JSON data
-                        
+                        console.log(this.responseText);
                         var response = JSON.parse(this.responseText);
-                        console.log(response);
+                        
                         return stripe.redirectToCheckout({ sessionId: response.id
                         });  
                     
@@ -883,7 +883,6 @@
             var senddata = "user_id=" + data[0]+ "&company_id=" + data[1]+ "&time=" + String(document.getElementById("collection_time").value) + "&date=" +String( document.getElementById("collection_date").value) + "&price=" + document.getElementById("total_price_for_all_products_with_gst").innerText.slice(1) + "&cart=" + current_cart;
             console.log(senddata);
             xhttp.send(senddata); // query parameters
-            xhttp.send();
           }
 
       

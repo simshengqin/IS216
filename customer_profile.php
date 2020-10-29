@@ -184,7 +184,7 @@
                             <div class='card border-dark mb-3'>
                             <div class='card-header'>Order Id #{$transaction->get_transaction_id()}&#8287;&#8287;&#8287;&#8287;&#8287;<br><span class='text-success font-weight-bold'>\${$transaction->get_amount()}</span><small class='float-right'>Date: {$transaction->get_order_date()},  Time: {$transaction->get_order_time()}</small><small class='float-right'>Collection Method: {$transaction->get_collection_type()}&#8287;&#8287;|&#8287;&#8287;</small></div>
                             <div class='card-body text-dark'>
-                                  <h5 class='card-title font-weight-bold'>{$companyDAO->retrieve_company($transaction->get_company_id())->get_name()}</h5>
+                                  <h5 class='card-title font-weight-bold text-capitalize'>{$companyDAO->retrieve_company($transaction->get_company_id())->get_name()}</h5>
                                   <p class='card-text'>{$order_details}</p>
                                   <p class='card-text'><button type='button' class='btn btn-primary btn-sm float-right' data-toggle='modal' data-target='#exampleModal'>RATE & REVIEW</button></p>
                                         <div class='modal fade' id='exampleModal' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>
@@ -226,7 +226,7 @@
                           <div class='card border-dark mb-3'>
                               <div class='card-header'>Order Id #{$transaction->get_transaction_id()}&#8287;&#8287;&#8287;&#8287;&#8287;<span class='badge badge-info'>Reviewed</span>&#8287;&#8287;<span class='badge badge-warning'>Rating: {$transaction->get_rating()}</span><br><span class='text-success font-weight-bold'>\${$transaction->get_amount()}</span><small class='float-right'>Date: {$transaction->get_order_date()},  Time: {$transaction->get_order_time()}</small><small class='float-right'>Collection Method: {$transaction->get_collection_type()}&#8287;&#8287;|&#8287;&#8287;</small></div>
                               <div class='card-body text-dark'>
-                                <h5 class='card-title font-weight-bold'>{$companyDAO->retrieve_company($transaction->get_company_id())->get_name()}</h5>
+                                <h5 class='card-title font-weight-bold text-capitalize'>{$companyDAO->retrieve_company($transaction->get_company_id())->get_name()}</h5>
                                 <p class='card-text'>{$order_details}</p>
                                 <p class='card-text'>Review: {$transaction->get_review()}</p>
                               </div>
