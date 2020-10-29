@@ -69,7 +69,7 @@
   </header> -->
 <div class="container">
     <div class='row'>
-        <div class='col-3 profile rounded' style="margin-top: 120px; margin-bottom: 50px;">
+        <div class='col-3 profile rounded' style="margin-top: 50px; margin-bottom: 50px;">
             <div class="jumbotron jumbotron-fluid" >
                 <!-- <h2 class="display-5 mx-md-5">Customer Profile</h2> -->
                 <!-- <hr class="my-4"> -->
@@ -85,7 +85,7 @@
 
         <div style="width:20px;"></div>
   
-        <div class="col profile rounded" style="margin-top: 120px; margin-bottom: 50px;">
+        <div class="col profile rounded" style="margin-top: 50px; margin-bottom: 50px;">
             <div class="mx-md-5" >
             <h2 style="margin-bottom: 30px; margin-top: 50px;">Notification Preferences</h2>
                 <p>Conditions for when you prefer to receive notifications on new food product listings.</p>

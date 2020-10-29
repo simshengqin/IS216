@@ -71,7 +71,7 @@ session_start();
   </nav> -->
   
   <!-- Header -->
-  <header class="header-img" style="margin: 80px 0px 10px;">
+  <header class="header-img" style="margin: 0px 0px 10px;">
         <div class="container align-items-center justify-items-center" style="height: auto;">
             <div class="row">
                 <div class="col-lg-12">
