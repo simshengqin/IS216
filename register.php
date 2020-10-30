@@ -3,7 +3,7 @@
   require_once 'include/protect.php';
 ?>
 <!DOCTYPE html>
-<html>
+<html style="padding: 0px 0px 0px 0px">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -21,7 +21,7 @@
         <!--Link to main.css files while contains all the css of this project-->
         <link rel='stylesheet' href='css\maincss.css'>
     </head>
-    <body>
+    <body style="padding: 0px 0px 0px 0px">
         <?php
             if(isset($_POST['submit'])) {
 

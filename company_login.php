@@ -4,7 +4,7 @@
   require_once 'include/protect.php';
 ?>
 <!DOCTYPE html>
-<html>
+<html style="padding: 0px 0px 0px 0px">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -22,7 +22,7 @@
         <!--Link to main.css files while contains all the css of this project-->
         <link rel='stylesheet' href='css\maincss.css'>
     </head>
-    <body>
+    <body style="padding: 0px 0px 0px 0px">
         <div class="container-fluid">
         <div class="row no-gutter">
             <div class="d-none d-md-flex col-md-4 col-lg-6 background-login-img"></div>
