@@ -261,7 +261,7 @@
         var user_type = params_arr["user_type"];
         var selected_from_id = sessionStorage.getItem("selected_from_id");
         var selected_from_type = sessionStorage.getItem("selected_from_type");
-        request.send("user_id="+user_id+"&user_type="+user_type);
+        request.send("user_id="+user_id+"&user_type="+user_type+"&nothing=wow");
         //alert(user_id);
 
     }
