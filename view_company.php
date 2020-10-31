@@ -220,10 +220,10 @@
                                 <div class="form-group col-12">
                                     <div class="row">
                                         <div class="col-6">
-                                            <input type="text" id="price_min" class="mr-1 w-100" placeholder='Min $'></input>
+                                            <input type="text" id="price_min" class="mr-1 p-2 w-100" placeholder='Min $'></input>
                                         </div>
                                         <div class="col-6">
-                                            <input type="text" id="price_max" class="w-100" placeholder='Max $'></input>
+                                            <input type="text" id="price_max" class="p-2 w-100" placeholder='Max $'></input>
                                         </div>
                                     </div>
                                 </div>
@@ -243,7 +243,7 @@
                             </div>
                             <div class="form-row ml-2 mr-2">
                                 <div class="form-group col-12">
-                                    <input type="number" id="freshness_min_days_to_expiry" min="1" step="1" placeholder='Min days to expiry'></input>   
+                                    <input type="number" class="p-2" id="freshness_min_days_to_expiry" min="1" step="1" placeholder='Min days to expiry'></input>   
                                 </div>
                             </div>
                             <!--
