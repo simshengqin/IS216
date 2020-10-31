@@ -1,6 +1,7 @@
 <?php
 
-session_start();
+require_once 'include/common.php';
+require_once 'include/protect.php';
                     
 
 ?>
@@ -51,26 +52,12 @@ session_start();
                 </div>
             </div>
             <div class ='row'>
-<<<<<<< HEAD:index.php
-                <div class="col-lg-8" style="margin: 30px 0px 30px;">
-                <!-- <div class="form-group col-8" style="margin: 30px 0px 20px;"> -->
-                    <input type="text" class="form-control" name="postal_code" id="postal_code"  placeholder="Enter Postal Code">
-                    <div class="mt-3" id="invalid_postal_code_warning"></div>
-                    <!-- <span class="input-group-btn"> --> 
-                          <!-- <button class="btn btn-default" type="button">
-                        <span class="glyphicon glyphicon-search"></span>
-                        </button>
-                    </span> -->
-                <!-- <div class="form-group col-2" style="margin: 30px 0px 20px;"> -->
-                <div class="col-lg-2" style="margin: 30px 0px 30px;">
-                  <button id="postal_code_submit" onclick="validate_postal_code()" class="btn btn-success">Confirm</button>
-=======
                 <div class="form-group col" style="margin: 30px 0px 30px; w-100">
-                    <form action="view_companies.php" method="get">
+                    
                     <!-- <div class="form-group col-8" style="margin: 30px 0px 20px;"> -->
                       
-                        <input type="text" class="form-control w-100" name="postal_code" id="search_for_products"  placeholder="Enter Postal Code">
-                        
+                        <input type="number" class="form-control w-100" name="postal_code" id="postal_code"  placeholder="Enter Postal Code">
+                        <!--<div class="mt-3" id="invalid_postal_code_warning"></div>-->
                         <!-- <span class="input-group-btn"> --> 
                               <!-- <button class="btn btn-default" type="button">
                             <span class="glyphicon glyphicon-search"></span>
@@ -80,10 +67,9 @@ session_start();
                 </div>
                 <!-- <div class="form-group col-2" style="margin: 30px 0px 20px;"> -->
                 <div class="form-group" style="margin: 30px 15px 30px; w-100">
-                    <button type='submit' class="btn btn-success" href="view_products.php">Search</button>
->>>>>>> 2ee18049e3488cab8bcdd1bdd6c53e9501169c92:app/index.php
+                    <button id="postal_code_submit" onclick="validate_postal_code()" class="btn btn-success" href="view_products.php">Confirm</button>
                 </div>
-                </form>
+                
             </div>
           
         </div>
@@ -333,7 +319,10 @@ session_start();
     function validate_postal_code() {
         postal_code_input = document.getElementById("postal_code");
         if (postal_code_input.value.length != 6) {
-            document.getElementById("invalid_postal_code_warning").innerHTML="<div class='alert alert-danger'>Postal code needs to be 6 digits</div>";              
+            //document.getElementById("invalid_postal_code_warning").innerHTML="<div class='alert alert-danger'>Postal code needs to be 6 digits</div>";   
+            postal_code_input.value = "";
+            postal_code_input.setAttribute("placeholder", "Postal code needs to be 6 digit"); 
+
         }
         else {
             //Hides the modal

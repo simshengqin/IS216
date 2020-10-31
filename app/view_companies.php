@@ -194,7 +194,7 @@
                                 echo "
                                 <div class='col-xl-4 col-lg-4 col-sm-6 single_company_grid' id ='single_company_grid' name='$company_id|$company_address|$company_description|$company_following|$company_joined_date|$company_mode_of_collection|$company_name|$company_rating'>
                                     <div class='company-grid shadow p-3 mb-5 bg-white rounded'>
-                                        <a class='product_link' href='http://localhost/is216/view_company.php?company_name=" . $company_name . "'>                               
+                                        <a class='product_link' href='view_company.php?company_name=" . $company_name . "'>                               
                                             <div class='company-image d-flex w-100'>
                                                 <img class='pic-1 my-auto'  src='images/company_profile_image/$company_id.jpeg'></img>";
                                                 
