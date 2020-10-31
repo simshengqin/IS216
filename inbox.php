@@ -107,7 +107,7 @@
         update_selected_messages();
          //Update the left side bar messages ever 1 second
         update_selected_messages_leftbar();
-    }, 30000);
+    }, 500);
 
     function update_selected_messages_leftbar() {
         //Update the left sidebar messages
