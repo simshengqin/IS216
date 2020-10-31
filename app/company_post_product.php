@@ -28,53 +28,25 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Eco</title>
+  <title>Post Product</title>
 
-  <!-- Bootstrap core CSS -->
-  <link href="startbootstrap-business-frontpage-gh-pages/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Custom styles for this template -->
-  <link href="startbootstrap-business-frontpage-gh-pages/css/business-frontpage.css" rel="stylesheet">
-  <!-- jquery -->
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <!-- maincss.css -->
   <!-- Roboto Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700&display=swap">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
-
-  <link rel="stylesheet" href="css/maincss.css">
+  <!--Bootstrap 4 and AJAX-->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <!--Link to main.css files while contains all the css of this project-->
+  <link rel='stylesheet' href='css\maincss.css'>
 
 </head>
 
 
 <body>
 
-
-
-<!-- Navigation Bar -->
-<!--
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-    <div class="container">
-    <a class="navbar-brand" href="mainpage.html">Eco</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarResponsive">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item active mr-4">
-          <a class="nav-link" href="company_profile.php"> Dashboard </a>
-        </li>
-        <li class="nav-item mr-4">
-          <a class="nav-link" href="company_post_product.php"> Post <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item mr-4">
-          <a class="nav-link" href="company_edit_product.php"> Edit </a>
-        </li>
-      </ul>
-    </div>
-    </div>
-  </nav>
-  -->
   <?php include 'include/company_navbar.php';?>
   <!--Company profile  -->
     <div class="jumbotron jumbotron-fluid bg-light">
@@ -184,7 +156,7 @@
                     </div>
 
                     <div class="form-group col-md-12" style="margin-top: 25px;">
-                          
+                          <!-- empty -->
                     </div>
 
                     <div class="col-md-6">
@@ -288,8 +260,10 @@
           node.appendChild(textnode);
           newItem = newItem.replace(/\s/g, '_')
           node.setAttribute("value", newItem);
-          $('#foodTypeModal').modal('hide');
           element.appendChild(node)
+          $('#foodTypeModal').modal('hide');
+          $(document.body).removeClass('modal-open');
+          $('.modal-backdrop').remove();
         }
       }
 
@@ -498,13 +472,6 @@
       }
       */
 
-<<<<<<< Updated upstream:app/company_post_product.php
-  // change active navbar
-  $(document).ready(function(){
-      $(".active").removeClass("active");
-      $("#link-post-product").addClass("active");
-  }); 
-=======
       function checkIfDateTimeExpired(date,time){
         console.log(date);
         console.log(time);
@@ -530,7 +497,6 @@
         }
         return false;
       }
->>>>>>> Stashed changes:company_post_product.php
 
   </script>
 

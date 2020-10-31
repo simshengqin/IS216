@@ -57,83 +57,7 @@
   </head>
 
 <body class="skin-light">
-  <!--Main Navigation-->
-  <!-- <header> -->
-
-    <!-- Navbar -->
-    <!-- <nav class="navbar navbar-expand-md navbar-light fixed-top scrolling-navbar">
-      <div class="container-fluid"> -->
-
-        <!-- Brand -->
-        <!-- <a class="navbar-brand" href="">
-        </a> -->
-
-        <!-- Collapse button -->
-        <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
-          aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button> -->
-
-        <!-- Links -->
-        <!-- <div class="collapse navbar-collapse" id="basicExampleNav"> -->
-
-          <!-- Right -->
-          <!-- <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a href="#!" class="nav-link navbar-link-2 waves-effect">
-                <span class="badge badge-pill red">1</span>
-                <i class="fas fa-shopping-cart pl-0"></i>
-              </a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle waves-effect" id="navbarDropdownMenuLink3" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="true">
-                <i class="united kingdom flag m-0"></i>
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item" href="#!">Action</a>
-                <a class="dropdown-item" href="#!">Another action</a>
-                <a class="dropdown-item" href="#!">Something else here</a>
-              </div>
-            </li>
-            <li class="nav-item">
-              <a href="#!" class="nav-link waves-effect">
-                Shop
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="#!" class="nav-link waves-effect">
-                Contact
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="#!" class="nav-link waves-effect">
-                Sign in
-              </a>
-            </li>
-            <li class="nav-item pl-2 mb-2 mb-md-0">
-              <a href="#!" type="button"
-                class="btn btn-outline-info btn-md btn-rounded btn-navbar waves-effect waves-light">Sign
-                up</a>
-            </li>
-          </ul>
-
-        </div> -->
-        <!-- Links -->
-      <!-- </div>
-    </nav> -->
-    <!-- Navbar -->
-    <!--
-    <div class="jumbotron color-grey-light mt-70">
-      <div class="d-flex align-items-center h-20">
-        <div class="container text-center py-5">
-          <h3 class="mb-0">Shopping cart</h3>
-        </div>
-      </div>
-    </div>
-    -->
-
-  <!-- </header> -->
+  
   <!--Main Navigation-->
   
   <!--Main layout-->
@@ -183,7 +107,7 @@
           <div class="modal-dialog" role="document">
               <div class="modal-content">
                   <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Delivery Address</h5>
+                  <h5 class="modal-title" id="exampleModalLabel">Current Location</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                   </button>
@@ -368,14 +292,14 @@
             <div class="card mb-4">
               <div class="card-body">
 
-                <h5 class="mb-4">Self-pickup Timing</h5>
+                <h5 class="mb-4"><b>Self-pickup Timing</b></h5>
                 <div class="input-group mb-3">
                   <div class="col-md-6">
                     <div class="row mb-3">
                       <div class="input-group-prepend">
                         <span class="input-group-text">Date:</span>
                       </div>
-                      <input type="date" class="col form-control check-checkout"  id="collection_date" aria-label="collection_date">
+                      <input type="date" class="col form-control check-checkout" value='<?php echo date('Y-m-d');?>'  id="collection_date" aria-label="collection_date" disabled>
                     </div>
                   </div>
                   <div class="col-md-6 mb-3">
@@ -383,7 +307,24 @@
                       <div class="input-group-prepend">
                         <span class="input-group-text">Time:</span>
                       </div>                   
-                      <input type="time" class="col form-control check-checkout"  id="collection_time" aria-label="collection_time">
+                      <input type="time" name="limittime" list="limittimeslist" min="18:30" max="21:30" class="col form-control check-checkout"  id="collection_time" aria-label="collection_time">
+                      <datalist id="limittimeslist">
+
+                          <option value="18:30">
+                          <option value="18:45">
+                          <option value="19:00">
+                          <option value="19:15">
+                          <option value="19:30">
+                          <option value="19:45">
+                          <option value="20:00">
+                          <option value="20:15">
+                          <option value="20:30">
+                          <option value="20:45">
+                          <option value="21:00">
+                          <option value="21:15">
+                          <option value="21:30">
+
+                      </datalist>
                     </div>
                   </div>
                 </div>
@@ -394,7 +335,7 @@
             <div class="card mb-4">
               <div class="card-body">
 
-                <h5 class="mb-4">Self-pickup Address</h5>
+                <h5 class="mb-4"><b>Self-pickup Address</b></h5>
 
                 <p class="mb-19"> <?php if (strlen($cart) !=0) {echo ucwords($company_name) . " - " . $company_address;} ?></p>                  
                 <!--The following is a placeholder for the map.-->

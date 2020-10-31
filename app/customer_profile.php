@@ -71,7 +71,7 @@
 <div class="container">
     <div class='row'>
         <div class='col-3 profile rounded' style="margin-top: 50px; margin-bottom: 50px;">
-            <div class="jumbotron jumbotron-fluid" >
+            <div class="jumbotron jumbotron-fluid"> 
                 <!-- <h2 class="display-5 mx-md-5">Customer Profile</h2> -->
                 <!-- <hr class="my-4"> -->
                 <img src="images/profile_picture/user/default.png" class="rounded-circle mx-auto d-block profile-img" style="margin-top: 30px; margin-bottom: 20px;">
@@ -160,6 +160,12 @@
                     $rating = $transaction->get_rating();
                     $review = $transaction->get_review();
                     $cart_string = $transaction->get_cart();
+                    $time = $transaction->get_order_time();
+                    if ($time[0] > 0) {
+                        $time.= ' PM';
+                    } else {
+                        $time .= ' AM';
+                    }
                     $cart = explode(',', $cart_string);
                     //var_dump($cart);
                     $order_details = '';
@@ -183,8 +189,8 @@
                     if ($review == '' || $rating ==''){
                         echo "
                             <div class='card border-dark mb-3'>
-                            <div class='card-header'>Order Id #{$transaction->get_transaction_id()}&#8287;&#8287;&#8287;&#8287;&#8287;<br><span class='text-success font-weight-bold'>\${$transaction->get_amount()}</span><small class='float-right'>Date: {$transaction->get_order_date()},  Time: {$transaction->get_order_time()}</small><small class='float-right'>Collection Method: {$transaction->get_collection_type()}&#8287;&#8287;|&#8287;&#8287;</small></div>
-                            <div class='card-body text-dark'>
+                            <div class='card-header'>Order Id #{$transaction->get_transaction_id()}&#8287;&#8287;&#8287;&#8287;&#8287;<br><span class='text-success font-weight-bold'>\${$transaction->get_amount()}</span><small class='float-right'>Date: {$transaction->get_order_date()},  Time: {$time}</small><small class='float-right'>Collection Method: {$transaction->get_collection_type()}&#8287;&#8287;|&#8287;&#8287;</small></div>
+                            <div class='card-body bg-special text-dark'>
                                   <h5 class='card-title font-weight-bold text-capitalize'>{$companyDAO->retrieve_company($transaction->get_company_id())->get_name()}</h5>
                                   <p class='card-text'>{$order_details}</p>
                                   <p class='card-text'><button type='button' class='btn btn-primary btn-sm float-right' data-toggle='modal' data-target='#exampleModal'>Rate & Review</button></p>
@@ -225,10 +231,10 @@
 
                         echo "
                           <div class='card border-dark mb-3'>
-                              <div class='card-header'>Order Id #{$transaction->get_transaction_id()}&#8287;&#8287;&#8287;&#8287;&#8287;<span class='badge badge-info'>Reviewed</span>&#8287;&#8287;<span class='badge badge-warning'>Rating: {$transaction->get_rating()}</span><br><span class='text-success font-weight-bold'>\${$transaction->get_amount()}</span><small class='float-right'>Date: {$transaction->get_order_date()},  Time: {$transaction->get_order_time()}</small><small class='float-right'>Collection Method: {$transaction->get_collection_type()}&#8287;&#8287;|&#8287;&#8287;</small></div>
+                              <div class='card-header'>Order Id #{$transaction->get_transaction_id()}&#8287;&#8287;&#8287;&#8287;&#8287;<span class='badge badge-info'>Reviewed</span>&#8287;&#8287;<span class='badge badge-warning'>Rating: {$transaction->get_rating()}</span><br><span class='text-success font-weight-bold'>\${$transaction->get_amount()}</span><small class='float-right'>Date: {$transaction->get_order_date()},  Time: {$time}</small><small class='float-right'>Collection Method: {$transaction->get_collection_type()}&#8287;&#8287;|&#8287;&#8287;</small></div>
                               <div class='card-body text-dark'>
                                 <h5 class='card-title font-weight-bold text-capitalize'>{$companyDAO->retrieve_company($transaction->get_company_id())->get_name()}</h5>
-                                <p class='card-text'>{$order_details}</p>
+                                <p class='card-text'>{$order_details}</p><hr class='class-1'>
                                 <p class='card-text'>Review: {$transaction->get_review()}</p>
                               </div>
                           </div>

@@ -47,21 +47,19 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Eco</title>
+  <title>Edit Products</title>
 
-  <!-- Bootstrap core CSS -->
-  <link href="startbootstrap-business-frontpage-gh-pages/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Custom styles for this template -->
-  <link href="startbootstrap-business-frontpage-gh-pages/css/business-frontpage.css" rel="stylesheet">
-  <!-- jquery -->
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <!-- maincss.css -->
   <!-- Roboto Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700&display=swap">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
-
-  <link rel="stylesheet" href="css/maincss.css">
+  <!--Bootstrap 4 and AJAX-->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <!--Link to main.css files while contains all the css of this project-->
+  <link rel='stylesheet' href='css\maincss.css'>
 
 
 </head>
@@ -116,21 +114,8 @@
     <div class="container">
       <p class="text-center">Copyright &copy; Eco G5T4 2020</p>
     </div>
-<<<<<<< Updated upstream:app/company_edit_product.php
-    <!-- /.container -->
-  </footer>    
-
-  <script>
-  // change active navbar
-  $(document).ready(function(){
-      $(".active").removeClass("active");
-      $("#link-edit-product").addClass("active");
-  }); 
-
-=======
   </footer> -->
   <?php include 'include/footer.php';?>
->>>>>>> Stashed changes:company_edit_product.php
 
 <script>
 document.addEventListener("DOMContentLoaded", function(event) { 
@@ -287,7 +272,6 @@ function validationDelete(productId){
   document.getElementById("modalProductName").setAttribute("value", productId)
   $('#exampleModalCenter').modal('show');
 }
-
 
 
 </script>    

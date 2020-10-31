@@ -11,6 +11,13 @@ body {
   color: #00a69c;
 }
 
+input[type="date"]:disabled { 
+  background-color: white;
+}
+
+hr.class-1 { 
+  border-top: 3px dotted lightgray; 
+} 
 
 html,
 body {
