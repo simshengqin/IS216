@@ -77,6 +77,12 @@
             } else {
 
                 foreach ($transactions as $transaction){
+                  $time = $transaction->get_order_time();
+                    if ($time[0] > 0) {
+                        $time.= ' PM';
+                    } else {
+                        $time .= ' AM';
+                    }
                   if ($transaction->get_collected() == 'false'){
                     $cart_string = $transaction->get_cart();
                     $cart = explode(',', $cart_string);
@@ -97,7 +103,7 @@
                   
                         echo "
                             <div class='card border-dark mb-3'>
-                            <div class='card-header'>Order Id #{$transaction->get_transaction_id()}&#8287;&#8287;&#8287;&#8287;&#8287;<small class='float-right'>Date: {$transaction->get_order_date()},  Time: {$transaction->get_order_time()}</small><small class='float-right'>Collection Method: {$transaction->get_collection_type()}&#8287;&#8287;|&#8287;&#8287;</small><br><span class='text-success font-weight-bold'>\${$transaction->get_amount()}</span>" .
+                            <div class='card-header'>Order Id #{$transaction->get_transaction_id()}&#8287;&#8287;&#8287;&#8287;&#8287;<small class='float-right'>Date: {$transaction->get_order_date()},  Time: {$time}</small><small class='float-right'>Collection Method: {$transaction->get_collection_type()}&#8287;&#8287;|&#8287;&#8287;</small><br><span class='text-success font-weight-bold'>\${$transaction->get_amount()}</span>" .
                             "<button type='button' class='btn btn-primary btn-sm float-right' data-toggle='modal' data-target='#exampleModal'>Received</button>".
                             "<div class='modal fade' id='exampleModal' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>
                             <div class='modal-dialog' role='document'>
