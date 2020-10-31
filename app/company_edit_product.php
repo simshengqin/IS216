@@ -95,7 +95,7 @@
         
       </div>
       <div class="modal-footer">
-        <?php echo "<button type='submit' class='btn btn-danger' name='deleteProduct' style='left: 0%;'> Delete </button>" ?>
+        <?php echo "<button type='submit' class='btn btn-info' name='deleteProduct' style='left: 0%;'> Delete </button>" ?>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
       </form>
