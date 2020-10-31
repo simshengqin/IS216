@@ -541,7 +541,7 @@ img {
 }
 .inbox_people2 {
   overflow: scroll;
-  max-height: 550px;
+  height: 550px;
 }
 .inbox_msg {
   border: 1px solid #c4c4c4;
@@ -709,9 +709,7 @@ img {
   padding: 0 0 50px 0;
 }
 .msg_history {
-  /*height: 516px;*/
-  /*Set height according toscreen height */
-  max-height: calc(100vh - 270px);
+  height: 516px;
   overflow-y: auto;
 }
 
