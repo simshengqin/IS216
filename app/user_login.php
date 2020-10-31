@@ -47,6 +47,13 @@
                         <hr>
                     
                         </div>
+
+                         <div class="text-center">
+                            <br> 
+                            <a class="medium font-weight-bold .text-secondary" href="company_login.php">Are you a company user? Login through here instead</a>
+                            <hr>
+                    
+                        </div>
                     </form>
                     <div class='text-center'>
                         <div class ="index-errormsg" style="background-color: #f8d7da; color: #8b3f46;">
@@ -91,6 +98,7 @@
                         url: "user_jslogin.php",
                         data: {username:username, password:password},
                         success:function(data){
+                            alert(data);
                             if( $.trim(data) === "1" ){
                                 //sessionStorage.setItem('username', data['username']);
                                 window.location.href = "index.php";               

@@ -1,8 +1,18 @@
 <?php
 //ADD PROTECTION CODE HERE
-if (!isset($_SESSION["user_id"]) && !isset($_SESSION["company_id"])) {
+require_once 'common.php';
+
+if (!isset($_SESSION["id"])) {
 	header("Location: user_login.php");
 }
+
+if(isset($_GET['logout'])){
+	session_destroy();
+	unset($_SESSION);
+	header("Location: ../user_login.php");
+	echo"hi";
+}
+
 /*
 $token = '';
 if (isset($_REQUEST['token'])) {

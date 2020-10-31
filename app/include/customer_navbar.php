@@ -52,9 +52,18 @@
         <li class="nav-item mr-4" id="link-customer-profile">
             <a class="nav-link" href="customer_profile.php">Profile</a>
         </li>
-        <li class="nav-item mr-4" id="link-login">
-            <a class="nav-link" href="user_login.php">Login/Register</a>
-        </li>
+        <?php
+          if (!isset($_SESSION["id"])) {
+              echo" <li class='nav-item mr-4 id='link-login'>
+                      <a class='nav-link' href='user_login.php'>Login/Register</a>
+                  </li>";
+              } else {
+                echo" <li class='nav-item mr-4 id='link-login'>
+                      <a class='nav-link' href='include/protect.php?logout=true'>".$_SESSION['name']."/Logout</a>
+                    </li>";
+              }
+        ?>
+     
         <li class="nav-item" id="link-cart">
               <a href="shoppingcart.php" class="nav-link navbar-link-2 waves-effect">
                 <span class="badge badge-pill red"></span>

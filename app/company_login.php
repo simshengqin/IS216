@@ -92,7 +92,7 @@
                                 sessionStorage.setItem('name', data['name']);
                                 sessionStorage.setItem('password', data['password']);
               
-                                setTimeout( 'window.location.href = "register.php"', 1000)
+                                setTimeout( 'window.location.href = "index.php"', 1000)
                             } else {
                                 $("#login-error").modal('show');
                     
