@@ -234,6 +234,10 @@
                             active_chat = ((params_arr["target_id"] == from_id && params_arr["target_type"] ==  from_type) ? "active_chat" : "");
                             //alert(active_chat);
                         } 
+                        // Change quotes
+                        message_body = message_body.replace(/[\u00A0-\u9999<>\&]/gim, function(i) {
+                                                                                                return '&#'+i.charCodeAt(0)+';';
+                                                                                                });
                         document.getElementById("inbox_chat").innerHTML =document.getElementById("inbox_chat").innerHTML + "\
                                                                                     <div class='incoming_msg'> \
                                                                                         <div class='chat_list" + " " + active_chat + "' id='"+from_id+","+from_type+"' onclick='select_chat()'> \
