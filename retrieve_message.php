@@ -6,8 +6,8 @@ if(isset($_POST['from_id']) && isset($_POST['from_type']) && isset($_POST['to_id
     $to_id = $_POST['to_id'];
     $to_type = $_POST['to_type'];
     //companyDAO is for retrieving the and company image
-    $userDAO = new userDAO();
-    $companyDAO = new companyDAO();
+    //$userDAO = new userDAO();
+    //$companyDAO = new companyDAO();
     $messageDAO = new messageDAO();
     //userDAO and companyDAO are for retrieving the user picture and company picture
     //$userDAO = new userDAO();
