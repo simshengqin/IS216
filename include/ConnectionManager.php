@@ -21,10 +21,15 @@ class ConnectionManager {
         return $conn;  
         */
         //$host = "localhost";
-        $host = "is216.cotlwptbe0ig.ap-southeast-1.rds.amazonaws.com";
-        $username = "admin";
-        $password = "is216eco123";
-        $db_name = "is216";
+        $url = parse_url(getenv("DATABASE_URL"));
+        $host = $url["host"];
+        $username = $url["user"];
+        $password = $url["pass"];
+        $db_name = substr($url["path"], 1);
+        //$host = "is216.cotlwptbe0ig.ap-southeast-1.rds.amazonaws.com";
+        //$username = "admin";
+        //$password = "is216eco123";
+        //$db_name = "is216";
         
         return new PDO('mysql:host=' . $host . ';dbname=' . $db_name, $username, $password, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
         
