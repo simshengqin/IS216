@@ -6,8 +6,8 @@ if(isset($_POST['user_id']) && isset($_POST['user_type'])){
     //update the leftsidebar messages
     $messageDAO = new messageDAO();
     //userDAO and companyDAO are for retrieving the user nane and company name
-    $userDAO = new userDAO();
-    $companyDAO = new companyDAO();
+    //$userDAO = new userDAO();
+    //$companyDAO = new companyDAO();
     $messages = $messageDAO->retrieve_message_to($user_id, $user_type);
     //Need to convert to a format that javascript can read!!! As JS cannot read what is message, which is a message object from message.php
     $messages_output = [];
@@ -33,7 +33,8 @@ if(isset($_POST['user_id']) && isset($_POST['user_type'])){
             $from_type = $message->get_to_type();                            
         } 
         if ($from_type == "user") {
-            $individual_message["from_name"] = ucfirst($userDAO->retrieve_user($from_id)->get_name());
+            $individual_message["from_name"] = ucfirst($_SESSION["name"]);
+            //$individual_message["from_name"] = ucfirst($userDAO->retrieve_user($from_id)->get_name());
             $individual_message["from_image"] = "images/profile_picture/user/$from_id.png";
             //Use the default picture if the image does not exist
             if (!file_exists($individual_message["from_image"])) {
@@ -42,8 +43,8 @@ if(isset($_POST['user_id']) && isset($_POST['user_type'])){
             
         }
         else if ($from_type == "company") {
-            
-            $individual_message["from_name"] = ucfirst($companyDAO->retrieve_company($from_id)->get_name());
+            $individual_message["from_name"] = ucfirst($_SESSION["name"]);
+            //$individual_message["from_name"] = ucfirst($companyDAO->retrieve_company($from_id)->get_name());
             $individual_message["from_image"] = "images/profile_picture/company/$from_id.png";
             //Use the default picture if the image does not exist
             if (!file_exists($individual_message["from_image"])) {
