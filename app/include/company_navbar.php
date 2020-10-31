@@ -48,6 +48,9 @@
         <li class="nav-item mr-4" id="link-edit-product">
           <a class="nav-link" href="company_edit_product.php">Edit</a>
         </li>
+        <li class="nav-item mr-4" id="link-inbox">
+          <a class="nav-link" href="inbox.php?user_id=<?php echo $_SESSION["company_id"]?>&user_type=company">Inbox</a>
+        </li>
         <li class="nav-item mr-4" id="link-home">
           <a class="nav-link" href="index.php">Logout</a>
         </li>

@@ -46,8 +46,7 @@
         <a class="nav-link" href="view_companies.php">Restaurants</a>
         </li>
         <li class="nav-item mr-4" id="link-inbox">
-          <!-- Hardcoded user id, need to change -->
-          <a class="nav-link" href="inbox.php?user_id=1&user_type=user">Inbox</a>
+          <a class="nav-link" href="inbox.php?user_id=<?php echo $_SESSION["user_id"]?>&user_type=user">Inbox</a>
         </li>
         <li class="nav-item mr-4" id="link-customer-profile">
             <a class="nav-link" href="customer_profile.php">Profile</a>
@@ -55,6 +54,7 @@
         <li class="nav-item mr-4" id="link-login">
             <a class="nav-link" href="user_login.php">Login/Register</a>
         </li>
+        
         <li class="nav-item" id="link-cart">
               <a href="shoppingcart.php" class="nav-link navbar-link-2 waves-effect">
                 <span class="badge badge-pill red"></span>

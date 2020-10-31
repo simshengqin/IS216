@@ -316,6 +316,13 @@ require_once 'include/protect.php';
 </body>
 
 <script>
+    // Execute a function when the user releases a key on the keyboard => Main purpose is to submit postal code when enter key is pressed
+    document.getElementById("postal_code").addEventListener("keyup", function(event) {
+        // Number 13 is the "Enter" key on the keyboard
+        if (event.keyCode === 13) {
+          validate_postal_code();
+        }
+    });
     function validate_postal_code() {
         postal_code_input = document.getElementById("postal_code");
         if (postal_code_input.value.length != 6) {
@@ -325,12 +332,40 @@ require_once 'include/protect.php';
 
         }
         else {
-            //Hides the modal
-            $('#input_postal_code').modal('hide');
-            //document.getElementById("input_postal_code_confirm").setAttribute("data-dismiss","modal");
-            //Sets the postal code in session
-            sessionStorage.setItem('postal_code', document.getElementById("postal_code").value);
-            window.location.href = "view_companies.php";
+          try {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        // following code may throw error if user input is invalid address
+                        // so we use try-catch block to handle errors
+                        //Invalid psotal code
+                        var data = JSON.parse(this.responseText);
+                        if ( data["status"] == "ZERO_RESULTS") {
+                          console.log("Sorry, invalid postal code. Please try again!");
+                          postal_code_input.value = "";
+                          postal_code_input.setAttribute("placeholder", "Sorry, invalid postal code. Please try again!"); 
+                        }
+                        else {
+                          //Sets the postal code in session
+                          sessionStorage.setItem('postal_code', document.getElementById("postal_code").value);
+                          window.location.href = "view_companies.php";                          
+                        }
+
+                    }
+                };
+                var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + postal_code_input.value + "&key=AIzaSyDcIUwwXfLUWzMAE1WspewghH9f-vmSkzc";    
+                xhttp.open("GET", url, true);
+                xhttp.send();
+            }
+            catch(err) { // show error message
+              // not a good idea to directly show err.message 
+              // as it may contain sensitive info
+              // show a predefined error message string
+              console.log("Sorry, invalid postal code. Please try again!");
+              postal_code_input.value = "";
+              postal_code_input.setAttribute("placeholder", "Sorry, invalid postal code. Please try again!"); 
+
+            }
         }
     }
 </script>

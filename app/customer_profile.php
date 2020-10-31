@@ -7,16 +7,7 @@
     require_once 'include/protect.php';
     #Get username and id from the link itself
     $userDAO = new userDAO();
-    if (isset($_GET["user_name"])) {
-        $user_name = $_GET["user_name"];   
-    }
-    else {
-      //Just a backup for now
-      $user_name = "John Doe";
-      $user_id = "1";
-    }
-    
-    $user = $userDAO->retrieve_user($user_id);
+    $user = $userDAO->retrieve_user($_SESSION["user_id"]);
     $user_name = $user->get_name();
     $email = $user->get_email();
     $phoneNumber = $user->get_phoneNumber();

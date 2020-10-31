@@ -21,7 +21,7 @@ $cart = $_POST['cart'];
 header('Content-Type: application/json');
 
 // change this link to where your app is hosted/ alias
-$YOUR_DOMAIN = 'http://localhost/eco/app';
+$YOUR_DOMAIN = '';
 
 $order_info = array(
   "user_id" => $user_id,
@@ -55,8 +55,8 @@ $checkout_session = \Stripe\Checkout\Session::create([
   'payment_method_types' => ['card'],
   'line_items' => $line_items,
   'mode' => 'payment',
-  'success_url' => $YOUR_DOMAIN . '/success.php?session_id={CHECKOUT_SESSION_ID}',
-  'cancel_url' => $YOUR_DOMAIN . '/shoppingcart.php',
+  'success_url' => $YOUR_DOMAIN . 'success.php?session_id={CHECKOUT_SESSION_ID}',
+  'cancel_url' => $YOUR_DOMAIN . 'shoppingcart.php',
   'metadata' => $order_info
 ]);
 

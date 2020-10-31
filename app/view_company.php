@@ -81,7 +81,7 @@
             <h1 class="font-weight-bold;"><?php echo $company_name ?>  
             </div> 
             <div class="row mb-3 ml-3">         
-                <button type="button" onclick="location.href='inbox.php?user_id=1&user_type=user&target_id=<?php echo $company_id?>&target_type=company&target_name=<?php echo $company_name?>'" class="btn btn-outline-info mr-2"><i class="fas fa-comment mr-2"></i>Chat</button>
+                <button type="button" onclick="location.href='inbox.php?user_id=<?php echo $_SESSION['user_id']?>&user_type=user&target_id=<?php echo $company_id?>&target_type=company&target_name=<?php echo $company_name?>'" class="btn btn-outline-info mr-2"><i class="fas fa-comment mr-2"></i>Chat</button>
                 <button type="button" onclick="show_map_modal()" class="btn btn-outline-info"><i class="fa fa-map-marker"></i>View Map</button>
             </div>
             </h1>         
@@ -114,7 +114,7 @@
 <body>
 <div class='container-fluid'>
     <div class='row'>
-        <div name="toastdiv">
+        <div name="toastdiv" class="d-none">
             <!--Toast, which is a message pop-up whenever an item is added to the cart-->
             <div style="position: relative; min-height: 200px;">
             <!-- Position it -->
@@ -629,7 +629,7 @@
         }
         //Display warning message if no products match the filter criteria
         if (!has_at_least_one_value) {
-            document.getElementById("no_items_warning").innerHTML = "<h5 class='alert alert-danger' style='height: 40%;'>No results match the filter criteria</h5>";
+            document.getElementById("no_items_warning").innerHTML = "<h5 class='alert alert-danger'>No results match the filter criteria</h5>";
         }
         else {
             document.getElementById("no_items_warning").innerHTML = "";
@@ -1080,7 +1080,7 @@
                 //Prompts user to enter th ecorrect postal code again
                 document.getElementById("close_input_postal_code").setAttribute("onclick","show_postal_code_modal()");
                 //Need to reset the style of map so it will generate again
-                document.getElementById('map').setAttribute("style","height: 25px;");
+                document.getElementById('map').setAttribute("style","height: auto;");
                 //document.getElementById("display").innerHTML = "Sorry, invalid address. Please try again!";
             }
         }
