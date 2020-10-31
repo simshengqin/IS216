@@ -265,6 +265,22 @@
         //alert(user_id);
 
     }
+    function getDifference(a, b)
+    {
+        var i = 0;
+        var j = 0;
+        var result = "";
+
+        while (j < b.length)
+        {
+         if (a[i] != b[j] || i == a.length)
+             result += b[j];
+         else
+             i++;
+         j++;
+        }
+        return result;
+    }
     function update_selected_messages() {
         //Update the rightsidebar messages
         //Send an AJAX request to retrieve all messages received by or sent to the selected user/company
@@ -322,7 +338,10 @@
                 }  
                 //Keeps it scrolled down only when there is a change in the html
                 old_html =  document.getElementById("selected_messages").innerHTML;
-                if (new_html != old_html) {
+                if (!(String(old_html.trim()) === String(new_html).trim())) {
+                    //difference = getDifference(old_html, new_html);
+                    //console.log("Differences", difference);
+                    //console.log("-----------------");
                     document.getElementById("selected_messages").innerHTML = new_html;
                     var element = document.getElementsByClassName("msg_history")[0];
                     element.scrollTop = element.scrollHeight;                           
