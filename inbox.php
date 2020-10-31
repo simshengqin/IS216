@@ -11,15 +11,6 @@
         require_once 'include/common.php';
         require_once 'include/protect.php';
 
-        //TO_BE_UPDATED
-        $url = $_SERVER['REQUEST_URI']; //returns the current directoy of current URL
-        $parts = explode('/',$url);
-        $dir = $_SERVER['SERVER_NAME'];
-        for ($i = 0; $i < count($parts) - 1; $i++) {
-        $dir .= $parts[$i] . "/";
-        }
-        $YOUR_DOMAIN =  "https://" . $dir;
-        echo $YOUR_DOMAIN;
 
 
     ?>

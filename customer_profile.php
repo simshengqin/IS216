@@ -88,7 +88,7 @@
                     <!--Toast, which is a message pop-up for successful update -->
 
                         <!-- Then put toasts within -->
-                        <div class="toast" id="success_popup"  style="margin: 10px;" aria-live="assertive" aria-atomic="true">
+                        <div class="toast hide" id="success_popup"  style="margin: 10px;" aria-live="assertive" aria-atomic="true">
                             <!-- <div class="toast-body"> -->
                                 <div class='alert alert-success alert-dismissible fade show' style="margin: 0px;" role='alert'>
                                     Successfully updated your preferences!

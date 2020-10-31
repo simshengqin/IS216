@@ -192,16 +192,20 @@
                         <div>
                             <div class="form-row m-2">
                                 <div class="form-group col-12">
+                                    <div class="form-row m-2">
+                                        Sort By 
+                                     </div>
                                     <div class="input-group">
-                                        <span class="input-group-prepend">
+                                        <!--<span class="input-group-prepend">
                                             <label class="input-group-text" for="inputGroupSelect01">
                                             Sort by</label>
-                                        </span>
-                                        <select class="form-control custom-select w-100" id="sort_by_bar";"                                                                                                                >
+                                        </span>-->
+                                        
+                                        <select class="form-control custom-select w-100" id="sort_by_bar" >
                                             <option selected value="Posted Date: Newest to oldest">Posted Date: Newest to oldest</option>
                                             <option selected value="Posted Date: Oldest to newest">Posted Date: Oldest to newest</option>
-                                            <option selected value="Expiry Date: Shorter away to further away">Expiry Date: Shorter away to further away</option>
-                                            <option selected value="Expiry Date: Further away to shorter away">Expiry Date: Further away to shorter away</option>
+                                            <option selected value="Expiry Date: Shorter away to further away">Expiry Date: Shorter to further</option>
+                                            <option selected value="Expiry Date: Further away to shorter away">Expiry Date: Further to shorter</option>
                                             <option value="Price: Low to high">Price: Low to high</option>
                                             <option value="Price: High to low">Price: High to low</option>
                                         </select>
@@ -535,7 +539,7 @@
                 </div>
                 </div>
 
-                <div class="toast" data-autohide="false" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast hide" data-autohide="false" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="toast-header">
                     <img src="..." class="rounded mr-2" alt="...">
                     <strong class="mr-auto">Bootstrap</strong>
