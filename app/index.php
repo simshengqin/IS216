@@ -154,7 +154,7 @@ require_once 'include/protect.php';
                   <img class="card-img-top" src="images/how_to_use/use-3.png" alt="">
                       <div class="card-body">
                           <h4 class="card-title">STEP 3</h4>
-                          <p class="card-text">Upon arrival, show your receipt which will be sent to you via SMS to the stall owner!</p>
+                          <p class="card-text">Upon arrival, show your receipt at the active orders page to the stall owner and collect your food!</p>
                       </div>
               </div>
               </div>

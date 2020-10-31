@@ -6,7 +6,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <!-- <meta http-equiv="x-ua-compatible" content="ie=edge"> -->
         <title>LOGIN PAGE FOR USER</title>
 
          <!-- Roboto Font -->
@@ -29,7 +29,7 @@
                 <div class="container">
                 <div class="row">
                     <div class="col-md-9 col-lg-8 mx-auto">
-                    <img class="d-flex justify-content-center" src="images/logo/android-chrome-512x512.png" style="height:400px; width:430px;">
+                    <img class="d-flex justify-content-center" src="images/user-eco-with-logo.png" style="height:300px; width:330px;">
                     <h3 class="login-heading mb-4">User Sign In</h3>
                     <form id="loginForm">
                         <div class="label-form-cluster">
@@ -40,18 +40,19 @@
                         <input type="password" id="password" class="form-control" placeholder="Password" required>
                         <label for="inputPassword">Password</label>
                         </div>
-                        <button id="login" class="btn btn-lg btn-primary btn-block btn-register text-uppercase font-weight-bold mb-2" type="submit">Sign in</button>
+                        <button id="login" class="btn btn-lg btn-info btn-block btn-register font-weight-bold mb-2" type="submit">Sign in</button>
                         <div class="text-center">
                         <br> 
-                        <a class="medium font-weight-bold .text-secondary" href="register.php">Don't have an account? Register for an account</a>
-                        <hr>
+                        <a class="small font-weight-bold .text-secondary" href="register.php">Don't have an account? Register for an account</a>
+                        
                     
                         </div>
+                        <hr>
 
                          <div class="text-center">
-                            <br> 
-                            <a class="medium font-weight-bold .text-secondary" href="company_login.php">Are you a company user? Login through here instead</a>
-                            <hr>
+                    
+                            <a class="small font-weight-bold .text-secondary" href="company_login.php">Are you a company user? Login through here instead</a>
+                            <!-- <hr> -->
                     
                         </div>
                     </form>
