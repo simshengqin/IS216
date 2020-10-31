@@ -153,20 +153,20 @@ document.addEventListener("DOMContentLoaded", function(event) {
             <div class="row">
 
                 <div class="col-md-12">
-                  </br>
-                  <h1 class="text-center font-weight-light"> Profile </h1>
-                  </br>
+                    </br>
+                    <h1 class="text-center font-weight-light"> Profile </h1>
+                    </br>
                 </div>
                 
                 <div class="col-md-6 text-center">
-                  <img class="mr-2 mb-2" width="200px" src="images/profile_picture/company/<?php echo $company_id ?>.png"></img>
-                  <h3> <?php echo ucfirst(str_replace('_', ' ', $company_name))?></h3>
-                  <div> <i class="fas fa-star mr-2"></i> <span> Ratings: <?php echo $company_rating ?></span> </div>
-                  <div> <i class="fas fa-users mr-2"></i> <span> Followings: <?php echo $numOfFollowing ?></span> </div>
-                  </br>
-                  <div class="text-center mx-auto">
-                    <button style="left: 0%;" type="button" onclick="location.href='inbox.php?user_id=1&user_type=user&target_id=<?php echo $company_id?>&target_type=company&target_name=<?php echo $company_name?>'" class="btn btn-outline-info ml-2"><i class="fas fa-comment mr-2"></i>Chat</button>
-                  </div>
+                    <img class="mr-2 mb-2" width="200px" src="images/profile_picture/company/<?php echo $company_id ?>.png"></img>
+                    <h3> <?php echo ucfirst(str_replace('_', ' ', $company_name))?></h3>
+                    <div> <i class="fas fa-star mr-2"></i> <span> Ratings: <?php echo $company_rating ?></span> </div>
+                    <div> <i class="fas fa-users mr-2"></i> <span> Followings: <?php echo $numOfFollowing ?></span> </div>
+                    </br>
+                    <div class="text-center mx-auto">
+                        <button style="left: 0%;" type="button" onclick="location.href='inbox.php?user_id=1&user_type=user&target_id=<?php echo $company_id?>&target_type=company&target_name=<?php echo $company_name?>'" class="btn btn-outline-info ml-2"><i class="fas fa-comment mr-2"></i>Chat</button>
+                    </div>
                 </div>
                 
                 <div class="col-md-6">
@@ -195,24 +195,26 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
               <div class="col-md-12">
                 <div class="card-deck">
-                    <?php
-                          displayProducts($company_id);
-                    ?>
+                    <?php displayProducts($company_id); ?>
                 </div>
-              <div>
+              </div>
 
             </div>
+            <!-- End of Company active products -->
 
         </div>
     </div>
     
   <!-- Footer -->
+  <!--
   <footer class="py-5">
     <div class="container">
       <p class="text-center">Copyright &copy; Eco G5T4 2020</p>
     </div>
-    <!-- /.container -->
   </footer>
+  -->
+
+  <?php include 'include/footer.php';?>
 
 
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

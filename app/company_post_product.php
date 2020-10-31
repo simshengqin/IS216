@@ -93,7 +93,7 @@
                     </div> 
 
                     <!-- Product Type -->
-                    <div class="form-group col-md-5" style="margin-bottom: -10px;">
+                    <div class="form-group col-md-3" style="margin-bottom: -10px;">
                         <select class="form-control form-control-lg inline" id="productType" name="productType">
                             <option disabled selected value=""> Select Product's type </option>
                             <?php
@@ -105,10 +105,14 @@
                         </select>
                         <p id='errorProductType' style='visibility: hidden; color: red;'>  </p>
                     </div>
-                   
+                   <!--
                     <div class="form-group col-md-1" style="margin-bottom: 20px;">
-                      <button type="button" class="btn btn-info btn-lg"  data-toggle="modal" data-target="#foodTypeModal" style="left: 0%;"> Add </button> 
-                    </div>
+                      <button type="button" class="btn btn-info btn-lg"  data-toggle="modal" data-target="#foodTypeModal" style="left: 0%;"> <a  data-toggle="tooltip" data-placement="top" title="Tooltip on top"> Add </a> </button> 
+                    </div> 
+                    -->
+                    <div class="form-group col-md-3" style="margin-bottom: 20px;">
+                      <button type="button" class="btn btn-info btn-lg"  data-toggle="modal" data-target="#foodTypeModal" style="left: 0%;">  New Product Type </button> 
+                    </div> 
 
                     <!-- Qty -->
                     <div class="form-group col-md-6" style="margin-bottom: -10px;">
@@ -191,12 +195,15 @@
 
         </div>
         <!-- Footer -->
+        <!--
         <footer class="py-5">
           <div class="container">
             <p class="text-center">Copyright &copy; Eco G5T4 2020</p>
           </div>
-        </footer>
+        </footer> -->
     </div>
+
+    <?php include 'include/footer.php';?>
 
     <!-- Modal for Adding new food type-->
             <div class="modal fade" id="foodTypeModal" tabindex="-1" role="dialog">
@@ -210,7 +217,7 @@
                   </div>
                   <form>
                   <div class="modal-body">
-                      <input class="form-control form-control-lg" id="newFoodType" type="text" placeholder="What's New?">
+                      <input class="form-control form-control-lg" id="newFoodType" type="text" placeholder="E.g. Pasta, Noodles or Bread">
                       <p id='errorNewFoodType' style='visibility: hidden; color: red;'> Please specify a food type! </p>
                   </div>
                   <div class="modal-footer">
@@ -290,6 +297,8 @@
         
         var data = {};
         var noError = true;
+        var noErrorBefore = false; 
+        var noErrorDate = false;
 
         var productName = document.getElementById('productName').value
         var productType = document.getElementById('productType').value
@@ -360,13 +369,14 @@
           document.getElementById("errorBeforePrice").innerHTML = "Please indicate a price.";
           document.getElementById("errorBeforePrice").style.visibility = "visible";
           noError = false;
-        } else if(productBeforePrice < 1) {
+        } else if(productBeforePrice < 0.001 ) {
           document.getElementById("errorBeforePrice").innerHTML = "Please input a valid price, price needs to be above $0.00";
           document.getElementById("errorBeforePrice").style.visibility = "visible";
           noError = false;
         } else{
           //data["productBeforePrice"] = productBeforePrice;
           document.getElementById("errorBeforePrice").style.visibility = "hidden";
+          noErrorBefore = true;
         }
 
         // validate After Price 
@@ -374,11 +384,17 @@
           document.getElementById("errorAfterPrice").innerHTML = "Please indicate a price.";
           document.getElementById("errorAfterPrice").style.visibility = "visible";
           noError = false;
-        } else if(productAfterPrice < 1){
+        } else if(productAfterPrice < 0.001 ){
           document.getElementById("errorAfterPrice").innerHTML = "Please input a valid price, price needs to be above $0.00";
           document.getElementById("errorAfterPrice").style.visibility = "visible";
           noError = false;
-        } else {
+        } else if (noErrorBefore == true) {
+            if(productBeforePrice < productAfterPrice){
+              document.getElementById("errorAfterPrice").innerHTML = "Please input a price lower than the before price";
+              document.getElementById("errorAfterPrice").style.visibility = "visible";
+              noError = false;
+            }
+        }else {
           //data["productAfterPrice"] = productAfterPrice;
           document.getElementById("errorAfterPrice").style.visibility = "hidden";
         }
@@ -410,6 +426,7 @@
         } else {
           //data["decay_date"] = productDateInput;
           document.getElementById("errorPromotionEndDate").style.visibility = "hidden";
+          noErrorDate = true;
         }
 
         // validate promotion end date
@@ -417,11 +434,17 @@
           document.getElementById("errorPromotionEndTime").innerHTML = "Please indicate a promotion end time."
           document.getElementById("errorPromotionEndTime").style.visibility = "visible";
           noError = false;
-        } else {
-          data["decay_time"] = productTimeInput;
-          document.getElementById("errorPromotionEndTime").style.visibility = "hidden";
+        } else if(noErrorDate == true){
+          var noErrorTime = checkIfDateTimeExpired(productDateInput,productTimeInput) 
+          console.log("No Erro Time: " + noErrorTime)
+          if(noErrorTime == false){
+            document.getElementById("errorPromotionEndTime").innerHTML = "Please indicate a promotion end time, with a later end time";
+            document.getElementById("errorPromotionEndTime").style.visibility = "visible";
+            noError = false;
+          } else {
+            document.getElementById("errorPromotionEndTime").style.visibility = "hidden";
+          }
         }
-
         
         document.getElementById("company_id").value = <?php echo $company_id ?>;
         document.getElementById("posted_date").value = singaporeDate;
@@ -475,11 +498,39 @@
       }
       */
 
+<<<<<<< Updated upstream:app/company_post_product.php
   // change active navbar
   $(document).ready(function(){
       $(".active").removeClass("active");
       $("#link-post-product").addClass("active");
   }); 
+=======
+      function checkIfDateTimeExpired(date,time){
+        console.log(date);
+        console.log(time);
+        // date
+        var year = date.split("-")[0];
+        var month = date.split("-")[1];
+        var day = date.split("-")[2];
+        // time
+        var hour = time.split(":")[0];
+        var min = time.split(":")[1];
+        var sec = "00";
+        
+        var postDateTime = " " + month + " " + day + ", " + year + " " + hour + ":" + min + ":" + sec + "";
+        var checkPostDateTime = new Date(postDateTime).getTime();
+        var now = new Date().getTime();
+        var timeRemaining =  checkPostDateTime - now;
+        console.log(timeRemaining);
+        
+        if(timeRemaining < 0){
+          return false;
+        } else {
+          return true;
+        }
+        return false;
+      }
+>>>>>>> Stashed changes:company_post_product.php
 
   </script>
 

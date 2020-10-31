@@ -28,7 +28,8 @@
     
     if(isset($_POST['deleteProduct']))
     {
-      $id = $_POST["productid"];
+      //$id = $_POST["productid"];
+      $id = $_POST["modalProductName"];
       $result = $productDAO->remove_product($id);;
       if($result){
         header("Location: company_edit_product.php");
@@ -70,23 +71,52 @@
 <?php include 'include/company_navbar.php';?>
 
   <!--Company profile  -->
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle"> Delete Promotion ?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+      <form action='company_edit_product.php' method='POST'>
+
+        <input type='hidden' name='modalProductName' id="modalProductName" value="">
+        <h5 class="text-center font-weight-light"> Are you sure that you would like to delete this promotion ? </h5>
+        
+      </div>
+      <div class="modal-footer">
+        <?php echo "<button type='submit' class='btn btn-danger' name='deleteProduct' style='left: 0%;'> Delete </button>" ?>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+  <!-- -->
 
   <div class="jumbotron jumbotron-fluid bg-light">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                  </br>
-                  <h1 class="text-center font-weight-light"> Edit Promotion </h1>
-                  <?php displayProducts($company_id);?>
+                    </br>
+                    <h1 class="text-center font-weight-light"> Edit Promotion </h1>
+                    <?php displayProducts($company_id);?>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Footer -->
+  <!--
   <footer class="py-5">
     <div class="container">
       <p class="text-center">Copyright &copy; Eco G5T4 2020</p>
     </div>
+<<<<<<< Updated upstream:app/company_edit_product.php
     <!-- /.container -->
   </footer>    
 
@@ -97,7 +127,12 @@
       $("#link-edit-product").addClass("active");
   }); 
 
+=======
+  </footer> -->
+  <?php include 'include/footer.php';?>
+>>>>>>> Stashed changes:company_edit_product.php
 
+<script>
 document.addEventListener("DOMContentLoaded", function(event) { 
     var singaporeDateUnmodified = new Date().toLocaleString("en-US", {timeZone: "Asia/Singapore"}).split(',')[0];
       
@@ -245,6 +280,14 @@ function validationUpdate(errorDateInput, decay_date_value, errorEndTime, decay_
     return false;
 }
 
+function validationDelete(productId){
+  console.log(productId);
+  //console.log(productName);
+  //document.getElementById(modalProductName).innerHTML = productId;
+  document.getElementById("modalProductName").setAttribute("value", productId)
+  $('#exampleModalCenter').modal('show');
+}
+
 
 
 </script>    
@@ -259,6 +302,8 @@ function validationUpdate(errorDateInput, decay_date_value, errorEndTime, decay_
         $time = convertTime($product->get_decay_time());
 
         $strProductId = strval($product->get_product_id());
+
+        //$productName = str_replace(' ', '_', $product->get_name());
 
         $errorDateInput = "errorDateInput".$strProductId;
         $decay_date_value = "decayDate".$strProductId;
@@ -345,7 +390,8 @@ function validationUpdate(errorDateInput, decay_date_value, errorEndTime, decay_
 
                 
                 <button type='submit' class='btn btn-info btn-lg btn-block' name='editProduct' style='left: 0%;' onclick='return validationUpdate($errorDateInput, $decay_date_value, $errorEndTime, $decay_time_value, $errorAfterPrice, $price_after_value, $errorQuantity, $quantity_value)'> Update </button>
-                <button type='submit' class='btn btn-danger btn-lg btn-block' name='deleteProduct' style='left: 0%;'> Delete </button>
+                <!-- <button type='submit' class='btn btn-danger btn-lg btn-block' name='deleteProduct' style='left: 0%;'> Delete </button> -->
+                <button type='button' class='btn btn-danger btn-lg btn-block' onclick='validationDelete($strProductId)' style='left: 0%;'> Delete </button>
 
                 </br>
                 </br>
