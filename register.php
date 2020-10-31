@@ -71,15 +71,15 @@
                         <label for="name">Full Name*</label>
                         </div>
                         <div class="label-form-cluster">
-                        <input name="phoneNumber" id="phoneNumber" class="form-control" placeholder="Please enter phone number*" required autofocus>
+                        <input name="phoneNumber" id="phoneNumber" class="form-control" placeholder="Please enter phone number*" pattern = "([0-9]{1,8})" title="Must contain 8 digts and contain only numbers" required autofocus>
                         <label for="phoneNumber">Phone Number*</label>
                         </div>  
                         <div class="label-form-cluster">
-                        <input name="email" id="email" class="form-control" placeholder="Please enter email*" required autofocus>
+                        <input name="email" id="email" class="form-control" placeholder="Please enter email*" type="email" title="Please Enter a valid email address" required autofocus>
                         <label for="email">Email*</label>
                         </div>
                         <div class="label-form-cluster">
-                        <input name="password" type="password" id="password" class="form-control" placeholder="Please enter password" required>
+                        <input name="password" type="password" id="password" class="form-control" placeholder="Please enter password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required>
                         <label for="password">Password*</label>
                         </div>
                         <div class="text-left">
@@ -143,13 +143,7 @@
                         })
                 
                 
-            } else {
-                Swal.fire({
-                    "title" : "Errors",
-                    "text": "Please Enter Your Fields",
-                    "type": "success",
-                })
-            }   
+            }    
         });
     </script>
 
