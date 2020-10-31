@@ -1108,7 +1108,7 @@
     }
 </script>
 <!-- To calculate distance between 2 points-->
-<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&v=3&libraries=geometry"></script>
+<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false&v=3&libraries=geometry"></script>
 <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcIUwwXfLUWzMAE1WspewghH9f-vmSkzc">
 </script>
