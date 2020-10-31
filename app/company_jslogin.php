@@ -16,7 +16,7 @@
     if( $result ) {
         $company = $stmt->fetch(PDO::FETCH_ASSOC);  
         if( $stmt->rowCount()> 0 ){
-            $_SESSION["id"] = $company['company_id'];
+            $_SESSION["user_id"] = $company['company_id'];
             $_SESSION["name"] = $company['name'];
             echo"1";
         } else {

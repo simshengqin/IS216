@@ -2,7 +2,7 @@
 //ADD PROTECTION CODE HERE
 require_once 'common.php';
 
-if (!isset($_SESSION["id"])) {
+if (!isset($_SESSION["user_id"]) && !isset($_SESSION["company_id"])) {
 	header("Location: user_login.php");
 }
 

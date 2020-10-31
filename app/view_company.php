@@ -114,43 +114,6 @@
 <body>
 <div class='container-fluid'>
     <div class='row'>
-        <div name="toastdiv" class="d-none">
-            <!--Toast, which is a message pop-up whenever an item is added to the cart-->
-            <div style="position: relative; min-height: 200px;">
-            <!-- Position it -->
-            <div style="position: fixed; top: 0; right: 0;  z-index: 10000;" >
-
-                <!-- Then put toasts within -->
-                <div class="toast" id="add_to_cart_message" role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="toast-header">
-                    <!--<img src="..." class="rounded mr-2" alt="...">-->
-                    <strong class="mr-auto">Success!</strong>
-                    <small class="text-muted">just now</small>
-                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="toast-body">
-                    <span id="cart_message_body">was successfully added to your cart. </span><a href="shoppingcart.php" id="added_to_cart_msg" target="_blank" >Click here</a> to view.
-                </div>
-                </div>
-
-                <div class="toast" data-autohide="false" role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="toast-header">
-                    <img src="..." class="rounded mr-2" alt="...">
-                    <strong class="mr-auto">Bootstrap</strong>
-                    <small class="text-muted">2 seconds ago</small>
-                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="toast-body">
-                    Heads up, toasts will stack automatically
-                </div>
-                </div>
-            </div>
-            </div>
-        </div>
         <!--Modal to warn users of change in cart-->
         <div class="modal fade" id="change_company_id_in_cart_msg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -546,6 +509,43 @@
             </div>
         </div>
         <div class="col-2"></div>
+        <div id="toastdiv">
+            <!--Toast, which is a message pop-up whenever an item is added to the cart-->
+            <div style="position: relative; min-height: 200px;">
+            <!-- Position it -->
+            <div style="position: fixed; top: 73; right: 0;  z-index: 10000;" >
+
+                <!-- Then put toasts within -->
+                <div class="toast" id="add_to_cart_message" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <!--<img src="..." class="rounded mr-2" alt="...">-->
+                    <strong class="mr-auto">Success!</strong>
+                    <small class="text-muted">just now</small>
+                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="toast-body">
+                    <span id="cart_message_body">was successfully added to your cart. </span><a href="shoppingcart.php" id="added_to_cart_msg" target="_blank" >Click here</a> to view.
+                </div>
+                </div>
+
+                <div class="toast" data-autohide="false" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <img src="..." class="rounded mr-2" alt="...">
+                    <strong class="mr-auto">Bootstrap</strong>
+                    <small class="text-muted">2 seconds ago</small>
+                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="toast-body">
+                    Heads up, toasts will stack automatically
+                </div>
+                </div>
+            </div>
+            </div>
+        </div>
     </div>
 </div>
 <?php include 'include/footer.php';?>
