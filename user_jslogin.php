@@ -6,6 +6,7 @@
     $password = $_POST["password"];
 
     $userDAO = new userDAO();
+    $companyDAO = new companyDAO();
     $connMgr = new ConnectionManager();       
     $conn = $connMgr->getConnection();
 
@@ -17,6 +18,8 @@
         $user = $stmt->fetch(PDO::FETCH_ASSOC);  
         if( $stmt->rowCount()> 0 ){
             $_SESSION['user_id'] = $user['user_id'];
+            $_SESSION['cart_company_id'] = $user['cart_company_id'];
+            $_SESSION['cart_company_name'] = $companyDAO -> retrieve_company_name($user['cart_company_id']);
             $_SESSION['name'] = $user['name'];
             echo"1";
         } else {
