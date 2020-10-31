@@ -4,6 +4,7 @@
     $transactionDAO = new transactionDAO();
     $companyDAO = new companyDAO();
     $productDAO = new productDAO();
+    $userDAO = new userDAO();
 
     require 'vendor/autoload.php';
     $stripe = new \Stripe\StripeClient('sk_test_51HgOY8AgaC3WCXUJkZeI8NEO20nKkEYE99qUUjnjSdLxJ25DlKtKJipaM4CvoTWzi1cryHYmF6zD83J5cCunACSz007ce7SGlu');
@@ -23,7 +24,7 @@
           //var_dump($price);
           $cart = $cart_info->cart;
           // add pending order into transactions table
-          $transactionDAO->add($user_id, $cart, $company_id, $date, $time, $price, 'Pickup', '', 0, 'false');
+          $transactionDAO->add($user_id, $cart, $company_id, $date, $time, $price, 'Self-pickup', '', 0, 'false');
           
 
 
@@ -34,6 +35,10 @@
 
     
     $transactions = $transactionDAO->retrieve_transactions_by_user_id($user_id);
+
+    // clear shopping cart for user
+    $userDAO->update_user_cart($user_id, '');
+    $userDAO->update_user_cart_company_id($user_id, 0);
 
 
 ?>
@@ -57,7 +62,7 @@
   <!-- Navigation -->
   <?php include 'include/customer_navbar.php';?>
   
-<div style="margin-top: 80px;"></div>
+<!-- <div style="margin-top: 80px;"></div> -->
 
 
 <div class="mx-md-5" style="margin-top: 50px; margin-bottom: 50px;">
