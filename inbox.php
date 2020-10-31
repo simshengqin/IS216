@@ -94,7 +94,7 @@
             sessionStorage.setItem("selected_from_id","");
             sessionStorage.setItem("selected_from_type","");            
         }
-        window.scroll_down = "true";
+        //window.scroll_down = "true";
         //alert(sessionStorage.getItem("selected_from_id") !== "");
         update_selected_messages_leftbar();
         update_selected_messages();
@@ -278,7 +278,8 @@
                 messages = JSON.parse(this.responseText);
                 //console.log(messages);  
                 //Empty out all the messages displayed first
-                document.getElementById("selected_messages").innerHTML = "";
+                //document.getElementById("selected_messages").innerHTML = "";
+                new_html = "";
                 for (var i=0; i < messages.length; i++) {
                     message = messages[i];
                     //$message_id, $body, $date, $from_id, $from_type, $seen, $time, $to_id, $to_type, $type
@@ -293,7 +294,7 @@
                        }
                        
 
-                        document.getElementById("selected_messages").innerHTML = document.getElementById("selected_messages").innerHTML + "\
+                        new_html = new_html + "\
                                                                                     <div class='incoming_msg'> \
                                                                                         <div class='incoming_msg_img'> <img src='" + from_image + "' alt='sunil'> </div> \
                                                                                         <div class='received_msg'> \
@@ -306,7 +307,7 @@
                                                                                 ";   
                     }
                     else { 
-                        document.getElementById("selected_messages").innerHTML = document.getElementById("selected_messages").innerHTML + "\
+                        new_html = new_html + "\
                                                                                     <div class='outgoing_msg'> \
                                                                                         <div class='sent_msg'> \
                                                                                             <p>" + message["body"] + "</p> \
@@ -318,13 +319,22 @@
                     }
 
 
-                }                    
-                //Keeps it scrolled down only when user sends a message
+                }  
+                //Keeps it scrolled down only when there is a change in the html
+                old_html =  document.getElementById("selected_messages").innerHTML;
+                if (new_html != old_html) {
+                    document.getElementById("selected_messages").innerHTML = new_html;
+                    var element = document.getElementsByClassName("msg_history")[0];
+                    element.scrollTop = element.scrollHeight;                           
+                }               
+                
+                /*
                 if (window.scroll_down == "true") {
                     var element = document.getElementsByClassName("msg_history")[0];
                     element.scrollTop = element.scrollHeight;
                     window.scroll_down = "false";                            
-                }            
+                } 
+                */           
             }  
         };  
         request.open('POST', 'retrieve_message.php', true);
@@ -374,7 +384,7 @@
         sessionStorage.setItem("selected_from_id", selected_from_id);
         sessionStorage.setItem("selected_from_type", selected_from_type);
         //alert(selected_from_id + selected_from_type);
-        window.scroll_down = "true";
+        //window.scroll_down = "true";
         //Update the right side chat bar
         update_selected_messages();
 
@@ -408,7 +418,7 @@
     });
     function send_message() {
         //Scrolls down to the end of message
-        window.scroll_down = "true";
+        //window.scroll_down = "true";
         //Retrieves the chat message sent
         body = document.getElementById("sent_message").value;
         if (body != "") {
