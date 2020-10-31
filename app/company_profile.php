@@ -3,13 +3,21 @@
     require_once 'include/protect.php';
 
     $companyDAO = new companyDAO();
-    
+
+    if(isset($_SESSION["company_id"])){
+      $company_id = $_SESSION["company_id"];
+    } else {
+      header("Location: company_login.php");
+      exit();
+    }
+    /*
     if (isset($_GET["company_id"])) {
         $company_id = $_GET["company_id"];   
     }
     else {
       $company_id = "1";
     }
+    */
 
   // Check if the directory exsit, else create new directory
   $dir = 'images/product/'.$company_id;

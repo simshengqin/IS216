@@ -805,6 +805,12 @@ img {
   background-position: center;
 }
 
+.background-login-company-img {
+  background-image: url("../images/company-photo-3.png");
+  background-size: cover;
+  background-position: center;
+}
+
 .background-img {
   background-image: url("../images/company_profile_image/1.jpeg");
   background-size: cover;
