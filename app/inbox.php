@@ -23,7 +23,14 @@
 <body>
 <div class="container-fluid ">
     <!-- add navbar at the top -->
-    <?php include 'include/customer_navbar.php';?>
+    <?php 
+        if (isset($_SESSION["user_id"])) {
+            include 'include/customer_navbar.php';
+        }
+        else if (isset($_SESSION["company_id"])) {
+            include 'include/company_navbar.php';
+        }
+    ?>
     <?php 
         //go back to previous page on history
         echo "<a id='go_back_btn' href='javascript:history.go(-1)'><h4 class='m-2'><button class='mt-2 mb-2' style='margin-left: 40px;' onClick='header(\'Location: view_company.php?company_name=target_name\');'><i class='fas fa-chevron-circle-left'></i></button>Go back</h4></a>";
@@ -52,6 +59,7 @@
                     </div>>-->
                     <!--The left sidebar below the searchbar containing all the chat previews to other people -->
                     <div class="inbox_chat" id="inbox_chat">
+                        <div class='alert alert-warning m-3'>No messages currently!</div>
                     </div>
 
                 </div>
@@ -113,8 +121,6 @@
                 
                 var messages = JSON.parse(this.responseText);
                 //console.log(messages);  
-                //Empty out all the messages displayed first
-                document.getElementById("inbox_chat").innerHTML = "";
                 //Only retrieve the first chat message received by a certain from_id
                 //Note that it is sorted by descending, so the first one message will always be the latest message by that user
                 //Hence, keep a list to keep track which user/company has already been displayed, so as not to duplicate them
@@ -172,6 +178,8 @@
                             //    from_image = "images/profile_picture/company/default.png";
                             //}
                         }
+                        //Empty out all the messages displayed first
+                        document.getElementById("inbox_chat").innerHTML = "";
                         document.getElementById("inbox_chat").innerHTML =document.getElementById("inbox_chat").innerHTML + "\
                                                                                     <div class='incoming_msg'> \
                                                                                         <div class='chat_list active_chat' id='"+from_id_url+","+from_type_url+"' onclick='select_chat()'> \
@@ -185,6 +193,10 @@
                                                                                     
 
                     }
+                }
+                if (messages.length > 0) {
+                    //Empty out all the messages displayed first
+                    document.getElementById("inbox_chat").innerHTML = "";
                 }
                 for (var i=0; i < messages.length; i++) {
                     var message = messages[i];

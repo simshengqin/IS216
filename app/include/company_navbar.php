@@ -51,9 +51,17 @@
         <li class="nav-item mr-4" id="link-inbox">
           <a class="nav-link" href="inbox.php?user_id=<?php echo $_SESSION["company_id"]?>&user_type=company">Inbox</a>
         </li>
-        <li class="nav-item mr-4" id="link-home">
-          <a class="nav-link" href="index.php">Logout</a>
-        </li>
+        <?php
+          if (!isset($_SESSION["company_id"])) {
+              echo" <li class='nav-item mr-4 id='link-login'>
+                      <a class='nav-link' href='company_login.php'>Login/Register</a>
+                  </li>";
+              } else {
+                echo" <li class='nav-item mr-4 id='link-login'>
+                      <a class='nav-link' href='include/protect.php?logout=true'>".$_SESSION['name']."/Logout</a>
+                    </li>";
+              }
+        ?>
       </ul>
     </div>
     </div>

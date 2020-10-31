@@ -51,7 +51,7 @@
 
                          <div class="text-center">
                     
-                            <a class="small font-weight-bold .text-secondary" href="company_login.php">Are you a company user? Login through here instead</a>
+                            <a class="small font-weight-bold .text-secondary" href="company_login.php">Login as a company instead</a>
                             <!-- <hr> -->
                     
                         </div>
@@ -85,7 +85,6 @@
             </div>
         </div>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
         <script>
             $(function() {
                 $("#login").click(function(e){
@@ -99,7 +98,7 @@
                         url: "user_jslogin.php",
                         data: {username:username, password:password},
                         success:function(data){
-                            alert(data);
+                            //alert(data);
                             if( $.trim(data) === "1" ){
                                 //sessionStorage.setItem('username', data['username']);
                                 window.location.href = "index.php";               
