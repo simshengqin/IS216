@@ -5,12 +5,20 @@
     $companyDAO = new companyDAO();
     $productDAO = new productDAO();
     
+    if(isset($_SESSION["company_id"])){
+      $company_id = $_SESSION["company_id"];
+    } else {
+      header("Location: company_login.php");
+      exit();
+    }
+    /*
     if (isset($_GET["company_id"])) {
         $company_id = $_GET["company_id"];   
     }
     else {
       $company_id = "1";
     }
+    */
 
     //if(isset($_POST["productid"]) && isset($_POST["decay_date"]) && isset($_POST["decay_time"]) && isset($_POST["price_after"]) && isset($_POST["quantity"]))
     if(isset($_POST['editProduct']))

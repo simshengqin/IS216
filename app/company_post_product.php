@@ -8,12 +8,20 @@
     //$productType = $productDAO->retrieve_product_type();
     $newProductId = count($productDAO->retrieve_all());
     
+    if(isset($_SESSION["company_id"])){
+      $company_id = $_SESSION["company_id"];
+    } else {
+      header("Location: company_login.php");
+      exit();
+    }
+    /*
     if (isset($_GET["company_id"])) {
         $company_id = $_GET["company_id"];    
     }
     else {
       $company_id = "1";
     }
+    */
 
     $productType = $productDAO->retrieve_unique_categories_by_company_id($company_id);
 
