@@ -83,8 +83,7 @@
                         data: {username:username, password:password},
                         success:function(data){
                             if( $.trim(data) === "1" ){
-                                sessionStorage.setItem('username', data['username']);
-                                sessionStorage.setItem('password', data['password']);
+                                //sessionStorage.setItem('username', data['username']);
                                 window.location.href = "index.php";               
                                 setTimeout( 'window.location.href = "index.php"', 1000)
                             } else {
