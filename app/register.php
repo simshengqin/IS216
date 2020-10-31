@@ -1,6 +1,5 @@
 <?php
   require_once 'include/common.php';
-  require_once 'include/protect.php';
 ?>
 <!DOCTYPE html>
 <html style="padding: 0px 0px 0px 0px">

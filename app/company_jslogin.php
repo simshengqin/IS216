@@ -1,7 +1,6 @@
 <?php
     //session_start();
     require_once 'include/common.php';
-    require_once 'include/protect.php';
 
     $name = $_POST["name"];
     $password = $_POST["password"];

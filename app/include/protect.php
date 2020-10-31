@@ -1,5 +1,8 @@
 <?php
-//UNDONE ADD PROTECTION CODE HERE
+//ADD PROTECTION CODE HERE
+if (!isset($_SESSION["user_id"]) || !isset($_SESSION["company_id"])) {
+	header("Location: user_login.php");
+}
 /*
 $token = '';
 if (isset($_REQUEST['token'])) {
