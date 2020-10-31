@@ -15,8 +15,9 @@
     $result = $stmt->execute([$name,$password]);
          
     if( $result ) {
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);  
+        $company = $stmt->fetch(PDO::FETCH_ASSOC);  
         if( $stmt->rowCount()> 0 ){
+            $_SESSION["company_id"] = $company['company_id'];
             echo"1";
         } else {
             "There is no user";

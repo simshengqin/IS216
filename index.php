@@ -82,20 +82,17 @@ session_start();
             </div>
             <div class ='row'>
                 <div class="col-lg-8" style="margin: 30px 0px 30px;">
-                <form action="view_companies.php" method="get">
                 <!-- <div class="form-group col-8" style="margin: 30px 0px 20px;"> -->
-                    <input type="text" class="form-control" name="postal_code" id="search_for_products"  placeholder="Enter Postal Code">
-                    
+                    <input type="text" class="form-control" name="postal_code" id="postal_code"  placeholder="Enter Postal Code">
+                    <div class="mt-3" id="invalid_postal_code_warning"></div>
                     <!-- <span class="input-group-btn"> --> 
                           <!-- <button class="btn btn-default" type="button">
                         <span class="glyphicon glyphicon-search"></span>
                         </button>
                     </span> -->
-                
-                </div>
                 <!-- <div class="form-group col-2" style="margin: 30px 0px 20px;"> -->
                 <div class="col-lg-2" style="margin: 30px 0px 30px;">
-                  <button type='submit' class="btn btn-success" href="view_products.php">Search</button>
+                  <button id="postal_code_submit" onclick="validate_postal_code()" class="btn btn-success">Confirm</button>
                 </div>
                 </form>
             </div>
@@ -336,6 +333,22 @@ session_start();
 
 </body>
 
+<script>
+    function validate_postal_code() {
+        postal_code_input = document.getElementById("postal_code");
+        if (postal_code_input.value.length != 6) {
+            document.getElementById("invalid_postal_code_warning").innerHTML="<div class='alert alert-danger'>Postal code needs to be 6 digits</div>";              
+        }
+        else {
+            //Hides the modal
+            $('#input_postal_code').modal('hide');
+            //document.getElementById("input_postal_code_confirm").setAttribute("data-dismiss","modal");
+            //Sets the postal code in session
+            sessionStorage.setItem('postal_code', document.getElementById("postal_code").value);
+            window.location.href = "view_companies.php";
+        }
+    }
+</script>
 
 
 </html>

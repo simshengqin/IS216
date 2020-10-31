@@ -201,7 +201,7 @@
                     $all_product_info = $productDAO->retrieve_all();                 
                     $userDAO = new userDAO();
                     //HARDCODED user_id here, need to change
-                    $user_id = 1;
+                    $user_id = $_SESSION["user_id"];
                     $user = $userDAO-> retrieve_user($user_id);
                     $cart = $user -> get_cart();
                     if (strlen($cart) ==0) {

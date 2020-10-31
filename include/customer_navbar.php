@@ -33,18 +33,18 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" style="">
     <div class="container">
-    <a class="navbar-brand" href="mainpage.html"><img src="images/logo/rsz_e (1).png">    <img src="images/logo/rsz_shadow_eco.png"></a>
+    <a class="navbar-brand" href="index.php"><img src="images/logo/rsz_e (1).png">    <img src="images/logo/rsz_shadow_eco.png"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse mb-20" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item active mr-4">
-          <a class="nav-link" href="mainpage.php">Home <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item mr-4" >
         
-        <a class="nav-link" href="view_companies.php">Companies</a>
+        <a class="nav-link" href="view_companies.php">Restaurants</a>
         </li>
         <li class="nav-item mr-4">
           <!-- Hardcoded user id, need to change -->
@@ -57,7 +57,7 @@
             <a class="nav-link" href="#">Contact</a>
         </li>
         <li class="nav-item mr-4">
-            <a class="nav-link" href="#">Login/Register</a>
+            <a class="nav-link" href="user_login.php">Login/Register</a>
         </li>
         <li class="nav-item">
               <a href="shoppingcart.php" class="nav-link navbar-link-2 waves-effect">

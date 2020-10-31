@@ -224,7 +224,7 @@
                 $userDAO = new userDAO();
                 $companyDAO = new companyDAO();
                 //Hardcoded as 1 first. Need to change to check who is currently logged in!
-                $user_id = 1;
+                $user_id = $_SESSION["user_id"];
                 $user = $userDAO->retrieve_user($user_id);
                 $cart = $user->get_cart();
                 #cart is in the format "product_id:quantity, product_id: quantity"
@@ -237,14 +237,9 @@
                 }             
                 $userDAO = new userDAO();
                 //HARDCODED user_id here, need to change
-                $user_id = 1;
+                $user_id = $_SESSION["user_id"];
                 $user = $userDAO-> retrieve_user($user_id);
                 $cart_company_id = $user->get_cart_company_id(); 
-                $company_name = $companyDAO -> retrieve_company_name($cart_company_id);
-                $company_address = $companyDAO -> retrieve_company_address($cart_company_id);
-                $company = $companyDAO->retrieve_company($cart_company_id);
-                $company_latitude = $company-> get_latitude();
-                $company_longtitude = $company-> get_longtitude();
                 $total_price = "0.00";
                 $company_id="";
                 if (strlen($cart) ==0) {
@@ -252,10 +247,19 @@
                   echo "<div class='alert alert-danger'>No items in cart currently!</div>";
                   $total_price_with_gst = "0.00";
                   $gst = "0.00";
+                  $company_name = "";
+                  $company_latitude = "";
+                  $company_longtitude = "";
                 }
                 else {
+                  $company_name = $companyDAO -> retrieve_company_name($cart_company_id);
                   echo "<h5 class='mb-4 font-weight-bold' >Cart (<span id='cartsize'>" . sizeof($cart_arr) . "</span> items) - " . ucwords($company_name) . "</h5>";
-                  
+                                    
+                  $company = $companyDAO->retrieve_company($cart_company_id); 
+                  $company_address = $companyDAO -> retrieve_company_address($cart_company_id);                
+                  $company_latitude = $company-> get_latitude();
+                  $company_longtitude = $company-> get_longtitude();
+                  #var_dump($cart_arr);
                   foreach ($cart_arr as $productqty) {
                       #Split it to an arr, where the 1st element is product_id and 2nd element is quantity
                       $productqty_arr = explode(":",$productqty);
@@ -497,6 +501,22 @@
   <?php include 'include/footer.php';?>
 
   <script>
+
+        function add_quantity() {
+
+          //Send the request to the server to update the cart of user in databasetotal
+          //Need to change hardcoded user_id later!!
+          //XHR_send($user_id, $product_id, $quantity)
+          //Only allows user to buy up to 10 products
+          console.log(event.target.parentNode.parentNode);
+          if ( event.target.parentNode.parentNode.children[2].value >= 10) {
+              document.getElementById("insufficent_product_qty_msg").getElementsByClassName("modal-body")[0].innerText = "Sorry! You can only buy up to 10 of this product.";
+              $('#insufficent_product_qty_msg').modal('show');
+          }
+          else {
+            XHR_send(1,event.target.parentNode.parentNode.children[1].innerText ,event.target.parentNode.parentNode.children[2].value,1, event.target);
+          }
+      }
       function XHR_send(user_id, product_id, quantity, quantity_change,event_target) {
         //Send an AJAX request to update_user.php to update the cart of user in database
         //Also send to update-user.php to update the product qty in database, quantity_change is needed to reflect
@@ -508,14 +528,14 @@
                 //Only needs to check for user adding more items to their cart. If there is not enough item, the user should not be able to add at all
                 //Note that AJAX CANNOT return a value to another function as it has some lag, so need to do the changes here
                 if ( quantity_change == 1 && this.responseText != "Insufficient product qty in database") {
-                  current_quantity = parseInt(event_target.parentNode.parentNode.children[2].value)
+                  current_quantity = parseInt(event_target.parentNode.parentNode.children[2].value);
                   event_target.parentNode.parentNode.children[2].value = current_quantity + 1;
                   var total_price_product_display = event_target.parentNode.parentNode.children[4];
                   total_price_product = parseFloat(total_price_product_display.innerText.slice(1)) / current_quantity * (current_quantity + 1);
-                  total_price_product = Math.round((total_price_product + Number.EPSILON) * 100) / 100
-                  total_price_product_display.innerText = "$" + total_price_product
+                  total_price_product = Math.round((total_price_product + Number.EPSILON) * 100) / 100;
+                  total_price_product_display.innerText = "$" + total_price_product;
                   //Update the total price of all products
-                  total_price_for_all_products = 0
+                  total_price_for_all_products = 0;
                   for (total_price_product of document.getElementsByClassName("total_price_for_current_product")) {
                     total_price_for_all_products +=  parseFloat(total_price_product.innerText.slice(1));
                   }
@@ -543,10 +563,10 @@
             event.target.parentNode.parentNode.children[2].value = current_quantity - 1;
             var total_price_product_display = event.target.parentNode.parentNode.children[4];
             total_price_product = parseFloat(total_price_product_display.innerText.slice(1)) / current_quantity * (current_quantity - 1);
-            total_price_product = Math.round((total_price_product + Number.EPSILON) * 100) / 100
-            total_price_product_display.innerText = "$" + total_price_product
+            total_price_product = Math.round((total_price_product + Number.EPSILON) * 100) / 100;
+            total_price_product_display.innerText = "$" + total_price_product;
             //Update the total price of all products
-            total_price_for_all_products = 0
+            total_price_for_all_products = 0;
 
             for (total_price_product of document.getElementsByClassName("total_price_for_current_product")) {
               total_price_for_all_products +=  parseFloat(total_price_product.innerText.slice(1));
@@ -564,21 +584,6 @@
             show_confirmation_msg(event.target);
           }
 
-      }
-      function add_quantity() {
-
-          //Send the request to the server to update the cart of user in databasetotal
-          //Need to change hardcoded user_id later!!
-          //XHR_send($user_id, $product_id, $quantity)
-          //Only allows user to buy up to 10 products
-          console.log(event.target.parentNode.parentNode);
-          if ( event.target.parentNode.parentNode.children[2].value >= 10) {
-              document.getElementById("insufficent_product_qty_msg").getElementsByClassName("modal-body")[0].innerText = "Sorry! You can only buy up to 10 of this product.";
-              $('#insufficent_product_qty_msg').modal('show');
-          }
-          else {
-            XHR_send(1,event.target.parentNode.parentNode.children[1].innerText ,event.target.parentNode.parentNode.children[2].value,1, event.target);
-          }
       }
 
       function show_confirmation_msg(target) {
@@ -661,28 +666,28 @@
         else {
             //Hides the modal
             $('#input_postal_code').modal('hide');
+            sessionStorage.setItem('postal_code', document.getElementById("postal_code").value);
             initMap();
         }
         
       }
       function initMap() {
         //Dont load the map if no items in cart
-        var items_in_cart_count = document.getElementById("map").getAttribute("name").split(",")[2];  
+        var items_in_cart_count = document.getElementById("map").getAttribute("name").split(",")[2]; 
+        console.log("HIIIIII");
+        console.log("count:" + items_in_cart_count);
         if (items_in_cart_count != 0)    {
           //Get the latitude and longtitude using a postal code (from the url)
           //if the user enters his postal code in the modal on top, this will have a value
-          var start = document.getElementById("postal_code").value;
-          if (start == "") {
-              if(parseURLParams(window.location.href) !== undefined && "postal_code" in parseURLParams(window.location.href)) {
-                  //console.log(typeof  parseURLParams(window.location.href));
-                  start = parseURLParams(window.location.href)["postal_code"];   
-              }
-              else {
-                  //if user never provides a postalcode, ask for it
-                  $('#input_postal_code').modal('show');
-                  return;               
-              }    
-          }   
+          if (sessionStorage.getItem('postal_code') == undefined) {
+                //if user never provides a postalcode, ask for it
+                $('#input_postal_code').modal('show');
+                return;               
+          }
+          else {
+              start = sessionStorage.getItem('postal_code');
+          }
+             
           //Sets the height of the map
           document.getElementById('map').setAttribute("style", "height: 400px;")       
           map = new google.maps.Map(document.getElementById('map'), {
@@ -714,27 +719,22 @@
               handleLocationError(false, infoWindow, map.getCenter());
             }
             */
-            calcRoute();          
+            calcRoute(); 
+            }         
         }         
-
-        }
 
       function calcRoute() {
           //Calculates the distance between start and end point
           //Get the latitude and longtitude using a postal code (from the url)
           //if the user enters his postal code in the modal on top, this will have a value
-          var start = document.getElementById("postal_code").value;
-          if (start == "") {
-              if(parseURLParams(window.location.href) !== undefined && "postal_code" in parseURLParams(window.location.href)) {
-                  //console.log(typeof  parseURLParams(window.location.href));
-                  start = parseURLParams(window.location.href)["postal_code"];   
-              }
-              else {
-                  //if user never provides a postalcode, ask for it
-                  $('#input_postal_code').modal('show');
-                  return;               
-              }    
-          }
+          if (sessionStorage.getItem('postal_code') == undefined) {
+                //if user never provides a postalcode, ask for it
+                $('#input_postal_code').modal('show');
+                return;               
+            }
+            else {
+                start = sessionStorage.getItem('postal_code');
+          }    
           //console.log(start[0]);
           var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + start + "&key=AIzaSyDcIUwwXfLUWzMAE1WspewghH9f-vmSkzc";
                 
@@ -748,7 +748,7 @@
                     var data = JSON.parse(this.responseText);
                     console.log(data);
                     if ( data["status"] == "ZERO_RESULTS") {
-                        document.getElementById("map").innerHTML = "<div class='alert alert-danger'>Invalid postal code. Please refresh the page.</div>";
+                        document.getElementById("map").innerHTML = "<div class='alert alert-danger'>Invalid postal code. Please refresh the page </div>";
                     }
                     var addr = data["results"][0]["formatted_address"];
                     var loc = data["results"][0]["geometry"]["location"];
@@ -783,7 +783,7 @@
                         directionsRenderer.setDirections(response);
                         }
                         else {
-                          document.getElementById("map").innerHTML = "<div class='alert alert-danger'>Invalid postal code. Please refresh the page./div>";
+                          document.getElementById("map").innerHTML = "<div class='alert alert-danger'>Invalid postal code. Please refresh the page!</div>";
                         }
                         console.log(response);
                     });  
@@ -849,7 +849,7 @@
         xhr.open("POST", "retrieve_cart.php", true);
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         //HARDCODED need to change later
-        xhr.send("user_id=1"); // query parameters
+        xhr.send(); // query parameters
 
       }
 

@@ -1,8 +1,8 @@
 <?php
 require_once 'include/common.php';
 require_once 'include/protect.php';
-if(isset($_POST['user_id']) && isset($_POST['product_id']) && isset($_POST['quantity']) && isset($_POST['quantity_change'])){
-    $user_id = $_POST['user_id'];
+if(isset($_SESSION['user_id']) && isset($_POST['product_id']) && isset($_POST['quantity']) && isset($_POST['quantity_change'])){
+    $user_id = $_SESSION['user_id'];
     $target_product_id = $_POST['product_id'];
     $new_quantity = $_POST['quantity'];
     $quantity_change = $_POST['quantity_change'];

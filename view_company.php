@@ -326,11 +326,13 @@
         <input type="hidden" id="same_company_id_from_user_cart" value="<?php 
                                                                 $userDAO = new userDAO();
                                                                 //HARDCODED user_id here, need to change
-                                                                $user_id = 1;
+                                                                $user_id = $_SESSION["user_id"];
                                                                 $user = $userDAO-> retrieve_user($user_id);
                                                                 $cart = $user -> get_cart();
                                                                 if (strlen($cart) ==0) {
-                                                                    echo 'true';
+                                                                    //echo the company_id for the below js function to access it
+                                                                    echo "$company_id";
+                                                                    //echo 'true';
                                                                 }
                                                                 else {
                                                                     $cart = $user -> get_cart();
@@ -355,12 +357,18 @@
                                                                 $companyDAO = new companyDAO();
                                                                 
                                                                 //HARDCODED user_id here, need to change
-                                                                $user_id = 1;
+                                                                $user_id = $_SESSION["user_id"];
                                                                 $user = $userDAO-> retrieve_user($user_id);
                                                                 $cart = $user -> get_cart();
                                                                 $cart_company_id = $user->get_cart_company_id();
-                                                                $cart_company_name = $companyDAO -> retrieve_company_name($cart_company_id);
-                                                                echo $cart_company_name;
+                                                                //echo "Cart companyid: " . $cart_company_id;
+                                                                if ($cart_company_id != "0") {
+                                                                    echo $companyDAO -> retrieve_company_name($cart_company_id);    
+                                                                }
+                                                                else {
+                                                                    //Cart is empty
+                                                                    echo "";
+                                                                }
                                                             ?>"></input>
         <!--Product grid displaying all food products-->
         <div class="col-2"></div>
@@ -384,7 +392,7 @@
                     #$all_product_info = $productDAO->retrieve_all();                 
                     $userDAO = new userDAO();
                     //HARDCODED user_id here, need to change
-                    $user_id = 1;
+                    $user_id = $_SESSION["user_id"];
                     $user = $userDAO-> retrieve_user($user_id);
                     $cart = $user -> get_cart();
                     if (strlen($cart) ==0) {
@@ -833,7 +841,7 @@
     }
     function show_map_modal() { 
         //Only show the map modal if postal code is entered
-        if(document.getElementById("postal_code").value == "") {            
+        if(sessionStorage.getItem('postal_code') == undefined) {            
             //Ask the modal to show the map modal once the user enters in a postal code
             document.getElementById("close_input_postal_code").setAttribute("onclick", "show_map_modal()");
             $('#input_postal_code').modal('show');
@@ -859,19 +867,14 @@
             //This functions calculate distance from provided postal code to this company location
             //Get the latitude and longtitude using a postal code (from the url)
             //if the user enters his postal code in the modal on top, this will have a value
-            var start = document.getElementById("postal_code").value;
-            if (start == "") {
-                if(parseURLParams(window.location.href) !== undefined && "postal_code" in parseURLParams(window.location.href)) {
-                    //console.log(typeof  parseURLParams(window.location.href));
-                    start = parseURLParams(window.location.href)["postal_code"];
-                    document.getElementById("postal_code").value = start;   
-                }
-                else {
-                    //if user never provides a postalcode, ask for it
-                    $('#input_postal_code').modal('show');
-                    return;               
-                }    
-            }                     
+            if (sessionStorage.getItem('postal_code') == undefined) {
+                //if user never provides a postalcode, ask for it
+                $('#input_postal_code').modal('show');
+                return;               
+            }
+            else {
+                start = sessionStorage.getItem('postal_code');
+            }                   
             var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + start + "&key=AIzaSyDcIUwwXfLUWzMAE1WspewghH9f-vmSkzc";       
             //Retrieves the company latitude and longtitude                        
             end_latlng_arr = document.getElementById("distance").getAttribute("name").split(",");
@@ -900,7 +903,7 @@
                             document.getElementById("distance").innerText = distance + " km away";    
                             //If the user provides his postal code through the modal, saves it in the added to cart msg so he dont need to enter it again 
                             added_to_cart_msg = document.getElementById("added_to_cart_msg");
-                            added_to_cart_msg.setAttribute("href", added_to_cart_msg.getAttribute("href") + "?postal_code=" + start);   
+                            //added_to_cart_msg.setAttribute("href", added_to_cart_msg.getAttribute("href") + "?postal_code=" + start);   
                     }
                 };
                 xhttp.open("GET", url, true);
@@ -961,6 +964,8 @@
             //Hides the modal
             $('#input_postal_code').modal('hide');
             //document.getElementById("input_postal_code_confirm").setAttribute("data-dismiss","modal");
+            //Sets the postal code in session
+            sessionStorage.setItem('postal_code', document.getElementById("postal_code").value);
             calculates_distance();
         }
     }
@@ -971,29 +976,24 @@
         //if the map is already rendered, dont render it again
     }
     else {
-    //Get the latitude and longtitude using a postal code (from the url)
-    //if the user enters his postal code in the modal on top, this will have a value
-    var start = document.getElementById("postal_code").value;
-    if (start == "") {
-        if(parseURLParams(window.location.href) !== undefined && "postal_code" in parseURLParams(window.location.href)) {
-            //console.log(typeof  parseURLParams(window.location.href));
-            start = parseURLParams(window.location.href)["postal_code"];
-            document.getElementById("postal_code").value = start;   
+        //Get the latitude and longtitude using a postal code (from the url)
+        //if the user enters his postal code in the modal on top, this will have a value
+        if (sessionStorage.getItem('postal_code') == undefined) {
+                    //if user never provides a postalcode, ask for it
+                    $('#input_postal_code').modal('show');
+                    return;               
         }
         else {
-            //if user never provides a postalcode, ask for it
-            $('#input_postal_code').modal('show');
-            return;               
-        }    
-    }   
-    //Sets the height of the map
-    document.getElementById('map').setAttribute("style", "height: 400px;")       
-    map = new google.maps.Map(document.getElementById('map'), {
-        //center: {lat: -34.397, lng: 150.644},
-        zoom: 6
-        });
-        calcRoute();               
-    }
+            start = sessionStorage.getItem('postal_code');
+        }     
+        //Sets the height of the map
+        document.getElementById('map').setAttribute("style", "height: 400px;")       
+        map = new google.maps.Map(document.getElementById('map'), {
+            //center: {lat: -34.397, lng: 150.644},
+            zoom: 6
+            });
+            calcRoute();               
+        }
                         
     }
 
@@ -1002,18 +1002,14 @@
         //Get the latitude and longtitude using a postal code (from the url)
         //if the user enters his postal code in the modal on top, this will have a value
         var start = document.getElementById("postal_code").value;
-        if (start == "") {
-            if(parseURLParams(window.location.href) !== undefined && "postal_code" in parseURLParams(window.location.href)) {
-                //console.log(typeof  parseURLParams(window.location.href));
-                start = parseURLParams(window.location.href)["postal_code"];  
-                document.getElementById("postal_code").value = start; 
-            }
-            else {
+        if (sessionStorage.getItem('postal_code') == undefined) {
                 //if user never provides a postalcode, ask for it
                 $('#input_postal_code').modal('show');
                 return;               
-            }    
         }
+        else {
+            start = sessionStorage.getItem('postal_code');
+        }    
         //console.log(start[0]);
         var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + start + "&key=AIzaSyDcIUwwXfLUWzMAE1WspewghH9f-vmSkzc";
         var xhttp = new XMLHttpRequest();
@@ -1063,11 +1059,11 @@
                     //No need to enter postal code if map is rendered successfully
                     document.getElementById("close_input_postal_code").setAttribute("onclick","");
                     //If the user provides his postal code through the modal, saves it in the added to cart msg so he dont need to enter it again 
-                    added_to_cart_msg = document.getElementById("added_to_cart_msg");
-                    var currrent_link = added_to_cart_msg.getAttribute("href");
-                    if (current_link.includes("?postal_code=") == false) {
-                        added_to_cart_msg.setAttribute("href", current_link + "?postal_code=" + start);  
-                    }
+                    // added_to_cart_msg = document.getElementById("added_to_cart_msg");
+                    // var currrent_link = added_to_cart_msg.getAttribute("href");
+                    // if (current_link.includes("?postal_code=") == false) {
+                    //     added_to_cart_msg.setAttribute("href", current_link + "?postal_code=" + start);  
+                    // }
                    
                 }
                 else {

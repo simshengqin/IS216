@@ -175,14 +175,14 @@
                         document.getElementById("inbox_chat").innerHTML =document.getElementById("inbox_chat").innerHTML + "\
                                                                                     <div class='incoming_msg'> \
                                                                                         <div class='chat_list active_chat' id='"+from_id_url+","+from_type_url+"' onclick='select_chat()'> \
-                                                                                        <div class='chat_people2 row'> \
-                                                                                            <div class='chat_img col-md-6'> <img class='d-block mx-auto' src='" + from_image +"' width='100px'> </div> \
-                                                                                            <div class='chat_ib col-md-6'> \
-                                                                                                <h5>" + from_name +" <span class='chat_date'>Today</span></h5> \
-                                                                                                <p></p> \
+                                                                                        <div class='chat_people2 row d-flex justify-content-center'> \
+                                                                                            <div class='chat_img col-xs-4'> <img class='d-block mx-auto' src='" + from_image +"' width='100px'> </div> \
+                                                                                            <div class='chat_ib col-xs-4'> \
+                                                                                                <div class='text-center mt-1'>" + from_name +" </div> <div class='text-center chat_date'>Today</div> \
                                                                                             </div>\
                                                                                         </div>\
                                                                                     </div>";
+                                                                                    
 
                     }
                 }
@@ -233,8 +233,6 @@
                                                                                             <div class='col-xs-4 mt-1 text-center w-100 overflow-hidden'> \
                                                                                                 <p id='message_body'>" + message_body +"</p> \
                                                                                             </div>\
-                                                                                            \
-                                                                                             \
                                                                                         </div> \
                                                                                     </div>";                                                                                       
 

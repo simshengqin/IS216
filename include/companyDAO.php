@@ -128,6 +128,7 @@ class companyDAO {
         $stmt->bindParam(':company_id', $company_id, PDO::PARAM_STR);
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $stmt->execute();
+
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $result = $row['name'];
         }

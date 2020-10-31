@@ -140,10 +140,6 @@ CREATE TABLE IF NOT EXISTS `product` (
 --
 
 INSERT INTO `product` (`product_id`, `company_id`, `decay_date`, `decay_time`, `name`, `posted_date`, `posted_time`, `price_after`, `price_before`, `quantity`, `category`, `mode_of_collection`, `image_url`) VALUES
-<<<<<<< HEAD
-(100, 1, '2020-12-01', '15:07:21.000000', 'Mushroom Soup', '2020-09-27', '16:35:56.000000', 3.5, 3.5, 8, 'Soup', 'pickup', 'https://d1sag4ddilekf6.cloudfront.net/compressed/items/4-CZDVSF61V7BZLX-CZDVTAVHN3CYAA/photo/100144a05658482da7ac552e2f92712d_1588590841087774518.jpeg');
-
-=======
 (100, 1, '2020-12-01', '15:07:21.000000', 'Mushroom Soup', '2020-09-27', '16:35:56.000000', 3.5, 3.5, 8, 'Soup', 'pickup', 'https://d1sag4ddilekf6.cloudfront.net/compressed/items/4-CZDVSF61V7BZLX-CZDVTAVHN3CYAA/photo/100144a05658482da7ac552e2f92712d_1588590841087774518.jpeg'),
 (101, 1, '2020-12-01', '15:07:21.000000', 'Corn Cream Soup', '2020-09-27', '16:35:56.000000', 3.2, 3.5, 9, 'Soup', 'pickup', 'https://d1sag4ddilekf6.cloudfront.net/compressed/items/4-CZDVSF61V7BZLX-CZDVTAVHSB5DDE/photo/86832bfd73ef4b66a0d5923055d5f4b8_1587280339313730651.jpeg'),
 (102, 1, '2020-12-01', '15:07:21.000000', 'Pumpkin Soup', '2020-09-27', '16:35:56.000000', 3.9, 3.9, 12, 'Soup', 'pickup', 'https://d1sag4ddilekf6.cloudfront.net/compressed/items/4-CZDVSF61V7BZLX-CZDVTAVHT8NWLN/photo/5d3de900a8504a3186b8edbdc783c226_1587280356396237621.jpeg'),
@@ -270,7 +266,6 @@ INSERT INTO `product` (`product_id`, `company_id`, `decay_date`, `decay_time`, `
 (1008, 10, '2020-12-01', '15:07:21.000000', 'Lola’s Chocolate Cake', '2020-09-27', '16:34:20.000000', 8.1, 8.5, 14, 'Desserts', 'pickup', 'https://d1sag4ddilekf6.cloudfront.net/compressed/items/SGDD00756ITM0590534/photo/menueditor_item_8de6fac671614bff87f07f132d241a30_1591494184183816335.jpg'),
 (1009, 10, '2020-10-02', '15:07:21.000000', 'Lychee Rosewater Cake', '2020-09-27', '16:34:20.000000', 7.1, 8.5, 14, 'Desserts', 'pickup', 'https://d1sag4ddilekf6.cloudfront.net/compressed/items/SGDD00756ITM0590531/photo/6f6f829f94f145f6b4af8fd4213bb15d_1578555831607531368.jpeg'),
 (1010, 10, '2020-12-01', '15:07:21.000000', 'Hummingbird Cake', '2020-09-27', '16:35:56.000000', 7, 7, 14, 'Desserts', 'pickup', 'https://d1sag4ddilekf6.cloudfront.net/compressed/items/SGDD00756ITM1034215/photo/b7f8a7c91e7d496a89da3ca08d68559f_1578555399071958057.jpeg');
->>>>>>> cf49ed78304ed1a1472db534f5a20b5dc7e24cb1
 
 -- --------------------------------------------------------
 
