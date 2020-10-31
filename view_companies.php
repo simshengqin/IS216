@@ -63,7 +63,7 @@
             <div style="position: fixed; top: 0; right: 0;  z-index: 10;" >
 
                 <!-- Then put toasts within -->
-                <div class="toast" id="add_to_cart_message" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast hide" id="add_to_cart_message" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="toast-header">
                     <!--<img src="..." class="rounded mr-2" alt="...">-->
                     <strong class="mr-auto">Success!</strong>

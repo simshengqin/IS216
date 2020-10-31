@@ -10,9 +10,17 @@
     <?php
         require_once 'include/common.php';
         require_once 'include/protect.php';
+
         //TO_BE_UPDATED
-        $user_id = $_GET["user_id"];
-        $user_type = $_GET["user_type"];
+        $url = $_SERVER['REQUEST_URI']; //returns the current directoy of current URL
+        $parts = explode('/',$url);
+        $dir = $_SERVER['SERVER_NAME'];
+        for ($i = 0; $i < count($parts) - 1; $i++) {
+        $dir .= $parts[$i] . "/";
+        }
+        $YOUR_DOMAIN =  "https://" . $dir;
+        echo $YOUR_DOMAIN;
+
 
     ?>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet">
@@ -150,6 +158,10 @@
                         }
                             
                     }
+                    if (messages.length > 0) {
+                        //Empty out all the messages displayed first
+                        document.getElementById("inbox_chat").innerHTML = "";
+                    }
                     //alert(params_arr["target_id"] +params_arr["user_id"] + params_arr["target_type"] + params_arr["user_type"] );
                     if (!has_existing_chat && !(String(params_arr["target_id"]) === String(params_arr["user_id"])  && String(params_arr["target_type"]) === String(params_arr["user_type"]))) {
 
@@ -180,6 +192,7 @@
                         }
                         //Empty out all the messages displayed first
                         document.getElementById("inbox_chat").innerHTML = "";
+                        
                         document.getElementById("inbox_chat").innerHTML =document.getElementById("inbox_chat").innerHTML + "\
                                                                                     <div class='incoming_msg'> \
                                                                                         <div class='chat_list active_chat' id='"+from_id_url+","+from_type_url+"' onclick='select_chat()'> \
@@ -191,12 +204,8 @@
                                                                                         </div>\
                                                                                     </div>";
                                                                                     
-
+                        console.log(document.getElementById("inbox_chat").innerHTML);
                     }
-                }
-                if (messages.length > 0) {
-                    //Empty out all the messages displayed first
-                    document.getElementById("inbox_chat").innerHTML = "";
                 }
                 for (var i=0; i < messages.length; i++) {
                     var message = messages[i];

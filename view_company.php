@@ -82,7 +82,7 @@
             </div> 
             <div class="row mb-3 ml-3">         
                 <button type="button" onclick="location.href='inbox.php?user_id=<?php echo $_SESSION['user_id']?>&user_type=user&target_id=<?php echo $company_id?>&target_type=company&target_name=<?php echo $company_name?>'" class="btn btn-outline-info mr-2"><i class="fas fa-comment mr-2"></i>Chat</button>
-                <button type="button" onclick="show_map_modal()" class="btn btn-outline-info"><i class="fa fa-map-marker"></i>View Map</button>
+                <button type="button" onclick="show_map_modal()" class="btn btn-outline-info"><i class="fa fa-map-marker mr-1"></i>View Map</button>
             </div>
             </h1>         
             <div class="row mb-3 ml-3">
@@ -521,7 +521,7 @@
             <div style="position: fixed; top: 73; right: 0;  z-index: 10000;" >
 
                 <!-- Then put toasts within -->
-                <div class="toast" id="add_to_cart_message" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast hide" id="add_to_cart_message" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="toast-header">
                     <!--<img src="..." class="rounded mr-2" alt="...">-->
                     <strong class="mr-auto">Success!</strong>
