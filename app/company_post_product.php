@@ -34,6 +34,9 @@
   <link href="startbootstrap-business-frontpage-gh-pages/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!-- Custom styles for this template -->
   <link href="startbootstrap-business-frontpage-gh-pages/css/business-frontpage.css" rel="stylesheet">
+  <!-- jquery -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <!-- maincss.css -->
   <!-- Roboto Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700&display=swap">
   <!-- Font Awesome -->
@@ -471,6 +474,12 @@
         request.send("data=" + jsonObj);
       }
       */
+
+  // change active navbar
+  $(document).ready(function(){
+      $(".active").removeClass("active");
+      $("#link-post-product").addClass("active");
+  }); 
 
   </script>
 

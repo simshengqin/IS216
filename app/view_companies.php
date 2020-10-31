@@ -53,7 +53,7 @@
 </head>
 <body>
 </head>
-<body>
+<body">
 <div class='container-fluid' style="background-color:white;">
     <div class='row'>
         <div name="toastdiv">
@@ -476,8 +476,15 @@
             //price_before = parseFloat(company_info_arr[8]);
             //quantity = company_info_arr[9];
             //type = company_info_arr[10];
-            //mode_of_collection_user = company_info_arr[11];    
+            //mode_of_collection_user = company_info_arr[11];   
+
     }
+
+    // change active navbar
+    $(document).ready(function(){
+        $(".active").removeClass("active");
+        $("#link-companies").addClass("active");
+    }); 
 
 </script>
 <!-- To calculate distance between 2 points-->

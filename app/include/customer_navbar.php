@@ -39,24 +39,23 @@
     </button>
     <div class="collapse navbar-collapse mb-20" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item active mr-4">
+        <li class="nav-item mr-4 active" id="link-home">
           <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
         </li>
-        <li class="nav-item mr-4" >
-        
+        <li class="nav-item mr-4" id="link-companies">
         <a class="nav-link" href="view_companies.php">Companies</a>
         </li>
-        <li class="nav-item mr-4">
+        <li class="nav-item mr-4" id="link-inbox">
           <!-- Hardcoded user id, need to change -->
           <a class="nav-link" href="inbox.php?user_id=1&user_type=user">Inbox</a>
         </li>
-        <li class="nav-item mr-4">
+        <li class="nav-item mr-4" id="link-customer-profile">
             <a class="nav-link" href="customer_profile.php">Profile</a>
         </li>
-        <li class="nav-item mr-4">
+        <li class="nav-item mr-4" id="link-login">
             <a class="nav-link" href="user_login.php">Login/Register</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" id="link-cart">
               <a href="shoppingcart.php" class="nav-link navbar-link-2 waves-effect">
                 <span class="badge badge-pill red"></span>
                 <i class="fas fa-shopping-cart pl-0"></i>

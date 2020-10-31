@@ -40,10 +40,11 @@
   <meta name="author" content="">
 
   <title>Eco</title>
-
+ 
   <!-- Bootstrap core CSS -->  
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
- 
+  <!-- jquery -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <!-- maincss.css -->
   <link href="css/maincss.css" rel="stylesheet">
 
@@ -246,6 +247,12 @@
 
 <script>
 
+    // change active navbar
+    $(document).ready(function(){
+        $(".active").removeClass("active");
+        $("#link-customer-profile").addClass("active");
+    }); 
+
     var user_id = document.getElementById('user_id').innerText;
     console.log(user_id);
 
@@ -348,6 +355,8 @@
             //$("#add_to_cart_message").toast('show');
         }); 
     });
+
+
 
 </script>
 

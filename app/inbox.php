@@ -441,6 +441,12 @@
       
     }
 
+     // change active navbar
+     $(document).ready(function(){
+        $(".active").removeClass("active");
+        $("#link-inbox").addClass("active");
+    }); 
+
 </script>
 </body>
 </html>

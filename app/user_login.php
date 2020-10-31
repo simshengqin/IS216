@@ -104,6 +104,14 @@
                 })
             
             });
+
+
+             // change active navbar
+            $(document).ready(function(){
+                $(".active").removeClass("active");
+                $("#link-login").addClass("active");
+            }); 
+
         </script>
     </body>
 

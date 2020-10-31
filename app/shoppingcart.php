@@ -812,8 +812,16 @@
         infoWindow.open(map);
       }
 
+      // change active navbar
+      $(document).ready(function(){
+          $(".active").removeClass("active");
+          $("#link-cart").addClass("active");
+      }); 
+
       
   </script>
+
+  
 
   <!-- go to stripe checkout page -->
   <script type="text/javascript" async>

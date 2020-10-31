@@ -280,4 +280,11 @@ for(var ele of salesPrice){
   ele.setAttribute('value', num);
 }
 
+
+// change active navbar
+$(document).ready(function(){
+    $(".active").removeClass("active");
+    $("#link-company-profile").addClass("active");
+}); 
+
 </script>
