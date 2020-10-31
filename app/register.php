@@ -88,8 +88,8 @@
         ?>
         <div class="container-fluid">
         <div class="row no-gutter">
-            <div class="d-none d-md-flex col-md-4 col-lg-8 background-img"></div>
-            <div class="col-md-8 col-lg-4">
+            <div class="d-none d-md-flex col-md-4 col-lg-6 background-img"></div>
+            <div class="col-md-8 col-lg-6">
             <div class="login d-flex align-items-center py-5">
                 <div class="container">
                 <div class="row">
@@ -138,7 +138,7 @@
                         <button id="register" name="submit" class="btn btn-lg btn-primary btn-block btn-register text-uppercase font-weight-bold mb-2" type="submit">Register</button>
                         <div class="text-center">
                         <br> 
-                        <a class="medium font-weight-bold .text-secondary" href="../app/index.php">Back to login</a></div>
+                        <a class="medium font-weight-bold .text-secondary" href="../app/user_login.php">Back to login</a></div>
                     </form>
                     <div class='text-center'>
                         <div class ="index-errormsg" style="background-color: #f8d7da; color: #8b3f46;">

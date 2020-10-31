@@ -41,12 +41,13 @@
                         <input type="password" id="password" class="form-control" placeholder="Password" required>
                         <label for="inputPassword">Password</label>
                         </div>
-                        <button id="login" class="btn btn-lg btn-info btn-block btn-register font-weight-bold mb-2" type="submit">Sign in</button>
-                        <div class="text-center">
-                        <br> 
-                       
-                    
+                        <button id="login" class="btn btn-lg btn-primary btn-block btn-register text-uppercase font-weight-bold mb-2" type="submit">Sign in</button>
+                        <hr>
+                        <div class="text-center">                  
+                            <a class="small font-weight-bold .text-secondary" href="user_login.php">Login as a user instead</a>
                         </div>
+            
+                </div>
                     </form>
                     <div class='text-center'>
                         <div class ="index-errormsg" style="background-color: #f8d7da; color: #8b3f46;">
