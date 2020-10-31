@@ -24,13 +24,13 @@
     <body style="padding: 0px 0px 0px 0px">
         <div class="container-fluid">
         <div class="row no-gutter">
-            <div class="d-none d-md-flex col-md-4 col-lg-6 background-login-img"></div>
+            <div class="d-none d-md-flex col-md-4 col-lg-6 background-login-company-img"></div>
             <div class="col-md-8 col-lg-6">
             <div class="login d-flex align-items-center py-5">
                 <div class="container">
                 <div class="row">
                     <div class="col-md-9 col-lg-8 mx-auto">
-                    <img class="d-flex justify-content-center" src="images/profile_picture/user/default.png" style="height:400px; width:460px;">
+                    <img class="d-flex justify-content-center" src="images/user-eco-with-logo.png" style="height:300px; width:330px;">
                     <h3 class="login-heading mb-4">Company Sign In</h3>
                     <form id="loginForm">
                         <div class="label-form-cluster">
@@ -41,7 +41,7 @@
                         <input type="password" id="password" class="form-control" placeholder="Password" required>
                         <label for="inputPassword">Password</label>
                         </div>
-                        <button id="login" class="btn btn-lg btn-primary btn-block btn-register text-uppercase font-weight-bold mb-2" type="submit">Sign in</button>
+                        <button id="login" class="btn btn-lg btn-info btn-block btn-register font-weight-bold mb-2" type="submit">Sign in</button>
                         <div class="text-center">
                         <br> 
                        
