@@ -47,6 +47,13 @@
                         <hr>
                     
                         </div>
+
+                         <div class="text-center">
+                            <br> 
+                            <a class="medium font-weight-bold .text-secondary" href="company_login.php">Are you a company user? Login through here instead</a>
+                            <hr>
+                    
+                        </div>
                     </form>
                     <div class='text-center'>
                         <div class ="index-errormsg" style="background-color: #f8d7da; color: #8b3f46;">
@@ -58,23 +65,32 @@
             </div>
             </div>
         </div>
+        <div class='modal fade' id="login-error" tabindex='-1' role='dialog' aria-labelledby="server-error" aria-hidden="true">
+            <div class='modal-dialog' role='document'>
+                <div class='modal-content'>
+                <div class='modal-header'>
+                    <h5 class='modal-title'>Error</h5>
+                    <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                    <span aria-hidden='true'>&times;</span>
+                    </button>
+                </div>
+                <div class='modal-body'>
+                    <p>Please enter the correct credentials</p>
+                </div>
+                <div class='modal-footer'>
+                    <button type='button' class='btn btn-success' data-dismiss='modal'>Close</button>
+                </div>
+                </div>
+            </div>
+        </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
         <script>
             $(function() {
                 $("#login").click(function(e){
-                    var valid = this.form.checkValidity();
-                    if(valid){
-                        var username = $("#username").val();
-                        var password = $("#password").val();
+                    var username = $("#username").val();
+                    var password = $("#password").val();
                     
-                    } else{
-                        Swal.fire({
-                                        "title" : "Errors",
-                                        "text": "Please Enter Your Fields",
-                                        "type": "success",
-                                    })
-                    }
                     
                     e.preventDefault();
                     $.ajax({
@@ -82,16 +98,13 @@
                         url: "user_jslogin.php",
                         data: {username:username, password:password},
                         success:function(data){
+                            alert(data);
                             if( $.trim(data) === "1" ){
                                 //sessionStorage.setItem('username', data['username']);
                                 window.location.href = "index.php";               
                                 setTimeout( 'window.location.href = "index.php"', 1000)
                             } else {
-                                Swal.fire({
-                                        "title" : "Errors",
-                                        "text": "Wrong Username Or Password",
-                                        "type": "success",
-                                    })
+                                $("#login-error").modal('show');
                     
                             }
                         },

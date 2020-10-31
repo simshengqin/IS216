@@ -1,5 +1,5 @@
 <?php
-    //session_start();
+
     require_once 'include/common.php';
 
     $username = $_POST["username"];
@@ -16,7 +16,8 @@
     if( $result ) {
         $user = $stmt->fetch(PDO::FETCH_ASSOC);  
         if( $stmt->rowCount()> 0 ){
-            $_SESSION['user_id'] = $user['user_id'];
+            $_SESSION['id'] = $user['user_id'];
+            $_SESSION['name'] = $user['name'];
             echo"1";
         } else {
             "There is no user";

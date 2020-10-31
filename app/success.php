@@ -4,6 +4,7 @@
     $transactionDAO = new transactionDAO();
     $companyDAO = new companyDAO();
     $productDAO = new productDAO();
+    $userDAO = new userDAO();
 
     require 'vendor/autoload.php';
     $stripe = new \Stripe\StripeClient('sk_test_51HgOY8AgaC3WCXUJkZeI8NEO20nKkEYE99qUUjnjSdLxJ25DlKtKJipaM4CvoTWzi1cryHYmF6zD83J5cCunACSz007ce7SGlu');
@@ -23,7 +24,7 @@
           //var_dump($price);
           $cart = $cart_info->cart;
           // add pending order into transactions table
-          $transactionDAO->add($user_id, $cart, $company_id, $date, $time, $price, 'Pickup', '', 0, 'false');
+          $transactionDAO->add($user_id, $cart, $company_id, $date, $time, $price, 'Self-pickup', '', 0, 'false');
           
 
 
@@ -34,6 +35,10 @@
 
     
     $transactions = $transactionDAO->retrieve_transactions_by_user_id($user_id);
+
+    // clear shopping cart for user
+    $userDAO->update_user_cart($user_id, '');
+    $userDAO->update_user_cart_company_id($user_id, 0);
 
 
 ?>
@@ -57,7 +62,7 @@
   <!-- Navigation -->
   <?php include 'include/customer_navbar.php';?>
   
-<div style="margin-top: 80px;"></div>
+<!-- <div style="margin-top: 80px;"></div> -->
 
 
 <div class="mx-md-5" style="margin-top: 50px; margin-bottom: 50px;">
@@ -72,6 +77,12 @@
             } else {
 
                 foreach ($transactions as $transaction){
+                  $time = $transaction->get_order_time();
+                    if ($time[0] > 0) {
+                        $time.= ' PM';
+                    } else {
+                        $time .= ' AM';
+                    }
                   if ($transaction->get_collected() == 'false'){
                     $cart_string = $transaction->get_cart();
                     $cart = explode(',', $cart_string);
@@ -92,7 +103,7 @@
                   
                         echo "
                             <div class='card border-dark mb-3'>
-                            <div class='card-header'>Order Id #{$transaction->get_transaction_id()}&#8287;&#8287;&#8287;&#8287;&#8287;<small class='float-right'>Date: {$transaction->get_order_date()},  Time: {$transaction->get_order_time()}</small><small class='float-right'>Collection Method: {$transaction->get_collection_type()}&#8287;&#8287;|&#8287;&#8287;</small><br><span class='text-success font-weight-bold'>\${$transaction->get_amount()}</span>" .
+                            <div class='card-header'>Order Id #{$transaction->get_transaction_id()}&#8287;&#8287;&#8287;&#8287;&#8287;<small class='float-right'>Date: {$transaction->get_order_date()},  Time: {$time}</small><small class='float-right'>Collection Method: {$transaction->get_collection_type()}&#8287;&#8287;|&#8287;&#8287;</small><br><span class='text-success font-weight-bold'>\${$transaction->get_amount()}</span>" .
                             "<button type='button' class='btn btn-primary btn-sm float-right' data-toggle='modal' data-target='#exampleModal'>Received</button>".
                             "<div class='modal fade' id='exampleModal' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>
                             <div class='modal-dialog' role='document'>

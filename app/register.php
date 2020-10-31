@@ -13,6 +13,10 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700&display=swap">
         <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
         <!-- Font Awesome -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -21,6 +25,7 @@
         <link rel='stylesheet' href='css\maincss.css'>
     </head>
     <body style="padding: 0px 0px 0px 0px">
+        
         <?php
             if(isset($_POST['submit'])) {
 
@@ -29,29 +34,55 @@
                     $phoneNumber       =$_POST['phoneNumber'];
                     $password          =$_POST['password'];
                     $cart              ="";
-                    $cart_company_id   =1;
-                    $prefer            =$_POST['preferances'];
+                    $cart_company_id   =0;
+                    $prefer            =(array)$_POST['preferances'];
                     $preferances       ="";
-                    if( in_array("halal", $prefer)){
+                  
+                    if( in_array("halal", $prefer, true)){
                         $preferances = $preferances . "true" . ",";
                     } else {
-                         $preferances . "false" . ",";
+                        $preferances = $preferances . "false" . ",";
                     }
 
-                     if( in_array("vegetarian", $prefer)){
+                     if( in_array("vegetarian", $prefer, true)){
                         $preferances = $preferances . "true" . ",";
                     } else {
-                         $preferances . "false" . ",";
+                        $preferances = $preferances . "false" . ",";
                     }
 
                     $end = end($prefer);
 
                     $preferances = $preferances . $end ;
-    
 
-                    $userDAO = new userDAO();
-                    $result = $userDAO->add( $password, $name, $email, $phoneNumber, $cart, $cart_company_id, $preferances );
+                    $connMgr = new ConnectionManager();       
+                    $conn = $connMgr->getConnection();
+         
+                    $stmt = $conn->prepare("SELECT * FROM user WHERE email = ?");
+                   
+                   $result = $stmt->execute([$email]); 
+                   $count = $stmt->rowCount();
+                    if ($stmt->rowCount() > 0) { ?>
+                        <script type="text/javascript"> 
+                            $(document).ready(function(){
+                                $("#email-error").modal('show');
+                                                           
+                            });
+                            console.log("hi");
+                        </script>
+                <?php
+                    } else{    
+                        $userDAO = new userDAO();
+                        $result = $userDAO->add( $password, $name, $email, $phoneNumber, $cart, $cart_company_id, $preferances );?>
+                         <script type="text/javascript"> 
+                            $(document).ready(function(){
+                                $("#success-register").modal('show');
+                                                           
+                            });
+                            console.log("hi");
+                        </script>
+                <?php
 
+                    }
                     
             } 
         ?>
@@ -107,7 +138,7 @@
                         <button id="register" name="submit" class="btn btn-lg btn-primary btn-block btn-register text-uppercase font-weight-bold mb-2" type="submit">Register</button>
                         <div class="text-center">
                         <br> 
-                        <a class="medium font-weight-bold .text-secondary" href="../index.php">Back to login</a></div>
+                        <a class="medium font-weight-bold .text-secondary" href="../app/index.php">Back to login</a></div>
                     </form>
                     <div class='text-center'>
                         <div class ="index-errormsg" style="background-color: #f8d7da; color: #8b3f46;">
@@ -119,6 +150,42 @@
             </div>
         </div>
         </div>
+         <div class='modal fade' id="email-error" tabindex='-1' role='dialog' aria-labelledby="server-error" aria-hidden="true">
+            <div class='modal-dialog' role='document'>
+                <div class='modal-content'>
+                <div class='modal-header'>
+                    <h5 class='modal-title'>Error</h5>
+                    <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                    <span aria-hidden='true'>&times;</span>
+                    </button>
+                </div>
+                <div class='modal-body'>
+                    <p>Email is already taken</p>
+                </div>
+                <div class='modal-footer'>
+                    <button type='button' class='btn btn-success' data-dismiss='modal'>Close</button>
+                </div>
+                </div>
+            </div>
+        </div>
+         <div class='modal fade' id="success-register" tabindex='-1' role='dialog' aria-labelledby="server-error" aria-hidden="true">
+            <div class='modal-dialog' role='document'>
+                <div class='modal-content'>
+                <div class='modal-header'>
+                    <h5 class='modal-title'>Success</h5>
+                    <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                    <span aria-hidden='true'>&times;</span>
+                    </button>
+                </div>
+                <div class='modal-body'>
+                    <p>Your account has been successfully created!</p>
+                </div>
+                <div class='modal-footer'>
+                    <button type='button' class='btn btn-success' data-dismiss='modal' onclick="navigate_to_login()">Close</button>
+                </div>
+                </div>
+            </div>
+        </div>
     </body>
 
        <!-- Script for range input label -->
@@ -129,23 +196,12 @@
         rangeLabel.innerText = experience.value + "K";
         }
     </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <script type="text/javascript" >
-        $( '#register').click(function(e) {
-            var valid = this.form.checkValidity();
-            console.log("hi");
-            if( valid ) {
-                alert("success");
-                Swal.fire({
-                            "title" : "Successful",
-                            "text": "Thank you for registering an account",
-                            "type": "success",
-                        })
-                
-                
-            }    
-        });
+    <script>
+        function navigate_to_login(){
+            setTimeout( 'window.location.href = "user_login.php"', 1000);
+        }
     </script>
+
+   
 
 </html>
