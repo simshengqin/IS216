@@ -62,7 +62,7 @@
 
 <div class="mx-md-5" style="margin-top: 50px; margin-bottom: 50px;">
           <h2 style="margin-bottom: 20px;">Active Orders</h2>
-          <i class="fas fa-info-circle"></i><small class="font-weight-bold">&#8287;&#8287;&#8287;&#8287;Click 'Received' button to confirm that order is completed! Leave a rating and review for your order! (optional) &#128540;</small>
+          <i class="fas fa-info-circle"></i><small class="font-weight-bold">&#8287;&#8287;&#8287;&#8287;Click 'Received' button to confirm that order is completed! Leave a rating and review for your order! (optional) <br> &#8287;&#8287;&#8287;&#8287;&#8287;&#8287;&#8287;&#8287; You are encouraged to bring your own reusable container to collect your food! &#128540; </small>
            <!-- pass user_id -->
            <input type='hidden' value='<?php echo "$user_id" ?>' id="user_id"> 
           <hr>
@@ -167,7 +167,7 @@
                 //Add check for success here?
                 var success = JSON.stringify(this.responseText);
                 alert(success);
-                window.location.href = "mainpage.php";
+                window.location.href = "index.php";
                 
             }  
         

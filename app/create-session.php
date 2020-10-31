@@ -20,7 +20,8 @@ $cart = $_POST['cart'];
 // header('Content-Type: application/json','Set-Cookie: cross-site-cookie=bar; SameSite=None; Secure');
 header('Content-Type: application/json');
 
-$YOUR_DOMAIN = 'http://localhost/IS216';
+// change this link to where your app is hosted/ alias
+$YOUR_DOMAIN = 'http://localhost/eco/app';
 
 $order_info = array(
   "user_id" => $user_id,

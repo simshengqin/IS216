@@ -39,37 +39,7 @@ session_start();
 
 <!-- Navigation -->
 <?php include 'include/customer_navbar.php';?>
-<!-- <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-    <div class="container">
-    <a class="navbar-brand" href="mainpage.html"><img src="images/logo/rsz_e (1).png">    <img src="images/logo/rsz_shadow_eco.png"></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarResponsive">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item active mr-4">
-          <a class="nav-link" href="mainpage.html">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item mr-4" >
-        <a class="nav-link" href="view_products.php">Food</a>
-        </li>
-        <li class="nav-item mr-4">
-          <a class="nav-link" href="#">Order</a>
-        </li>
-        <li class="nav-item mr-4">
-            <a class="nav-link" href="#">About</a>
-        </li>
-        <li class="nav-item mr-4">
-            <a class="nav-link" href="#">Contact</a>
-        </li>
-        <li class="nav-item mr-4">
-            <a class="nav-link" href="#">Login/Register</a>
-        </li>
-      </ul>
-    </div>
-    </div>
-  </nav> -->
-  
+
   <!-- Header -->
   <header class="header-img" style="margin: 0px 0px 10px;">
         <div class="container align-items-center justify-items-center" style="height: auto;">
@@ -81,21 +51,22 @@ session_start();
                 </div>
             </div>
             <div class ='row'>
-                <div class="col-lg-8" style="margin: 30px 0px 30px;">
-                <form action="view_companies.php" method="get">
-                <!-- <div class="form-group col-8" style="margin: 30px 0px 20px;"> -->
-                    <input type="text" class="form-control" name="postal_code" id="search_for_products"  placeholder="Enter Postal Code">
+                <div class="form-group col" style="margin: 30px 0px 30px; w-100">
+                    <form action="view_companies.php" method="get">
+                    <!-- <div class="form-group col-8" style="margin: 30px 0px 20px;"> -->
+                      
+                        <input type="text" class="form-control w-100" name="postal_code" id="search_for_products"  placeholder="Enter Postal Code">
+                        
+                        <!-- <span class="input-group-btn"> --> 
+                              <!-- <button class="btn btn-default" type="button">
+                            <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </span> -->
                     
-                    <!-- <span class="input-group-btn"> --> 
-                          <!-- <button class="btn btn-default" type="button">
-                        <span class="glyphicon glyphicon-search"></span>
-                        </button>
-                    </span> -->
-                
                 </div>
                 <!-- <div class="form-group col-2" style="margin: 30px 0px 20px;"> -->
-                <div class="col-lg-2" style="margin: 30px 0px 30px;">
-                  <button type='submit' class="btn btn-success" href="view_products.php">Search</button>
+                <div class="form-group" style="margin: 30px 15px 30px; w-100">
+                    <button type='submit' class="btn btn-success" href="view_products.php">Search</button>
                 </div>
                 </form>
             </div>
@@ -172,7 +143,7 @@ session_start();
                   <img class="card-img-top" src="images/how_to_use/use-2.png" alt="">
                       <div class="card-body">
                           <h4 class="card-title">STEP 2</h4>
-                          <p class="card-text">Select a timeslot for collection <br>and pay online! <br> Timeslots from 6.30PM to 9.30PM </p>         
+                          <p class="card-text">Select a timeslot from 6.30PM to 9.30PM for collection and pay online via your credit card!</p>         
                       </div>
               </div>
               </div>
@@ -329,7 +300,14 @@ session_start();
   </div> -->
 
   
+<script>
+    // change active navbar
+    $(document).ready(function(){
+        $(".active").removeClass("active");
+        $("#link-home").addClass("active");
+    }); 
 
+</script>
 
 <!-- Footer -->
 <?php include 'include/footer.php';?>

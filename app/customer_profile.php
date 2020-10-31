@@ -143,12 +143,12 @@
   </div>
 
 
-  <hr>
+  <!-- <hr> -->
 
 
       <div class="mx-md-5" style="margin-top: 50px; margin-bottom: 50px;">
           <h2 style="margin-bottom: 20px;">Order History</h2>
-          <i class="fas fa-info-circle"></i><small class="font-weight-bold">&#8287;&#8287;&#8287;&#8287;View your past orders. These receipts serve as confirmation for your order pickup/ delivery.</small>
+          <i class="fas fa-info-circle"></i><small class="font-weight-bold">&#8287;&#8287;&#8287;&#8287;View your past orders. These receipts serve as confirmation for your order pickup.</small>
           <hr>
           <?php
             if ($transactions == []){
