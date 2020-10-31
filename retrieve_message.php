@@ -1,5 +1,5 @@
 <?php
-require_once "include\common.php";
+require_once "include/common.php";
 if(isset($_POST['from_id']) && isset($_POST['from_type']) && isset($_POST['to_id']) && isset($_POST['to_type'])){
     $from_id = $_POST['from_id'];
     $from_type = $_POST['from_type'];

@@ -1,5 +1,5 @@
 <?php
-require_once "include\common.php";
+require_once "include/common.php";
 if(isset($_POST['user_id']) && isset($_POST['user_type'])){
     $user_id = $_POST['user_id'];
     $user_type = $_POST['user_type'];
