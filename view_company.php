@@ -27,6 +27,11 @@
   //$company_name = $company-> get_name()
   //$company_password= $company-> get_password()
   $company_rating = $company-> get_rating();
+  $user_id = $_SESSION["user_id"];
+  $userDAO = new userDAO();
+  $user = $userDAO-> retrieve_user($user_id);
+  $cart_company_id = $user->get_cart_company_id(); 
+  $cart_company_name = $companyDAO -> retrieve_company_name($cart_company_id);
 
 
 ?>
@@ -322,7 +327,7 @@
                                                                          
                                                                 }  
                                                             ?>"></input>
-        <input type="text" id="cart_company_name" value="<?php echo $_SESSION['cart_company_name'];          
+        <input type="text" id="cart_company_name" value="<?php echo $cart_company_name;          
                                                             ?>"></input>
         <!--Product grid displaying all food products-->
         <div class="col-2"></div>
