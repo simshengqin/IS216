@@ -290,7 +290,7 @@
         </div>        
         <!--A placeholder to store the user's cart-->
 
-        <input type="hidden" id="same_company_id_from_user_cart" value="<?php 
+        <input type="text" id="same_company_id_from_user_cart" value="<?php 
                                                                 $userDAO = new userDAO();
                                                                 //HARDCODED user_id here, need to change
                                                                 $user_id = $_SESSION["user_id"];
@@ -322,7 +322,7 @@
                                                                          
                                                                 }  
                                                             ?>"></input>
-        <input type="hidden" id="cart_company_name" value="<?php 
+        <input type="text" id="cart_company_name" value="<?php 
                                                                 $companyDAO = new companyDAO();
                                                                 
                                                                 //HARDCODED user_id here, need to change
@@ -1108,7 +1108,7 @@
     }
 </script>
 <!-- To calculate distance between 2 points-->
-<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false&v=3&libraries=geometry"></script>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&v=3&libraries=geometry"></script>
 <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcIUwwXfLUWzMAE1WspewghH9f-vmSkzc">
 </script>
