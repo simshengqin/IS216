@@ -149,7 +149,7 @@
                         }
                             
                     }
-                    if (messages.length > 0) {
+                    if (messages.length >= 0) {
                         //Empty out all the messages displayed first
                         document.getElementById("inbox_chat").innerHTML = "";
                     }
