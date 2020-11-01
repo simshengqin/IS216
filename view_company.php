@@ -323,16 +323,6 @@
                                                                 }  
                                                             ?>"></input>
         <input type="text" id="cart_company_name" value="<?php 
-                                                                $companyDAO = new companyDAO();
-                                                                
-                                                                //HARDCODED user_id here, need to change
-                                                                /*
-                                                                $user_id = $_SESSION["user_id"];
-                                                                $user = $userDAO-> retrieve_user($user_id);
-                                                                $cart = $user -> get_cart();
-                                                                $cart_company_id = $user->get_cart_company_id();
-                                                                */
-                                                                //echo "Cart companyid: " . $cart_company_id;
                                                                 $cart_company_id = $_SESSION['cart_company_id'];
                                                                 if ($cart_company_id != "0") {
                                                                     echo $_SESSION['cart_company_name'];    
