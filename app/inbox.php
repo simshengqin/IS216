@@ -64,7 +64,7 @@
                 </div>
                 <!-- Rightsidebar Contains the messages to the currently selected person/company -->
                 <div class="mesgs col-sm-8 w-100">
-                    <div class="msg_history">
+                    <div class="msg_history" id="msg_history2">
                         <div id="selected_messages">                    
                         </div>
                     </div>
@@ -93,7 +93,7 @@
             sessionStorage.setItem("selected_from_id","");
             sessionStorage.setItem("selected_from_type","");            
         }
-        //window.scroll_down = "true";
+        window.scroll_down = "true";
         //alert(sessionStorage.getItem("selected_from_id") !== "");
         update_selected_messages_leftbar();
         update_selected_messages();
@@ -341,6 +341,7 @@
 
 
                 }  
+                document.getElementById("selected_messages").innerHTML = new_html;
                 //Keeps it scrolled down only when there is a change in the html
                 /*
                 old_html =  document.getElementById("selected_messages").innerHTML;
@@ -353,13 +354,13 @@
                     element.scrollTop = element.scrollHeight;                           
                 }               
                 */
-                /*
+                
                 if (window.scroll_down == "true") {
                     var element = document.getElementsByClassName("msg_history")[0];
                     element.scrollTop = element.scrollHeight;
                     window.scroll_down = "false";                            
                 } 
-                */           
+                           
             }  
         };  
         request.open('POST', 'retrieve_message.php', true);
@@ -409,7 +410,7 @@
         sessionStorage.setItem("selected_from_id", selected_from_id);
         sessionStorage.setItem("selected_from_type", selected_from_type);
         //alert(selected_from_id + selected_from_type);
-        //window.scroll_down = "true";
+        window.scroll_down = "true";
         //Update the right side chat bar
         update_selected_messages();
 
@@ -443,7 +444,7 @@
     });
     function send_message() {
         //Scrolls down to the end of message
-        //window.scroll_down = "true";
+        window.scroll_down = "true";
         //Retrieves the chat message sent
         body = document.getElementById("sent_message").value;
         if (body != "") {
@@ -491,9 +492,9 @@
         $(".active").removeClass("active");
         $("#link-inbox").addClass("active");
     }); 
-    var checkbottom;
+var checkbottom = "hi";
 jQuery(function($) {
-$('#selected_messages').on('scroll', function() {
+$('.msg_history').on('scroll', function() {
     var check = $(this).scrollTop() + $(this).innerHeight() >= $(this) 
 [0].scrollHeight;
     if(check) {
@@ -505,11 +506,13 @@ $('#selected_messages').on('scroll', function() {
 })
 });
 window.setInterval(function(){
+    console.log(checkbottom);
 if (checkbottom=="bottom") {
-var objDiv = document.getElementById("selected_messages");
-objDiv.scrollTop = objDiv.scrollHeight;
+    //Scrolls down only if the user is already at the bottom when new messages arrive
+    var element = document.getElementsByClassName("msg_history")[0];
+    element.scrollTop = element.scrollHeight;
 }
-}, 500);
+}, 100);
 </script>
 </body>
 </html>
