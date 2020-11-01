@@ -114,14 +114,14 @@
 
                     <!-- Before Price -->
                     <div class="form-group col-md-6" style="margin-bottom: -10px;">
-                        <input type="double" id="beforePrice" name="beforePrice" class="form-control form-control-lg" placeholder="Price Before: $0.00"> 
+                        <input type="number" id="beforePrice" name="beforePrice" class="form-control form-control-lg" placeholder="Price Before: $0.00"> 
                         <p id='errorBeforePrice'class="error_msg"  style='visibility: hidden; color: red;'>  </p> 
                     </div>
                     
 
                     <!-- After Price -->
                     <div class="form-group col-md-6" style="margin-bottom: -10px;">
-                        <input type="double" id="afterPrice" name="afterPrice" class="form-control form-control-lg error_msg" placeholder="Price Discounted: $0.00"> 
+                        <input type="number" id="afterPrice" name="afterPrice" class="form-control form-control-lg" placeholder="Price Discounted: $0.00"> 
                         <p id='errorAfterPrice'class="error_msg"  style='visibility: hidden; color: red;'>  </p> 
                     </div>
                     
