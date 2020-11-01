@@ -21,7 +21,14 @@ $cart = $_POST['cart'];
 header('Content-Type: application/json');
 
 // change this link to where your app is hosted/ alias
-$YOUR_DOMAIN = '';
+$url = $_SERVER['REQUEST_URI']; //returns the current directoy of current URL
+$parts = explode('/',$url);
+$dir = $_SERVER['SERVER_NAME'];
+for ($i = 0; $i < count($parts) - 1; $i++) {
+$dir .= $parts[$i] . "/";
+}
+$YOUR_DOMAIN =  "https://" . $dir;
+//$YOUR_DOMAIN = 'https://localhost/is216/app/';
 
 $order_info = array(
   "user_id" => $user_id,

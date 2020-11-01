@@ -1,5 +1,5 @@
 <?php
-require_once "include\common.php";
+require_once "include/common.php";
 if(isset($_POST['body']) && isset($_POST['date']) && isset($_POST['from_id']) && isset($_POST['from_type']) && isset($_POST['seen']) && isset($_POST['time']) && isset($_POST['to_id']) && isset($_POST['to_type']) && isset($_POST['type'])){
     $body = $_POST['body'];
     $date = $_POST['date'];

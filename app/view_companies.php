@@ -22,7 +22,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="x-ua-compatible" content="ie=edge"> 
-<title>View Companies</title>
+<title>View Restaurants</title>
 <!-- Roboto Font -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700&display=swap">
 <!-- Font Awesome -->
@@ -63,7 +63,7 @@
             <div style="position: fixed; top: 0; right: 0;  z-index: 10;" >
 
                 <!-- Then put toasts within -->
-                <div class="toast" id="add_to_cart_message" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast hide" id="add_to_cart_message" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="toast-header">
                     <!--<img src="..." class="rounded mr-2" alt="...">-->
                     <strong class="mr-auto">Success!</strong>
@@ -77,7 +77,7 @@
                 </div>
                 </div>
 
-                <div class="toast" data-autohide="false" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast hide" data-autohide="false" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="toast-header">
                     <img src="..." class="rounded mr-2" alt="...">
                     <strong class="mr-auto">Bootstrap</strong>
@@ -165,7 +165,7 @@
             <!--Search bar-->
             <div class="row" name="search_for_companies">    
                 <div class="form-group col-12">
-                    <input type="text" class="form-control" style="margin-top: 100px;" name="x" id="search_for_company" oninput ='search_filter()' placeholder="Search for companies">
+                    <input type="text" class="form-control" style="margin-top: 100px;" name="x" id="search_for_company" oninput ='search_filter()' placeholder="Search for restaurants">
                     <span class="input-group-btn">
                         <button class="btn btn-default" type="button">
                         <span class="glyphicon glyphicon-search"></span>
@@ -487,6 +487,6 @@
 
 </script>
 <!-- To calculate distance between 2 points-->
-<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&v=3&libraries=geometry"></script>
+<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false&v=3&libraries=geometry"></script>
 </body>
 </html>
