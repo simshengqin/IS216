@@ -322,15 +322,7 @@
                                                                          
                                                                 }  
                                                             ?>"></input>
-        <input type="text" id="cart_company_name" value="<?php //echo $_SESSION['cart_company_name'] . "HI"; 
-                                                                $companyDAO = new companyDAO();
-                                                                if ($_SESSION['cart_company_id'] != 0){
-                                                                    echo $companyDAO -> retrieve_company_name($_SESSION['cart_company_id']);
-                                                                }
-                                                                else {
-                                                                    echo "";
-                                                                }
-                                                                 
+        <input type="text" id="cart_company_name" value="<?php echo $_SESSION['cart_company_name'];          
                                                             ?>"></input>
         <!--Product grid displaying all food products-->
         <div class="col-2"></div>
