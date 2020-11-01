@@ -131,6 +131,8 @@
                     sessionStorage.setItem("selected_from_id", params_arr["target_id"]);
                     sessionStorage.setItem("selected_from_type", params_arr["target_type"]);                    
                 }
+                //Empty out all the messages displayed first
+                document.getElementById("inbox_chat").innerHTML = "";
                 if (params_arr["target_id"] !== undefined && params_arr["target_type"] !== undefined && params_arr["target_name"] !== undefined) {
                      
 
@@ -149,10 +151,9 @@
                         }
                             
                     }
-                    if (messages.length > 0) {
-                        //Empty out all the messages displayed first
-                        document.getElementById("inbox_chat").innerHTML = "";
-                    }
+                    
+                    
+                    
                     //alert(params_arr["target_id"] +params_arr["user_id"] + params_arr["target_type"] + params_arr["user_type"] );
                     if (!has_existing_chat && !(String(params_arr["target_id"]) === String(params_arr["user_id"])  && String(params_arr["target_type"]) === String(params_arr["user_type"]))) {
 

@@ -303,7 +303,7 @@
                                                                 $cart = $user -> get_cart();
                                                                 if (strlen($cart) ==0) {
                                                                     //echo the company_id for the below js function to access it
-                                                                    echo "$company_id";
+                                                                    echo "New" . "$company_id";
                                                                     //echo 'true';
                                                                 }
                                                                 else {
@@ -756,6 +756,9 @@
         else if (target.innerText == "ADD TO CART") {           
             //Warn the user if he wants to change the company id in his current cart
             //alert(document.getElementById("same_company_id_from_user_cart").value);
+            if (document.getElementById("same_company_id_from_user_cart").value == "true") {
+                
+            }
             if (document.getElementById("same_company_id_from_user_cart").value == "true") {
                 //Here can put 0 as update_user.php will increase it to 1
                 var quantity = 0;
