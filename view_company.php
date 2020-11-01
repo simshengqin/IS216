@@ -295,7 +295,7 @@
         </div>        
         <!--A placeholder to store the user's cart-->
 
-        <input type="text" id="same_company_id_from_user_cart" value="<?php 
+        <input type="hidden" id="same_company_id_from_user_cart" value="<?php 
                                                                 $userDAO = new userDAO();
                                                                 //HARDCODED user_id here, need to change
                                                                 $user_id = $_SESSION["user_id"];
@@ -327,7 +327,7 @@
                                                                          
                                                                 }  
                                                             ?>"></input>
-        <input type="text" id="cart_company_name" value="<?php echo $cart_company_name;          
+        <input type="hidden" id="cart_company_name" value="<?php echo $cart_company_name;          
                                                             ?>"></input>
         <!--Product grid displaying all food products-->
         <div class="col-2"></div>
