@@ -303,7 +303,7 @@
                                                                 $cart = $user -> get_cart();
                                                                 if (strlen($cart) ==0) {
                                                                     //echo the company_id for the below js function to access it
-                                                                    echo "$company_id";
+                                                                    echo "true";
                                                                     //echo 'true';
                                                                 }
                                                                 else {
