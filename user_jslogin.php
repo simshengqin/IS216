@@ -9,7 +9,7 @@
     $connMgr = new ConnectionManager();       
     $conn = $connMgr->getConnection();
 
-    $sql = "SELECT * FROM user where email= ? and password = ? limit 1";
+    $sql = "SELECT * FROM user where email= ? and password = ? COLLATE SQL_Latin1_General_CP1_CS_AS limit 1";
     $stmt = $conn->prepare($sql);
     $result = $stmt->execute([$username,$password]);
          
