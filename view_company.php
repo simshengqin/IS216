@@ -322,15 +322,8 @@
                                                                          
                                                                 }  
                                                             ?>"></input>
-        <input type="text" id="cart_company_name" value="<?php 
-                                                                $cart_company_id = $_SESSION['cart_company_id'];
-                                                                if ($cart_company_id != "0") {
-                                                                    echo $_SESSION['cart_company_name'];    
-                                                                }
-                                                                else {
-                                                                    //Cart is empty
-                                                                    echo "";
-                                                                }
+        <input type="text" id="cart_company_name" value="<?php echo $_SESSION['cart_company_name'] . "HI";  
+
                                                             ?>"></input>
         <!--Product grid displaying all food products-->
         <div class="col-2"></div>
