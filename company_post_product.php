@@ -69,7 +69,7 @@
                 
                     <div class="form-group col-md-6" style="margin-bottom: -10px;">
                         <input class="form-control form-control-lg" id="productName" name="productName" type="text" placeholder="Product Name">
-                        <p id='errorProductName' style='visibility: hidden; color: red;'> </p>
+                        <p id='errorProductName' class="error_msg" style='visibility: hidden; color: red;'> </p>
                     </div> 
 
                     <!-- Product Type -->
@@ -83,7 +83,7 @@
                                 }
                             ?>
                         </select>
-                        <p id='errorProductType' style='visibility: hidden; color: red;'>  </p>
+                        <p id='errorProductType' class="error_msg" style='visibility: hidden; color: red;'>  </p>
                     </div>
                    <!--
                     <div class="form-group col-md-1" style="margin-bottom: 20px;">
@@ -97,7 +97,7 @@
                     <!-- Qty -->
                     <div class="form-group col-md-6" style="margin-bottom: -10px;">
                         <input class="form-control form-control-lg" id="productQuantity" name="productQuantity" type="number" placeholder="Quantity">
-                        <p id='errorQuantity' style='visibility: hidden; color: red;'>  </p>
+                        <p id='errorQuantity'class="error_msg"  style='visibility: hidden; color: red;'>  </p>
                     </div>
 
                     <!-- Mode of Collection -->
@@ -108,21 +108,21 @@
                             <!-- <option value="delivery"> Delivery Only</option> -->
                             <!-- <option value="both"> Self-Collect / Delivery </option> -->
                         </select>
-                        <p id='errorCollection' style='visibility: hidden; color: red;'>  </p>
+                        <p id='errorCollection'class="error_msg"  style='visibility: hidden; color: red;'>  </p>
                     </div>
 
 
                     <!-- Before Price -->
                     <div class="form-group col-md-6" style="margin-bottom: -10px;">
                         <input type="double" id="beforePrice" name="beforePrice" class="form-control form-control-lg" placeholder="Price Before: $0.00"> 
-                        <p id='errorBeforePrice' style='visibility: hidden; color: red;'>  </p> 
+                        <p id='errorBeforePrice'class="error_msg"  style='visibility: hidden; color: red;'>  </p> 
                     </div>
                     
 
                     <!-- After Price -->
                     <div class="form-group col-md-6" style="margin-bottom: -10px;">
-                        <input type="double" id="afterPrice" name="afterPrice" class="form-control form-control-lg" placeholder="Price Discounted: $0.00"> 
-                        <p id='errorAfterPrice' style='visibility: hidden; color: red;'>  </p> 
+                        <input type="double" id="afterPrice" name="afterPrice" class="form-control form-control-lg error_msg" placeholder="Price Discounted: $0.00"> 
+                        <p id='errorAfterPrice'class="error_msg"  style='visibility: hidden; color: red;'>  </p> 
                     </div>
                     
 
@@ -132,7 +132,7 @@
                             <label for="productImageUpload">Select Image to upload ( jpg / jpeg image files only )</label>
                             <input type="file" accept="image/jpeg,image/jpg" class="form-control-file form-control-lg" id="productImageUpload" name="productImageUpload">
                         </div>
-                        <p id='errorProductImageUpload' style='visibility: hidden; color: red;'>  </p>  
+                        <p id='errorProductImageUpload'class="error_msg"  style='visibility: hidden; color: red;'>  </p>  
                     </div>
 
                     <div class="form-group col-md-6">
@@ -144,7 +144,7 @@
                         <!-- <label for="dateInput" class="col-form-label"><h5>End Date: </h5></label> -->
                         <span> Promotional End Date</span>
                         <input id="dateInput" class="form-control form-control-lg datepicker" name="dateInput" type="date" placeholder="dd-mm-yyyy" min="2000-01-01" max="2100-12-31"> 
-                        <p id='errorPromotionEndDate' style='visibility: hidden; color: red;'>  </p>
+                        <p id='errorPromotionEndDate'class="error_msg"  style='visibility: hidden; color: red;'>  </p>
                     </div>
 
                     <div class="form-group col-md-6">
@@ -160,7 +160,7 @@
                     <div class="form-group col-md-6" style="margin-bottom: -10px;">
                         <span> Promotional End Time</span>
                         <input id="timeInput" class="form-control form-control-lg" name="timeInput" type="time" min="00:00:00" max="23:59:59">
-                        <p id='errorPromotionEndTime' style='visibility: hidden; color: red;'>  </p>
+                        <p id='errorPromotionEndTime'class="error_msg"  style='visibility: hidden; color: red;'>  </p>
                     </div>
 
                     <div class="form-group col-md-12" style="margin-top: 25px;">
@@ -198,7 +198,7 @@
                   <form>
                   <div class="modal-body">
                       <input class="form-control form-control-lg" id="newFoodType" type="text" placeholder="E.g. Pasta, Noodles or Bread">
-                      <p id='errorNewFoodType' style='visibility: hidden; color: red;'> Please specify a food type! </p>
+                      <p id='errorNewFoodType'class="error_msg"  style='visibility: hidden; color: red;'> Please specify a food type! </p>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-info" onclick="addNewType()" style="left: 0%;"> Add </button>
@@ -282,29 +282,33 @@
         var noErrorBefore = false; 
         var noErrorDate = false;
 
-        var productName = document.getElementById('productName').value
-        var productType = document.getElementById('productType').value
-        var productQty = document.getElementById('productQuantity').value
-        var productModeOfCollection = document.getElementById('modeOfCollection').value
-        var productBeforePrice = document.getElementById('beforePrice').value
-        var productAfterPrice = document.getElementById('afterPrice').value
-        
-        var productImagePathSource = document.getElementById('productImageUpload').value // Get the file path 
+        var productName = document.getElementById('productName').value;
+        var productType = document.getElementById('productType').value;
+        var productQty = document.getElementById('productQuantity').value;
+        var productModeOfCollection = document.getElementById('modeOfCollection').value;
+        var productBeforePrice = parseFloat(document.getElementById('beforePrice').value);
+        var productAfterPrice = parseFloat(document.getElementById('afterPrice').value);
+        console.log(productBeforePrice);
+        var productImagePathSource = document.getElementById('productImageUpload').value; // Get the file path 
         console.log(productImagePathSource);
         //var productImagePathSource = document.getElementById("productImageUpload").files[0].path
         //console.log("Source path " + productImagePathSource);
         var productImage = "";
         if(productImagePathSource!=""){
-          productImage = document.getElementById('productImageUpload').files[0].name // Get the file name
+          productImage = document.getElementById('productImageUpload').files[0].name; // Get the file name
         }
 
-        var productDateInput = document.getElementById('dateInput').value
-        var productTimeInput = document.getElementById('timeInput').value
+        var productDateInput = document.getElementById('dateInput').value;
+        var productTimeInput = document.getElementById('timeInput').value;
 
-
+        //reset all error messages
+        all_error_msg = document.getElementsByClassName("error_msg");
+        for (error_msg of all_error_msg) {
+            error_msg.setAttribute('visibility', 'hidden; color: red;');
+        }
         // validate product name 
         if(productName==""){
-          document.getElementById("errorProductName").innerHTML = "Please specify a Product Name."
+          document.getElementById("errorProductName").innerHTML = "Please specify a Product Name.";
           document.getElementById("errorProductName").style.visibility = "visible";
           noError = false;
         } else {
@@ -314,7 +318,7 @@
 
         // validate product type 
         if(productType==""){
-          document.getElementById("errorProductType").innerHTML = "Please select a type."
+          document.getElementById("errorProductType").innerHTML = "Please select a type.";
           document.getElementById("errorProductType").style.visibility = "visible";
           noError = false;
         } else {
@@ -324,7 +328,7 @@
 
         // validate product Qty 
         if(productQty==""){
-          document.getElementById("errorQuantity").innerHTML = "Please input quantity."
+          document.getElementById("errorQuantity").innerHTML = "Please input quantity.";
           document.getElementById("errorQuantity").style.visibility = "visible";
           noError = false;
         } else if (productQty < 1){
@@ -347,7 +351,7 @@
         }
 
         // validate before price
-        if(productBeforePrice==""){
+        if(document.getElementById('beforePrice').value==""){
           document.getElementById("errorBeforePrice").innerHTML = "Please indicate a price.";
           document.getElementById("errorBeforePrice").style.visibility = "visible";
           noError = false;
@@ -362,7 +366,7 @@
         }
 
         // validate After Price 
-        if(productAfterPrice==""){
+        if(document.getElementById('afterPrice').value==""){
           document.getElementById("errorAfterPrice").innerHTML = "Please indicate a price.";
           document.getElementById("errorAfterPrice").style.visibility = "visible";
           noError = false;
@@ -449,11 +453,11 @@
 
         if(noError){
           //processToServer(data)
-          console.log("Sent")
-          return true
+          console.log("Sent");
+          return true;
         } else {
-          console.log("Did not sent")
-          return false
+          console.log("Did not sent");
+          return false;
         }
 
       }
