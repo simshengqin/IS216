@@ -341,6 +341,7 @@
 
                 }  
                 //Keeps it scrolled down only when there is a change in the html
+                /*
                 old_html =  document.getElementById("selected_messages").innerHTML;
                 if (!(String(old_html.trim()) === String(new_html).trim())) {
                     //difference = getDifference(old_html, new_html);
@@ -350,7 +351,7 @@
                     var element = document.getElementsByClassName("msg_history")[0];
                     element.scrollTop = element.scrollHeight;                           
                 }               
-                
+                */
                 /*
                 if (window.scroll_down == "true") {
                     var element = document.getElementsByClassName("msg_history")[0];
@@ -489,7 +490,25 @@
         $(".active").removeClass("active");
         $("#link-inbox").addClass("active");
     }); 
-
+    var checkbottom;
+jQuery(function($) {
+$('#selected_messages').on('scroll', function() {
+    var check = $(this).scrollTop() + $(this).innerHeight() >= $(this) 
+[0].scrollHeight;
+    if(check) {
+       checkbottom = "bottom";
+    }
+    else {
+    checkbottom = "nobottom";
+    }
+})
+});
+window.setInterval(function(){
+if (checkbottom=="bottom") {
+var objDiv = document.getElementById("selected_messages");
+objDiv.scrollTop = objDiv.scrollHeight;
+}
+}, 500);
 </script>
 </body>
 </html>
