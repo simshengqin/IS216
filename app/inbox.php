@@ -10,9 +10,8 @@
     <?php
         require_once 'include/common.php';
         require_once 'include/protect.php';
-        //TO_BE_UPDATED
-        $user_id = $_GET["user_id"];
-        $user_type = $_GET["user_type"];
+
+
 
     ?>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet">
@@ -65,7 +64,7 @@
                 </div>
                 <!-- Rightsidebar Contains the messages to the currently selected person/company -->
                 <div class="mesgs col-sm-8 w-100">
-                    <div class="msg_history">
+                    <div class="msg_history" id="msg_history2">
                         <div id="selected_messages">                    
                         </div>
                     </div>
@@ -132,6 +131,8 @@
                     sessionStorage.setItem("selected_from_id", params_arr["target_id"]);
                     sessionStorage.setItem("selected_from_type", params_arr["target_type"]);                    
                 }
+                //Empty out all the messages displayed first
+                document.getElementById("inbox_chat").innerHTML = "";
                 if (params_arr["target_id"] !== undefined && params_arr["target_type"] !== undefined && params_arr["target_name"] !== undefined) {
                      
 
@@ -150,6 +151,9 @@
                         }
                             
                     }
+                    
+                    
+                    
                     //alert(params_arr["target_id"] +params_arr["user_id"] + params_arr["target_type"] + params_arr["user_type"] );
                     if (!has_existing_chat && !(String(params_arr["target_id"]) === String(params_arr["user_id"])  && String(params_arr["target_type"]) === String(params_arr["user_type"]))) {
 
@@ -180,6 +184,7 @@
                         }
                         //Empty out all the messages displayed first
                         document.getElementById("inbox_chat").innerHTML = "";
+                        
                         document.getElementById("inbox_chat").innerHTML =document.getElementById("inbox_chat").innerHTML + "\
                                                                                     <div class='incoming_msg'> \
                                                                                         <div class='chat_list active_chat' id='"+from_id_url+","+from_type_url+"' onclick='select_chat()'> \
@@ -191,12 +196,8 @@
                                                                                         </div>\
                                                                                     </div>";
                                                                                     
-
+                        console.log(document.getElementById("inbox_chat").innerHTML);
                     }
-                }
-                if (messages.length > 0) {
-                    //Empty out all the messages displayed first
-                    document.getElementById("inbox_chat").innerHTML = "";
                 }
                 for (var i=0; i < messages.length; i++) {
                     var message = messages[i];
@@ -234,6 +235,10 @@
                             active_chat = ((params_arr["target_id"] == from_id && params_arr["target_type"] ==  from_type) ? "active_chat" : "");
                             //alert(active_chat);
                         } 
+                        // Change quotes
+                        message_body = message_body.replace(/[\u00A0-\u9999<>\&]/gim, function(i) {
+                                                                                                return '&#'+i.charCodeAt(0)+';';
+                                                                                                });
                         document.getElementById("inbox_chat").innerHTML =document.getElementById("inbox_chat").innerHTML + "\
                                                                                     <div class='incoming_msg'> \
                                                                                         <div class='chat_list" + " " + active_chat + "' id='"+from_id+","+from_type+"' onclick='select_chat()'> \
@@ -261,9 +266,25 @@
         var user_type = params_arr["user_type"];
         var selected_from_id = sessionStorage.getItem("selected_from_id");
         var selected_from_type = sessionStorage.getItem("selected_from_type");
-        request.send("user_id="+user_id+"&user_type="+user_type);
+        request.send("user_id="+user_id+"&user_type="+user_type+"&nothing=wow");
         //alert(user_id);
 
+    }
+    function getDifference(a, b)
+    {
+        var i = 0;
+        var j = 0;
+        var result = "";
+
+        while (j < b.length)
+        {
+         if (a[i] != b[j] || i == a.length)
+             result += b[j];
+         else
+             i++;
+         j++;
+        }
+        return result;
     }
     function update_selected_messages() {
         //Update the rightsidebar messages
@@ -278,7 +299,8 @@
                 messages = JSON.parse(this.responseText);
                 //console.log(messages);  
                 //Empty out all the messages displayed first
-                document.getElementById("selected_messages").innerHTML = "";
+                //document.getElementById("selected_messages").innerHTML = "";
+                new_html = "";
                 for (var i=0; i < messages.length; i++) {
                     message = messages[i];
                     //$message_id, $body, $date, $from_id, $from_type, $seen, $time, $to_id, $to_type, $type
@@ -293,7 +315,7 @@
                        }
                        
 
-                        document.getElementById("selected_messages").innerHTML = document.getElementById("selected_messages").innerHTML + "\
+                        new_html = new_html + "\
                                                                                     <div class='incoming_msg'> \
                                                                                         <div class='incoming_msg_img'> <img src='" + from_image + "' alt='sunil'> </div> \
                                                                                         <div class='received_msg'> \
@@ -306,7 +328,7 @@
                                                                                 ";   
                     }
                     else { 
-                        document.getElementById("selected_messages").innerHTML = document.getElementById("selected_messages").innerHTML + "\
+                        new_html = new_html + "\
                                                                                     <div class='outgoing_msg'> \
                                                                                         <div class='sent_msg'> \
                                                                                             <p>" + message["body"] + "</p> \
@@ -318,13 +340,27 @@
                     }
 
 
-                }                    
-                //Keeps it scrolled down only when user sends a message
+                }  
+                document.getElementById("selected_messages").innerHTML = new_html;
+                //Keeps it scrolled down only when there is a change in the html
+                /*
+                old_html =  document.getElementById("selected_messages").innerHTML;
+                if (!(String(old_html.trim()) === String(new_html).trim())) {
+                    //difference = getDifference(old_html, new_html);
+                    //console.log("Differences", difference);
+                    //console.log("-----------------");
+                    document.getElementById("selected_messages").innerHTML = new_html;
+                    var element = document.getElementsByClassName("msg_history")[0];
+                    element.scrollTop = element.scrollHeight;                           
+                }               
+                */
+                
                 if (window.scroll_down == "true") {
                     var element = document.getElementsByClassName("msg_history")[0];
                     element.scrollTop = element.scrollHeight;
                     window.scroll_down = "false";                            
-                }            
+                } 
+                           
             }  
         };  
         request.open('POST', 'retrieve_message.php', true);
@@ -456,7 +492,27 @@
         $(".active").removeClass("active");
         $("#link-inbox").addClass("active");
     }); 
-
+var checkbottom = "hi";
+jQuery(function($) {
+$('.msg_history').on('scroll', function() {
+    var check = $(this).scrollTop() + $(this).innerHeight() >= $(this) 
+[0].scrollHeight;
+    if(check) {
+       checkbottom = "bottom";
+    }
+    else {
+    checkbottom = "nobottom";
+    }
+})
+});
+window.setInterval(function(){
+    console.log(checkbottom);
+if (checkbottom=="bottom") {
+    //Scrolls down only if the user is already at the bottom when new messages arrive
+    var element = document.getElementsByClassName("msg_history")[0];
+    element.scrollTop = element.scrollHeight;
+}
+}, 100);
 </script>
 </body>
 </html>

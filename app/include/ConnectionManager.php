@@ -12,6 +12,7 @@ class ConnectionManager {
             $password = "";  
         $dbname = "is216";
         $port = 3306;    
+        
         //Need to put uft8 to support chinese and latin characters!
         $url  = "mysql:host={$host};dbname={$dbname};port={$port};charset=utf8";
         
@@ -24,9 +25,9 @@ class ConnectionManager {
         $username = "admin";
         $password = "is216eco123";
         $db_name = "is216";
-        */
-        //return new PDO('mysql:host=' . $host . ';dbname=' . $db_name, $username, $password, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
         
+        return new PDO('mysql:host=' . $host . ';dbname=' . $db_name, $username, $password, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+        */
     }
     
 }

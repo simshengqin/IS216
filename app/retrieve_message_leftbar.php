@@ -1,5 +1,5 @@
 <?php
-require_once "include\common.php";
+require_once "include/common.php";
 if(isset($_POST['user_id']) && isset($_POST['user_type'])){
     $user_id = $_POST['user_id'];
     $user_type = $_POST['user_type'];
@@ -33,6 +33,7 @@ if(isset($_POST['user_id']) && isset($_POST['user_type'])){
             $from_type = $message->get_to_type();                            
         } 
         if ($from_type == "user") {
+            //$individual_message["from_name"] = ucfirst($_SESSION["name"]);
             $individual_message["from_name"] = ucfirst($userDAO->retrieve_user($from_id)->get_name());
             $individual_message["from_image"] = "images/profile_picture/user/$from_id.png";
             //Use the default picture if the image does not exist
@@ -42,7 +43,7 @@ if(isset($_POST['user_id']) && isset($_POST['user_type'])){
             
         }
         else if ($from_type == "company") {
-            
+            //$individual_message["from_name"] = ucfirst($_SESSION["name"]);
             $individual_message["from_name"] = ucfirst($companyDAO->retrieve_company($from_id)->get_name());
             $individual_message["from_image"] = "images/profile_picture/company/$from_id.png";
             //Use the default picture if the image does not exist

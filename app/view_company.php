@@ -27,6 +27,11 @@
   //$company_name = $company-> get_name()
   //$company_password= $company-> get_password()
   $company_rating = $company-> get_rating();
+  $user_id = $_SESSION["user_id"];
+  $userDAO = new userDAO();
+  $user = $userDAO-> retrieve_user($user_id);
+  $cart_company_id = $user->get_cart_company_id(); 
+  $cart_company_name = $companyDAO -> retrieve_company_name($cart_company_id);
 
 
 ?>
@@ -82,7 +87,7 @@
             </div> 
             <div class="row mb-3 ml-3">         
                 <button type="button" onclick="location.href='inbox.php?user_id=<?php echo $_SESSION['user_id']?>&user_type=user&target_id=<?php echo $company_id?>&target_type=company&target_name=<?php echo $company_name?>'" class="btn btn-outline-info mr-2"><i class="fas fa-comment mr-2"></i>Chat</button>
-                <button type="button" onclick="show_map_modal()" class="btn btn-outline-info"><i class="fa fa-map-marker"></i>View Map</button>
+                <button type="button" onclick="show_map_modal()" class="btn btn-outline-info"><i class="fa fa-map-marker mr-1"></i>View Map</button>
             </div>
             </h1>         
             <div class="row mb-3 ml-3">
@@ -116,7 +121,7 @@
     <div class='row'>
         <!--Modal to warn users of change in cart-->
         <div class="modal fade" id="change_company_id_in_cart_msg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
+            <div class="modal-dialog modal-dialog-centered role="document">
             <div class="modal-content">
                 <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
@@ -192,16 +197,20 @@
                         <div>
                             <div class="form-row m-2">
                                 <div class="form-group col-12">
+                                    <div class="form-row m-2">
+                                        Sort By 
+                                     </div>
                                     <div class="input-group">
-                                        <span class="input-group-prepend">
+                                        <!--<span class="input-group-prepend">
                                             <label class="input-group-text" for="inputGroupSelect01">
                                             Sort by</label>
-                                        </span>
-                                        <select class="form-control custom-select w-100" id="sort_by_bar";"                                                                                                                >
+                                        </span>-->
+                                        
+                                        <select class="form-control custom-select w-100" id="sort_by_bar" >
                                             <option selected value="Posted Date: Newest to oldest">Posted Date: Newest to oldest</option>
                                             <option selected value="Posted Date: Oldest to newest">Posted Date: Oldest to newest</option>
-                                            <option selected value="Expiry Date: Shorter away to further away">Expiry Date: Shorter away to further away</option>
-                                            <option selected value="Expiry Date: Further away to shorter away">Expiry Date: Further away to shorter away</option>
+                                            <option selected value="Expiry Date: Shorter away to further away">Expiry Date: Shorter to further</option>
+                                            <option selected value="Expiry Date: Further away to shorter away">Expiry Date: Further to shorter</option>
                                             <option value="Price: Low to high">Price: Low to high</option>
                                             <option value="Price: High to low">Price: High to low</option>
                                         </select>
@@ -216,10 +225,10 @@
                                 <div class="form-group col-12">
                                     <div class="row">
                                         <div class="col-6">
-                                            <input type="text" id="price_min" class="mr-1 w-100" placeholder='Min $'></input>
+                                            <input type="text" id="price_min" class="mr-1 p-2 w-100" placeholder='Min $'></input>
                                         </div>
                                         <div class="col-6">
-                                            <input type="text" id="price_max" class="w-100" placeholder='Max $'></input>
+                                            <input type="text" id="price_max" class="p-2 w-100" placeholder='Max $'></input>
                                         </div>
                                     </div>
                                 </div>
@@ -239,7 +248,7 @@
                             </div>
                             <div class="form-row ml-2 mr-2">
                                 <div class="form-group col-12">
-                                    <input type="number" id="freshness_min_days_to_expiry" min="1" step="1" placeholder='Min days to expiry'></input>   
+                                    <input type="number" class="p-2 w-100" id="freshness_min_days_to_expiry" min="1" step="1" placeholder='Min days to expiry'></input>   
                                 </div>
                             </div>
                             <!--
@@ -294,13 +303,15 @@
                                                                 $cart = $user -> get_cart();
                                                                 if (strlen($cart) ==0) {
                                                                     //echo the company_id for the below js function to access it
-                                                                    echo "$company_id";
+                                                                    echo "New" . "$company_id";
                                                                     //echo 'true';
                                                                 }
                                                                 else {
                                                                     $cart = $user -> get_cart();
                                                                     if (strlen($cart) ==0) {
                                                                         $cart_arr = [];
+                                                                        $_SESSION['cart_company_id'] = 0;
+                                                                        $_SESSION['cart_company_name'] = "";    
                                                                       }
                                                                       else {
                                                                         $cart_arr = explode(",",$cart);
@@ -316,22 +327,7 @@
                                                                          
                                                                 }  
                                                             ?>"></input>
-        <input type="hidden" id="cart_company_name" value="<?php 
-                                                                $companyDAO = new companyDAO();
-                                                                
-                                                                //HARDCODED user_id here, need to change
-                                                                $user_id = $_SESSION["user_id"];
-                                                                $user = $userDAO-> retrieve_user($user_id);
-                                                                $cart = $user -> get_cart();
-                                                                $cart_company_id = $user->get_cart_company_id();
-                                                                //echo "Cart companyid: " . $cart_company_id;
-                                                                if ($cart_company_id != "0") {
-                                                                    echo $companyDAO -> retrieve_company_name($cart_company_id);    
-                                                                }
-                                                                else {
-                                                                    //Cart is empty
-                                                                    echo "";
-                                                                }
+        <input type="hidden" id="cart_company_name" value="<?php echo $cart_company_name;          
                                                             ?>"></input>
         <!--Product grid displaying all food products-->
         <div class="col-2"></div>
@@ -516,7 +512,7 @@
             <div style="position: fixed; top: 73; right: 0;  z-index: 10000;" >
 
                 <!-- Then put toasts within -->
-                <div class="toast" id="add_to_cart_message" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast hide" id="add_to_cart_message" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="toast-header">
                     <!--<img src="..." class="rounded mr-2" alt="...">-->
                     <strong class="mr-auto">Success!</strong>
@@ -530,7 +526,7 @@
                 </div>
                 </div>
 
-                <div class="toast" data-autohide="false" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast hide" data-autohide="false" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="toast-header">
                     <img src="..." class="rounded mr-2" alt="...">
                     <strong class="mr-auto">Bootstrap</strong>
@@ -760,6 +756,9 @@
         else if (target.innerText == "ADD TO CART") {           
             //Warn the user if he wants to change the company id in his current cart
             //alert(document.getElementById("same_company_id_from_user_cart").value);
+            if (document.getElementById("same_company_id_from_user_cart").value == "true") {
+                
+            }
             if (document.getElementById("same_company_id_from_user_cart").value == "true") {
                 //Here can put 0 as update_user.php will increase it to 1
                 var quantity = 0;

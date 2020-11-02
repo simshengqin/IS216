@@ -646,6 +646,7 @@ img {
   margin: 0;
   padding: 5px 10px 5px 12px;
   width: 100%;
+  white-space: initial;
 }
 .time_date {
   color: #747474;
@@ -670,6 +671,7 @@ img {
   color: #fff;
   padding: 5px 10px 5px 12px;
   width: 100%;
+  white-space: initial;
 }
 .outgoing_msg {
   overflow: hidden;

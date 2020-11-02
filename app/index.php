@@ -328,7 +328,7 @@ require_once 'include/protect.php';
         if (postal_code_input.value.length != 6) {
             //document.getElementById("invalid_postal_code_warning").innerHTML="<div class='alert alert-danger'>Postal code needs to be 6 digits</div>";   
             postal_code_input.value = "";
-            postal_code_input.setAttribute("placeholder", "Postal code needs to be 6 digit"); 
+            postal_code_input.setAttribute("placeholder", "Please enter 6 digit"); 
 
         }
         else {
@@ -343,7 +343,7 @@ require_once 'include/protect.php';
                         if ( data["status"] == "ZERO_RESULTS") {
                           console.log("Sorry, invalid postal code. Please try again!");
                           postal_code_input.value = "";
-                          postal_code_input.setAttribute("placeholder", "Sorry, invalid postal code. Please try again!"); 
+                          postal_code_input.setAttribute("placeholder", "Invalid postal code"); 
                         }
                         else {
                           //Sets the postal code in session

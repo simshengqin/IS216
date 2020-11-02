@@ -32,13 +32,11 @@
                     <img class="d-flex justify-content-center" src="images/user-eco-with-logo.png" style="height:300px; width:330px;">
                     <h3 class="login-heading mb-4">User Sign In</h3>
                     <form id="loginForm">
-                        <div class="label-form-cluster">
-                        <input id="username" class="form-control" placeholder="Username" required autofocus>
-                        <label for="inputEmail">Email</label>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" id="username" placeholder="Username" required autofocus>                          
                         </div>
-                        <div class="label-form-cluster">
-                        <input type="password" id="password" class="form-control" placeholder="Password" required>
-                        <label for="inputPassword">Password</label>
+                        <div class="input-group mb-3">
+                            <input type="password" class="form-control" id="password" placeholder="Password" required>                          
                         </div>
                         <button id="login" class="btn btn-lg btn-info btn-block btn-register font-weight-bold mb-2" type="submit">Sign in</button>
                         <div class="text-center">
