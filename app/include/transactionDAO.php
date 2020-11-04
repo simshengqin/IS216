@@ -22,6 +22,28 @@ class transactionDAO {
         return $result;
     }
 
+    public function retrieve_transactions_by_company_id($company_id){
+        $sql = "SELECT * FROM transactions WHERE 
+        company_id = :company_id ORDER BY transaction_id DESC";#order_date, order_time DESC";
+        
+        $connMgr = new ConnectionManager();      
+        $conn = $connMgr->getConnection();
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':company_id', $company_id, PDO::PARAM_INT);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->execute();
+
+        $result = [];
+
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $result[] = new transactions($row['transaction_id'], $row['userid'], $row['cart'], $row['company_id'], $row['order_date'], $row['order_time'], $row['amount'], $row['collection_type'], $row['review'], $row['rating'], $row['collected']);
+        }
+        return $result;
+    }
+
+
+
     public function add($userid, $cart, $company_id, $order_date, $order_time, $amount, $collection_type, $review, $rating, $collected){       
         $sql = 'INSERT INTO transactions (userid, cart, company_id, order_date, order_time, amount, collection_type, review, rating, collected) 
                     VALUES (:userid, :cart, :company_id, :order_date, :order_time, :amount, :collection_type, :review, :rating, :collected)';
