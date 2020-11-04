@@ -33,6 +33,7 @@
                     $email             =$_POST['email'];
                     $phoneNumber       =$_POST['phoneNumber'];
                     $password          =$_POST['password'];
+                    $password          =password_hash($password, PASSWORD_BCRYPT);
                     $cart              ="";
                     $cart_company_id   =0;
                     $prefer            =(array)$_POST['preferances'];
@@ -129,13 +130,13 @@
                         <br>
                          <div class="form-group right">
                             <label for="experience" class="label-title">Within a proximity range from current location</label>
-                            <input type="range" min="1" max="25" step="5" value="0" name="preferances[]" id="experience" class="form-input" onChange="change();" style="height: 28px; width: 78%; padding: 0;" />
-                            <span id="range-label">1KM</span>
+                            <input type="range" min="1" max="21000" step="5" value="0" name="preferances[]" id="experience" class="form-input" onChange="change();" style="height: 28px; width: 78%; padding: 0;" />
+                            <span id="range-label">1m</span>
                         </div>
                         <div class="text-left">
                         <br>
                         </div>
-                        <button id="register" name="submit" class="btn btn-lg btn-primary btn-block btn-register text-uppercase font-weight-bold mb-2" type="submit">Register</button>
+                        <button id="register" name="submit" class="btn btn-lg btn-primary btn-block btn-register font-weight-bold mb-2" type="submit">Register</button>
                         <div class="text-center">
                         <br> 
                         <a class="medium font-weight-bold .text-secondary" href="../app/user_login.php">Back to login</a></div>
@@ -193,7 +194,7 @@
         var rangeLabel = document.getElementById("range-label");
         var experience = document.getElementById("experience");
         function change() {
-        rangeLabel.innerText = experience.value + "K";
+        rangeLabel.innerText = experience.value + "m";
         }
     </script>
     <script>

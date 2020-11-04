@@ -168,7 +168,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 </div>
                 
                 <div class="col-md-6 text-center">
-                    <img class="mr-2 mb-2" width="200px" src="images/profile_picture/company/<?php echo $company_id ?>.png"></img>
+                    <img class="mr-2 mb-2 bg-white" width="200px" src="images/profile_picture/company/<?php echo $company_id ?>.png"></img>
                     <h3> <?php echo ucfirst(str_replace('_', ' ', $company_name))?></h3>
                     <div> <i class="fas fa-star mr-2"></i> <span> Rating: <?php echo $company_rating ?></span> </div>
                     
