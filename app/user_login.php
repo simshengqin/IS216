@@ -96,7 +96,7 @@
                         url: "user_jslogin.php",
                         data: {username:username, password:password},
                         success:function(data){
-                            alert(data);
+                            //alert(data);
                             if( $.trim(data) === "1" ){
                                 //sessionStorage.setItem('username', data['username']);
                                 window.location.href = "index.php";               

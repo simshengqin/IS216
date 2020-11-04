@@ -61,15 +61,29 @@
   </header> -->
 <div class="container">
     <div class='row pl-3 pr-3'>
-        <div class='col-sm-3 profile rounded' style="margin-top: 50px; margin-right: 20p;">
+        <div class='col-md-3 profile rounded' style="margin-top: 50px; margin-right: 20p;">
             <div class="pb-5"> 
                 <!-- <h2 class="display-5 mx-md-5">Customer Profile</h2> -->
                 <!-- <hr class="my-4"> -->
-                <img src="images/profile_picture/user/default.png" class="rounded-circle w-53 mx-auto d-block profile-img" style="margin-top: 30px; margin-bottom: 20px;">
+                <?php
+                    if (file_exists("images/profile_picture/user/$user_id.png")) {
+                        $image_link = "images/profile_picture/user/$user_id.png";
+                    }
+                    elseif (file_exists("images/profile_picture/user/$user_id.jpg")) {
+                        $image_link = "images/profile_picture/user/$user_id.jpg";
+                    }
+                    elseif (file_exists("images/profile_picture/user/$user_id.jpeg")) {
+                        $image_link = "images/profile_picture/user/$user_id.jpeg";
+                    }
+                    else {
+                        $image_link = "images/profile_picture/user/default.png";
+                    }
+                ?>
+                <img src='<?php echo "$image_link"?>' class="rounded-circle w-5 mx-auto d-block profile-img" style="margin-top: 30px; margin-bottom: 20px;">
                 <!-- <img src="images/profile_picture/user/default.png" class="profile-img mx-auto d-block" style="margin-top: 30px; margin-bottom: 20px;"> -->
-                <div class="personal-details"><h3><?php echo $user_name ?></h3></div>
-                <div class="personal-details"><h5><?php echo $email ?></h5></div>
-                <div class="personal-details"><h5><?php echo $phoneNumber ?></h5></div>
+                <div class="personal-details"><h3 style="word-wrap: break-word;"><?php echo $user_name ?></h3></div>
+                <div class="personal-details"><p style="word-wrap: break-word;"><?php echo $email ?></p></div>
+                <div class="personal-details"><p style="word-wrap: break-word;"><?php echo $phoneNumber ?></p></div>
                 <div id='user_id' hidden><?php echo $user_id ?></div>
                 <div id='preferences' hidden><?php echo $preferences ?></div>
             </div>
@@ -77,7 +91,7 @@
 
         <!--<div style="width:20px;"></div>-->
   
-        <div class="col-sm-9 profile rounded" style="margin-top: 50px;">
+        <div class="col-md-9 profile rounded" style="margin-top: 50px;">
             <div class="mx-md-5" >
             <h2 style="margin-bottom: 30px; margin-top: 50px;">Notification Preferences</h2>
                 <p>Conditions for when you prefer to receive notifications on new food product listings.</p>
@@ -113,7 +127,7 @@
                                 } elseif ($counter == 2){
                                     echo "<input type='checkbox' id='c2' name='c2' value='true' onchange =\"update_preferences('halal')\" checked><label for='c2'' style='padding-left: 10px;'> Halal</label><br>";
                                 } else {
-                                      echo "<input type='checkbox' id='c3' name='c3' value='{$pref}' onchange =\"update_preferences('proximity')\" checked><label for='c3' style='padding-left: 10px;'> Within a proximity range from current location (m): <input type='text' id='updated_proximity'  value='{$pref}' aria-label='Text input with checkbox' onchange =\"update_preferences('proximity')\" ></label><br>";
+                                      echo "<input type='checkbox' id='c3' name='c3' value='{$pref}' onchange =\"update_preferences('proximity')\" checked><label for='c3' style='padding-left: 10px;'> Within a proximity range (m): <input type='text' id='updated_proximity'  value='{$pref}' aria-label='Text input with checkbox' onchange =\"update_preferences('proximity')\" ></label><br>";
                                 }
                             } else {
                                   if ($counter == 1) {
@@ -121,13 +135,13 @@
                                   } elseif ($counter == 2){
                                       echo "<input type='checkbox' id='c2' name='c2' value='false' onchange =\"update_preferences('halal')\"><label for='c2' style='padding-left: 10px;'> Halal</label><br>";
                                   } else {
-                                    echo "<input type='checkbox' id='c3' name='c3' value='{$pref}' onchange =\"update_preferences('proximity')\"><label for='c3' style='padding-left: 10px;'> Within a proximity range from current location (m): <input type='text' id='updated_proximity' aria-label='Text input with checkbox' onchange =\"update_preferences('proximity')\" ></label><br>";
+                                    echo "<input type='checkbox' id='c3' name='c3' value='{$pref}' onchange =\"update_preferences('proximity')\"><label for='c3' style='padding-left: 10px;'> Within a proximity range (m): </label><div><input type='text' class='ml-3' id='updated_proximity' aria-label='Text input with checkbox' onchange =\"update_preferences('proximity')\" ></div><br>";
                                   }
                             }
                         }
                     ?>
         
-                <p style="margin-top: 10px;"><button type="submit" class="btn btn-primary" onclick="changePreferences()" >Change Preferences</button></p>
+                <p style=""><button type="submit" class="btn btn-primary ml-3" onclick="changePreferences()" >Change Preferences</button></p>
 
               
             </div>
