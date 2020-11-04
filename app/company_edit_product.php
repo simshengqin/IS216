@@ -212,7 +212,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 });
 
-function validationUpdate(errorDateInput, decay_date_value, errorEndTime, decay_time_value, errorAfterPrice, price_after_value, errorQuantity, quantity_value){
+function validationUpdate(errorDateInput, decay_date_value, errorEndTime, decay_time_value, price_before_value, errorAfterPrice, price_after_value, errorQuantity, quantity_value){
+    
     var noError = true;
 
     errorDateInput = errorDateInput.attributes[0].value
@@ -222,8 +223,12 @@ function validationUpdate(errorDateInput, decay_date_value, errorEndTime, decay_
 
     var decayDateInput = document.getElementById(decay_date_value.attributes[1].value).value;
     var decayTimeInput = document.getElementById(decay_time_value.attributes[1].value).value;
+    var priceBefore = document.getElementById(price_before_value.attributes[2].value).value;
     var priceAfter = document.getElementById(price_after_value.attributes[1].value).value;
     var qty = document.getElementById(quantity_value.attributes[1].value).value;
+
+    console.log(decayDateInput);
+    console.log(decayTimeInput);
 
     if(decayDateInput==""){
       document.getElementById(errorDateInput).innerHTML = "Please specify a new end date."
@@ -249,7 +254,12 @@ function validationUpdate(errorDateInput, decay_date_value, errorEndTime, decay_
       document.getElementById(errorAfterPrice).innerHTML = "Price cannot be less than 0."
       document.getElementById(errorAfterPrice).style.visibility = "visible";
       noError = false;
-    } else {
+    } else if (priceAfter >= priceBefore){
+      document.getElementById(errorAfterPrice).innerHTML = "Price must be less than before price."
+      document.getElementById(errorAfterPrice).style.visibility = "visible";
+      noError = false;
+    }
+    else {
       document.getElementById(errorAfterPrice).style.visibility = "hidden";
     }
 
@@ -302,6 +312,7 @@ function validationDelete(productId){
         $errorEndTime = "errorEndTime".$strProductId;
         $decay_time_value = "decayTime".$strProductId;
         $errorAfterPrice = "errorAfterPrice".$strProductId;
+        $price_before_value = "beforePrice".$strProductId;
         $price_after_value = "priceAfter".$strProductId;
         $errorQuantity = "errorQuantity".$strProductId;
         $quantity_value = "quantity".$strProductId;
@@ -332,6 +343,8 @@ function validationDelete(productId){
 
                 <input type='hidden' name='productid' value={$product->get_product_id()}>
 
+                <input type='hidden' name='before_Price' id='beforePrice{$product->get_product_id()}' value={$product->get_price_before()}>
+
                 <div class='form-group'>
                     <div class='input-group mb-3'>
                         <div class='input-group-prepend'>
@@ -355,7 +368,7 @@ function validationDelete(productId){
                 <div class='form-group' style='margin-bottom:-15px;'>
                   <div class='input-group mb-3'>
                     <label for='beforePrice_{$product->get_product_id()}' class='col-form-label' style='font-size: 20px;'> Before Price : $  </label>
-                    <input type='text' readonly class='form-control-plaintext' name='before_Price' id='beforePrice_{$product->get_product_id()}' value='{$product->get_price_before()}' style='font-size: 20px;'>
+                    <input type='text' readonly class='form-control-plaintext'  value='{$product->get_price_before()}' style='font-size: 20px;'>
                   </div>
                 </div>
 
@@ -381,7 +394,7 @@ function validationDelete(productId){
                 <p id='errorQuantity{$product->get_product_id()}' style='visibility: hidden; color: red;'> </p>
 
                 
-                <button type='submit' class='btn btn-info btn-lg btn-block' name='editProduct' style='left: 0%;' onclick='return validationUpdate($errorDateInput, $decay_date_value, $errorEndTime, $decay_time_value, $errorAfterPrice, $price_after_value, $errorQuantity, $quantity_value)'> Update </button>
+                <button type='submit' class='btn btn-info btn-lg btn-block' name='editProduct' style='left: 0%;' onclick='return validationUpdate($errorDateInput, $decay_date_value, $errorEndTime, $decay_time_value, $price_before_value, $errorAfterPrice, $price_after_value, $errorQuantity, $quantity_value)'> Update </button>
                 <!-- <button type='submit' class='btn btn-danger btn-lg btn-block' name='deleteProduct' style='left: 0%;'> Delete </button> -->
                 <button type='button' class='btn btn-danger btn-lg btn-block' onclick='validationDelete($strProductId)' style='left: 0%;'> Delete </button>
 
