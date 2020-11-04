@@ -33,6 +33,7 @@
                     $email             =$_POST['email'];
                     $phoneNumber       =$_POST['phoneNumber'];
                     $password          =$_POST['password'];
+                    $password          =password_hash($password, PASSWORD_BCRYPT);
                     $cart              ="";
                     $cart_company_id   =0;
                     $prefer            =(array)$_POST['preferances'];
