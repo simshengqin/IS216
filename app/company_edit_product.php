@@ -224,26 +224,42 @@ function validationUpdate(errorDateInput, decay_date_value, errorEndTime, decay_
     var decayDateInput = document.getElementById(decay_date_value.attributes[1].value).value;
     var decayTimeInput = document.getElementById(decay_time_value.attributes[1].value).value;
     var priceBefore = document.getElementById(price_before_value.attributes[2].value).value;
+    priceBefore = parseFloat(priceBefore)
     var priceAfter = document.getElementById(price_after_value.attributes[1].value).value;
+    priceAfter = parseFloat(priceAfter)
     var qty = document.getElementById(quantity_value.attributes[1].value).value;
 
-    console.log(decayDateInput);
-    console.log(decayTimeInput);
+    var noDateError = false;
+
+    console.log("Decay Date: " + decayDateInput);
+    console.log("Decay time: " + decayTimeInput);
 
     if(decayDateInput==""){
       document.getElementById(errorDateInput).innerHTML = "Please specify a new end date."
       document.getElementById(errorDateInput).style.visibility = "visible";
       noError = false;
     } else {
+      noDateError = true
       document.getElementById(errorDateInput).style.visibility = "hidden";
     }
 
     if(decayTimeInput==""){
-      document.getElementById(errorEndTime).innerHTML = "Please specify a new end time."
+      document.getElementById(errorEndTime).innerHTML = "Please specify a new end time.";
       document.getElementById(errorEndTime).style.visibility = "visible";
       noError = false;
-    } else {
+    } else if (noDateError == true){
+      var checkDatetime = checkIfDateTimeExpired(decayDateInput, decayTimeInput);
+      if(checkDatetime == false){
+        document.getElementById(errorEndTime).innerHTML = "Please indicate a promotion end time, with a later end time.";
+        document.getElementById(errorDateInput).innerHTML = "Please indicate a promotion end date, with a later end date."
+        document.getElementById(errorEndTime).style.visibility = "visible";
+        document.getElementById(errorDateInput).style.visibility = "visible";
+        noError = false;
+      }
+    }else {
       document.getElementById(errorEndTime).style.visibility = "hidden";
+      document.getElementById(errorDateInput).style.visibility = "hidden";
+      noError = true;
     }
 
     if(priceAfter==""){
@@ -289,6 +305,32 @@ function validationDelete(productId){
   //document.getElementById(modalProductName).innerHTML = productId;
   document.getElementById("modalProductName").setAttribute("value", productId)
   $('#exampleModalCenter').modal('show');
+}
+
+function checkIfDateTimeExpired(date,time){
+  console.log(date);
+  console.log(time);
+  // date
+  var year = date.split("-")[0];
+  var month = date.split("-")[1];
+  var day = date.split("-")[2];
+  // time
+  var hour = time.split(":")[0];
+  var min = time.split(":")[1];
+  var sec = "00";
+        
+  var postDateTime = " " + month + " " + day + ", " + year + " " + hour + ":" + min + ":" + sec + "";
+  var checkPostDateTime = new Date(postDateTime).getTime();
+  var now = new Date().getTime();
+  var timeRemaining =  checkPostDateTime - now;
+  console.log(timeRemaining);
+        
+  if(timeRemaining < 0){
+    return false;
+  } else {
+    return true;
+  }
+    return false;
 }
 
 
