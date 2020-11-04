@@ -514,5 +514,7 @@ if (checkbottom=="bottom") {
 }
 }, 100);
 </script>
+<!-- Footer -->
+<?php include 'include/footer.php';?>
 </body>
 </html>
