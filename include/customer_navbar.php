@@ -48,21 +48,16 @@
         <li class="nav-item mr-4" id="link-inbox">
           <a class="nav-link" href="inbox.php?user_id=<?php echo $_SESSION["user_id"]?>&user_type=user">Inbox</a>
         </li>
-
-        <!-- <li class="nav-item mr-4" id="link-customer-profile">
+        <li class="nav-item mr-4" id="link-customer-profile">
             <a class="nav-link" href="customer_profile.php">Profile</a>
-        </li> -->
+        </li>
         <?php
           if (!isset($_SESSION["user_id"])) {
               echo" <li class='nav-item mr-4 id='link-login'>
                       <a class='nav-link' href='user_login.php'>Login/Register</a>
                   </li>";
               } else {
-                echo " 
-                    <li class='nav-item mr-4' id='link-customer-profile'>
-                        <a class='nav-link' href='customer_profile.php'>". ucwords($_SESSION['name']) ."</a>
-                    </li>
-                
+                echo " <span class='nav-link'> " . ucwords($_SESSION['name']) . "</span>
                     <li class='nav-item mr-4 id='link-login'>
                       <a class='nav-link' href='include/protect.php?logout=true'>Logout</a>
                     </li>";

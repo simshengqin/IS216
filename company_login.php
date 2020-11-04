@@ -40,7 +40,7 @@
                             <input type="password" class="form-control" id="password" placeholder="Password" required>
                                                     
                         </div>
-                        <button id="login" class="btn btn-lg btn-info btn-block btn-register font-weight-bold mb-2" type="submit">Sign in</button>
+                        <button id="login" class="btn btn-lg btn-primary btn-block btn-register text-uppercase font-weight-bold mb-2" type="submit">Sign in</button>
                         <hr>
                         <div class="text-center">                  
                             <a class="small font-weight-bold .text-secondary" href="user_login.php">Login as a user instead</a>

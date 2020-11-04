@@ -114,14 +114,14 @@
 
                     <!-- Before Price -->
                     <div class="form-group col-md-6" style="margin-bottom: -10px;">
-                        <input type="number" step="0.01" id="beforePrice" name="beforePrice" class="form-control form-control-lg" placeholder="Price Before: $0.00"> 
+                        <input type="number" id="beforePrice" name="beforePrice" class="form-control form-control-lg" placeholder="Price Before: $0.00"> 
                         <p id='errorBeforePrice'class="error_msg"  style='visibility: hidden; color: red;'>  </p> 
                     </div>
                     
 
                     <!-- After Price -->
                     <div class="form-group col-md-6" style="margin-bottom: -10px;">
-                        <input type="number" step="0.01" id="afterPrice" name="afterPrice" class="form-control form-control-lg" placeholder="Price Discounted: $0.00"> 
+                        <input type="number" id="afterPrice" name="afterPrice" class="form-control form-control-lg" placeholder="Price Discounted: $0.00"> 
                         <p id='errorAfterPrice'class="error_msg"  style='visibility: hidden; color: red;'>  </p> 
                     </div>
                     
@@ -143,7 +143,7 @@
                     <div class="form-group col-md-6" style="margin-bottom: -10px;">
                         <!-- <label for="dateInput" class="col-form-label"><h5>End Date: </h5></label> -->
                         <span> Promotional End Date</span>
-                        <input id="dateInput" class="form-control form-control-lg datepicker" name="dateInput" type="date" min="2000-01-01" max="2100-12-31"> 
+                        <input id="dateInput" class="form-control form-control-lg datepicker" name="dateInput" type="date" placeholder="dd-mm-yyyy" min="2000-01-01" max="2100-12-31"> 
                         <p id='errorPromotionEndDate'class="error_msg"  style='visibility: hidden; color: red;'>  </p>
                     </div>
 
@@ -301,18 +301,6 @@
         var productDateInput = document.getElementById('dateInput').value;
         var productTimeInput = document.getElementById('timeInput').value;
 
-        // Singapore Current Datetime
-        var singaporeDateUnmodified = new Date().toLocaleString("en-US", {timeZone: "Asia/Singapore"}).split(',')[0];
-        var singaporeDate = "";
-        singaporeDate += singaporeDateUnmodified.split('/')[2]; // Year
-        singaporeDate += "-";                         
-        singaporeDate += singaporeDateUnmodified.split('/')[0]; // Month
-        singaporeDate += "-";   
-        singaporeDate += singaporeDateUnmodified.split('/')[1]; // Date
-
-        var currentDate = new Date(singaporeDate);
-        var inputDate = new Date(productDateInput);
-
         //reset all error messages
         all_error_msg = document.getElementsByClassName("error_msg");
         for (error_msg of all_error_msg) {
@@ -434,16 +422,13 @@
           noError = false;
         } else if(noErrorDate == true){
           var noErrorTime = checkIfDateTimeExpired(productDateInput,productTimeInput) 
-          console.log("No Error Time: " + noErrorTime)
+          console.log("No Erro Time: " + noErrorTime)
           if(noErrorTime == false){
-            document.getElementById("errorPromotionEndDate").innerHTML = "Please indicate a promotion end date, with a later end date"
             document.getElementById("errorPromotionEndTime").innerHTML = "Please indicate a promotion end time, with a later end time";
             document.getElementById("errorPromotionEndTime").style.visibility = "visible";
-            document.getElementById("errorPromotionEndDate").style.visibility = "visible";
             noError = false;
           } else {
             document.getElementById("errorPromotionEndTime").style.visibility = "hidden";
-            document.getElementById("errorPromotionEndDate").style.visibility = "hidden";
           }
         }
         
