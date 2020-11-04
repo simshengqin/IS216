@@ -49,8 +49,6 @@ if(isset($_SESSION['user_id']) && isset($_POST['product_id']) && isset($_POST['q
     if (isset($_POST['change_cart_company_id'])) {
         $cart_arr = [];
         echo "Hello" . $_POST['change_cart_company_id'];
-        //Also update the session cart value
-        $_SESSION['cart_company_id'] = $_POST['change_cart_company_id'];
         $userDAO->update_user_cart_company_id($user_id, $_POST['change_cart_company_id']);
     }
     if ($item_in_cart == false) {
@@ -64,12 +62,6 @@ if(isset($_SESSION['user_id']) && isset($_POST['product_id']) && isset($_POST['q
     #Need to update the quantity change if the user removes an entire product from their cart through view_products.php
     if ($quantity_change == "to_be_updated") {
         $quantity_change = -$before_delete_qty;
-    }
-    #If user deletes everything from his cart, it should set the cart company id to 0
-    if ($updated_cart == "") {
-        //Also update the session cart value
-        $_SESSION['cart_company_id'] = "0";
-        $userDAO->update_user_cart_company_id($user_id, "0");
     }
     #When user adds an item to their cart, the product qty in database decrease by 1!
     $quantity_change = -$quantity_change;

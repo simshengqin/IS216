@@ -39,11 +39,9 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
-        <!--
         <li class="nav-item mr-4" id="link-company-profile">
           <a class="nav-link" href="company_profile.php">Dashboard </a>
         </li>
-        -->
         <li class="nav-item mr-4" id="link-post-product" >
         <a class="nav-link" href="company_post_product.php">Post</a>
         </li>
@@ -59,7 +57,7 @@
                       <a class='nav-link' href='company_login.php'>Login/Register</a>
                   </li>";
               } else {
-                echo " <li class='nav-item mr-4' id='link-company-profile'> <a class='nav-link' href='company_profile.php'>" . ucwords($_SESSION['name']) . "</a></li>
+                echo " <span class='nav-link'> " . ucwords($_SESSION['name']) . "</span>
                     <li class='nav-item mr-4 id='link-login'>
                       <a class='nav-link' href='include/protect.php?logout=true'>Logout</a>
                     </li>";

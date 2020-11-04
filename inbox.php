@@ -104,10 +104,11 @@
     window.setInterval(function(){
         //Update the right side bar messages ever 1 second
         update_selected_messages();
+    }, 500);
+    window.setInterval(function(){
          //Update the left side bar messages ever 1 second
         update_selected_messages_leftbar();
-    }, 500);
-
+    }, 2000);
     function update_selected_messages_leftbar() {
         //Update the left sidebar messages
 
@@ -514,7 +515,5 @@ if (checkbottom=="bottom") {
 }
 }, 100);
 </script>
-<!-- Footer -->
-<?php include 'include/footer.php';?>
 </body>
 </html>

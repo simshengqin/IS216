@@ -95,8 +95,8 @@
         
       </div>
       <div class="modal-footer">
-        <?php echo "<button type='submit' class='btn btn-danger' name='deleteProduct' style='left: 0%;'> Delete </button>" ?>
-        <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+        <?php echo "<button type='submit' class='btn btn-info' name='deleteProduct' style='left: 0%;'> Delete </button>" ?>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
       </form>
     </div>
@@ -212,8 +212,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 });
 
-function validationUpdate(errorDateInput, decay_date_value, errorEndTime, decay_time_value, price_before_value, errorAfterPrice, price_after_value, errorQuantity, quantity_value){
-    
+function validationUpdate(errorDateInput, decay_date_value, errorEndTime, decay_time_value, errorAfterPrice, price_after_value, errorQuantity, quantity_value){
     var noError = true;
 
     errorDateInput = errorDateInput.attributes[0].value
@@ -223,43 +222,23 @@ function validationUpdate(errorDateInput, decay_date_value, errorEndTime, decay_
 
     var decayDateInput = document.getElementById(decay_date_value.attributes[1].value).value;
     var decayTimeInput = document.getElementById(decay_time_value.attributes[1].value).value;
-    var priceBefore = document.getElementById(price_before_value.attributes[2].value).value;
-    priceBefore = parseFloat(priceBefore)
     var priceAfter = document.getElementById(price_after_value.attributes[1].value).value;
-    priceAfter = parseFloat(priceAfter)
     var qty = document.getElementById(quantity_value.attributes[1].value).value;
-
-    var noDateError = false;
-
-    console.log("Decay Date: " + decayDateInput);
-    console.log("Decay time: " + decayTimeInput);
 
     if(decayDateInput==""){
       document.getElementById(errorDateInput).innerHTML = "Please specify a new end date."
       document.getElementById(errorDateInput).style.visibility = "visible";
       noError = false;
     } else {
-      noDateError = true
       document.getElementById(errorDateInput).style.visibility = "hidden";
     }
 
     if(decayTimeInput==""){
-      document.getElementById(errorEndTime).innerHTML = "Please specify a new end time.";
+      document.getElementById(errorEndTime).innerHTML = "Please specify a new end time."
       document.getElementById(errorEndTime).style.visibility = "visible";
       noError = false;
-    } else if (noDateError == true){
-      var checkDatetime = checkIfDateTimeExpired(decayDateInput, decayTimeInput);
-      if(checkDatetime == false){
-        document.getElementById(errorEndTime).innerHTML = "Please indicate a promotion end time, with a later end time.";
-        document.getElementById(errorDateInput).innerHTML = "Please indicate a promotion end date, with a later end date."
-        document.getElementById(errorEndTime).style.visibility = "visible";
-        document.getElementById(errorDateInput).style.visibility = "visible";
-        noError = false;
-      }
-    }else {
+    } else {
       document.getElementById(errorEndTime).style.visibility = "hidden";
-      document.getElementById(errorDateInput).style.visibility = "hidden";
-      noError = true;
     }
 
     if(priceAfter==""){
@@ -270,12 +249,7 @@ function validationUpdate(errorDateInput, decay_date_value, errorEndTime, decay_
       document.getElementById(errorAfterPrice).innerHTML = "Price cannot be less than 0."
       document.getElementById(errorAfterPrice).style.visibility = "visible";
       noError = false;
-    } else if (priceAfter >= priceBefore){
-      document.getElementById(errorAfterPrice).innerHTML = "Price must be less than before price."
-      document.getElementById(errorAfterPrice).style.visibility = "visible";
-      noError = false;
-    }
-    else {
+    } else {
       document.getElementById(errorAfterPrice).style.visibility = "hidden";
     }
 
@@ -307,32 +281,6 @@ function validationDelete(productId){
   $('#exampleModalCenter').modal('show');
 }
 
-function checkIfDateTimeExpired(date,time){
-  console.log(date);
-  console.log(time);
-  // date
-  var year = date.split("-")[0];
-  var month = date.split("-")[1];
-  var day = date.split("-")[2];
-  // time
-  var hour = time.split(":")[0];
-  var min = time.split(":")[1];
-  var sec = "00";
-        
-  var postDateTime = " " + month + " " + day + ", " + year + " " + hour + ":" + min + ":" + sec + "";
-  var checkPostDateTime = new Date(postDateTime).getTime();
-  var now = new Date().getTime();
-  var timeRemaining =  checkPostDateTime - now;
-  console.log(timeRemaining);
-        
-  if(timeRemaining < 0){
-    return false;
-  } else {
-    return true;
-  }
-    return false;
-}
-
 
 </script>    
 
@@ -354,7 +302,6 @@ function checkIfDateTimeExpired(date,time){
         $errorEndTime = "errorEndTime".$strProductId;
         $decay_time_value = "decayTime".$strProductId;
         $errorAfterPrice = "errorAfterPrice".$strProductId;
-        $price_before_value = "beforePrice".$strProductId;
         $price_after_value = "priceAfter".$strProductId;
         $errorQuantity = "errorQuantity".$strProductId;
         $quantity_value = "quantity".$strProductId;
@@ -385,8 +332,6 @@ function checkIfDateTimeExpired(date,time){
 
                 <input type='hidden' name='productid' value={$product->get_product_id()}>
 
-                <input type='hidden' name='before_Price' id='beforePrice{$product->get_product_id()}' value={$product->get_price_before()}>
-
                 <div class='form-group'>
                     <div class='input-group mb-3'>
                         <div class='input-group-prepend'>
@@ -410,7 +355,7 @@ function checkIfDateTimeExpired(date,time){
                 <div class='form-group' style='margin-bottom:-15px;'>
                   <div class='input-group mb-3'>
                     <label for='beforePrice_{$product->get_product_id()}' class='col-form-label' style='font-size: 20px;'> Before Price : $  </label>
-                    <input type='text' readonly class='form-control-plaintext'  value='{$product->get_price_before()}' style='font-size: 20px;'>
+                    <input type='text' readonly class='form-control-plaintext' name='before_Price' id='beforePrice_{$product->get_product_id()}' value='{$product->get_price_before()}' style='font-size: 20px;'>
                   </div>
                 </div>
 
@@ -436,7 +381,7 @@ function checkIfDateTimeExpired(date,time){
                 <p id='errorQuantity{$product->get_product_id()}' style='visibility: hidden; color: red;'> </p>
 
                 
-                <button type='submit' class='btn btn-info btn-lg btn-block' name='editProduct' style='left: 0%;' onclick='return validationUpdate($errorDateInput, $decay_date_value, $errorEndTime, $decay_time_value, $price_before_value, $errorAfterPrice, $price_after_value, $errorQuantity, $quantity_value)'> Update </button>
+                <button type='submit' class='btn btn-info btn-lg btn-block' name='editProduct' style='left: 0%;' onclick='return validationUpdate($errorDateInput, $decay_date_value, $errorEndTime, $decay_time_value, $errorAfterPrice, $price_after_value, $errorQuantity, $quantity_value)'> Update </button>
                 <!-- <button type='submit' class='btn btn-danger btn-lg btn-block' name='deleteProduct' style='left: 0%;'> Delete </button> -->
                 <button type='button' class='btn btn-danger btn-lg btn-block' onclick='validationDelete($strProductId)' style='left: 0%;'> Delete </button>
 
