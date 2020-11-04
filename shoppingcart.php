@@ -166,7 +166,7 @@
                 $cart_company_id = $user->get_cart_company_id(); 
                 $total_price = "0.00";
                 $company_id="";
-                if (strlen($cart) ==0) {
+                if ($_SESSION["cart_company_id"] == 0 || strlen($cart) ==0) {
                   echo "<h5 class='mb-4 font-weight-bold' >Cart (<span id='cartsize'>" . sizeof($cart_arr) . "</span> items)</h5>";
                   echo "<div class='alert alert-danger'>No items in cart currently!</div>";
                   $total_price_with_gst = "0.00";

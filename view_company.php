@@ -31,7 +31,13 @@
   $userDAO = new userDAO();
   $user = $userDAO-> retrieve_user($user_id);
   $cart_company_id = $user->get_cart_company_id(); 
-  $cart_company_name = $companyDAO -> retrieve_company_name($cart_company_id);
+  if ($cart_company_id != "0"){
+      $cart_company_name = $companyDAO -> retrieve_company_name($cart_company_id);
+  }
+  else {
+    $cart_company_name = "";
+  }
+  
 
 
 ?>
@@ -294,16 +300,20 @@
             </div>
         </div>        
         <!--A placeholder to store the user's cart-->
-
+  <!--
         <input type="hidden" id="same_company_id_from_user_cart" value="<?php 
                                                                 $userDAO = new userDAO();
                                                                 //HARDCODED user_id here, need to change
                                                                 $user_id = $_SESSION["user_id"];
+                                                                $cart_company_id = $_SESSION['cart_company_id'];
+                                                                echo ""
+                                                                /*
                                                                 $user = $userDAO-> retrieve_user($user_id);
+                                                                
                                                                 $cart = $user -> get_cart();
                                                                 if (strlen($cart) ==0) {
                                                                     //echo the company_id for the below js function to access it
-                                                                    echo "true";
+                                                                    echo "New" . "$company_id";
                                                                     //echo 'true';
                                                                 }
                                                                 else {
@@ -326,8 +336,17 @@
                                                                     }
                                                                          
                                                                 }  
+                                                                */
                                                             ?>"></input>
+        
+        
+        
+        -->
         <input type="hidden" id="cart_company_name" value="<?php echo $cart_company_name;          
+                                                            ?>"></input>
+        <input type="hidden" id="cart_company_id" value="<?php echo $_SESSION['cart_company_id'];          
+                                                            ?>"></input>
+        <input type="hidden" id="company_id" value="<?php echo $company_id;          
                                                             ?>"></input>
         <!--Product grid displaying all food products-->
         <div class="col-2"></div>
@@ -380,10 +399,10 @@
                     }
                     echo "<div class='col-12'>";
                     //Search bar
-                    echo '<div class="row" name="search_for_products">    
+                    echo '<div class="row" name="search_for_products" style="margin-bottom: 8px">    
                             <div class="col">
                                 <div class="row">
-                                    <div class="col">
+                                    <div class="col" style="padding: 0px">
                                         <input type="text" class="form-control" name="x" id="search_for_products" oninput ="search_filter()" placeholder="Find products">
                                     </div>
                                     <button class="btn btn-outline-info mb-2" id="filter_btn" onclick="show_filter_modal()">Filter</button>
@@ -513,11 +532,11 @@
 
                 <!-- Then put toasts within -->
                 <div class="toast hide" id="add_to_cart_message" role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="toast-header">
+                <div class="toast-header bg-success">
                     <!--<img src="..." class="rounded mr-2" alt="...">-->
-                    <strong class="mr-auto">Success!</strong>
-                    <small class="text-muted">just now</small>
-                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <strong class="mr-auto text-white">Success!</strong>
+                    <small style="color:white">just now</small>
+                    <button type="button" class="ml-2 mb-1 close text-white" data-dismiss="toast" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -724,7 +743,9 @@
                 }        
                 else {
                     //Now the user cart should be the same company id as this current page
-                    document.getElementById("same_company_id_from_user_cart").value = "true";
+                    //document.getElementById("same_company_id_from_user_cart").value = "true";
+                    document.getElementById("cart_company_id").value = document.getElementById("company_id").value;
+                
                     //Update the toast to reflect what item was added
                     arr = window.target_element.id.split(",");
                     product_id = arr[0];
@@ -740,7 +761,7 @@
         request.open('POST', 'update_user.php', true);
         request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded'); 
         //alert(document.getElementById("same_company_id_from_user_cart").value);
-        request.send("user_id="+user_id+"&product_id="+product_id+"&quantity="+quantity+"&quantity_change="+quantity_change+"&change_cart_company_id="+document.getElementById("same_company_id_from_user_cart").value );
+        request.send("user_id="+user_id+"&product_id="+product_id+"&quantity="+quantity+"&quantity_change="+quantity_change+"&change_cart_company_id="+document.getElementById("company_id").value );
         //$("#add_to_cart_message").toast('show');
         //alert('Successfully added ' + name + ' to cart!');
     }
@@ -748,6 +769,8 @@
         arr = event.target.id.split(",");
         product_id = arr[0];
         name = arr[1];
+        company_id = document.getElementById("company_id").value;
+        cart_company_id = document.getElementById("cart_company_id").value;
         //Button should not work at all if product is out of stock
         if (target.innerText == "OUT OF STOCK") {
             return;
@@ -756,13 +779,22 @@
         else if (target.innerText == "ADD TO CART") {           
             //Warn the user if he wants to change the company id in his current cart
             //alert(document.getElementById("same_company_id_from_user_cart").value);
-            if (document.getElementById("same_company_id_from_user_cart").value == "true") {
+            //No warning message if its the same company as the user current cart
+            if (company_id == cart_company_id) {
                 //Here can put 0 as update_user.php will increase it to 1
                 var quantity = 0;
                 var quantity_change = 1;        
                 target.innerText= "ADDED TO CART";
                 //Update the toast to reflect what item was added
                 document.getElementById("cart_message_body").innerText = name.charAt(0).toUpperCase() + name.slice(1) + " was successfully added to your cart. ";             
+            }
+            //Also no warning message if there is currently nothing in the user ccart, but should still update the user cart
+            //company id!
+            else if (cart_company_id == "0") {
+                //To change the add to cart btn to added to cart
+                window.target_element = target;
+                change_cart_company_id();              
+                return;
             }
             else {
                 window.target_element = target;
