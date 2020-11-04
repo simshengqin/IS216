@@ -51,7 +51,7 @@
   
 </head>
 
-<body>
+<body class="bg-white"> 
 
 <!-- Navigation -->
 <?php include 'include/customer_navbar.php';?>

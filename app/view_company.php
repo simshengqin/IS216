@@ -513,11 +513,11 @@
 
                 <!-- Then put toasts within -->
                 <div class="toast hide" id="add_to_cart_message" role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="toast-header">
+                <div class="toast-header bg-success">
                     <!--<img src="..." class="rounded mr-2" alt="...">-->
-                    <strong class="mr-auto">Success!</strong>
-                    <small class="text-muted">just now</small>
-                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <strong class="mr-auto text-white">Success!</strong>
+                    <small style="color:white">just now</small>
+                    <button type="button" class="ml-2 mb-1 close text-white" data-dismiss="toast" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
