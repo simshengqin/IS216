@@ -18,6 +18,7 @@
         if( $stmt->rowCount()> 0 ){
             $_SESSION['user_id'] = $user['user_id'];
             $_SESSION['name'] = $user['name'];
+            $_SESSION['cart_company_id'] = $user['cart_company_id'];
             echo"1";
         } else {
             "There is no user";
