@@ -399,10 +399,10 @@
                     }
                     echo "<div class='col-12'>";
                     //Search bar
-                    echo '<div class="row" name="search_for_products">    
+                    echo '<div class="row" name="search_for_products" style="margin-bottom: 8px">    
                             <div class="col">
                                 <div class="row">
-                                    <div class="col">
+                                    <div class="col" style="padding: 0px">
                                         <input type="text" class="form-control" name="x" id="search_for_products" oninput ="search_filter()" placeholder="Find products">
                                     </div>
                                     <button class="btn btn-outline-info mb-2" id="filter_btn" onclick="show_filter_modal()">Filter</button>
