@@ -803,7 +803,8 @@
                     product_id = arr[0];
                     name = arr[1];
                     //Update the navbar cart count
-                    document.getElementById("cart_count").innerText = 1;
+                    document.getElementsByClassName("cart-label")[0].innerText = 1;
+                    document.getElementsByClassName("cart-label")[1].innerText = 1;
                     document.getElementById("cart_message_body").innerText = name.charAt(0).toUpperCase() + name.slice(1) + " was successfully added to your cart. ";   
                     $("#add_to_cart_message").toast({ delay: 7000 });
                     $("#add_to_cart_message").toast('show');
@@ -850,7 +851,8 @@
                 var quantity_change = 1;        
                 target.innerText= "ADDED TO CART";
                 //Update the navbar cart count
-                document.getElementById("cart_count").innerText = parseInt(document.getElementById("cart_count").innerText) + 1;
+                document.getElementsByClassName("cart-label")[0].innerText = parseInt(document.getElementsByClassName("cart-label")[0].innerText) + 1;
+                document.getElementsByClassName("cart-label")[1].innerText = parseInt(document.getElementsByClassName("cart-label")[1].innerText) + 1;
                 //bounce animation
                 console.log("WHY");
                 doBounce($("#cart_count"), 3, '10px', 300);   
@@ -885,7 +887,9 @@
             //this way also helps to prevent cheating the system! if the user remove from his cart on shoppingcart page, it wont change the product qty in database twice
             var quantity_change = "to_be_updated";  
             //Update the navbar cart count
-            document.getElementById("cart_count").innerText = parseInt(document.getElementById("cart_count").innerText) - 1;  
+            document.getElementsByClassName("cart-label")[0].innerText = parseInt(document.getElementsByClassName("cart-label")[0].innerText) - 1; 
+            document.getElementsByClassName("cart-label")[1].innerText = parseInt(document.getElementsByClassName("cart-label")[1].innerText) - 1;  
+            
             //Update the toast to reflect what item was removed
             document.getElementById("cart_message_body").innerText = name.charAt(0).toUpperCase() + name.slice(1) + " was successfully removed from your cart. ";        
         }

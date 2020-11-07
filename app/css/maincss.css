@@ -10,7 +10,9 @@ body {
 .navbar-light .navbar-nav .nav-item > a:hover {
   color: #00a69c;
 }
-
+.navbar-light .navbar-nav .nav-item > a:hover .child{
+  color: #00a69c;
+}
 input[type="date"]:disabled { 
   background-color: white;
 }
@@ -915,7 +917,7 @@ img {
     color: #777;
   }
 }
-#cart-icon {
+.cart-icon {
   position: relative;
 }
 /*Customer navbar*/
@@ -937,4 +939,9 @@ img {
 }
 .cart-label:hover {
   background-color: #00a69c;
+}
+@media (max-width: 992px) {                  
+  #link-cart-inner {
+     display: none;
+  }
 }

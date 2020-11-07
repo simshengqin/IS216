@@ -54,11 +54,21 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" style="">
     <div class="container">
-    <a class="navbar-brand" href="index.php"><img src="images/logo/rsz_e (1).png">    <img src="images/logo/rsz_shadow_eco.png"></a>
+    <a class="navbar-brand" href="index.php"><img src="images/logo/rsz_e (1).png">    <img src="images/logo/rsz_shadow_eco.png"></a>    
+    <ul class="navbar-nav ml-auto mr-4 d-lg-none">
+      <li class="nav-item" id="link-cart">
+                <a href="shoppingcart.php" class="nav-link navbar-link-2 waves-effect cart-icon">
+                  <span class="badge badge-pill red"></span>
+                  <i class="fas fa-shopping-cart pl-0" style="width:30px;height:30px;"></i>
+                  <div class='cart-label'><?php echo $cart_count?></div>
+                </a>
+          </li>
+    </ul>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse mb-20" id="navbarResponsive">
+
+    <div class="collapse navbar-collapse mb-20 float-right" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item mr-4 active" id="link-home">
           <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
@@ -91,11 +101,11 @@
         ?>
      
         
-        <li class="nav-item" id="link-cart">
-              <a href="shoppingcart.php" class="nav-link navbar-link-2 waves-effect" id="cart-icon">
+        <li class="nav-item" id="link-cart-inner">
+              <a href="shoppingcart.php" class="nav-link navbar-link-2 waves-effect cart-icon">
                 <span class="badge badge-pill red"></span>
                 <i class="fas fa-shopping-cart pl-0" style="width:30px;height:30px;"></i>
-                <div class='cart-label' id="cart_count"><?php echo $cart_count?></div>
+                <div class='cart-label'><?php echo $cart_count?></div>
               </a>
         </li>
       </ul>

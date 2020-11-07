@@ -544,8 +544,8 @@
           console.log(window.target_element.id);
           window.target_element.remove();
           //Update the navbar cart count
-          document.getElementById("cart_count").innerText = parseInt(document.getElementById("cart_count").innerText) - 1;
-          user_id = document.getElementById("user_id").innerText;
+          document.getElementsByClassName("cart-label")[0].innerText = parseInt(document.getElementsByClassName("cart-label")[0].innerText) - 1; 
+          document.getElementsByClassName("cart-label")[1].innerText = parseInt(document.getElementsByClassName("cart-label")[1].innerText) - 1;  
           //Update the total price of all products
           total_price_for_all_products = 0
           for (total_price_product of document.getElementsByClassName("total_price_for_current_product")) {
