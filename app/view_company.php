@@ -64,6 +64,8 @@
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <!--cart bounce-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <!--Link to main.css files while contains all the css of this project-->
   <link rel='stylesheet' href='css\maincss.css'>
 <!--Company main info such as logo, numbero f products, followers etc-->
@@ -350,15 +352,20 @@
             </div>
         </div>        
         <!--A placeholder to store the user's cart-->
-
+                        
         <input type="hidden" id="same_company_id_from_user_cart" value="<?php 
                                                                 $userDAO = new userDAO();
                                                                 //HARDCODED user_id here, need to change
                                                                 $user_id = $_SESSION["user_id"];
+                                                                $cart_company_id = $_SESSION['cart_company_id'];
+                                                                echo ""
+                                                                /*
                                                                 $user = $userDAO-> retrieve_user($user_id);
+                                                                
                                                                 $cart = $user -> get_cart();
                                                                 if (strlen($cart) ==0) {
                                                                     //echo the company_id for the below js function to access it
+                                                                    echo "New" . "$company_id";
                                                                     echo "true";
                                                                     //echo 'true';
                                                                 }
@@ -380,10 +387,18 @@
                                                                         //echo the company_id for the below js function to access it
                                                                         echo "$company_id";
                                                                     }
-                                                                         
+
                                                                 }  
+                                                                */
+                                                                
                                                             ?>"></input>
         <input type="hidden" id="cart_company_name" value="<?php echo $cart_company_name;          
+                                                            ?>"></input>
+        <input type="hidden" id="user_id" value="<?php echo $_SESSION['user_id'];          
+                                                            ?>"></input>
+        <input type="hidden" id="cart_company_id" value="<?php echo $_SESSION['cart_company_id'];          
+                                                            ?>"></input>
+        <input type="hidden" id="company_id" value="<?php echo $company_id;          
                                                             ?>"></input>
         <!--Product grid displaying all food products-->
         <div class="col-2"></div>
@@ -561,14 +576,15 @@
             </div>
         </div>
         <div class="col-2"></div>
-        <div id="toastdiv">
+
+        <div id="toastdivold">
             <!--Toast, which is a message pop-up whenever an item is added to the cart-->
             <div style="position: relative; min-height: 200px;">
             <!-- Position it -->
-            <div style="position: fixed; top: 73; right: 0;  z-index: 10000;" >
+            <div style="position: fixed; top: 0; right: 0;  " >
 
                 <!-- Then put toasts within -->
-                <div class="toast hide" id="add_to_cart_message" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast hide" id="add_to_cart_messageold" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="toast-header">
                     <!--<img src="..." class="rounded mr-2" alt="...">-->
                     <strong class="mr-auto">Success!</strong>
@@ -601,7 +617,7 @@
     </div>
 </div>
 <?php include 'include/footer.php';?>
-
+<!--cart bounce -->
 <script>
     //***Follow button****//
     function process_follow() {
@@ -780,11 +796,14 @@
                 }        
                 else {
                     //Now the user cart should be the same company id as this current page
-                    document.getElementById("same_company_id_from_user_cart").value = "true";
+                    //document.getElementById("same_company_id_from_user_cart").value = "true";
+                    document.getElementById("cart_company_id").value = document.getElementById("company_id").value;
                     //Update the toast to reflect what item was added
                     arr = window.target_element.id.split(",");
                     product_id = arr[0];
                     name = arr[1];
+                    //Update the navbar cart count
+                    document.getElementById("cart_count").innerText = 1;
                     document.getElementById("cart_message_body").innerText = name.charAt(0).toUpperCase() + name.slice(1) + " was successfully added to your cart. ";   
                     $("#add_to_cart_message").toast({ delay: 7000 });
                     $("#add_to_cart_message").toast('show');
@@ -792,18 +811,30 @@
             }  
         };  
         //Hardcorded user id here. Rmb to change
-        user_id = 1;
+        user_id = document.getElementById("user_id").innerText;
         request.open('POST', 'update_user.php', true);
         request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded'); 
         //alert(document.getElementById("same_company_id_from_user_cart").value);
-        request.send("user_id="+user_id+"&product_id="+product_id+"&quantity="+quantity+"&quantity_change="+quantity_change+"&change_cart_company_id="+document.getElementById("same_company_id_from_user_cart").value );
+        request.send("user_id="+user_id+"&product_id="+product_id+"&quantity="+quantity+"&quantity_change="+quantity_change+"&change_cart_company_id="+document.getElementById("company_id").value );
         //$("#add_to_cart_message").toast('show');
         //alert('Successfully added ' + name + ' to cart!');
+    }
+    
+
+
+    function doBounce(element, times, distance, speed) {
+        console.log(element);
+        for(var i = 0; i < times; i++) {
+            element.animate({marginTop: '-='+distance}, speed)
+                .animate({marginTop: '+='+distance}, speed);
+        }        
     }
     function add_to_cart(target) {        
         arr = event.target.id.split(",");
         product_id = arr[0];
         name = arr[1];
+        company_id = document.getElementById("company_id").value;
+        cart_company_id = document.getElementById("cart_company_id").value;
         //Button should not work at all if product is out of stock
         if (target.innerText == "OUT OF STOCK") {
             return;
@@ -812,13 +843,28 @@
         else if (target.innerText == "ADD TO CART") {           
             //Warn the user if he wants to change the company id in his current cart
             //alert(document.getElementById("same_company_id_from_user_cart").value);
-            if (document.getElementById("same_company_id_from_user_cart").value == "true") {
+            //No warning message if its the same company as the user current cart
+            if (company_id == cart_company_id) {
                 //Here can put 0 as update_user.php will increase it to 1
                 var quantity = 0;
                 var quantity_change = 1;        
                 target.innerText= "ADDED TO CART";
+                //Update the navbar cart count
+                document.getElementById("cart_count").innerText = parseInt(document.getElementById("cart_count").innerText) + 1;
+                //bounce animation
+                console.log("WHY");
+                doBounce($("#cart_count"), 3, '10px', 300);   
+                //$("#cart_count").effect( "bounce", {times:3}, 300 );
                 //Update the toast to reflect what item was added
                 document.getElementById("cart_message_body").innerText = name.charAt(0).toUpperCase() + name.slice(1) + " was successfully added to your cart. ";             
+            }
+            //Also no warning message if there is currently nothing in the user ccart, but should still update the user cart
+            //company id!
+            else if (cart_company_id == "0") {
+                //To change the add to cart btn to added to cart
+                window.target_element = target;
+                change_cart_company_id();             
+                return;
             }
             else {
                 window.target_element = target;
@@ -837,7 +883,9 @@
             var quantity = 0;
             //Need to let the server know that it needs to retrieve the correct qty from the user cart and remove that qty for that product id in the database
             //this way also helps to prevent cheating the system! if the user remove from his cart on shoppingcart page, it wont change the product qty in database twice
-            var quantity_change = "to_be_updated";    
+            var quantity_change = "to_be_updated";  
+            //Update the navbar cart count
+            document.getElementById("cart_count").innerText = parseInt(document.getElementById("cart_count").innerText) - 1;  
             //Update the toast to reflect what item was removed
             document.getElementById("cart_message_body").innerText = name.charAt(0).toUpperCase() + name.slice(1) + " was successfully removed from your cart. ";        
         }
@@ -857,13 +905,17 @@
                     target.setAttribute("class", "add-to-cart");                   
                 }        
                 else {
-                    $("#add_to_cart_message").toast({ delay: 7000 });
-                    $("#add_to_cart_message").toast('show');
+                    
+                    //alert("HIII");
+                    //$("#success_popup").toast({ delay: 2000 });
+                    //$("#success_popup").toast('show');
+                    //$("#add_to_cart_message").toast({ delay: 7000 });
+                    //$("#add_to_cart_message").toast('show');
                 }
             }  
         };  
         //Hardcorded user id here. Rmb to change
-        user_id = 1;
+        user_id = document.getElementById("user_id").innerText;
         request.open('POST', 'update_user.php', true);
         request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded'); 
         

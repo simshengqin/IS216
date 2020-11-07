@@ -384,6 +384,7 @@
               
                 
                 <input type='hidden' value='<?php echo "$user_id,$company_id"; ?>' id="checkout-info">
+                <input type='hidden' value='<?php echo "$user_id"; ?>' id="user_id">
 
               </div>
             </div>
@@ -518,7 +519,8 @@
             //Send the request to the server to update the cart of user in database
             //Need to change hardcoded user_id later!!
             //XHR_send($user_id, $product_id, $quantity)
-            XHR_send(1,event.target.parentNode.parentNode.children[1].innerText ,event.target.parentNode.parentNode.children[2].value,-1);            
+            user_id = document.getElementById("user_id").innerText;
+            XHR_send(user_id,event.target.parentNode.parentNode.children[1].innerText ,event.target.parentNode.parentNode.children[2].value,-1);            
           }
           else {
             //Ask user whether they want to delete if quantity drops below 1
@@ -541,6 +543,9 @@
           //event.target.parentNode.parentNode.parentNode.parentNode.remove();
           console.log(window.target_element.id);
           window.target_element.remove();
+          //Update the navbar cart count
+          document.getElementById("cart_count").innerText = parseInt(document.getElementById("cart_count").innerText) - 1;
+          user_id = document.getElementById("user_id").innerText;
           //Update the total price of all products
           total_price_for_all_products = 0
           for (total_price_product of document.getElementsByClassName("total_price_for_current_product")) {

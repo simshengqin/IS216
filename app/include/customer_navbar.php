@@ -15,6 +15,14 @@
   <!-- maincss.css -->
   <link href="css/maincss.css" rel="stylesheet">
 
+  <!-- jquery for bounce animation-->
+  <script type = "text/javascript" 
+         src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js">
+  </script>
+		
+  <script type = "text/javascript" 
+      src = "https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js">
+  </script>
   <!-- icon -->
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>  -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.js" integrity="sha256-2JRzNxMJiS0aHOJjG+liqsEOuBb6++9cY4dSOyiijX4=" crossorigin="anonymous"></script>
@@ -29,7 +37,20 @@
 </head>
 
 <body>
+<?php
+    $userDAO = new userDAO();
+    $user_id = $_SESSION["user_id"];
+    $user = $userDAO->retrieve_user($user_id);
+    $cart = $user->get_cart();
+    if (strlen($cart) == 0) {
+        $cart_count = 0;
+    }
+    else {
+      $cart_arr = explode(",",$cart);
+      $cart_count = count($cart_arr);      
+    }
 
+?>
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" style="">
     <div class="container">
@@ -71,9 +92,10 @@
      
         
         <li class="nav-item" id="link-cart">
-              <a href="shoppingcart.php" class="nav-link navbar-link-2 waves-effect">
+              <a href="shoppingcart.php" class="nav-link navbar-link-2 waves-effect" id="cart-icon">
                 <span class="badge badge-pill red"></span>
-                <i class="fas fa-shopping-cart pl-0"></i>
+                <i class="fas fa-shopping-cart pl-0" style="width:30px;height:30px;"></i>
+                <div class='cart-label' id="cart_count"><?php echo $cart_count?></div>
               </a>
         </li>
       </ul>
@@ -82,5 +104,12 @@
   </nav>
 
 </body>
+<script>
+    $(document).ready(function() {
+
+        $("#cart_count").effect( "bounce", {times:3}, 300 );
+
+    });
+</script>
 
 </html>
