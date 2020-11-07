@@ -174,7 +174,15 @@
                 </div>
             </div>
             <span id="no_items_warning"></span>
-            <div class="row" id="main_company_grid">               
+            <div class="row" id="main_company_grid"> 
+                <?php
+                    //To calculate whether a company is within the range of the user specified proximity in preferences
+                    $userDAO = new userDAO();
+                    $preferences = $userDAO->retrieve_user_preferences($_SESSION["user_id"]);
+                    $proximity_range = explode(",",$preferences)[2];
+                    echo "<input type='text' id='proximity_range' value='$proximity_range'></input>";
+                ?>
+                <div id='proximity'         
                 <?php
                     function display_company_grids($data) {
                         echo "<div class='row'>";
@@ -391,8 +399,13 @@
                         var distance = google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(start_latitude,start_longtitude), new google.maps.LatLng(end_latitude, end_longtitude))/1000; 
                         console.log("Distance between start and end:", distance, "km");
                         //round to 2 dp
-                        distance = Math.round(distance * 100) / 100;               
-                        distance_obj.innerText = distance + " km away";     
+                        distance = Math.round(distance * 100) / 100;   
+
+                        distance_obj.innerHTML = "<div>" + distance + " km away</div>";  
+                        if (distance > parseFloat(document.getElementById("proximity_range").value)/1000) {
+                            distance_obj.innerHTML += "<div class='mt-2 text-danger'>Further away then specified preferences</div> ";  
+                        }  
+
 
                         
 

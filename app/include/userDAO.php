@@ -92,6 +92,22 @@ class userDAO {
         }
         return $result;
     }
+    
+    public function retrieve_user_preferences($user_id){
+        $sql = "SELECT * FROM user WHERE user_id = :user_id";
+
+        $connMgr = new ConnectionManager();      
+        $conn = $connMgr->getConnection();
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->execute();
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $result = $row['preferences'];
+        }
+        return $result;
+    }
     public function retrieve_user_cart($user_id){
         $sql = "SELECT * FROM user WHERE user_id = :user_id";
 

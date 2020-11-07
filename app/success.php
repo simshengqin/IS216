@@ -34,11 +34,11 @@
 
 
     
-    $transactions = $transactionDAO->retrieve_transactions_by_user_id($user_id);
+    //$transactions = $transactionDAO->retrieve_transactions_by_user_id($user_id);
 
     // clear shopping cart for user
-    $userDAO->update_user_cart($user_id, '');
-    $userDAO->update_user_cart_company_id($user_id, 0);
+    //$userDAO->update_user_cart($user_id, '');
+    //$userDAO->update_user_cart_company_id($user_id, 0);
 
 
 ?>
@@ -72,6 +72,7 @@
            <input type='hidden' value='<?php echo "$user_id" ?>' id="user_id"> 
           <hr>
           <?php
+          /*
             if ($transactions == []){
                 echo "<div>No orders made yet.</div>";
             } else {
@@ -144,7 +145,7 @@
                 }
               }
 
-
+          */
           ?>
 
           <!-- <p class='card-text'><button type='submit' class='btn btn-success btn-sm' onclick='addRating()'>Rate</button></p>
