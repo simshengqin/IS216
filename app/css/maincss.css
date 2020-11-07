@@ -227,7 +227,7 @@ h3.h3 {
 .company-grid .company-content {
   width: 100%;
   height: auto;
-  max-height: 100%;
+  
 }
 .company-grid .company-discount-label,
 .company-grid .company-new-label {
@@ -922,15 +922,15 @@ img {
 }
 /*Customer navbar*/
 .cart-label {
-  color: black;
-  background-color: springgreen;
-  font-size: 11px;
-  font-weight: 800;
+  color: white;
+  background-color: #00a69c;
+  font-size: 16px;
+  font-weight: 700;
   text-transform: uppercase;
   text-align: center;
   padding: auto;
-  height: 20px;
-  width: 20px;
+  height: 22px;
+  width: 22px;
   border-radius: 50%;
   position: absolute;
   left: 26px;
@@ -940,6 +940,11 @@ img {
 .cart-label:hover {
   background-color: #00a69c;
 }
+/*
+#link-cart-inner .fa-shopping-cart{
+  background-color: #7C7C7D;
+}*/
+
 @media (max-width: 992px) {                  
   #link-cart-inner {
      display: none;
