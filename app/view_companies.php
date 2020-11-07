@@ -180,7 +180,7 @@
                     $userDAO = new userDAO();
                     $preferences = $userDAO->retrieve_user_preferences($_SESSION["user_id"]);
                     $proximity_range = explode(",",$preferences)[2];
-                    echo "<input type='text' id='proximity_range' value='$proximity_range'></input>";
+                    echo "<input type='hidden' id='proximity_range' value='$proximity_range'></input>";
                 ?>
                 <div id='proximity'         
                 <?php
