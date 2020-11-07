@@ -854,8 +854,8 @@
                 document.getElementsByClassName("cart-label")[0].innerText = parseInt(document.getElementsByClassName("cart-label")[0].innerText) + 1;
                 document.getElementsByClassName("cart-label")[1].innerText = parseInt(document.getElementsByClassName("cart-label")[1].innerText) + 1;
                 //bounce animation
-                console.log("WHY");
-                doBounce($("#cart_count"), 3, '10px', 300);   
+                //console.log("pp");
+                //doBounce($("#cart_count"), 3, '10px', 300);   
                 //$("#cart_count").effect( "bounce", {times:3}, 300 );
                 //Update the toast to reflect what item was added
                 document.getElementById("cart_message_body").innerText = name.charAt(0).toUpperCase() + name.slice(1) + " was successfully added to your cart. ";             
