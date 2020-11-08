@@ -15,7 +15,8 @@ $price = floatval($_POST['price']) * 100;
 $cart = $_POST['cart'];
 
 
-\Stripe\Stripe::setApiKey('sk_test_51HgOY8AgaC3WCXUJkZeI8NEO20nKkEYE99qUUjnjSdLxJ25DlKtKJipaM4CvoTWzi1cryHYmF6zD83J5cCunACSz007ce7SGlu');
+\Stripe\Stripe::setApiKey('sk_test_51Hl5isBMUcjHpFwRvz6qspAPqMCA5rKLA2vLHz9e3Yj8XK8mR8HaGwTSqEVIWijUWJ2QmiB2A7b5KoRFdW5JcJ1P00seOMCnvs');
+#setApiKey('sk_test_51HgOY8AgaC3WCXUJkZeI8NEO20nKkEYE99qUUjnjSdLxJ25DlKtKJipaM4CvoTWzi1cryHYmF6zD83J5cCunACSz007ce7SGlu');
 
 // header('Content-Type: application/json','Set-Cookie: cross-site-cookie=bar; SameSite=None; Secure');
 header('Content-Type: application/json');
@@ -27,8 +28,8 @@ $dir = $_SERVER['SERVER_NAME'];
 for ($i = 0; $i < count($parts) - 1; $i++) {
 $dir .= $parts[$i] . "/";
 }
-$YOUR_DOMAIN =  "https://" . $dir;
-//$YOUR_DOMAIN = 'https://localhost/is216/app/';
+$YOUR_DOMAIN =  "http://" . $dir;
+//$YOUR_DOMAIN = 'http://localhost/is216/app/';
 
 $order_info = array(
   "user_id" => $user_id,

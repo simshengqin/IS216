@@ -2,6 +2,25 @@
 <html lang="en">
 
 <head>
+    <!--Modal to inform confirmation of order-->
+    <div class="modal fade" id="received_order_msg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Success</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            Successfully confirmed order received!
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-success" data-dismiss="modal" onclick="refresh_page()" >Okay</button>
+        </div>
+        </div>
+    </div>
+    </div>
   <?php
     require_once 'include/common.php';
     require_once 'include/protect.php';
@@ -17,6 +36,9 @@
 
     $transactionDAO = new transactionDAO();
     $transactions = $transactionDAO->retrieve_transactions_by_user_id($user_id);
+    $unrated_transactions = $transactionDAO->retrieve_unrated_transactions_by_user_id($user_id);
+    $rated_transactions = $transactionDAO->retrieve_rated_transactions_by_user_id($user_id);
+
     // $company_id = $orders->get_company_id();
 
     $companyDAO = new companyDAO();
@@ -153,106 +175,153 @@
 
 
     <div class="row mx-md-5 pl-3 pr-3" style="margin-top: 50px; margin-bottom: 50px;">
-        <div class='col-12'>
-            <h2 style="margin-bottom: 20px;">Order History</h2>
-        </div>
-        <div class='col-12'>
-            <i class="fas fa-info-circle"></i><small class="font-weight-bold">&#8287;&#8287;&#8287;&#8287;View your past orders. These receipts serve as confirmation for your order pickup.</small>
-            <hr>
-        </div>
-        <?php
-        if ($transactions == []){
-            echo "<div class='col-12'>No orders made yet.</div>";
-        } else {
-            echo "<div class='col-12'>";
-            foreach ($transactions as $transaction){
-                $rating = $transaction->get_rating();
-                $review = $transaction->get_review();
-                $cart_string = $transaction->get_cart();
-                $time = $transaction->get_order_time();
-                if ($time[0] > 0) {
-                    $time.= ' PM';
-                } else {
-                    $time .= ' AM';
-                }
-                $cart = explode(',', $cart_string);
-                //var_dump($cart);
-                $order_details = '';
-                foreach ($cart as $item) {
-                    $item_array = explode(":",$item);
-                    $product_id = $item_array[0];
-                    $qty = $item_array[1];
-                    $product = $productDAO->retrieve_single_product($product_id);
-                    $product_name = $product->get_name();
-                    $order_details .= $product_name .': ' . $qty . ' pax <br>';
-                }
-                
-                // if ($rating == ''){
-                //   echo "<button type='submit' class='btn btn-primary btn-sm' onclick="addRating()">Rate</button>"
-                // } 
-
-                // if ($review == ''){
-                //   echo "<input type='text' name='review' id='review>";
-                // }
-
-                if ($review == '' || $rating ==''){
+        <?php          
+            if ($unrated_transactions == []){
+                echo "";
+                //"<div class='col-12 mb-2'>No active orders</div>";
+            }
+            else {
+                echo "<div class='col-12'>";
+                echo "<h2 style='margin-bottom: 20px;'>Active Orders</h2>
+                        <i class='fas fa-info-circle'></i><small class='font-weight-bold'>&#8287;&#8287;&#8287;&#8287;Click 'Received' button to confirm that order is completed! Leave a rating and review for your order! (optional) <br> &#8287;&#8287;&#8287;&#8287;&#8287;&#8287;&#8287;&#8287; You are encouraged to bring your own reusable container to collect your food! &#128540; </small>
+                        <hr>";
+                foreach ($unrated_transactions as $transaction){
+                    $rating = $transaction->get_rating();
+                    $review = $transaction->get_review();
+                    $cart_string = $transaction->get_cart();
+                    $time = $transaction->get_order_time();
+                    if ($time[0] > 0) {
+                        $time.= ' PM';
+                    } else {
+                        $time .= ' AM';
+                    }
+                    $cart = explode(',', $cart_string);
+                    //var_dump($cart);
+                    $order_details = '';
+                    foreach ($cart as $item) {
+                        $item_array = explode(":",$item);
+                        $product_id = $item_array[0];
+                        $qty = $item_array[1];
+                        $product = $productDAO->retrieve_single_product($product_id);
+                        $product_name = $product->get_name();
+                        $order_details .= $product_name .': ' . $qty . ' pax <br>';
+                    }
+                    
+                    // if ($rating == ''){
+                    //   echo "<button type='submit' class='btn btn-primary btn-sm' onclick="addRating()">Rate</button>"
+                    // } 
+    
+                    // if ($review == ''){
+                    //   echo "<input type='text' name='review' id='review>";
+                    // }
                     echo "
-                        <div class='row card border-dark mb-3'>
+                    <div class='row card border-dark mb-3'>
                         <div class='card-header'>Order Id #{$transaction->get_transaction_id()}&#8287;&#8287;&#8287;&#8287;&#8287;<br><span class='text-success font-weight-bold'>\${$transaction->get_amount()}</span><small class='float-right'>Date: {$transaction->get_order_date()},  Time: {$time}</small><small class='float-right'>Collection Method: {$transaction->get_collection_type()}&#8287;&#8287;|&#8287;&#8287;</small></div>
-                        <div class='card-body bg-special text-dark'>
-                                <h5 class='card-title font-weight-bold text-capitalize'>{$companyDAO->retrieve_company($transaction->get_company_id())->get_name()}</h5>
-                                <p class='card-text'>{$order_details}</p>
-                                <p class='card-text'><button type='button' class='btn btn-primary btn-sm float-right' data-toggle='modal' data-target='#exampleModal'>Rate & Review</button></p>
-                                    <div class='modal fade' id='exampleModal' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>
-                                <div class='modal-dialog' role='document'>
-                                <div class='modal-content'>
-                                    <div class='modal-header'>
-                                    <h5 class='modal-title' id='exampleModalLabel'>New Review</h5>
-                                    <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
-                                        <span aria-hidden='true'>&times;</span>
-                                    </button>
-                                    </div>
-                                    <div class='modal-body'>
-                                    <form>
-                                        <div class='form-group'>
-                                        <label for='rating' class='col-form-label'>Rating: ⭐⭐⭐⭐⭐</label>
-                                        <input type='number' class='form-control' placeholder='Enter a number from 1 (Very bad) to 5 (Very good)'  id='rating-score'>
+                            <div class='card-body bg-special text-dark'>
+                                    <h5 class='card-title font-weight-bold text-capitalize'>{$companyDAO->retrieve_company($transaction->get_company_id())->get_name()}</h5>
+                                    <p class='card-text'>{$order_details}</p>
+                                    <p class='card-text'><button type='button' class='btn btn-primary btn-sm float-right' onclick='set_target_transaction_id({$transaction->get_transaction_id()})' data-toggle='modal' data-target='#review_modal'>Received Order</button></p>
+                                        <div class='modal fade' id='review_modal' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>
+                                    <div class='modal-dialog' role='document'>
+                                        <div class='modal-content'>
+                                            <div class='modal-header'>
+                                            <h5 class='modal-title' id='exampleModalLabel'>New Review</h5>
+                                            <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                                                <span aria-hidden='true'>&times;</span>
+                                            </button>
+                                            </div>
+                                            <div class='modal-body'>
+                                            <form>
+                                                <div class='form-group'>
+                                                <label for='rating' class='col-form-label'>Rating (Optional) : ⭐⭐⭐⭐⭐</label>
+                                                <input type='number' class='form-control' placeholder='Enter a number from 1 (Very bad) to 5 (Very good)'  id='rating-score'>
+                                                </div>
+                                                <div class='form-group'>
+                                                <label for='review-text' class='col-form-label'>Review (Optional) :</label>
+                                                <textarea class='form-control' id='review-text'></textarea>
+                                                </div>
+                                            </form>
+                                            </div>
+                                            <div class='modal-footer'>
+                                            <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
+                                            <button type='button' class='btn btn-primary' onclick='received({$transaction->get_transaction_id()})'>Submit Review</button>
+                                            </div>
                                         </div>
-                                        <div class='form-group'>
-                                        <label for='review-text' class='col-form-label'>Review:</label>
-                                        <textarea class='form-control' id='review-text'></textarea>
-                                        </div>
-                                    </form>
                                     </div>
-                                    <div class='modal-footer'>
-                                    <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
-                                    <button type='button' class='btn btn-primary' onclick='received({$transaction->get_transaction_id()})'>Submit Review</button>
-                                    </div>
-                                </div>
-                                </div>
-                            </div>
                             </div>
                         </div>
-                    ";
-                } 
-                
-                else {
+                    </div>
+                    ";                 
+                    }      
+            }                
+            echo "  <div class='col-12'>
+                            <h2 style='margin-bottom: 20px;'>Order History</h2>
+                        </div>
+                        <div class='col-12'>
+                            <i class='fas fa-info-circle'></i><small class='font-weight-bold'>&#8287;&#8287;&#8287;&#8287;View your past orders. These receipts serve as confirmation for your order pickup.</small>
+                            <hr>
+                        </div>";    
+            if ($rated_transactions == []){
+                echo "<div class='col-12'>No past orders</div>";
+            }
+            else {
+                echo "<div class='col-12'>";
+                foreach ($rated_transactions as $transaction){
+                    $rating = $transaction->get_rating();
+                    $review = $transaction->get_review();
+                    $cart_string = $transaction->get_cart();
+                    $time = $transaction->get_order_time();
+                    if ($time[0] > 0) {
+                        $time.= ' PM';
+                    } else {
+                        $time .= ' AM';
+                    }
+                    $cart = explode(',', $cart_string);
+                    //var_dump($cart);
+                    $order_details = '';
+                    foreach ($cart as $item) {
+                        $item_array = explode(":",$item);
+                        $product_id = $item_array[0];
+                        $qty = $item_array[1];
+                        $product = $productDAO->retrieve_single_product($product_id);
+                        $product_name = $product->get_name();
+                        $order_details .= $product_name .': ' . $qty . ' pax <br>';
+                    }
+                    
+                    // if ($rating == ''){
+                    //   echo "<button type='submit' class='btn btn-primary btn-sm' onclick="addRating()">Rate</button>"
+                    // } 
 
+                    // if ($review == ''){
+                    //   echo "<input type='text' name='review' id='review>";
+                    // }
+                    //rating = 0 means not rated yet, rating = -1 means customer dont want to review
+                    $rating = $transaction->get_rating();
+                    if ($rating == -1) {
+                        $rating = "No rating";
+                    }
+                    else {
+                        $rating = "Rating: " . $rating;
+                    }
                     echo "
                         <div class='row card border-dark mb-3'>
-                            <div class='card-header'>Order Id #{$transaction->get_transaction_id()}&#8287;&#8287;&#8287;&#8287;&#8287;<span class='badge badge-info'>Reviewed</span>&#8287;&#8287;<span class='badge badge-warning'>Rating: {$transaction->get_rating()}</span><br><span class='text-success font-weight-bold'>\${$transaction->get_amount()}</span><small class='float-right'>Date: {$transaction->get_order_date()},  Time: {$time}</small><small class='float-right'>Collection Method: {$transaction->get_collection_type()}&#8287;&#8287;|&#8287;&#8287;</small></div>
+                            <div class='card-header'>Order Id #{$transaction->get_transaction_id()}&#8287;&#8287;&#8287;&#8287;&#8287;<span class='badge badge-info'>Received</span>&#8287;&#8287;<span class='badge badge-warning'>$rating</span><br><span class='text-success font-weight-bold'>\${$transaction->get_amount()}</span><small class='float-right'>Date: {$transaction->get_order_date()},  Time: {$time}</small><small class='float-right'>Collection Method: {$transaction->get_collection_type()}&#8287;&#8287;|&#8287;&#8287;</small></div>
                             <div class='card-body text-dark'>
                             <h5 class='card-title font-weight-bold text-capitalize'>{$companyDAO->retrieve_company($transaction->get_company_id())->get_name()}</h5>
-                            <p class='card-text'>{$order_details}</p><hr class='class-1'>
-                            <p class='card-text'>Review: {$transaction->get_review()}</p>
-                            </div>
-                        </div>
-                    ";
+                            <p class='card-text'>{$order_details}</p>";
+                    $review_text = $transaction->get_review();
+                    if ($review_text != "") {
+                        echo "<hr class='class-1'>
+                                <p class='card-text'>Review: {$transaction->get_review()}</p>";
+                    }
+                    echo "</div></div>";
+                    
+                    }
                 }
-                }
-            }
-            echo "</div>";
+                echo "</div>";                
+            
 
+        
         ?>
             
     </div>
@@ -329,13 +398,17 @@
         
         
     }
-  
-    function received(transaction_id) {
+    //Tells the modal which transaction id to give review to
+    function set_target_transaction_id(transaction_id) {
+        window.transaction_id = transaction_id;
+    }
+    function received() {
+        transaction_id = window.transaction_id;
+        //alert(transaction_id);
         var rating = document.getElementById('rating-score').value;
-        if (rating == ''){
-        rating = 0;
-        }
-        
+        if (rating == ''){         
+            rating = -1;
+        };
         var review = document.getElementById('review-text').value;
         
         console.log(rating);
@@ -348,8 +421,10 @@
                 if (this.readyState == 4 && this.status == 200) {
                     //Add check for success here?
                     var success = JSON.stringify(this.responseText);
-                    alert(success);
-                    window.location.href = "customer_profile.php";
+                    //alert(success);
+                    $('#review_modal').modal('hide');
+                    $('#received_order_msg').modal('show');
+                   
                     
                 }  
             
@@ -360,8 +435,10 @@
         request.send("transaction_id="+transaction_id+"&rating="+rating+"&review="+review); 
 
 
-  }
-
+    }
+    function refresh_page() {
+        window.location.href = "customer_profile.php";
+    }
     //****Add to cart message popup****//
     $(document).ready(function(){
     $(".success_popup").click(function(){

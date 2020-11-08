@@ -21,7 +21,45 @@ class transactionDAO {
         }
         return $result;
     }
+    public function retrieve_unrated_transactions_by_user_id($userid){
+        //rating = 0 means not rated yet, rating = -1 means customer dont want to review
+        $sql = "SELECT * FROM transactions WHERE 
+        userid = :userid AND rating = 0 ORDER BY transaction_id DESC";#order_date, order_time DESC";
+        
+        $connMgr = new ConnectionManager();      
+        $conn = $connMgr->getConnection();
 
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':userid', $userid, PDO::PARAM_STR);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->execute();
+
+        $result = [];
+
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $result[] = new transactions($row['transaction_id'], $row['userid'], $row['cart'], $row['company_id'], $row['order_date'], $row['order_time'], $row['amount'], $row['collection_type'], $row['review'], $row['rating'], $row['collected']);
+        }
+        return $result;
+    }
+    public function retrieve_rated_transactions_by_user_id($userid){
+        $sql = "SELECT * FROM transactions WHERE 
+        userid = :userid AND rating != 0 ORDER BY transaction_id DESC";#order_date, order_time DESC";
+        
+        $connMgr = new ConnectionManager();      
+        $conn = $connMgr->getConnection();
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':userid', $userid, PDO::PARAM_STR);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->execute();
+
+        $result = [];
+
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $result[] = new transactions($row['transaction_id'], $row['userid'], $row['cart'], $row['company_id'], $row['order_date'], $row['order_time'], $row['amount'], $row['collection_type'], $row['review'], $row['rating'], $row['collected']);
+        }
+        return $result;
+    }
     public function retrieve_transactions_by_company_id($company_id){
         $sql = "SELECT * FROM transactions WHERE 
         company_id = :company_id ORDER BY transaction_id DESC";#order_date, order_time DESC";

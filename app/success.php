@@ -7,7 +7,8 @@
     $userDAO = new userDAO();
 
     require 'vendor/autoload.php';
-    $stripe = new \Stripe\StripeClient('sk_test_51HgOY8AgaC3WCXUJkZeI8NEO20nKkEYE99qUUjnjSdLxJ25DlKtKJipaM4CvoTWzi1cryHYmF6zD83J5cCunACSz007ce7SGlu');
+    $stripe = new \Stripe\StripeClient('sk_test_51Hl5isBMUcjHpFwRvz6qspAPqMCA5rKLA2vLHz9e3Yj8XK8mR8HaGwTSqEVIWijUWJ2QmiB2A7b5KoRFdW5JcJ1P00seOMCnvs');
+    #('sk_test_51HgOY8AgaC3WCXUJkZeI8NEO20nKkEYE99qUUjnjSdLxJ25DlKtKJipaM4CvoTWzi1cryHYmF6zD83J5cCunACSz007ce7SGlu');
     $events = $stripe->events->all(['limit' => 3]);
 
     foreach($events->autoPagingIterator() as $event) {
@@ -25,6 +26,7 @@
           $cart = $cart_info->cart;
           // add pending order into transactions table
           $transactionDAO->add($user_id, $cart, $company_id, $date, $time, $price, 'Self-pickup', '', 0, 'false');
+          //redirect to profile page immediately
           
 
 
@@ -34,12 +36,15 @@
 
 
     
-    //$transactions = $transactionDAO->retrieve_transactions_by_user_id($user_id);
+    $transactions = $transactionDAO->retrieve_transactions_by_user_id($user_id);
 
     // clear shopping cart for user
-    //$userDAO->update_user_cart($user_id, '');
-    //$userDAO->update_user_cart_company_id($user_id, 0);
-
+    $userDAO->update_user_cart($user_id, '');
+    $userDAO->update_user_cart_company_id($user_id, 0);
+    ob_start();
+    header('Location: '.'customer_profile.php');
+    ob_end_flush();
+    die();
 
 ?>
 
@@ -59,103 +64,6 @@
   
 </head>
 <body>
-  <!-- Navigation -->
-  <?php include 'include/customer_navbar.php';?>
-  
-<!-- <div style="margin-top: 80px;"></div> -->
-
-
-<div class="mx-md-5" style="margin-top: 50px; margin-bottom: 50px;">
-          <h2 style="margin-bottom: 20px;">Active Orders</h2>
-          <i class="fas fa-info-circle"></i><small class="font-weight-bold">&#8287;&#8287;&#8287;&#8287;Click 'Received' button to confirm that order is completed! Leave a rating and review for your order! (optional) <br> &#8287;&#8287;&#8287;&#8287;&#8287;&#8287;&#8287;&#8287; You are encouraged to bring your own reusable container to collect your food! &#128540; </small>
-           <!-- pass user_id -->
-           <input type='hidden' value='<?php echo "$user_id" ?>' id="user_id"> 
-          <hr>
-          <?php
-          /*
-            if ($transactions == []){
-                echo "<div>No orders made yet.</div>";
-            } else {
-
-                foreach ($transactions as $transaction){
-                  $time = $transaction->get_order_time();
-                    if ($time[0] > 0) {
-                        $time.= ' PM';
-                    } else {
-                        $time .= ' AM';
-                    }
-                  if ($transaction->get_collected() == 'false'){
-                    $cart_string = $transaction->get_cart();
-                    $cart = explode(',', $cart_string);
-                    //var_dump($cart);
-                    $order_details = '';
-                    foreach ($cart as $item) {
-                      //var_dump($item);
-                      $item_array = explode(":",$item);
-                      $product_id = $item_array[0];
-                      $qty = $item_array[1];
-                      $product = $productDAO->retrieve_single_product($product_id);
-                      $product_name = $product->get_name();
-                      $order_details .= $product_name .': ' . $qty . ' pax <br>';
-                    }
-
-                  
-
-                  
-                        echo "
-                            <div class='card border-dark mb-3'>
-                            <div class='card-header'>Order Id #{$transaction->get_transaction_id()}&#8287;&#8287;&#8287;&#8287;&#8287;<small class='float-right'>Date: {$transaction->get_order_date()},  Time: {$time}</small><small class='float-right'>Collection Method: {$transaction->get_collection_type()}&#8287;&#8287;|&#8287;&#8287;</small><br><span class='text-success font-weight-bold'>\${$transaction->get_amount()}</span>" .
-                            "<button type='button' class='btn btn-primary btn-sm float-right' data-toggle='modal' data-target='#exampleModal'>Received</button>".
-                            "<div class='modal fade' id='exampleModal' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>
-                            <div class='modal-dialog' role='document'>
-                              <div class='modal-content'>
-                                <div class='modal-header'>
-                                  <h5 class='modal-title' id='exampleModalLabel'>New Review</h5>
-                                  <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
-                                    <span aria-hidden='true'>&times;</span>
-                                  </button>
-                                </div>
-                                <div class='modal-body'>
-                                  <form>
-                                    <div class='form-group'>
-                                      <label for='rating' class='col-form-label'>Rating: ⭐⭐⭐⭐⭐</label>
-                                      <input type='number' class='form-control' placeholder='Enter a number from 1 (Very bad) to 5 (Very good)'  id='rating-score'>
-                                    </div>
-                                    <div class='form-group'>
-                                      <label for='review-text' class='col-form-label'>Review:</label>
-                                      <textarea class='form-control' id='review-text'></textarea>
-                                    </div>
-                                  </form>
-                                </div>
-                                <div class='modal-footer'>
-                                  <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
-                                  <button type='button' class='btn btn-primary' onclick='received()'>Submit Review</button>
-                                </div>
-                              </div>
-                            </div>
-                          </div>".
-                            "</div>
-                            <div class='card-body text-dark'>
-                                  <h5 class='card-title font-weight-bold text-capitalize'>{$companyDAO->retrieve_company($transaction->get_company_id())->get_name()}</h5>
-                                  <p class='card-text'>{$order_details}</p>
-                                </div>
-                            </div>
-                        ";
-                  }
-                }
-              }
-
-          */
-          ?>
-
-          <!-- <p class='card-text'><button type='submit' class='btn btn-success btn-sm' onclick='addRating()'>Rate</button></p>
-          <p class='card-text'><button type='submit' class='btn btn-success btn-sm' onclick='addReview()'>Review</button></p> -->
-              
-      </div>
-  </div>
-
-</div> 
-
 
 <script>
  
@@ -194,13 +102,5 @@
 
 
 </script>
-
-
-
-
-  <!-- Footer -->
-  <?php include 'include/footer.php';?>
-
-
 </body>
 </html>

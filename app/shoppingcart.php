@@ -810,7 +810,8 @@
       function checkout(current_cart) {
         var url = "create-session.php";
         // Create an instance of the Stripe object with your publishable API key
-        var stripe = Stripe("pk_test_51HgOY8AgaC3WCXUJIaOFunkJxpIXJwKHuu6CeHk4NGB1esqvHIwVGXTTuxaZIebOuKhnSfqQDZTsBB5wOBn9D5RC00BlIAWB0d");            
+        var stripe = Stripe("pk_test_51Hl5isBMUcjHpFwR5VtTFLT7q5m6Rw237MPYFQ9EpJgKBNEbjcOLm4bDIDQPV03LSQQgKSmpK6pkyFMws8ScjKu000khO1ym1m") 
+        //Stripe("pk_test_51HgOY8AgaC3WCXUJIaOFunkJxpIXJwKHuu6CeHk4NGB1esqvHIwVGXTTuxaZIebOuKhnSfqQDZTsBB5wOBn9D5RC00BlIAWB0d");            
             try { 
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function() {
