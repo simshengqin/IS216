@@ -815,6 +815,7 @@
                     //Update the navbar cart count
                     document.getElementsByClassName("cart-label")[0].innerText = 1;
                     document.getElementsByClassName("cart-label")[1].innerText = 1;
+                    $(".cart-label").removeClass("bounce-4");
                     document.getElementById("cart_message_body").innerText = name.charAt(0).toUpperCase() + name.slice(1) + " was successfully added to your cart. ";   
                     $("#add_to_cart_message").toast({ delay: 7000 });
                     $("#add_to_cart_message").toast('show');
@@ -863,6 +864,7 @@
                 //Update the navbar cart count
                 document.getElementsByClassName("cart-label")[0].innerText = parseInt(document.getElementsByClassName("cart-label")[0].innerText) + 1;
                 document.getElementsByClassName("cart-label")[1].innerText = parseInt(document.getElementsByClassName("cart-label")[1].innerText) + 1;
+                $(".cart-label").removeClass("bounce-4");
                 //bounce animation
                 //console.log("pp");
                 //doBounce($("#cart_count"), 3, '10px', 300);   
@@ -899,6 +901,8 @@
             //Update the navbar cart count
             document.getElementsByClassName("cart-label")[0].innerText = parseInt(document.getElementsByClassName("cart-label")[0].innerText) - 1; 
             document.getElementsByClassName("cart-label")[1].innerText = parseInt(document.getElementsByClassName("cart-label")[1].innerText) - 1;  
+
+            $(".cart-label").removeClass("bounce-4");
             
             //Update the toast to reflect what item was removed
             document.getElementById("cart_message_body").innerText = name.charAt(0).toUpperCase() + name.slice(1) + " was successfully removed from your cart. ";        
@@ -1232,6 +1236,14 @@
                             'Error: Your browser doesn\'t support geolocation.');
     infoWindow.open(map);
     }
+
+
+    // bounce animation
+    $(".add-to-cart").click(function(){
+        $(".cart-label").addClass("bounce-4");
+    });
+
+
 </script>
 <!-- To calculate distance between 2 points-->
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&v=3&libraries=geometry"></script>
