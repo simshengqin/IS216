@@ -74,7 +74,7 @@ require_once 'include/protect.php';
           
         </div>
 
-             <!-- <div class="col-md-10 col-lg-8 col-xl-7 mx-auto"> --> -->
+             <!-- <div class="col-md-10 col-lg-8 col-xl-7 mx-auto"> --> 
                 <!-- <div class="wrap">
                     <div class="search">
                        <input type="text" class="searchTerm" placeholder="What kind of food are you craving...">
