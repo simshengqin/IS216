@@ -812,10 +812,11 @@
                     arr = window.target_element.id.split(",");
                     product_id = arr[0];
                     name = arr[1];
-                    //Update the navbar cart count
-                    document.getElementsByClassName("cart-label")[0].innerText = 1;
-                    document.getElementsByClassName("cart-label")[1].innerText = 1;
                     $(".cart-label").removeClass("bounce-4");
+                    //Update the navbar cart count
+                    //delay the updating of cart label number for a cool effect!
+                    setTimeout(function() { update_cart_label("1"); }, 700);
+                    
                     document.getElementById("cart_message_body").innerText = name.charAt(0).toUpperCase() + name.slice(1) + " was successfully added to your cart. ";   
                     $("#add_to_cart_message").toast({ delay: 7000 });
                     $("#add_to_cart_message").toast('show');
@@ -841,6 +842,23 @@
                 .animate({marginTop: '+='+distance}, speed);
         }        
     }
+    function update_cart_label(amount) {
+        if (amount == "+1") {
+            document.getElementsByClassName("cart-label")[0].innerText = parseInt(document.getElementsByClassName("cart-label")[0].innerText) + 1;
+            document.getElementsByClassName("cart-label")[1].innerText = parseInt(document.getElementsByClassName("cart-label")[1].innerText) + 1;  
+        }
+        else if (amount == "-1") {
+            document.getElementsByClassName("cart-label")[0].innerText = parseInt(document.getElementsByClassName("cart-label")[0].innerText) - 1;
+            document.getElementsByClassName("cart-label")[1].innerText = parseInt(document.getElementsByClassName("cart-label")[1].innerText) - 1;  
+        }
+        else if (amount == "1") {
+            document.getElementsByClassName("cart-label")[0].innerText = 1;
+            document.getElementsByClassName("cart-label")[1].innerText = 1;  
+        }
+      
+    }
+
+
     function add_to_cart(target) {        
         arr = event.target.id.split(",");
         product_id = arr[0];
@@ -861,14 +879,12 @@
                 var quantity = 0;
                 var quantity_change = 1;        
                 target.innerText= "ADDED TO CART";
-                //Update the navbar cart count
-                document.getElementsByClassName("cart-label")[0].innerText = parseInt(document.getElementsByClassName("cart-label")[0].innerText) + 1;
-                document.getElementsByClassName("cart-label")[1].innerText = parseInt(document.getElementsByClassName("cart-label")[1].innerText) + 1;
-                $(".cart-label").removeClass("bounce-4");
-                //bounce animation
-                //console.log("pp");
-                //doBounce($("#cart_count"), 3, '10px', 300);   
-                //$("#cart_count").effect( "bounce", {times:3}, 300 );
+                
+                 $(".cart-label").removeClass("bounce-4");
+                 //Update the navbar cart count
+                //delay the updating of cart label number for a cool effect!
+                setTimeout(function() { update_cart_label("+1"); }, 700);
+               
                 //Update the toast to reflect what item was added
                 document.getElementById("cart_message_body").innerText = name.charAt(0).toUpperCase() + name.slice(1) + " was successfully added to your cart. ";             
             }
@@ -898,11 +914,11 @@
             //Need to let the server know that it needs to retrieve the correct qty from the user cart and remove that qty for that product id in the database
             //this way also helps to prevent cheating the system! if the user remove from his cart on shoppingcart page, it wont change the product qty in database twice
             var quantity_change = "to_be_updated";  
-            //Update the navbar cart count
-            document.getElementsByClassName("cart-label")[0].innerText = parseInt(document.getElementsByClassName("cart-label")[0].innerText) - 1; 
-            document.getElementsByClassName("cart-label")[1].innerText = parseInt(document.getElementsByClassName("cart-label")[1].innerText) - 1;  
-
             $(".cart-label").removeClass("bounce-4");
+            //Update the navbar cart count       
+            //delay the updating of cart label number for a cool effect!
+            setTimeout(function() { update_cart_label("-1"); }, 700);
+
             
             //Update the toast to reflect what item was removed
             document.getElementById("cart_message_body").innerText = name.charAt(0).toUpperCase() + name.slice(1) + " was successfully removed from your cart. ";        
@@ -1236,12 +1252,27 @@
                             'Error: Your browser doesn\'t support geolocation.');
     infoWindow.open(map);
     }
-
-
+    function bounce() {        
+        company_id = document.getElementById("company_id").value;
+        cart_company_id = document.getElementById("cart_company_id").value;
+        //Only do the bounce animation if the user is not changing cart
+        if (company_id == cart_company_id || cart_company_id == "0") { 
+            $(".cart-label").addClass("bounce-4");           
+        }     
+    }
+    
     // bounce animation
     $(".add-to-cart").click(function(){
-        $(".cart-label").addClass("bounce-4");
+        bounce();
+        
     });
+    /*
+    $("#change_company_id_in_cart_msg_yes_btn").click(function(){
+        
+        $(".cart-label").addClass("bounce-4");
+        change_cart_company_id();
+    });
+    */
 
 
 </script>
