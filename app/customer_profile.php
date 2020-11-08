@@ -82,7 +82,7 @@
 
   </header> -->
 <div class="container">
-    <div class='row pl-3 pr-3'>
+    <div class='row mx-md-5 pl-3 pr-3'>
         <div class='col-md-3 profile rounded' style="margin-top: 50px; margin-right: 20p;">
             <div class="pb-5"> 
                 <!-- <h2 class="display-5 mx-md-5">Customer Profile</h2> -->
@@ -130,7 +130,7 @@
                                     Successfully updated your preferences!
                                     <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>      
                                 </div>
-                            </div>   
+                        </div>   
                 </div>
 
                 
@@ -181,10 +181,12 @@
                 //"<div class='col-12 mb-2'>No active orders</div>";
             }
             else {
-                echo "<div class='col-12'>";
+                //echo "<div class='col-12'>";
                 echo "<h2 style='margin-bottom: 20px;'>Active Orders</h2>
+                        <div class='col-12'>
                         <i class='fas fa-info-circle'></i><small class='font-weight-bold'>&#8287;&#8287;&#8287;&#8287;Click 'Received' button to confirm that order is completed! Leave a rating and review for your order! (optional) <br> &#8287;&#8287;&#8287;&#8287;&#8287;&#8287;&#8287;&#8287; You are encouraged to bring your own reusable container to collect your food! &#128540; </small>
-                        <hr>";
+                        <hr>
+                        </div>";
                 foreach ($unrated_transactions as $transaction){
                     $rating = $transaction->get_rating();
                     $review = $transaction->get_review();
@@ -215,6 +217,7 @@
                     //   echo "<input type='text' name='review' id='review>";
                     // }
                     echo "
+                    <div class='col-12'>
                     <div class='row card border-dark mb-3'>
                         <div class='card-header'>Order Id #{$transaction->get_transaction_id()}&#8287;&#8287;&#8287;&#8287;&#8287;<br><span class='text-success font-weight-bold'>\${$transaction->get_amount()}</span><small class='float-right'>Date: {$transaction->get_order_date()},  Time: {$time}</small><small class='float-right'>Collection Method: {$transaction->get_collection_type()}&#8287;&#8287;|&#8287;&#8287;</small></div>
                             <div class='card-body bg-special text-dark'>
@@ -233,8 +236,16 @@
                                             <div class='modal-body'>
                                             <form>
                                                 <div class='form-group'>
-                                                <label for='rating' class='col-form-label'>Rating (Optional) : ⭐⭐⭐⭐⭐</label>
-                                                <input type='number' class='form-control' placeholder='Enter a number from 1 (Very bad) to 5 (Very good)'  id='rating-score'>
+                                                <label for='rating' class='col-form-label'>Rating (Optional):
+                                                <br> <small>Select a number from 1 (Very bad) to 5 (Very good)</small></label>
+                                                <select class='form-control' id='rating-score'>
+                                                    <option>No rating</option>
+                                                    <option>1</option>
+                                                    <option>2</option>
+                                                    <option>3</option>
+                                                    <option>4</option>
+                                                    <option>5</option>
+                                                </select>
                                                 </div>
                                                 <div class='form-group'>
                                                 <label for='review-text' class='col-form-label'>Review (Optional) :</label>
@@ -250,6 +261,7 @@
                                     </div>
                             </div>
                         </div>
+                    </div>
                     </div>
                     ";                 
                     }      
@@ -406,7 +418,7 @@
         transaction_id = window.transaction_id;
         //alert(transaction_id);
         var rating = document.getElementById('rating-score').value;
-        if (rating == ''){         
+        if (rating == 'No rating'){         
             rating = -1;
         };
         var review = document.getElementById('review-text').value;

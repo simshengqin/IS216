@@ -151,8 +151,8 @@ class transactionDAO {
         return $stmt->execute();   
     }
 
-    public function update_transaction_by_transaction_id($transaction_id, $rating, $review){
-        $sql = "UPDATE transactions SET rating = :rating, review =:review WHERE transaction_id =:transaction_id";
+    public function update_transaction_by_transaction_id($transaction_id, $rating, $review, $collected){
+        $sql = "UPDATE transactions SET rating = :rating, review =:review, collected =:collected WHERE transaction_id =:transaction_id";
         $connMgr = new ConnectionManager();      
         $conn = $connMgr->getConnection();
 
@@ -160,6 +160,7 @@ class transactionDAO {
         $stmt->bindParam(':transaction_id', $transaction_id, PDO::PARAM_INT);
         $stmt->bindParam(':rating', $rating, PDO::PARAM_STR);
         $stmt->bindParam(':review', $review, PDO::PARAM_STR);
+        $stmt->bindParam(':collected', $collected, PDO::PARAM_STR);
         return $stmt->execute();   
     }
 

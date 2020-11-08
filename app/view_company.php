@@ -327,8 +327,18 @@
                                 $user_id = $transaction->get_user_id();
                                 $username = $userDAO -> retrieve_user($user_id) -> get_name();
                                 //var_dump($transaction->get_review());
-                                $reviews.= "<div class='card-header'>{$username}<span class='float-right'>Rating: {$transaction->get_rating()}</span></div>
-                                <li class='list-group-item'>{$transaction->get_review()}</li>";
+                                $rating = $transaction->get_rating();
+                                $review = $transaction->get_review();
+                                if ($rating != -1) {
+                                    if ($review != '') {
+                                        $reviews.= "<div class='card-header'>{$username}<span class='float-right'>Rating: {$transaction->get_rating()}</span></div><li class='list-group-item'>{$review}</li>";
+                                    }
+                                    $reviews.= "<div class='card-header'>{$username}<span class='float-right'>Rating: {$transaction->get_rating()}</span></div>";
+                                } else {
+                                    if ($review != '') {
+                                        $reviews.= "<div class='card-header'>{$username}</div><li class='list-group-item'>{$review}</li>";
+                                    } 
+                                }
                             }
                             
                             if ($reviews == ''){
