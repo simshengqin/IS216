@@ -828,7 +828,7 @@
         request.open('POST', 'update_user.php', true);
         request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded'); 
         //alert(document.getElementById("same_company_id_from_user_cart").value);
-        request.send("user_id="+user_id+"&product_id="+product_id+"&quantity="+quantity+"&quantity_change="+quantity_change+"&change_cart_company_id="+document.getElementById("company_id").value );
+        request.send("user_id="+user_id+"&product_id="+product_id+"&quantity="+quantity+"&quantity_change="+quantity_change+"&change_cart_company_id="+document.getElementById("company_id").value+"&delete_cart=true" );
         //$("#add_to_cart_message").toast('show');
         //alert('Successfully added ' + name + ' to cart!');
     }
@@ -952,8 +952,9 @@
         user_id = document.getElementById("user_id").innerText;
         request.open('POST', 'update_user.php', true);
         request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded'); 
-        
-        request.send("user_id="+user_id+"&product_id="+product_id+"&quantity="+quantity+"&quantity_change="+quantity_change);
+        //Add to cart should ALWAYS update the cart company id just to be safe!
+        request.send("user_id="+user_id+"&product_id="+product_id+"&quantity="+quantity+"&quantity_change="+quantity_change+"&change_cart_company_id="+document.getElementById("company_id").value );
+        //request.send("user_id="+user_id+"&product_id="+product_id+"&quantity="+quantity+"&quantity_change="+quantity_change);
         //$("#add_to_cart_message").toast('show');
         //alert('Successfully added ' + name + ' to cart!');
     }
@@ -1258,7 +1259,8 @@
         //Only do the bounce animation if the user is not changing cart
         if (company_id == cart_company_id || cart_company_id == "0") { 
             $(".cart-label").addClass("bounce-4");           
-        }     
+        }
+     
     }
     
     // bounce animation

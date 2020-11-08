@@ -45,9 +45,12 @@ if(isset($_SESSION['user_id']) && isset($_POST['product_id']) && isset($_POST['q
         
         $i += 1;
     }
+    //Empty the cart if needed (when function change cart company id is called)
+    if (isset($_POST['delete_cart']) && $_POST['delete_cart'] == "true" ) {
+        $cart_arr = [];
+    }
     //Empty the cart and update the user's cart_company_id if specified (Start a new order with a different company)
     if (isset($_POST['change_cart_company_id'])) {
-        $cart_arr = [];
         echo "Hello" . $_POST['change_cart_company_id'];
         //Also update the session cart value
         $_SESSION['cart_company_id'] = $_POST['change_cart_company_id'];
