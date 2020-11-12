@@ -76,8 +76,8 @@
 
 <?php include 'include/company_navbar.php';?>
 
-  <!--Company profile  -->
-  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <!-- Confirm Delete Modal  -->
+  <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -102,7 +102,7 @@
     </div>
   </div>
 </div>
-  <!-- -->
+<!-- -->
 
   <div class="jumbotron jumbotron-fluid bg-light">
         <div class="container">
@@ -150,7 +150,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         ele.setAttribute('value', newTime);
       }
 
-      var beforePrice = document.getElementsByName("before_Price");
+      var beforePrice = document.getElementsByName("before_Price_Display");
       for(var ele of beforePrice){
         console.log("test");
         var num = ele.getAttribute('value');
@@ -304,7 +304,7 @@ function validationDelete(productId){
   //console.log(productName);
   //document.getElementById(modalProductName).innerHTML = productId;
   document.getElementById("modalProductName").setAttribute("value", productId)
-  $('#exampleModalCenter').modal('show');
+  $('#confirmDelete').modal('show');
 }
 
 function checkIfDateTimeExpired(date,time){
@@ -410,7 +410,7 @@ function checkIfDateTimeExpired(date,time){
                 <div class='form-group' style='margin-bottom:-15px;'>
                   <div class='input-group mb-3'>
                     <label for='beforePrice_{$product->get_product_id()}' class='col-form-label' style='font-size: 20px;'> Before Price : $  </label>
-                    <input type='text' readonly class='form-control-plaintext'  value='{$product->get_price_before()}' style='font-size: 20px;'>
+                    <input type='text' readonly class='form-control-plaintext'  name='before_Price_Display' value='{$product->get_price_before()}' style='font-size: 20px;'>
                   </div>
                 </div>
 
