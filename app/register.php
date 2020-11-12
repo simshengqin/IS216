@@ -139,7 +139,7 @@
                         <button id="register" name="submit" class="btn btn-lg btn-primary btn-block btn-register font-weight-bold mb-2" type="submit">Register</button>
                         <div class="text-center">
                         <br> 
-                        <a class="medium font-weight-bold .text-secondary" href="../app/user_login.php">Back to login</a></div>
+                        <a class="medium font-weight-bold .text-secondary" href="user_login.php">Back to login</a></div>
                     </form>
                     <div class='text-center'>
                         <div class ="index-errormsg" style="background-color: #f8d7da; color: #8b3f46;">

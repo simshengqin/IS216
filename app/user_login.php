@@ -33,7 +33,7 @@
                     <h3 class="login-heading mb-4">User Sign In</h3>
                     <form id="loginForm">
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control" id="username" placeholder="Username" required autofocus>                          
+                            <input type="text" class="form-control" id="username" placeholder="Email" required autofocus>                          
                         </div>
                         <div class="input-group mb-3">
                             <input type="password" class="form-control" id="password" placeholder="Password" required>                          

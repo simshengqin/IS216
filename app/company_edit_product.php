@@ -420,7 +420,7 @@ function checkIfDateTimeExpired(date,time){
                         <div class='input-group-prepend'>
                             <span class='input-group-text' id='{$product->get_product_id()}afterprice'> After Price $</span>
                         </div>
-                        <input class='form-control form-control-lg' id='priceAfter{$product->get_product_id()}' name='price_after' type='double' value='{$product->get_price_after()}' min='1' aria-describedby='{$product->get_product_id()}afterprice'>
+                        <input class='form-control form-control-lg' id='priceAfter{$product->get_product_id()}' name='price_after' type='number'step='0.01' value='{$product->get_price_after()}' min='0.01' aria-describedby='{$product->get_product_id()}afterprice'>
                     </div>
                 </div>
                 <p id='errorAfterPrice{$product->get_product_id()}' style='visibility: hidden; color: red;'> </p>
@@ -430,7 +430,7 @@ function checkIfDateTimeExpired(date,time){
                         <div class='input-group-prepend'>
                             <span class='input-group-text' id='{$product->get_product_id()}qty'> Quantity </span>
                         </div>
-                        <input class='form-control form-control-lg' id='quantity{$product->get_product_id()}' name='quantity' type='double' value='{$product->get_quantity()}' min='1' aria-describedby='{$product->get_product_id()}qty'>
+                        <input class='form-control form-control-lg' id='quantity{$product->get_product_id()}' name='quantity' type='number' value='{$product->get_quantity()}' min='1' aria-describedby='{$product->get_product_id()}qty'>
                     </div>
                 </div>
                 <p id='errorQuantity{$product->get_product_id()}' style='visibility: hidden; color: red;'> </p>
