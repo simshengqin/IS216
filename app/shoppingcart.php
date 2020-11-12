@@ -470,20 +470,29 @@
                 //Only needs to check for user adding more items to their cart. If there is not enough item, the user should not be able to add at all
                 //Note that AJAX CANNOT return a value to another function as it has some lag, so need to do the changes here
                 if ( quantity_change == 1 && this.responseText != "Insufficient product qty in database") {
-                  current_quantity = parseInt(event_target.parentNode.parentNode.children[2].value);
-                  event_target.parentNode.parentNode.children[2].value = current_quantity + 1;
-                  var total_price_product_display = event_target.parentNode.parentNode.children[4];
-                  total_price_product = parseFloat(total_price_product_display.innerText.slice(1)) / current_quantity * (current_quantity + 1);
-                  total_price_product = Math.round((total_price_product + Number.EPSILON) * 100) / 100;
-                  total_price_product_display.innerText = "$" + total_price_product;
-                  //Update the total price of all products
-                  total_price_for_all_products = 0;
-                  for (total_price_product of document.getElementsByClassName("total_price_for_current_product")) {
-                    total_price_for_all_products +=  parseFloat(total_price_product.innerText.slice(1));
+                  if ( event_target.parentNode.parentNode.children[2].value >= 10) {
+                    //Do 1 more final check here in case there is server lag, esp on Heroku
+                      document.getElementById("insufficent_product_qty_msg").getElementsByClassName("modal-body")[0].innerText = "Sorry! You can only buy up to 10 of this product.";
+                      $('#insufficent_product_qty_msg').modal('show');
                   }
-                  document.getElementById("total_price_for_all_products").innerText = "$" + total_price_for_all_products.toFixed(2);
-                  document.getElementById("total_price_for_all_products_with_gst").innerText = "$" + (total_price_for_all_products*1.07).toFixed(2); 
-                  document.getElementById("gst_amount").innerText = "$" + (total_price_for_all_products*0.07).toFixed(2);   
+                  else {
+                    
+                    current_quantity = parseInt(event_target.parentNode.parentNode.children[2].value);
+                    event_target.parentNode.parentNode.children[2].value = current_quantity + 1;
+                    var total_price_product_display = event_target.parentNode.parentNode.children[4];
+                    total_price_product = parseFloat(total_price_product_display.innerText.slice(1)) / current_quantity * (current_quantity + 1);
+                    total_price_product = Math.round((total_price_product + Number.EPSILON) * 100) / 100;
+                    total_price_product_display.innerText = "$" + total_price_product;
+                    //Update the total price of all products
+                    total_price_for_all_products = 0;
+                    for (total_price_product of document.getElementsByClassName("total_price_for_current_product")) {
+                      total_price_for_all_products +=  parseFloat(total_price_product.innerText.slice(1));
+                    }
+                    document.getElementById("total_price_for_all_products").innerText = "$" + total_price_for_all_products.toFixed(2);
+                    document.getElementById("total_price_for_all_products_with_gst").innerText = "$" + (total_price_for_all_products*1.07).toFixed(2); 
+                    document.getElementById("gst_amount").innerText = "$" + (total_price_for_all_products*0.07).toFixed(2);                       
+                  }
+
                 }
                 else if (this.responseText == "Insufficient product qty in database") {
                   document.getElementById("insufficent_product_qty_msg").getElementsByClassName("modal-body")[0].innerText = "Sorry! There is insufficient quantity for this product.";

@@ -461,17 +461,16 @@
                     }
                     echo "<div class='col-12 p-0'>";
                     //Search bar
-                    echo '<div class="row" name="search_for_products">    
-                            <div class="col">
-                                <div class="row">
-                                    <div class="col">
-                                        <input type="text" class="form-control" name="x" id="search_for_products" oninput ="search_filter()" placeholder="Find products">
+                    echo '  <div class="row" name="search_for_products">    
+                                <div class="col">
+                                    <div class="row">
+                                        <div class="col">
+                                            <input type="text" class="form-control" name="x" id="search_for_products" oninput ="search_filter()" placeholder="Find products">
+                                        </div>
+                                        <button class="btn btn-outline-info mb-2" id="filter_btn" onclick="show_filter_modal()">Filter options</button>
                                     </div>
-                                    <button class="btn btn-outline-info mb-2" id="filter_btn" onclick="show_filter_modal()">Filter</button>
-                                </div>
-                            </div>                 
-                            </div>
-                        </div>';
+                                </div>                 
+                            </div>';
                     //warning message
                     echo '<h5 id="no_items_warning"></h5>';
                     // Print category (of the food product) by category
