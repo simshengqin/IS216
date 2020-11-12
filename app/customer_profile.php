@@ -148,19 +148,20 @@
                                     echo "<input type='checkbox' id='c1' name='c1' value='true' onchange =\"update_preferences('must_be_vegetarian')\" checked><label for='c1' style='padding-left: 10px;'> Must be Vegetarian</label><br>";
                                 } elseif ($counter == 2){
                                     echo "<input type='checkbox' id='c2' name='c2' value='true' onchange =\"update_preferences('halal')\" checked><label for='c2'' style='padding-left: 10px;'> Halal</label><br>";
-                                } else {
-                                      echo "<input type='checkbox' id='c3' name='c3' value='{$pref}' onchange =\"update_preferences('proximity')\" checked><label for='c3' style='padding-left: 10px;'> Within a proximity range (m): <input type='text' id='updated_proximity'  value='{$pref}' aria-label='Text input with checkbox' onchange =\"update_preferences('proximity')\" ></label><br>";
                                 }
                             } else {
                                   if ($counter == 1) {
                                       echo "<input type='checkbox' id='c1' name='c1' value='false' onchange =\"update_preferences('must_be_vegetarian')\"><label for='c1' style='padding-left: 10px;'> Must be Vegetarian</label><br>";
                                   } elseif ($counter == 2){
                                       echo "<input type='checkbox' id='c2' name='c2' value='false' onchange =\"update_preferences('halal')\"><label for='c2' style='padding-left: 10px;'> Halal</label><br>";
-                                  } else {
-                                    echo "<input type='checkbox' id='c3' name='c3' value='{$pref}' onchange =\"update_preferences('proximity')\"><label for='c3' style='padding-left: 10px;'> Within a proximity range (m): </label><div><input type='text' class='ml-3' id='updated_proximity' aria-label='Text input with checkbox' onchange =\"update_preferences('proximity')\" ></div><br>";
-                                  }
+                                  } 
                             }
-                        }
+
+                        }                            
+                        //echo "<label for='c3'> Within a proximity range (m): <input type='number' min='0' id='updated_proximity'  value='{$pref}' aria-label='Text input with checkbox' onchange =\"update_preferences('proximity')\" ></label><br>";
+                        echo "  <label for='updated_proximity' class='label-title'>Within a proximity range from current location (Leave as 0 to not set a range)</label>
+                                <input type='range' min='0' max='20000' step='5' value='$pref' name='preferances[]' id='updated_proximity' class='form-input' onclick ='change_proximity()' style='height: 28px; width: 78%; padding: 0;' />
+                                <span id='proximity-label'>{$pref}m</span>";
                     ?>
         
                 <p style=""><button type="submit" class="btn btn-primary ml-3" onclick="changePreferences()" >Change Preferences</button></p>
@@ -350,7 +351,12 @@
 
     var user_id = document.getElementById('user_id').innerText;
     console.log(user_id);
-
+    function change_proximity() {
+        //Update the slider bar text on change 
+        var proximity = document.getElementById("updated_proximity").value;
+        document.getElementById("proximity-label").innerText = proximity + "m";
+        preferences[2] = proximity;
+    }
     function opposite(x){
         if (x == 'true') {
             return 'false';
@@ -371,12 +377,13 @@
             preferences[1] = opposite(halal);
             console.log(preferences[1]);
         } else {
-            if (document.getElementById("c3").checked) {
-                var proximity = document.getElementById("updated_proximity").value;
-            } else {
-                var proximity = 0;
-                document.getElementById("updated_proximity").value = 0;
-            }
+            var proximity = document.getElementById("updated_proximity").value;
+            // if (document.getElementById("c3").checked) {
+            //     var proximity = document.getElementById("updated_proximity").value;
+            // } else {
+            //     var proximity = 0;
+            //     document.getElementById("updated_proximity").value = 0;
+            // }
   
             preferences[2] = proximity;
             console.log(preferences[2]);

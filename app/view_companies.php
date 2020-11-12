@@ -402,7 +402,7 @@
                         distance = Math.round(distance * 100) / 100;   
 
                         distance_obj.innerHTML = "<div>" + distance + " km away</div>";  
-                        if (distance > parseFloat(document.getElementById("proximity_range").value)/1000) {
+                        if ( parseFloat(document.getElementById("proximity_range").value) != 0 && distance > parseFloat(document.getElementById("proximity_range").value)/1000) {
                             distance_obj.innerHTML += "<div class='mt-2 text-danger'>Further away then specified preferences</div> ";  
                         }  
 
