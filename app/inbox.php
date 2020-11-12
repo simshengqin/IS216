@@ -58,7 +58,7 @@
                     </div>>-->
                     <!--The left sidebar below the searchbar containing all the chat previews to other people -->
                     <div class="inbox_chat" id="inbox_chat">
-                        <div class='alert alert-warning m-3'>No messages currently!</div>
+                        <!--<div class='alert alert-warning m-3'>No messages currently!</div>-->
                     </div>
 
                 </div>
@@ -255,7 +255,17 @@
 
                     }
  
-                }            
+                }   
+                if ( document.getElementById("inbox_chat").innerHTML == "") {
+                    //Show empty inbox message if no messages
+                    if (user_type == "user") {
+                        document.getElementById("inbox_chat").innerHTML = "<div class='alert alert-warning m-3'>No messages currently! Start a new chat through the restaurant page</div>";
+                    }
+                    else {
+                        document.getElementById("inbox_chat").innerHTML = "<div class='alert alert-warning m-3'>No messages currently! A customer will enquire on your food products soon enough!</div>";
+                    }
+                    
+                }         
             }  
         };  
         request.open('POST', 'retrieve_message_leftbar.php', true);
