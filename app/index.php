@@ -134,7 +134,7 @@ require_once 'include/protect.php';
                   <img class="card-img-top" src="images/how_to_use/use-1.png" alt="">
                     <div class="card-body">
                         <h4 class="card-title">STEP 1</h4>
-                        <p class="card-text">Enter your preferences to receive notifications on nearby or favourite deals!</p>
+                        <p class="card-text">Enter your preferences for proximity range to highlight nearby deals which are convenient to collect!</p>
                     </div>
               </div>
               </div>
@@ -154,7 +154,7 @@ require_once 'include/protect.php';
                   <img class="card-img-top" src="images/how_to_use/use-3.png" alt="">
                       <div class="card-body">
                           <h4 class="card-title">STEP 3</h4>
-                          <p class="card-text">Upon arrival, show your receipt at the active orders page to the stall owner and collect your food!</p>
+                          <p class="card-text">Upon arrival, show your receipt at the active orders section to the restaurant and collect your food!</p>
                       </div>
               </div>
               </div>

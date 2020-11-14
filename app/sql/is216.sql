@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 14, 2020 at 02:19 AM
+-- Generation Time: Nov 14, 2020 at 07:33 AM
 -- Server version: 5.7.23
 -- PHP Version: 7.2.10
 
@@ -258,17 +258,15 @@ CREATE TABLE IF NOT EXISTS `transactions` (
   `rating` int(1) NOT NULL,
   `collected` varchar(100) NOT NULL,
   PRIMARY KEY (`transaction_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=136 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `transactions`
 --
 
 INSERT INTO `transactions` (`transaction_id`, `userid`, `cart`, `company_id`, `order_date`, `order_time`, `amount`, `collection_type`, `review`, `rating`, `collected`) VALUES
-(1, 1, '113:1,117:1,116:1,100:1', 1, '2020/08/08', '21:00 ', '3', 'Self-pickup', 'Value for money!', 4, 'true'),
-(2, 1, '100:1', 2, '2020/08/08', '20:30 ', '5', 'Self-pickup', 'Convenient to pick up during the evenings and easy to use! The food was nice and really happy to get it at a very cheap price! :)', 3, 'true'),
-(3, 1, '100:1', 10, '2020-10-31', '21:58', '7.49', 'Self-pickup', 'I loved it! Affordable price!', 5, 'true'),
-(4, 3, '202:1,1003:1,1002:1', 10, '2020-11-13', '18:45', '51.36', 'Self-pickup', 'Super nice! Really happy to have got this at such a low price', 5, 'true');
+(1, 1, '113:1,117:1,116:1,100:1', 1, '2020/08/08', '21:00 ', '3', 'Self-pickup', 'Super nice! Really happy to have got this at such a low price', 4, 'true'),
+(2, 1, '202:1', 2, '2020/08/08', '20:30 ', '5', 'Self-pickup', 'Convenient to pick up during the evenings and easy to use! The food was nice and really happy to get it at a very cheap price! :)', 5, 'true');
 
 -- --------------------------------------------------------
 
@@ -287,16 +285,14 @@ CREATE TABLE IF NOT EXISTS `user` (
   `phoneNumber` varchar(100) NOT NULL,
   `preferences` varchar(100) NOT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=37 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`user_id`, `cart`, `cart_company_id`, `password`, `name`, `email`, `phoneNumber`, `preferences`) VALUES
-(1, '903:1', 9, '$2y$10$uY2SaVJ19aJcEyxrkM6yOeakEnfwMHgmzTZsnM38fC8amqz.aXuj.', 'Yoyo', 'yoyo@gmail.com', '93484747', 'false,false,1'),
-(2, '100:1', 1, '$2y$10$/QHBdNogWHuc2taU4HebRuUS0EArAYvrPMbGzonuchqf6Qkn2/Py6', 'Yi Ming', 'yiming@gmail.com', '98515348', 'true,true,500'),
-(3, '', 0, '$2y$10$pMooVYGhvPUygSjbR0X28.CTAyb0MgQYnGeeftUrHVwMc0YK32r5.', 'James Lee', 'zh14@gmail.com', '82729462', 'false,false,1');
+(1, '', 0, '$2y$10$6m184ru3RRq9qaVOrzrn0eqodDfooB8s2/qZXpRgu7mijglqrU42i', 'Sun Jun', 'sunjunlovesg5t4@smu.edu.sg', '93846577', '3025');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
