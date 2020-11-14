@@ -179,7 +179,7 @@
                     //To calculate whether a company is within the range of the user specified proximity in preferences
                     $userDAO = new userDAO();
                     $preferences = $userDAO->retrieve_user_preferences($_SESSION["user_id"]);
-                    $proximity_range = explode(",",$preferences)[2];
+                    $proximity_range = $preferences; //explode(",",$preferences)[2];
                     echo "<input type='hidden' id='proximity_range' value='$proximity_range'></input>";
                 ?>
                 <div id='proximity'         
@@ -198,7 +198,27 @@
                             $company_mode_of_collection = ucwords($company->get_mode_of_collection());
                             $company_name = $company->get_name();
                             //$company_password = $company->get_password();
-                            $company_rating = $company->get_rating();
+                            //$company_rating = $company->get_rating();
+                            $transactionDAO = new transactionDAO();
+                            $transactions = $transactionDAO -> retrieve_transactions_by_company_id($company_id);
+                            $company_total_rating = 0;
+                            $company_rating_count = 0;
+                            foreach ($transactions as $transaction) {
+                                $transaction_rating = floatval($transaction->get_rating());
+                                $transaction_company_id = $transaction->get_company_id();
+                                if ($transaction_company_id == $company_id && $transaction_rating > 0 ) {
+                                      $company_total_rating += $transaction_rating;
+                                      $company_rating_count += 1;
+                                }
+                          
+                            }
+                            if ($company_rating_count == 0) {
+                                $company_rating = 0;
+                            }
+                            else {
+                                $company_rating = round($company_total_rating / $company_rating_count , 2);
+                            }
+                            
                                 echo "
                                 <div class='col-xl-4 col-lg-4 col-sm-6 single_company_grid' id ='single_company_grid' name='$company_id|$company_address|$company_description|$company_following|$company_joined_date|$company_mode_of_collection|$company_name|$company_rating'>
                                     <div class='company-grid shadow p-3 mb-5 bg-white rounded'>
@@ -210,7 +230,26 @@
                                             </div>
                                             <div class='company-content'>
                                                 
-                                                <span class='title font-weight-bold'>" . str_replace('_',' ',$company_name) ."</span> <li class='fa fa-star' style='margin-left: 10px;'></li>" . "<span class='font-weight-bold'>" . $company_rating . "</span><span>/5</span>"  . "
+                                                <span class='title font-weight-bold'>" . str_replace('_',' ',$company_name) ."</span> <li class='fa fa-star' style='margin-left: 10px;'></li>";
+                                                if ($company_rating == 0) {
+                                                    echo "<span class='font-weight-bold ml-1 mt-2'>No rating yet!</span>";
+                                                }
+                                                else {
+                                                    if ($company_rating == 0) {
+                                                        echo "<span class='font-weight-bold ml-1'>No rating yet!</span>";
+                                                    }
+                                                    else {
+                                                        echo "<span class='font-weight-bold ml-1'>$company_rating</span>
+                                                        <span>/5</span>&nbsp;($company_rating_count ";
+                                                        if ($company_rating_count > 1) {
+                                                            echo "reviews)";
+                                                        }
+                                                        else {
+                                                            echo "review)";
+                                                        }
+                                                    }
+                                                }
+                                                echo "
                                                 <h3 class='description'>" . $company_description . "</h3>
                                                 <h3 class='description'>" . $company_mode_of_collection . "</h3> <h3 class='description distance_obj' name='$company_latitude,$company_longtitude'></h3>
                                             </div>
@@ -223,11 +262,13 @@
                     }
                     echo "<div class='col-12'>";
                     //Print top rated restaurants
+                    /*
                     echo "  <div class='row' style='margin-left: 5px; margin-bottom: 20px;'>
                                 <h2 class='font-weight-bold'>Top-rated restaurants</h2>
                             </div>";                        
                     $top_rated_companies = $companyDAO->retrieve_top_rated_companies();
                     echo display_company_grids($top_rated_companies);
+                    */
                     // Print special description (of the food product) by special description
                     foreach ($unique_special_descriptions as $unique_special_description) {
                         echo "  <div class='row' style='margin-left: 5px; margin-bottom: 20px;'>
@@ -236,6 +277,7 @@
                         $company_products_by_special_description = $companyDAO->retrieve_products_by_special_description($unique_special_description);
                         echo display_company_grids($company_products_by_special_description);
                     }
+                    
                     //Print all the restaurants
                     echo "  <div class='row' style='margin-left: 5px; margin-bottom: 20px;'>
                                 <h2 class='font-weight-bold'>All restaurants</h2>

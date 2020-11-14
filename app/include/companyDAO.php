@@ -87,6 +87,7 @@ class companyDAO {
         $stmt->execute();
         $result = [];
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            
             $result[] = new company($row['company_id'], $row['address'], $row['latitude'],$row['longtitude'], $row['description'], $row['following'], $row['joined_date'], $row['mode_of_collection'], $row['name'], $row['password'], $row['rating'],  $row['special_description']);
         }
         return $result;

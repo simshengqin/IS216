@@ -7,6 +7,7 @@
   require_once 'include/protect.php';
   #Get company name and id from the link itself
   $companyDAO = new companyDAO();
+  $transactionDAO = new transactionDAO();
   if (isset($_GET["company_name"])) {
       $company_name = $_GET["company_name"];   
       
@@ -26,7 +27,27 @@
   $company_joined_date = $company-> get_joined_date();
   //$company_name = $company-> get_name()
   //$company_password= $company-> get_password()
-  $company_rating = $company-> get_rating();
+  //$company_rating = $company-> get_rating();
+  $transactions = $transactionDAO -> retrieve_transactions_by_company_id($company_id);
+  $company_total_rating = 0;
+  $company_rating_count = 0;
+  foreach ($transactions as $transaction) {
+      $transaction_rating = floatval($transaction->get_rating());
+      $transaction_company_id = $transaction->get_company_id();
+      if ($transaction_company_id == $company_id && $transaction_rating > 0 ) {
+            $company_total_rating += $transaction_rating;
+            $company_rating_count += 1;
+      }
+
+  }
+  if ($company_rating_count == 0) {
+    $company_rating = 0;
+    }
+else {
+        $company_rating = round($company_total_rating / $company_rating_count , 2);
+    }
+  $company_rating = round($company_total_rating / $company_rating_count , 2);
+  //$company_rating_count = $company-> get_rating_count();
   $user_id = $_SESSION["user_id"];
   $userDAO = new userDAO();
   $user = $userDAO-> retrieve_user($user_id);
@@ -106,9 +127,23 @@
             </div>
             </h1>         
             <div class="row mb-3 ml-3">
-                <li class='fa fa-star'></li>
-                <span class='font-weight-bold'><?php echo $company_rating ?></span>
-                <span>/5</span><span style="margin-left: 10px;" id="distance" name='<?php echo "$company_latitude,$company_longtitude"?>'></span>
+                <li class='fa fa-star'></li><?php
+                if ($company_rating == 0) {
+                    echo "<span class='font-weight-bold ml-1'>No rating yet!</span>";
+                }
+                else {
+                    echo "<span class='font-weight-bold ml-1'>$company_rating</span>
+                <span>/5</span>&nbsp;($company_rating_count ";
+                if ($company_rating_count > 1) {
+                    echo "reviews)";
+                }
+                else {
+                    echo "review)";
+                }
+                }
+                
+                ?>
+                <span style="margin-left: 10px;" id="distance" name='<?php echo "$company_latitude,$company_longtitude"?>'></span>
             </div> 
             <div class="row mb-3 ml-3">  
                 <div class="company-description"> <?php echo $company_description?></div>
@@ -329,11 +364,21 @@
                                 //var_dump($transaction->get_review());
                                 $rating = $transaction->get_rating();
                                 $review = $transaction->get_review();
-                                if ($rating != -1) {
+                                if ($rating != 0 && $rating != -1) {
                                     if ($review != '') {
                                         $reviews.= "<div class='card-header'>{$username}<span class='float-right'>Rating: {$transaction->get_rating()}</span></div><li class='list-group-item'>{$review}</li>";
                                     }
-                                    $reviews.= "<div class='card-header'>{$username}<span class='float-right'>Rating: {$transaction->get_rating()}</span></div>";
+                                    else {
+                                        $reviews.= "<div class='card-header'>{$username}<span class='float-right'>Rating: {$transaction->get_rating()}</span></div>";
+                                    }                                   
+                                }
+                                elseif ($rating == 0 ) {
+                                        if ($review != '') {
+                                            $reviews.= "<div class='card-header'>{$username}<span class='float-right'>No rating</span></div><li class='list-group-item'>{$review}</li>";
+                                        }
+                                        else {
+                                            $reviews.= "<div class='card-header'>{$username}<span class='float-right'>No rating</span></div>";
+                                        }
                                 } else {
                                     if ($review != '') {
                                         $reviews.= "<div class='card-header'>{$username}</div><li class='list-group-item'>{$review}</li>";
