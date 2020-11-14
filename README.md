@@ -1,4 +1,4 @@
-Eco
+Eco G5T4
 ======
 Step by step instructions of:
 ## How to set up Eco app based on the submitted file(s)
@@ -18,19 +18,19 @@ Step by step instructions of:
 (User)
 
 
-Username 1: sunjunlovesg5t4@smu.edu.sg
+Username: sunjunlovesg5t4@smu.edu.sg
 
 
-Password 1: Password2
+Password: Password2
 
 
 (Company)
 
 
-Username 1: breadtalk
+Username: breadtalk
 
 
-Password 1: password1
+Password: password1
 
 
 ## Version 
