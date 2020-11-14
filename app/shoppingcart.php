@@ -267,7 +267,7 @@
                                 <input readonly class='col h-100 quantity check-checkout' style='padding: 10px;' min='1' name='quantity' value='$quantity_in_cart' type='number' >
                                 <span onclick='add_quantity()'><button class='btn btn-link change_qty_btn pt-0' style='font-size: 25px;'>+</button>
                                 </span>
-                                <span class='total_price_for_current_product pt-2' style='width: 2.8em;'>
+                                <span class='total_price_for_current_product pt-2' style='width: 3.4em;'>
                                     $$total_price_for_current_product
                                 </span>
                             </div>
