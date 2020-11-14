@@ -59,7 +59,7 @@
 
 
 
-  <title>Profile</title>
+  <title>Company Profile</title>
 
   <!-- Roboto Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700&display=swap">

@@ -73,7 +73,7 @@ else {
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="x-ua-compatible" content="ie=edge"> 
-<title>View Company</title>
+<title>View Restaurant</title>
 <!-- Poppins font -->
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
   <!-- Roboto Font -->
