@@ -110,7 +110,7 @@ class productDAO {
     }
     public function retrieve_product($product_id){
 
-        $sql = "SELECT * FROM product WHERE product_id = :product_id AND visible='true'";// AND DATE(decay_date) > CURDATE()";// AND (decay_time > CURRENT_TIME())"; 
+        $sql = "SELECT * FROM product WHERE product_id = :product_id AND CONCAT(decay_date , ' ', decay_time) > NOW() AND visible='true'";// AND DATE(decay_date) > CURDATE()";// AND (decay_time > CURRENT_TIME())"; 
         $connMgr = new ConnectionManager();      
         $conn = $connMgr->getConnection();
 
