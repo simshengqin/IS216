@@ -17,10 +17,10 @@ Username/password details:
 <User>
 Username 1:
 Password 1:
-
+=====
 <Company>
-Username 1: saizeriya
-Password 1: Password1
+Username 1: breadtalk
+Password 1: password1
 
 
 ## Version 
