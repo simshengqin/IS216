@@ -115,8 +115,9 @@
   
         <div class="col-md-9 profile rounded" style="margin-top: 50px;">
             <div class="mx-md-5" >
-            <h2 style="margin-bottom: 30px; margin-top: 50px;">Notification Preferences</h2>
-                <p>Conditions for when you prefer to receive notifications on new food product listings.</p>
+            <div class="d-none d-sm-none d-md-block d-lg-block d-xl-block" style= "height: 60px;"></div>
+            <h2 style="margin-top: 30px;">Preferences</h2>
+                <p></p>
                 <!-- <div id="success"></div> -->
 
 
@@ -141,7 +142,7 @@
                         $prefArr = explode(',',$preferences);
                         foreach($prefArr as $pref){
                             $counter++;
-                            
+                            /*
                             if ($pref == 'true' || $pref != 0) {
                               //echo "yey";
                                 if ($counter == 1) {
@@ -156,16 +157,17 @@
                                       echo "<input type='checkbox' id='c2' name='c2' value='false' onchange =\"update_preferences('halal')\"><label for='c2' style='padding-left: 10px;'> Halal</label><br>";
                                   } 
                             }
+                            */
 
                         }                            
                         //echo "<label for='c3'> Within a proximity range (m): <input type='number' min='0' id='updated_proximity'  value='{$pref}' aria-label='Text input with checkbox' onchange =\"update_preferences('proximity')\" ></label><br>";
-                        echo "  <label for='updated_proximity' class='label-title'>Within a proximity range from current location (Leave as 0 to not set a range)</label>
+                        echo "  <label for='updated_proximity' class='label-title'>Highlight to me when a restaurant is outside of this proximity range: <br> (Leave as 0 to turn off this feature)</label>
                                 <input type='range' min='0' max='20000' step='5' value='$pref' name='preferances[]' id='updated_proximity' class='form-input' oninput ='change_proximity()' style='height: 28px; width: 78%; padding: 0;' />
                                 <span id='proximity-label'>{$pref}m</span>";
                     ?>
-        
-                <p style=""><button type="submit" class="btn btn-primary ml-3" onclick="changePreferences()" >Change Preferences</button></p>
-
+                <!--<div class="d-xs-none d-sm-none d-md-block d-lg-block d-xl-block" style= "height: 120px;"></div>-->
+                <p style=""><button type="submit" style="margin-top: 40px" class="btn btn-primary" onclick="changePreferences()" >Change Preferences</button></p>
+                <div class="d-md-none" style= "height: 20px;"></div>
               
             </div>
         </div>
