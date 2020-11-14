@@ -2,9 +2,9 @@
 
 class productDAO {
 
-    public function add($company_id, $decay_date, $decay_time, $name, $posted_date, $posted_time, $price_after, $price_before, $quantity, $category, $mode_of_collection, $image_url){       
-        $sql = 'INSERT INTO product (company_id, decay_date, decay_time, name, posted_date, posted_time, price_after, price_before, quantity, category, mode_of_collection, image_url) 
-                    VALUES (:company_id, :decay_date, :decay_time, :name, :posted_date, :posted_time, :price_after, :price_before, :quantity, :category, :mode_of_collection, :image_url)';
+    public function add($company_id, $decay_date, $decay_time, $name, $posted_date, $posted_time, $price_after, $price_before, $quantity, $category, $mode_of_collection, $image_url, $visible){       
+        $sql = 'INSERT INTO product (company_id, decay_date, decay_time, name, posted_date, posted_time, price_after, price_before, quantity, category, mode_of_collection, image_url, visible) 
+                    VALUES (:company_id, :decay_date, :decay_time, :name, :posted_date, :posted_time, :price_after, :price_before, :quantity, :category, :mode_of_collection, :image_url, $visible)';
         
         $connMgr = new ConnectionManager();       
         $conn = $connMgr->getConnection();
@@ -24,6 +24,7 @@ class productDAO {
         $stmt->bindParam(':category', $category, PDO::PARAM_STR);
         $stmt->bindParam(':mode_of_collection', $mode_of_collection, PDO::PARAM_STR);
         $stmt->bindParam(':image_url', $image_url, PDO::PARAM_STR);
+        $stmt->bindParam(':visible', $visible, PDO::PARAM_STR);
 
         $isAddOK = False;
         if ($stmt->execute()) {
@@ -50,7 +51,7 @@ class productDAO {
 
     public function retrieve_all($show_decayed_product){
         if ($show_decayed_product == true) {
-            $sql = "SELECT * FROM product WHERE CONCAT(decay_date , ' ', decay_time) > NOW()";
+            $sql = "SELECT * FROM product WHERE CONCAT(decay_date , ' ', decay_time) > NOW() AND visible='true'";
         }
         else {
             $sql = 'SELECT * FROM product';            
@@ -67,13 +68,13 @@ class productDAO {
         $result = [];
 
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $result[] = new product($row['product_id'], $row['company_id'], $row['decay_date'], $row['decay_time'], $row['name'], $row['posted_date'], $row['posted_time'], $row['price_after'], $row['price_before'], $row['quantity'], $row['category'], $row['mode_of_collection'], $row['image_url']);
+            $result[] = new product($row['product_id'], $row['company_id'], $row['decay_date'], $row['decay_time'], $row['name'], $row['posted_date'], $row['posted_time'], $row['price_after'], $row['price_before'], $row['quantity'], $row['category'], $row['mode_of_collection'], $row['image_url'], $row['visible']);
         }
         return $result;
     }
 
     public function retrieve_unique_categories_by_company_id($company_id){
-        $sql = "SELECT DISTINCT category FROM product WHERE company_id = :company_id AND CONCAT(decay_date , ' ', decay_time) > NOW()";// AND (decay_date > CURRENT_DATE()) AND (decay_time > CURRENT_TIME())';
+        $sql = "SELECT DISTINCT category FROM product WHERE company_id = :company_id AND CONCAT(decay_date , ' ', decay_time) > NOW() AND visible='true'";// AND (decay_date > CURRENT_DATE()) AND (decay_time > CURRENT_TIME())';
 
         $connMgr = new ConnectionManager();      
         $conn = $connMgr->getConnection();
@@ -91,7 +92,7 @@ class productDAO {
         return $result;
     }
     public function retrieve_products_by_category($category, $company_id){
-        $sql = "SELECT * FROM product WHERE category = :category AND company_id = :company_id AND CONCAT(decay_date , ' ', decay_time) > NOW()";
+        $sql = "SELECT * FROM product WHERE category = :category AND company_id = :company_id AND CONCAT(decay_date , ' ', decay_time) > NOW() AND visible='true'";
         //AND DATE(decay_date) > CURDATE() AND TIME(decay_time) > CONVERT(VARCHAR(8), GETDATE(), 108)";
         $connMgr = new ConnectionManager();      
         $conn = $connMgr->getConnection();
@@ -103,13 +104,13 @@ class productDAO {
         $stmt->execute();
         $result = [];
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $result[] = new product($row['product_id'], $row['company_id'], $row['decay_date'], $row['decay_time'], $row['name'], $row['posted_date'], $row['posted_time'], $row['price_after'], $row['price_before'], $row['quantity'], $row['category'], $row['mode_of_collection'], $row['image_url']);
+            $result[] = new product($row['product_id'], $row['company_id'], $row['decay_date'], $row['decay_time'], $row['name'], $row['posted_date'], $row['posted_time'], $row['price_after'], $row['price_before'], $row['quantity'], $row['category'], $row['mode_of_collection'], $row['image_url'], $row['visible']);
         }
         return $result;
     }
     public function retrieve_product($product_id){
 
-        $sql = "SELECT * FROM product WHERE product_id = :product_id";// AND DATE(decay_date) > CURDATE()";// AND (decay_time > CURRENT_TIME())"; 
+        $sql = "SELECT * FROM product WHERE product_id = :product_id AND visible='true'";// AND DATE(decay_date) > CURDATE()";// AND (decay_time > CURRENT_TIME())"; 
         $connMgr = new ConnectionManager();      
         $conn = $connMgr->getConnection();
 
@@ -117,9 +118,9 @@ class productDAO {
         $stmt->bindParam(':product_id', $product_id, PDO::PARAM_STR);
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $stmt->execute();
-        $result = [];
+        $result = "";
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $result = new product($row['product_id'], $row['company_id'], $row['decay_date'], $row['decay_time'], $row['name'], $row['posted_date'], $row['posted_time'], $row['price_after'], $row['price_before'], $row['quantity'], $row['category'], $row['mode_of_collection'], $row['image_url']);
+            $result = new product($row['product_id'], $row['company_id'], $row['decay_date'], $row['decay_time'], $row['name'], $row['posted_date'], $row['posted_time'], $row['price_after'], $row['price_before'], $row['quantity'], $row['category'], $row['mode_of_collection'], $row['image_url'], $row['visible']);
         }
         return $result;
     }
@@ -134,14 +135,15 @@ class productDAO {
         $stmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $stmt->execute();
+        $result = "";
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $result = new product($row['product_id'], $row['company_id'], $row['decay_date'], $row['decay_time'], $row['name'], $row['posted_date'], $row['posted_time'], $row['price_after'], $row['price_before'], $row['quantity'], $row['category'], $row['mode_of_collection'], $row['image_url']);
+            $result = new product($row['product_id'], $row['company_id'], $row['decay_date'], $row['decay_time'], $row['name'], $row['posted_date'], $row['posted_time'], $row['price_after'], $row['price_before'], $row['quantity'], $row['category'], $row['mode_of_collection'], $row['image_url'], $row['visible']);
         }
         return $result;
     }
     
     public function retrieve_product_by_company($company_id){
-        $sql = "SELECT * FROM product WHERE company_id = :company_id";
+        $sql = "SELECT * FROM product WHERE company_id = :company_id AND visible='true'";
         $connMgr = new ConnectionManager();      
         $conn = $connMgr->getConnection();
 
@@ -151,7 +153,7 @@ class productDAO {
         $stmt->execute();
         $result = [];
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $result[] = new product($row['product_id'], $row['company_id'], $row['decay_date'], $row['decay_time'], $row['name'], $row['posted_date'], $row['posted_time'], $row['price_after'], $row['price_before'], $row['quantity'], $row['category'], $row['mode_of_collection'], $row['image_url']);
+            $result[] = new product($row['product_id'], $row['company_id'], $row['decay_date'], $row['decay_time'], $row['name'], $row['posted_date'], $row['posted_time'], $row['price_after'], $row['price_before'], $row['quantity'], $row['category'], $row['mode_of_collection'], $row['image_url'], $row['visible']);
         }
         return $result;
     }
@@ -192,7 +194,8 @@ class productDAO {
 
     }
     public function remove_product($product_id){
-        $sql = "DELETE FROM product WHERE product_id =:product_id";
+        //$sql = "DELETE FROM product WHERE product_id =:product_id";
+        $sql = "UPDATE product SET visible = 'false' WHERE product_id =:product_id";
         $connMgr = new ConnectionManager();      
         $conn = $connMgr->getConnection();
 

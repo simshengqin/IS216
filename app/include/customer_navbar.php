@@ -42,12 +42,29 @@
     $user_id = $_SESSION["user_id"];
     $user = $userDAO->retrieve_user($user_id);
     $cart = $user->get_cart();
-    if (strlen($cart) == 0) {
-        $cart_count = 0;
-    }
-    else {
-      $cart_arr = explode(",",$cart);
-      $cart_count = count($cart_arr);      
+    $cart_count = 0;                 
+    if (strlen($cart) ==0) {
+        $cart_arr = [];
+      }
+      else {
+        $cart_arr = explode(",",$cart);
+    }  
+    $productDAO = new productDAO();
+    foreach ($cart_arr as $productqty) {
+        #Split it to an arr, where the 1st element is product_id and 2nd element is quantity
+        $productqty_arr = explode(":",$productqty);
+        $product_id = $productqty_arr[0];
+        #$quantity_in_cart contains how much the user currently ordered that product in their cart
+        $quantity_in_cart = $productqty_arr[1];
+        #Once the product_id is found, get the relevant product details from product table in the database
+      
+        $product = $productDAO->retrieve_product($product_id);
+        if ($product == '' ) {
+          continue;
+        }
+        else {
+          $cart_count += 1;
+        }
     }
 
 ?>

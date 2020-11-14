@@ -153,12 +153,31 @@
                 $cart = $user->get_cart();
                 #cart is in the format "product_id:quantity, product_id: quantity"
                 #Convert it to an array first, then loop through each of this product qty pair
+                $cart_count = 0;                 
                 if (strlen($cart) ==0) {
                     $cart_arr = [];
                   }
                   else {
                     $cart_arr = explode(",",$cart);
-                }             
+                }  
+                $productDAO = new productDAO();
+                foreach ($cart_arr as $productqty) {
+                    #Split it to an arr, where the 1st element is product_id and 2nd element is quantity
+                    $productqty_arr = explode(":",$productqty);
+                    $product_id = $productqty_arr[0];
+                    #$quantity_in_cart contains how much the user currently ordered that product in their cart
+                    $quantity_in_cart = $productqty_arr[1];
+                    #Once the product_id is found, get the relevant product details from product table in the database
+                  
+                    $product = $productDAO->retrieve_product($product_id);
+                    if ($product == '' ) {
+                      continue;
+                    }
+                    else {
+                      $cart_count += 1;
+                    }
+                }
+           
                 $userDAO = new userDAO();
                 //HARDCODED user_id here, need to change
                 $user_id = $_SESSION["user_id"];
@@ -166,18 +185,23 @@
                 $cart_company_id = $user->get_cart_company_id(); 
                 $total_price = "0.00";
                 $company_id="";
-                if ($_SESSION["cart_company_id"] == 0 || strlen($cart) ==0) {
-                  echo "<h5 class='mb-4 font-weight-bold' >Cart (<span id='cartsize'>" . sizeof($cart_arr) . "</span> items)</h5>";
+                $gst = "0.00"; 
+                $total_price_with_gst = "0.00";
+                $company_address = "";
+                $company_latitude = "";
+                $company_longtitude = "";
+                if ($_SESSION["cart_company_id"] == 0 || $cart_count ==0) {
+                  echo "<h5 class='mb-4 font-weight-bold' >Cart (<span id='cartsize'>" . $cart_count . "</span> items)</h5>";
                   echo "<div class='alert alert-danger'>No items in cart currently!</div>";
-                  $total_price_with_gst = "0.00";
-                  $gst = "0.00";
+                 
+                  
                   $company_name = "";
                   $company_latitude = "";
                   $company_longtitude = "";
                 }
                 else {
                   $company_name = $companyDAO -> retrieve_company_name($cart_company_id);
-                  echo "<h5 class='mb-4 font-weight-bold' >Cart (<span id='cartsize'>" . sizeof($cart_arr) . "</span> items) - " . ucwords($company_name) . "</h5>";
+                  echo "<h5 class='mb-4 font-weight-bold' >Cart (<span id='cartsize'>" . $cart_count . "</span> items) - " . ucwords($company_name) . "</h5>";
                                     
                   $company = $companyDAO->retrieve_company($cart_company_id); 
                   $company_address = $companyDAO -> retrieve_company_address($cart_company_id);                
@@ -193,6 +217,9 @@
                       #Once the product_id is found, get the relevant product details from product table in the database
                       $productDAO = new productDAO();
                       $product = $productDAO->retrieve_product($product_id);
+                      if ($product == '' ) {
+                        continue;
+                      }
                       $company_id = $product->get_company_id();
                       $decay_date = $product->get_decay_date();
                       $decay_time = $product->get_decay_time();
@@ -338,9 +365,9 @@
 
                 <h5 class="mb-4"><b>Self-pickup Address</b></h5>
 
-                <p class="mb-19"> <?php if (strlen($cart) !=0) {echo ucwords($company_name) . " - " . $company_address;} ?></p>                  
+                <p class="mb-19"> <?php if ($cart_count !=0) {echo ucwords($company_name) . " - " . $company_address;} ?></p>                  
                 <!--The following is a placeholder for the map.-->
-                <?php $items_in_cart_count = strlen($cart)?>
+                <?php $items_in_cart_count = $cart_count;?>
                 <div id="map" name='<?php echo "$company_latitude,$company_longtitude,$items_in_cart_count"; ?>'></div>
               </div>
             </div>

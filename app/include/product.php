@@ -15,8 +15,9 @@ class product {
     private $category;
     private $mode_of_collection;
     private $image_url;
+    private $visible;
     
-    public function __construct($product_id, $company_id, $decay_date, $decay_time, $name, $posted_date, $posted_time, $price_after, $price_before, $quantity, $category, $mode_of_collection, $image_url)
+    public function __construct($product_id, $company_id, $decay_date, $decay_time, $name, $posted_date, $posted_time, $price_after, $price_before, $quantity, $category, $mode_of_collection, $image_url, $visible)
     {
         $this->product_id = $product_id;
         $this->company_id = $company_id;
@@ -31,6 +32,7 @@ class product {
         $this->category = $category;
         $this->mode_of_collection = $mode_of_collection;
         $this->image_url = $image_url;
+        $this->visible = $visible;
     }
     public function get_product_id()
     { 
@@ -83,6 +85,10 @@ class product {
     public function get_image_url()
     {
         return $this->image_url;
+    }
+    public function get_visible()
+    {
+        return $this->visible;
     }
     
 }
