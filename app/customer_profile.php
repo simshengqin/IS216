@@ -104,8 +104,8 @@
                 <img src='<?php echo "$image_link"?>' class="rounded-circle w-5 mx-auto d-block profile-img" style="margin-top: 30px; margin-bottom: 20px;">
                 <!-- <img src="images/profile_picture/user/default.png" class="profile-img mx-auto d-block" style="margin-top: 30px; margin-bottom: 20px;"> -->
                 <div class="personal-details"><h3 style="word-wrap: break-word;"><?php echo $user_name ?></h3></div>
-                <div class="personal-details"><p style="word-wrap: break-word;"><?php echo $email ?></p></div>
-                <div class="personal-details"><p style="word-wrap: break-word;"><?php echo $phoneNumber ?></p></div>
+                <div class="personal-details"><small style="word-wrap: break-word;"><?php echo $email ?></small></div>
+                <div class="personal-details"><small style="word-wrap: break-word;"><?php echo $phoneNumber ?></small></div>
                 <div id='user_id' hidden><?php echo $user_id ?></div>
                 <div id='preferences' hidden><?php echo $preferences ?></div>
             </div>
