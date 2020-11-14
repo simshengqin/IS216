@@ -68,8 +68,10 @@ if(isset($_POST["productName"]) && isset($_POST["productType"]) && isset($_POST[
   var_dump("destination:". $destination);
   var_dump("Image url: ".$image_url);
 
+  $visible = "true";
+
   $output = $productDAO->add( $company_id, $decay_date, $decay_time, $name, 
-      $posted_date, $posted_time, $afterPrice, $beforePrice, $qty, $category, $modeOfCollection, $image_url);
+      $posted_date, $posted_time, $afterPrice, $beforePrice, $qty, $category, $modeOfCollection, $image_url, $visible);
 
   //var_dump($output);
 

@@ -18,10 +18,16 @@ Step by step instructions of:
 (User)
 
 
-Username: sunjunlovesg5t4@smu.edu.sg
+Username 1: sunjunlovesg5t4@smu.edu.sg
 
 
-Password: Password2
+Password 1: Password2
+
+
+Username 2: chrislee@gmail.com
+
+
+Password 2: Password1
 
 
 (Company)

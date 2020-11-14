@@ -4,7 +4,7 @@ class productDAO {
 
     public function add($company_id, $decay_date, $decay_time, $name, $posted_date, $posted_time, $price_after, $price_before, $quantity, $category, $mode_of_collection, $image_url, $visible){       
         $sql = 'INSERT INTO product (company_id, decay_date, decay_time, name, posted_date, posted_time, price_after, price_before, quantity, category, mode_of_collection, image_url, visible) 
-                    VALUES (:company_id, :decay_date, :decay_time, :name, :posted_date, :posted_time, :price_after, :price_before, :quantity, :category, :mode_of_collection, :image_url, $visible)';
+                    VALUES (:company_id, :decay_date, :decay_time, :name, :posted_date, :posted_time, :price_after, :price_before, :quantity, :category, :mode_of_collection, :image_url, :visible)';
         
         $connMgr = new ConnectionManager();       
         $conn = $connMgr->getConnection();
