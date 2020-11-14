@@ -442,7 +442,7 @@
                         $cart_arr = explode(",",$cart);
                     }        
                     $i = 0;
-                    #Here, we want to retrieve the items in the user's cart, so we can show it as added to cart accordingly
+                    #Here, we want to retrieve the items in the user's cart, so we can show it as ALREADY ADDED accordingly
                     $cart_product_ids = [];
                     foreach ($cart_arr as $productqty) {
                         #Split it to an arr, where the 1st element is product_id and 2nd element is quantity
@@ -505,15 +505,15 @@
                             }
                             $discount = round((($price_before-$price_after)/$price_before)*100,0);
 
-                            //checks whether this product is in the user cart. If so, it should display added to cart                        
+                            //checks whether this product is in the user cart. If so, it should display ALREADY ADDED                        
                             $product = $productDAO -> retrieve_product($product_id);
                             $product_quantity_in_database = $product -> get_quantity();
                             if (in_array($product_id, $cart_product_ids, true)) {
-                                $add_to_cart_btn_text = "ADDED TO CART";
+                                $add_to_cart_btn_text = "ALREADY ADDED";
                                 $add_to_cart_btn_class = "add-to-cart add-to-cart-hover";
                             }
                             //checks whether the product still has stocks left
-                            //this is after added to cart, as the user might be the person to hold on to the stocks so no more stocks left
+                            //this is after ALREADY ADDED, as the user might be the person to hold on to the stocks so no more stocks left
 
                             elseif ($product_quantity_in_database == 0) {
                                 $add_to_cart_btn_text = "OUT OF STOCK";
@@ -788,7 +788,7 @@
         }); 
     });
     function change_cart_company_id() {
-        window.target_element.innerText= "ADDED TO CART";
+        window.target_element.innerText= "ALREADY ADDED";
         var quantity = 0;
         var quantity_change = 1; 
         //Send an AJAX request to update_user.php to update the cart of user in database
@@ -868,7 +868,7 @@
         if (target.innerText == "OUT OF STOCK") {
             return;
         }
-        //If the user has previously added to cart, clicking the btn again should remove it from cart!
+        //If the user has previously ALREADY ADDED, clicking the btn again should remove it from cart!
         else if (target.innerText == "ADD TO CART") {           
             //Warn the user if he wants to change the company id in his current cart
             //alert(document.getElementById("same_company_id_from_user_cart").value);
@@ -877,7 +877,7 @@
                 //Here can put 0 as update_user.php will increase it to 1
                 var quantity = 0;
                 var quantity_change = 1;        
-                target.innerText= "ADDED TO CART";
+                target.innerText= "ALREADY ADDED";
                 
                  $(".cart-label").removeClass("bounce-4");
                  //Update the navbar cart count
@@ -890,7 +890,7 @@
             //Also no warning message if there is currently nothing in the user ccart, but should still update the user cart
             //company id!
             else if (cart_company_id == "0") {
-                //To change the add to cart btn to added to cart
+                //To change the add to cart btn to ALREADY ADDED
                 window.target_element = target;
                 change_cart_company_id();             
                 return;
@@ -1056,7 +1056,7 @@
                             //round to 2 dp
                             var distance = Math.round(distance * 100) / 100;               
                             document.getElementById("distance").innerText = distance + " km away";    
-                            //If the user provides his postal code through the modal, saves it in the added to cart msg so he dont need to enter it again 
+                            //If the user provides his postal code through the modal, saves it in the ALREADY ADDED msg so he dont need to enter it again 
                             added_to_cart_msg = document.getElementById("added_to_cart_msg");
                             //added_to_cart_msg.setAttribute("href", added_to_cart_msg.getAttribute("href") + "?postal_code=" + start);   
                     }
@@ -1213,7 +1213,7 @@
                     directionsRenderer.setDirections(response);
                     //No need to enter postal code if map is rendered successfully
                     document.getElementById("close_input_postal_code").setAttribute("onclick","");
-                    //If the user provides his postal code through the modal, saves it in the added to cart msg so he dont need to enter it again 
+                    //If the user provides his postal code through the modal, saves it in the ALREADY ADDED msg so he dont need to enter it again 
                     // added_to_cart_msg = document.getElementById("added_to_cart_msg");
                     // var currrent_link = added_to_cart_msg.getAttribute("href");
                     // if (current_link.includes("?postal_code=") == false) {
