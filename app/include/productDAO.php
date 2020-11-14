@@ -48,8 +48,14 @@ class productDAO {
     }
 
 
-    public function retrieve_all(){
-        $sql = 'SELECT * FROM product WHERE (decay_date > CURRENT_DATE()) OR (decay_time > CURRENT_TIME())';
+    public function retrieve_all($show_decayed_product){
+        if ($show_decayed_product == true) {
+            $sql = "SELECT * FROM product WHERE CONCAT(decay_date , ' ', decay_time) > NOW()";
+        }
+        else {
+            $sql = 'SELECT * FROM product';            
+        }
+
 
         $connMgr = new ConnectionManager();      
         $conn = $connMgr->getConnection();
@@ -67,7 +73,7 @@ class productDAO {
     }
 
     public function retrieve_unique_categories_by_company_id($company_id){
-        $sql = 'SELECT DISTINCT category FROM product WHERE company_id = :company_id';
+        $sql = "SELECT DISTINCT category FROM product WHERE company_id = :company_id AND CONCAT(decay_date , ' ', decay_time) > NOW()";// AND (decay_date > CURRENT_DATE()) AND (decay_time > CURRENT_TIME())';
 
         $connMgr = new ConnectionManager();      
         $conn = $connMgr->getConnection();
@@ -84,13 +90,15 @@ class productDAO {
         }
         return $result;
     }
-    public function retrieve_products_by_category($category){
-        $sql = "SELECT * FROM product WHERE category = :category; #AND (decay_date > CURRENT_DATE()) OR (decay_time > CURRENT_TIME())";
+    public function retrieve_products_by_category($category, $company_id){
+        $sql = "SELECT * FROM product WHERE category = :category AND company_id = :company_id AND CONCAT(decay_date , ' ', decay_time) > NOW()";
+        //AND DATE(decay_date) > CURDATE() AND TIME(decay_time) > CONVERT(VARCHAR(8), GETDATE(), 108)";
         $connMgr = new ConnectionManager();      
         $conn = $connMgr->getConnection();
 
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':category', $category, PDO::PARAM_STR);
+        $stmt->bindParam(':company_id', $company_id, PDO::PARAM_STR);
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $stmt->execute();
         $result = [];
@@ -100,7 +108,8 @@ class productDAO {
         return $result;
     }
     public function retrieve_product($product_id){
-        $sql = "SELECT * FROM product WHERE product_id = :product_id#; AND (decay_date > CURRENT_DATE()) OR (decay_time > CURRENT_TIME())"; 
+
+        $sql = "SELECT * FROM product WHERE product_id = :product_id";// AND DATE(decay_date) > CURDATE()";// AND (decay_time > CURRENT_TIME())"; 
         $connMgr = new ConnectionManager();      
         $conn = $connMgr->getConnection();
 
@@ -108,6 +117,7 @@ class productDAO {
         $stmt->bindParam(':product_id', $product_id, PDO::PARAM_STR);
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $stmt->execute();
+        $result = [];
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $result = new product($row['product_id'], $row['company_id'], $row['decay_date'], $row['decay_time'], $row['name'], $row['posted_date'], $row['posted_time'], $row['price_after'], $row['price_before'], $row['quantity'], $row['category'], $row['mode_of_collection'], $row['image_url']);
         }
@@ -131,7 +141,7 @@ class productDAO {
     }
     
     public function retrieve_product_by_company($company_id){
-        $sql = "SELECT * FROM product WHERE company_id = :company_id #AND (decay_date > CURRENT_DATE()) OR (decay_time > CURRENT_TIME())";
+        $sql = "SELECT * FROM product WHERE company_id = :company_id";
         $connMgr = new ConnectionManager();      
         $conn = $connMgr->getConnection();
 
@@ -221,7 +231,7 @@ class productDAO {
 
 
     public function retrieve_product_category(){
-        $sql = "SELECT DISTINCT category FROM product";
+        $sql = "SELECT DISTINCT category FROM product WHERE product_id = :product_id AND CONCAT(decay_date , ' ', decay_time) > NOW()";
         $connMgr = new ConnectionManager();      
         $conn = $connMgr->getConnection();
 

@@ -198,7 +198,7 @@
             <div class="row" id="main_product_grid">               
                 <?php
                     $productDAO = new productDAO();
-                    $all_product_info = $productDAO->retrieve_all();                 
+                    $all_product_info = $productDAO->retrieve_all(true);                 
                     $userDAO = new userDAO();
                     //HARDCODED user_id here, need to change
                     $user_id = $_SESSION["user_id"];

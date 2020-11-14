@@ -524,7 +524,7 @@ else {
                         echo "  <div class='col-12' style='margin-left: 5px; margin-bottom: 20px;'>
                                     <h1 class='font-weight-bold'>$category</h1>
                                 </div>";
-                        $company_products_by_category = $productDAO->retrieve_products_by_category($category);
+                        $company_products_by_category = $productDAO->retrieve_products_by_category($category, $company_id);
                         //echo '<pre>'; print_r($company_products_by_category); echo '</pre>';
                         echo "<div class='col-12' style='margin-left: 5px; margin-bottom: 20px;'>";
                         echo "  <div class='row'>";

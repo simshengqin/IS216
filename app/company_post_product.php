@@ -6,7 +6,7 @@
     $companyDAO = new companyDAO();
     $productDAO = new productDAO();
     //$productType = $productDAO->retrieve_product_type();
-    $newProductId = count($productDAO->retrieve_all());
+    $newProductId = count($productDAO->retrieve_all(false));
     
     if(isset($_SESSION["company_id"])){
       $company_id = $_SESSION["company_id"];
