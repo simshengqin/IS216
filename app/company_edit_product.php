@@ -379,6 +379,13 @@ function checkIfDateTimeExpired(date,time){
                 
                 <input type='text' readonly class='form-control-plaintext' id='name_{$product->get_product_id()}' value='".ucfirst(str_replace('_', ' ', $product->get_name()))."' style='font-size: 30px;'>
                 <!-- <h2 class='card-title font-weight-light' id='{$product->get_product_id()}_OLD'>".ucfirst(str_replace('_', ' ', $product->get_name()))."</h2> -->
+                
+                <div class='form-group' style='margin-bottom: 15px;'>
+                  <div class='input-group mb-3'>
+                    <label for='product_category_{$product->get_category()}' class='col-form-label' style='font-size: 20px;'> Category:  </label>
+                    <input type='text' readonly class='form-control-plaintext'  name='product_category' value=' {$product->get_category()}' style='font-size: 20px;'>
+                  </div>
+                </div>
 
                 <input type='hidden' name='errorBugBlock' value={$product->get_product_id()}>
 
