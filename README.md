@@ -1,4 +1,4 @@
-Eco
+Eco G5T4
 ======
 Step by step instructions of:
 ## How to set up Eco app based on the submitted file(s)
@@ -12,18 +12,25 @@ Step by step instructions of:
 2. Alternatively, you can access our webpage at https://ecois216.herokuapp.com/.
 3. To checkout, simply enter 4242 4242 4242 4242 in the stripe checkout page for the card number and any expiry date (after today) and CSV code.
 
-=====
-Username/password details:
 
-###User
-Username 1: sunjunlovesg5t4@smu.edu.sg
-Password 1: Password2
+## Username/password details:
+
+(User)
 
 
-=====
-###Company
-Username 1: breadtalk
-Password 1: password1
+Username: sunjunlovesg5t4@smu.edu.sg
+
+
+Password: Password2
+
+
+(Company)
+
+
+Username: breadtalk
+
+
+Password: password1
 
 
 ## Version 
