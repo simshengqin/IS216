@@ -130,7 +130,7 @@
                         <br>
                          <div class="form-group right">
                             <label for="experience" class="label-title">Within a proximity range from current location (Leave as 0 to not set a range)</label>
-                            <input type="range" min="0" max="20000" step="5" value="0" name="preferances[]" id="experience" class="form-input" onChange="change();" style="height: 28px; width: 78%; padding: 0;" />
+                            <input type="range" min="0" max="20000" step="5" value="0" name="preferances[]" id="experience" class="form-input" oninput="change();" style="height: 28px; width: 78%; padding: 0;" />
                             <span id="range-label">0m</span>
                         </div>
                         <div class="text-left">
