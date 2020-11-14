@@ -15,13 +15,21 @@ Step by step instructions of:
 
 ## Username/password details:
 
-User
+(User)
+
+
 Username 1: sunjunlovesg5t4@smu.edu.sg
+
+
 Password 1: Password2
 
 
-Company
+(Company)
+
+
 Username 1: breadtalk
+
+
 Password 1: password1
 
 
