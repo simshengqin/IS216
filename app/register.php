@@ -36,24 +36,8 @@
                     $password          =password_hash($password, PASSWORD_BCRYPT);
                     $cart              ="";
                     $cart_company_id   =0;
-                    $prefer            =(array)$_POST['preferances'];
-                    $preferances       ="";
+                    $preferances       = $_POST['preferances'];
                   
-                    if( in_array("halal", $prefer, true)){
-                        $preferances = $preferances . "true" . ",";
-                    } else {
-                        $preferances = $preferances . "false" . ",";
-                    }
-
-                     if( in_array("vegetarian", $prefer, true)){
-                        $preferances = $preferances . "true" . ",";
-                    } else {
-                        $preferances = $preferances . "false" . ",";
-                    }
-
-                    $end = end($prefer);
-
-                    $preferances = $preferances . $end ;
 
                     $connMgr = new ConnectionManager();       
                     $conn = $connMgr->getConnection();
@@ -115,22 +99,14 @@
                         </div>
                         <div class="text-left">
                         <hr>
+                
                         <a class="medium .text-primary">Preferences:</a>
                         </div>
-                        <br>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" name="preferances[]" id="prefer1" value="halal" >
-                            <label class="form-check-label" for="gender1">Halal</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" name="preferances[]" id="prefer2" value="vegetarian" >
-                            <label class="form-check-label" for="gender2">Vegetarian</label>
-                        </div>   
-                        <br>
-                        <br>
+                     
                          <div class="form-group right">
                             <label for="experience" class="label-title">Within a proximity range from current location (Leave as 0 to not set a range)</label>
-                            <input type="range" min="0" max="20000" step="5" value="0" name="preferances[]" id="experience" class="form-input" oninput="change();" style="height: 28px; width: 78%; padding: 0;" />
+                            <br>
+                            <input type="range" min="0" max="20000" step="5" value="0" name="preferances" id="experience" class="form-input" oninput="change();" style="height: 28px; width: 78%; padding: 0;" />
                             <span id="range-label">0m</span>
                         </div>
                         <div class="text-left">
