@@ -357,7 +357,7 @@
         //Update the slider bar text on change 
         var proximity = document.getElementById("updated_proximity").value;
         document.getElementById("proximity-label").innerText = proximity + "m";
-        preferences[2] = proximity;
+        preferences = proximity;
     }
     function opposite(x){
         if (x == 'true') {
@@ -367,9 +367,10 @@
         }
     }
 
-    var preferences = document.getElementById('preferences').innerText.split(',');
+    var preferences = document.getElementById('preferences').innerText;//.split(',');
     console.log(preferences);
     function update_preferences(condition) {
+        /*
         if (condition == 'must_be_vegetarian') {
             var must_be_vegetarian = document.getElementById("c1").value;
             preferences[0] = opposite(must_be_vegetarian);
@@ -390,6 +391,8 @@
             preferences[2] = proximity;
             console.log(preferences[2]);
         }   
+        */
+        preferences = proximity;
     }
 
 

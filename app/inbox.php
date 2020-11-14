@@ -340,8 +340,8 @@
                     else { 
                         new_html = new_html + "\
                                                                                     <div class='outgoing_msg'> \
-                                                                                        <div class='sent_msg'> \
-                                                                                            <p>" + message["body"] + "</p> \
+                                                                                        <div class='sent_msg' style='margin-right: 10px;'> \
+                                                                                            <p class='individual_chat_msg' style='margin-right: 10px;'>" + message["body"] + "</p> \
                                                                                             <span class='time_date'>" + message["date"] + "</span> \
                                                                                         </div> \
                                                                                     </div>  \

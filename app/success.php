@@ -39,6 +39,7 @@
     $transactions = $transactionDAO->retrieve_transactions_by_user_id($user_id);
 
     // clear shopping cart for user
+    $_SESSION['cart_company_id'] = "0";
     $userDAO->update_user_cart($user_id, '');
     $userDAO->update_user_cart_company_id($user_id, 0);
     ob_start();

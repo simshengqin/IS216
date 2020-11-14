@@ -46,7 +46,7 @@
 else {
         $company_rating = round($company_total_rating / $company_rating_count , 2);
     }
-  $company_rating = round($company_total_rating / $company_rating_count , 2);
+  //$company_rating = round($company_total_rating / $company_rating_count , 2);
   //$company_rating_count = $company-> get_rating_count();
   $user_id = $_SESSION["user_id"];
   $userDAO = new userDAO();
@@ -451,7 +451,7 @@ else {
                                                             ?>"></input>
         <input type="hidden" id="user_id" value="<?php echo $_SESSION['user_id'];          
                                                             ?>"></input>
-        <input type="hidden" id="cart_company_id" value="<?php echo $_SESSION['cart_company_id'];          
+        <input type="text" class="d-none" id="cart_company_id" value="<?php echo $_SESSION['cart_company_id'];          
                                                             ?>"></input>
         <input type="hidden" id="company_id" value="<?php echo $company_id;          
                                                             ?>"></input>
