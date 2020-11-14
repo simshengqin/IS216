@@ -31,16 +31,16 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `company`;
 CREATE TABLE IF NOT EXISTS `company` (
   `company_id` int(11) NOT NULL AUTO_INCREMENT,
-  `address` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `address` varchar(1000) CHARACTER SET utf8mb4 NOT NULL,
   `latitude` int(11) NOT NULL,
   `longtitude` int(11) NOT NULL,
-  `description` varchar(9999) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `following` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `description` varchar(9999) CHARACTER SET utf8mb4 NOT NULL,
+  `following` varchar(1000) CHARACTER SET utf8mb4 NOT NULL,
   `joined_date` date NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `password` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
+  `password` varchar(1000) CHARACTER SET utf8mb4 NOT NULL,
   `rating` float NOT NULL,
-  `mode_of_collection` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'pickup',
+  `mode_of_collection` varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT 'pickup',
   `special_description` varchar(255) NOT NULL,
   PRIMARY KEY (`company_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
@@ -70,15 +70,15 @@ INSERT INTO `company` (`company_id`, `address`, `latitude`, `longtitude`, `descr
 DROP TABLE IF EXISTS `message`;
 CREATE TABLE IF NOT EXISTS `message` (
   `message_id` int(11) NOT NULL AUTO_INCREMENT,
-  `body` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `body` varchar(1000) CHARACTER SET utf8mb4 NOT NULL,
   `date` datetime NOT NULL,
   `from_id` int(11) NOT NULL,
-  `from_type` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `seen` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `time` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `from_type` varchar(1000) CHARACTER SET utf8mb4 NOT NULL,
+  `seen` varchar(1000) CHARACTER SET utf8mb4 NOT NULL,
+  `time` varchar(1000) CHARACTER SET utf8mb4 NOT NULL,
   `to_id` int(11) NOT NULL,
-  `to_type` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `type` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `to_type` varchar(1000) CHARACTER SET utf8mb4 NOT NULL,
+  `type` varchar(1000) CHARACTER SET utf8mb4 NOT NULL,
   PRIMARY KEY (`message_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 
@@ -111,15 +111,15 @@ CREATE TABLE IF NOT EXISTS `product` (
   `company_id` int(11) NOT NULL,
   `decay_date` date NOT NULL,
   `decay_time` time(6) NOT NULL,
-  `name` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `name` varchar(1000) CHARACTER SET utf8mb4 NOT NULL,
   `posted_date` date NOT NULL,
   `posted_time` time(6) NOT NULL,
   `price_after` float NOT NULL,
   `price_before` float NOT NULL,
   `quantity` int(11) NOT NULL,
-  `category` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `category` varchar(1000) CHARACTER SET utf8mb4 NOT NULL,
   `mode_of_collection` varchar(9999) NOT NULL DEFAULT 'pickup',
-  `image_url` varchar(9999) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `image_url` varchar(9999) CHARACTER SET utf8mb4 NOT NULL,
   PRIMARY KEY (`product_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1017 DEFAULT CHARSET=latin1;
 
@@ -327,7 +327,7 @@ INSERT INTO `transactions` (`transaction_id`, `userid`, `cart`, `company_id`, `o
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT,
-  `cart` varchar(9999) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `cart` varchar(9999) CHARACTER SET utf8mb4 NOT NULL,
   `cart_company_id` int(11) NOT NULL,
   `password` varchar(100) NOT NULL,
   `name` varchar(100) NOT NULL,
