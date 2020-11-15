@@ -12,7 +12,7 @@ $price = floatval($_POST['price']) * 100;
 $cart = $_POST['cart'];
 
 
-\Stripe\Stripe::setApiKey('sk_test_51Hl5isBMUcjHpFwRvz6qspAPqMCA5rKLA2vLHz9e3Yj8XK8mR8HaGwTSqEVIWijUWJ2QmiB2A7b5KoRFdW5JcJ1P00seOMCnvs');
+\Stripe\Stripe::setApiKey('sk_test_51Hnc3NFI6XY9iwatovIPdfXDVVM5Gq5aB8tvuSXEHiZqaFywO5e1gaHWniCEJvdfAAMU7EpMxuD15Q5WsfxYE3cb00isYDc3Gc');
 
 
 header('Content-Type: application/json');

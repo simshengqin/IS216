@@ -6,23 +6,7 @@
     session_start(); 
   } 
 
-  // print_r($_SESSION);
-
-  // header('Set-Cookie: cross-site-cookie=bar; SameSite=None; Secure');
-
-  // $arr_cookie_options = array (
-  //   // 'expires' => time() + 60*60*24*30,
-  //   // 'path' => '/',
-  //   // 'domain' => '.example.com', // leading dot for compatibility or use subdomain
-  //   'secure' => true,     // or false
-  //   // 'httponly' => true,    // or false
-  //   'samesite' => 'None' // None || Lax  || Strict
-  // );
-
-  // setcookie('TestCookie', 'The Cookie Value', $arr_cookie_options); 
-
-  // setcookie('key', 'value', ['samesite' => 'None', 'secure' => true]);
-
+ 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -58,7 +42,7 @@
 
 <body class="skin-light">
   
-  <!--Main Navigation-->
+
   
   <!--Main layout-->
   <main>
@@ -147,7 +131,7 @@
                 <?php
                 $userDAO = new userDAO();
                 $companyDAO = new companyDAO();
-                //Hardcoded as 1 first. Need to change to check who is currently logged in!
+
                 $user_id = $_SESSION["user_id"];
                 $user = $userDAO->retrieve_user($user_id);
                 $cart = $user->get_cart();
@@ -179,7 +163,7 @@
                 }
            
                 $userDAO = new userDAO();
-                //HARDCODED user_id here, need to change
+        
                 $user_id = $_SESSION["user_id"];
                 $user = $userDAO-> retrieve_user($user_id);
                 $cart_company_id = $user->get_cart_company_id(); 
@@ -207,7 +191,7 @@
                   $company_address = $companyDAO -> retrieve_company_address($cart_company_id);                
                   $company_latitude = $company-> get_latitude();
                   $company_longtitude = $company-> get_longtitude();
-                  #var_dump($cart_arr);
+          
                   foreach ($cart_arr as $productqty) {
                       #Split it to an arr, where the 1st element is product_id and 2nd element is quantity
                       $productqty_arr = explode(":",$productqty);
@@ -267,11 +251,7 @@
                           if ($discount != 0.0) {
                               #echo "<span class='product-discount-label'>-$discount%</span>";
                           }                                  
-                          //<a href='#!' type='button' class='card-link-secondary small text-uppercase mr-3 float-right' onmousedown='show_confirmation_msg()'><i
-                                      //class='fas fa-trash-alt mr-1'></i>DELETE</a>
-                          //    <div class='row justify-content-center w-50 mt-2'>
-                          //    <div class='square centered' style='text-decoration: line-through' >$price_before_modified</div><div class='square centered font-weight-bold'>$$price_after</div>
-                          //</div>
+                          
                           echo "
                               <a href='#!'>
                               </a>
@@ -311,9 +291,7 @@
 
               </div>
             </div>
-            <!-- Card -->
-
-            <!-- Card -->
+           
             <div class="card mb-4">
               <div class="card-body">
 
@@ -522,9 +500,9 @@
                 else if (this.responseText == "Insufficient product qty in database") {
                   document.getElementById("insufficent_product_qty_msg").getElementsByClassName("modal-body")[0].innerText = "Sorry! There is insufficient quantity for this product.";
                   $('#insufficent_product_qty_msg').modal('show');
-                  //alert("Insufficient product qty in database");
+                  
                 }
-                //return (this.responseText);
+               
             }  
         };  
         request.open('POST', 'update_user.php', true);
@@ -565,7 +543,7 @@
 
       function show_confirmation_msg(target) {
         window.target_element = target.parentNode.parentNode.parentNode.parentNode;
-        //target.parentNode.parentNode.children[2].value
+        
         window.target_product_id= target.parentNode.parentNode.children[1].innerText;
         window.target_quantity = target.parentNode.parentNode.children[2].value;
         console.log(window.target_product_id, window.target_quantity);
@@ -598,7 +576,6 @@
           document.getElementById("cartsize").innerText -= 1;
           
           //Update the database
-          //XHR_send(1,event.target.parentNode.children[0].innerText ,0);
           XHR_send(1,window.target_product_id ,0,-window.target_quantity);
           
 
@@ -654,8 +631,7 @@
       function initMap() {
         //Dont load the map if no items in cart
         var items_in_cart_count = document.getElementById("map").getAttribute("name").split(",")[2]; 
-        console.log("HIIIIII");
-        console.log("count:" + items_in_cart_count);
+        
         if (items_in_cart_count != 0)    {
           //Get the latitude and longtitude using a postal code (from the url)
           //if the user enters his postal code in the modal on top, this will have a value
@@ -671,34 +647,10 @@
           //Sets the height of the map
           document.getElementById('map').setAttribute("style", "height: 400px;")       
           map = new google.maps.Map(document.getElementById('map'), {
-              //center: {lat: -34.397, lng: 150.644},
+              
               zoom: 6
             });
-            /*
-            // info window is the one showing "Location found" message
-            infoWindow = new google.maps.InfoWindow;
-    
-            // this attempts to get user permission to access location
-            // Try HTML5 geolocation.
-            if (navigator.geolocation) {
-              navigator.geolocation.getCurrentPosition(function(position) {
-                var pos = {
-                  lat: position.coords.latitude,
-                  lng: position.coords.longitude
-                };
-                // set user position to infoWindow
-                infoWindow.setPosition(pos);
-                infoWindow.setContent('Location found.');
-                infoWindow.open(map);
-                map.setCenter(pos);
-              }, function() {
-                handleLocationError(true, infoWindow, map.getCenter());
-              });
-            } else { // error handling
-              // Browser doesn't support Geolocation
-              handleLocationError(false, infoWindow, map.getCenter());
-            }
-            */
+           
             calcRoute(); 
             }         
         }         
@@ -715,7 +667,7 @@
             else {
                 start = sessionStorage.getItem('postal_code');
           }    
-          //console.log(start[0]);
+         
           var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + start + "&key=AIzaSyDcIUwwXfLUWzMAE1WspewghH9f-vmSkzc";
                 
           try { 
@@ -777,7 +729,7 @@
                   
                   document.getElementById("map").innerHTML = "<div class='alert alert-warning'>Invalid postal code. Please refresh the page.</div>";
                   document.getElementById("map").setAttribute("style","height: 10px;");
-                  //document.getElementById("display").innerHTML = "Sorry, invalid address. Please try again!";
+                  
               }
           xhttp.open("GET", url, true);
           xhttp.send();
@@ -819,9 +771,7 @@
         });
 
 
-      //var checkoutButton = document.getElementById("checkout-button");      
-      //checkoutButton.addEventListener("click", get_current_cart());
-      
+    
       function get_current_cart() {
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() { // callback aka anonymous function
@@ -836,7 +786,7 @@
         
         xhr.open("POST", "retrieve_cart.php", true);
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        //HARDCODED need to change later
+       
         xhr.send(); // query parameters
 
       }
@@ -844,8 +794,8 @@
       function checkout(current_cart) {
         var url = "create-session.php";
         // Create an instance of the Stripe object with your publishable API key
-        var stripe = Stripe("pk_test_51Hl5isBMUcjHpFwR5VtTFLT7q5m6Rw237MPYFQ9EpJgKBNEbjcOLm4bDIDQPV03LSQQgKSmpK6pkyFMws8ScjKu000khO1ym1m") 
-        //Stripe("pk_test_51HgOY8AgaC3WCXUJIaOFunkJxpIXJwKHuu6CeHk4NGB1esqvHIwVGXTTuxaZIebOuKhnSfqQDZTsBB5wOBn9D5RC00BlIAWB0d");            
+        var stripe = Stripe("pk_test_51Hnc3NFI6XY9iwat19YgjSn7VtrRXxsdCjQ0fFqP5PtmVGc4q82zCggY6gGAAEvkNcpioJyNiAkIWxjDlYG7lHol00eo8aZAr0") 
+           
             try { 
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function() {
