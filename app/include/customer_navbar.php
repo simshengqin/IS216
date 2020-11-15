@@ -65,6 +65,10 @@
         else {
           $cart_count += 1;
         }
+    }        
+    if ($cart_count == 0) {
+      // clear shopping cart for user
+      $_SESSION['cart_company_id'] = 0;
     }
 
 ?>

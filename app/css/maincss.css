@@ -301,7 +301,12 @@ h3.h3 {
   border-radius: 4px;
   transition: all 0.3s;
 }
-.company-grid:hover .add-to-cart-hover {
+.added-to-cart{
+  border: 1px solid transparent;
+  background: #16a085;
+  color: #fff;
+}
+.company-grid:hover .add-to-cart-hover{
   border: 1px solid transparent;
   background: #16a085;
   color: #fff;
@@ -388,6 +393,22 @@ h3.h3 {
   left: 5px;
   top: 10px;
   transition: all 0.3s;
+}
+.product-new-label-cart {
+  color: #fff;
+  background-color: #16a085;
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: 45px;
+  height: 45px;
+  width: 45px;
+  border-radius: 50%;
+  position: absolute;
+  left: 20px;
+  top: 10px;
+  padding-left: 8px;
+  transition: all 0.3s;  
 }
 .product-grid .product-discount-label {
   left: auto;
@@ -630,7 +651,12 @@ img {
 .active_chat {
   background: #ebebeb;
 }
-
+#message_body {
+  padding: 10px;
+}
+.individual_chat_msg {
+  margin-right: 10px;
+}
 .incoming_msg_img {
   display: inline-block;
   width: 6%;
@@ -690,7 +716,8 @@ img {
   color: #4c4c4c;
   font-size: 15px;
   min-height: 48px;
-  width: 100%;
+  width: 95%;
+  padding: 10px;
 }
 
 .type_msg {

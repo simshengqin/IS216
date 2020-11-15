@@ -69,11 +69,34 @@ if(isset($_POST["productName"]) && isset($_POST["productType"]) && isset($_POST[
   var_dump("Image url: ".$image_url);
 
   $visible = "true";
+  $sql = 'INSERT INTO product (company_id, decay_date, decay_time, name, posted_date, posted_time, price_after, price_before, quantity, category, mode_of_collection, image_url, visible) 
+  VALUES (:company_id, :decay_date, :decay_time, :name, :posted_date, :posted_time, :price_after, :price_before, :quantity, :category, :mode_of_collection, :image_url, :visible)';
 
-  $output = $productDAO->add( $company_id, $decay_date, $decay_time, $name, 
-      $posted_date, $posted_time, $afterPrice, $beforePrice, $qty, $category, $modeOfCollection, $image_url, $visible);
+  $connMgr = new ConnectionManager();       
+  $conn = $connMgr->getConnection();
 
+  $stmt = $conn->prepare($sql); 
+
+  //$stmt->bindParam(':product_id', $company_id, PDO::PARAM_INT);
+  $stmt->bindParam(':company_id', $company_id, PDO::PARAM_INT);
+  $stmt->bindParam(':decay_date', $decay_date, PDO::PARAM_STR);
+  $stmt->bindParam(':decay_time', $decay_time, PDO::PARAM_STR);
+  $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+  $stmt->bindParam(':posted_date', $posted_date, PDO::PARAM_STR);
+  $stmt->bindParam(':posted_time', $posted_time, PDO::PARAM_STR);
+  $stmt->bindParam(':price_after', $afterPrice, PDO::PARAM_STR);
+  $stmt->bindParam(':price_before', $beforePrice, PDO::PARAM_STR);
+  $stmt->bindParam(':quantity', $qty, PDO::PARAM_INT);
+  $stmt->bindParam(':category', $category, PDO::PARAM_STR);
+  $stmt->bindParam(':mode_of_collection', $modeOfCollection, PDO::PARAM_STR);
+  $stmt->bindParam(':image_url', $image_url, PDO::PARAM_STR);
+  $stmt->bindParam(':visible', $visible, PDO::PARAM_STR);
+  echo($stmt->execute());
+  //$output = $productDAO->add( $company_id, $decay_date, $decay_time, $name, 
+  //    $posted_date, $posted_time, $afterPrice, $beforePrice, $qty, $category, $modeOfCollection, $image_url, $visible);
   //var_dump($output);
+  //var_dump($output);
+  
 
 header("Location: company_edit_product.php");
 exit();
