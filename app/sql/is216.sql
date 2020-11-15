@@ -344,11 +344,12 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 INSERT INTO `user` (`user_id`, `cart`, `cart_company_id`, `password`, `name`, `email`, `phoneNumber`, `preferences`) VALUES
 (1, '1004:1,1006:1', 10, '$2y$10$6m184ru3RRq9qaVOrzrn0eqodDfooB8s2/qZXpRgu7mijglqrU42i', 'Sun Jun', 'sunjunlovesg5t4@smu.edu.sg', '93846577', '4285'),
+(2, '511:1', 5, '$2y$10$uToeYuL7SQkOem2SBWx5de4gQr3F0LbZAv9CWKJrjo1PrT/pl5Kva', 'Chris Lee', 'chrislee@gmail.com', '83739999', '0'),
 (37, '', 0, '$2y$10$nNrZxvy2ToPrjvni6oXpAOi/dZt7QzqS3bUNl.Cq.y4F81qGOlQOe', 'Lisa Low', 'lisa123@gmail.com', '12345678', '0'),
 (38, '', 0, '$2y$10$N43L5Kaf1yamumf3hMhp6eCZayrkGZuuux.zmhXdifldCsHh7V5EC', 'Calvin Carpenter', 'Calvin@hotmail.com', '91239922', '9155'),
 (39, '', 0, '$2y$10$Ym6PPfU6JFLaamyFryCieuJgIa7qj5Yg/Za56gznHrKfRq1.F2MjO', 'Jackie Chan', 'jackiechan@gmail.com', '87456322', '0'),
-(40, '', 0, '$2y$10$ldZX5iS9qQD5ug43Ncnrm.Xure1uTH09IlbpLjTG6seIuTZQmi/aK', 'Fann Wong', 'fannwong@gmail.com', '98625333', '1030'),
-(41, '511:1', 5, '$2y$10$uToeYuL7SQkOem2SBWx5de4gQr3F0LbZAv9CWKJrjo1PrT/pl5Kva', 'Chris Lee', 'chrislee@gmail.com', '83739999', '0');
+(40, '', 0, '$2y$10$ldZX5iS9qQD5ug43Ncnrm.Xure1uTH09IlbpLjTG6seIuTZQmi/aK', 'Fann Wong', 'fannwong@gmail.com', '98625333', '1030')
+;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
