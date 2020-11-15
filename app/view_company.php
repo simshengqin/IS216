@@ -84,7 +84,7 @@ else {
     //Process the database into info to be displayed
     $productDAO = new productDAO();
     //Retrieve all the unique categories, then we will retrieve all thep roducts category by category
-    $unique_categories = $productDAO->retrieve_unique_categories_by_company_id($company_id);
+    $unique_categories = $productDAO->retrieve_unique_categories_by_company_id_non_zero_quantity($company_id);
     //echo '<pre>'; print_r($unique_categories); echo '</pre>'; 
     $company_products = $productDAO->retrieve_product_by_company($company_id);
     $company_products_count = count($company_products);

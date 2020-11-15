@@ -145,7 +145,7 @@
                         }                            
                         
                         echo "  <label for='updated_proximity' class='label-title'>Highlight to me when a restaurant is outside of this proximity range: <br> (Leave as 0 to turn off this feature)</label>
-                                <input type='range' min='0' max='20000' step='5' value='$pref' name='preferances[]' id='updated_proximity' class='form-input' oninput ='change_proximity()' style='height: 28px; width: 78%; padding: 0;' />
+                                <input type='range' min='0' max='20000' step='5' value='$pref' name='preferances[]' id='updated_proximity' class='form-input' oninput ='change_proximity()' style='height: 28px; margin: -5px;width: 75%; padding: 0;' />
                                 <span id='proximity-label'>{$pref}m</span>";
                     ?>
                 
