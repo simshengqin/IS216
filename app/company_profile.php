@@ -224,8 +224,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
               <!-- <img class='card-img-top' src='images/{$product->get_category()}/{$product->get_name()}.jpg' width='100%' height='225'> -->
               <img class='card-img-top' src='{$product->get_image_url()}' width='100%' height='225'>
               <div class='card-body'>
-                <h4 class='card-title'> ".ucfirst(str_replace('_', ' ', $product->get_name()))."</h4>
-                <p class='card-text'> Promotion End: </p>
+                <h4 class='card-title'> ".ucfirst(str_replace('_', ' ', $product->get_name()))."</h4>";
+                echo "                
+                    <div class='card-subtitle mb-2'> Category: " . 
+                     ucfirst(str_replace('_', ' ', $product->get_category()))."' 
+                    </div>
+                    ";
+                echo "<p class='card-text'> Promotion End: </p>
                 <input type='hidden' class='dateTimeInputLeft' value='{$product->get_product_id()}*{$product->get_decay_date()}*{$product->get_decay_time()}'>
                 <p class='card-text text-center' style='font-size: 22px;' id='{$product->get_product_id()}')>  0:00:00 </p>
                 <!-- <p class='card-text font-weight-light' style='margin-bottom: -5px; font-size: 18px;'> Before Price: $  {$product->get_price_after()}</p> -->
