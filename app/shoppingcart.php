@@ -307,7 +307,7 @@
                 ?>
                 <
                 <hr class="mb-4">
-                <p class="text-primary mb-0"><i class="fas fa-info-circle mr-1"></i> Do not delay your purchase, food in your cart will automatically be deleted once expired or the company remove the promotion.</p>
+                <p class="text-primary mb-0"><i class="fas fa-info-circle mr-1"></i> Do not delay your purchase, food in your cart will automatically be deleted once expired or the restaurant remove the promotion</p>
 
               </div>
             </div>
