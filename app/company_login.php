@@ -88,10 +88,9 @@
                         url: "company_jslogin.php",
                         data: {name:name, password:password},
                         success:function(data){
-                            //alert(data);
+                        
                             if( $.trim(data) === "1" ){
-                                //sessionStorage.setItem('name', data['name']);
-                                //sessionStorage.setItem('password', data['password']);
+                                
                                 window.location.href = "company_profile.php";               
                                 setTimeout( 'window.location.href = "company_profile.php"', 1000)
                             } else {

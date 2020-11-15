@@ -24,7 +24,6 @@
       src = "https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js">
   </script>
   <!-- icon -->
-  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>  -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.js" integrity="sha256-2JRzNxMJiS0aHOJjG+liqsEOuBb6++9cY4dSOyiijX4=" crossorigin="anonymous"></script>
 
   <!-- font -->
@@ -101,9 +100,7 @@
           <a class="nav-link" href="inbox.php?user_id=<?php echo $_SESSION["user_id"]?>&user_type=user">Inbox</a>
         </li>
 
-        <!-- <li class="nav-item mr-4" id="link-customer-profile">
-            <a class="nav-link" href="customer_profile.php">Profile</a>
-        </li> -->
+  
         <?php
           if (!isset($_SESSION["user_id"])) {
               echo" <li class='nav-item mr-4 id='link-login'>

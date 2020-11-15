@@ -20,7 +20,7 @@
     $company_following = $company->get_following();
     $numOfFollowing = count(explode( ',', $company_following ));
     $company_joined_date = $company->get_joined_date();
-    //$company_rating = $company->get_rating();
+ 
     $transactionDAO = new transactionDAO();
     $transactions = $transactionDAO -> retrieve_transactions_by_company_id($company_id);
     $company_total_rating = 0;
