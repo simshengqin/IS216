@@ -227,7 +227,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 <h4 class='card-title'> ".ucfirst(str_replace('_', ' ', $product->get_name()))."</h4>";
                 echo "                
                     <div class='card-subtitle mb-2'> Category: " . 
-                     ucfirst(str_replace('_', ' ', $product->get_category()))."' 
+                     ucfirst(str_replace('_', ' ', $product->get_category()))."
                     </div>
                     ";
                 echo "<p class='card-text'> Promotion End: </p>
