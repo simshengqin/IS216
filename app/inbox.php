@@ -25,7 +25,7 @@
             $("#link-inbox").addClass("active");
         }); 
     </script>
-    
+    <title>Inbox</title>
 </head>
 <body>
 <div class="container-fluid ">
