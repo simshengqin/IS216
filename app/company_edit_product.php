@@ -201,9 +201,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
       var timeRemaining =  countDownDate - now;
 
       if (timeRemaining < 0) {
-        var newValue = document.getElementById('name_'+productid).getAttribute('value');
-        newValue = newValue + " * EXPIRED";
-        document.getElementById('name_'+productid).setAttribute('value', newValue);
+        document.getElementById('name_'+productid).innerText += " * EXPIRED";
         document.getElementById('name_'+productid).style.color = "red";
       }
     }
