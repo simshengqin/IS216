@@ -30,7 +30,7 @@
   <meta name="author" content="">
 
   <title>Post Product</title>
-  <link rel="icon" href="images/logo/favicon.png">;
+  <link rel="icon" href="images/logo/favicon.png">
   <!-- Roboto Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700&display=swap">
   <!-- Font Awesome -->

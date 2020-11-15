@@ -63,7 +63,7 @@ else {
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="x-ua-compatible" content="ie=edge"> 
 <title>View Restaurant</title>
-<link rel="icon" href="images/logo/favicon.png">;
+<link rel="icon" href="images/logo/favicon.png">
 <!-- Poppins font -->
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
   
