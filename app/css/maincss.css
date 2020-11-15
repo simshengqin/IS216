@@ -1,10 +1,7 @@
 body {
   background-color: #f7f7f7;
-  /* background-color: #92bdb7; */
-  /* font-family: 'Lato'; */
-  /* font-family: 'Montserrat'; */
   font-family: "Poppins";
-  /* font-family: 'Roboto'; */
+
 }
 
 .navbar-light .navbar-nav .nav-item > a:hover {
@@ -17,9 +14,7 @@ input[type="date"]:disabled {
   background-color: white;
 }
 
-/* .jumbotron, .jumbotron-fluid {
-  background-color: #00a69c!important;
-} */
+
 
 .bg-special {
   background-color:  #00a69c!important;
@@ -969,10 +964,7 @@ img {
 .cart-label:hover {
   background-color: #00a69c;
 }
-/*
-#link-cart-inner .fa-shopping-cart{
-  background-color: #7C7C7D;
-}*/
+
 
 @media (max-width: 992px) {                  
   #link-cart-inner {

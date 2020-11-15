@@ -11,7 +11,7 @@ class productDAO {
          
         $stmt = $conn->prepare($sql); 
 
-        //$stmt->bindParam(':product_id', $company_id, PDO::PARAM_INT);
+       
         $stmt->bindParam(':company_id', $company_id, PDO::PARAM_INT);
         $stmt->bindParam(':decay_date', $decay_date, PDO::PARAM_STR);
         $stmt->bindParam(':decay_time', $decay_time, PDO::PARAM_STR);
@@ -199,7 +199,7 @@ class productDAO {
         } 
         else {
             $quantity = strval($current_quantity + $quantity);
-            //return $quantity . " " . $product_id;
+         
             $sql2 = "UPDATE product SET quantity =:quantity WHERE product_id =:product_id";
             $connMgr2 = new ConnectionManager();    
             $conn2 = $connMgr2->getConnection();
@@ -212,7 +212,7 @@ class productDAO {
 
     }
     public function remove_product($product_id){
-        //$sql = "DELETE FROM product WHERE product_id =:product_id";
+     
         $sql = "UPDATE product SET visible = 'false' WHERE product_id =:product_id";
         $connMgr = new ConnectionManager();      
         $conn = $connMgr->getConnection();
@@ -224,31 +224,7 @@ class productDAO {
         return $status;
     }
 
-    /* can we delete this tables ? 
-
-    public function removeAll(){
-        $sql = 'TRUNCATE TABLE student';
-        
-        $connMgr = new ConnectionManager();
-        $conn = $connMgr->getConnection();
-        
-        $stmt = $conn->prepare($sql);
-        
-        $stmt->execute();
-        $count = $stmt->rowCount();
-    }
-
-
-    public function updateEDollar($userid,$edollar){
-        $sql = "UPDATE student SET edollar =:edollar WHERE userid =:userid";
-        $connMgr = new ConnectionManager();    
-        $conn = $connMgr->getConnection();
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':userid', $userid, PDO::PARAM_STR);
-        $stmt->bindParam(':edollar', $edollar, PDO::PARAM_STR);
-        $stmt->execute();
-    }
-    */
+   
 
 
     public function retrieve_product_category(){

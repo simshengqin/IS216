@@ -378,7 +378,7 @@ function checkIfDateTimeExpired(date,time){
                 <h4 class='card-title' id='name_{$product->get_product_id()}' style='font-size: 24px; '>" . ucfirst(str_replace('_', ' ', $product->get_name())) . "</h4>";
                 echo "                
                     <div class='card-subtitle mb-2'> Category: " . 
-                     ucfirst(str_replace('_', ' ', $product->get_category()))."' 
+                     ucfirst(str_replace('_', ' ', $product->get_category()))."
                     </div>
                     ";
                 echo "
