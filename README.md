@@ -10,7 +10,7 @@ Step by step instructions of:
 ## How to run Eco app
 1. Access our application at /app locally. (E.g. localhost/eco/app)
 2. Alternatively, you can access our webpage at https://ecois216.herokuapp.com/.
-3. To checkout, simply enter 4242 4242 4242 4242 in the stripe checkout page for the card number and any expiry date (after today) and CSV code.
+3. To checkout, simply enter `4242 4242 4242 4242` in the stripe checkout page for the card number and any expiry date (after today) and CSV code.
 
 
 ## Username/password details:
@@ -20,12 +20,12 @@ Step by step instructions of:
 
 Username 1: sunjunlovesg5t4@smu.edu.sg
 
-Password 1: Password2
+Password 1: `Password2`
 
 
 Username 2: chrislee@gmail.com
 
-Password 2: Password1
+Password 2: `Password1`
 
 
 **Company**
