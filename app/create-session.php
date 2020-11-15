@@ -3,9 +3,6 @@
 
 require 'vendor/autoload.php';
 
-// if(!isset($_SESSION)) { 
-//     session_start(); 
-// } 
 
 $user_id = $_POST['user_id'];
 $company_id = $_POST['company_id'];
@@ -16,9 +13,8 @@ $cart = $_POST['cart'];
 
 
 \Stripe\Stripe::setApiKey('sk_test_51Hl5isBMUcjHpFwRvz6qspAPqMCA5rKLA2vLHz9e3Yj8XK8mR8HaGwTSqEVIWijUWJ2QmiB2A7b5KoRFdW5JcJ1P00seOMCnvs');
-#setApiKey('sk_test_51HgOY8AgaC3WCXUJkZeI8NEO20nKkEYE99qUUjnjSdLxJ25DlKtKJipaM4CvoTWzi1cryHYmF6zD83J5cCunACSz007ce7SGlu');
 
-// header('Content-Type: application/json','Set-Cookie: cross-site-cookie=bar; SameSite=None; Secure');
+
 header('Content-Type: application/json');
 
 // change this link to where your app is hosted/ alias
@@ -69,23 +65,7 @@ $checkout_session = \Stripe\Checkout\Session::create([
 ]);
 
 
-// $checkout_session = \Stripe\Checkout\Session::create([
-//   'payment_method_types' => ['card'],
-//   'line_items' => [[
-//     'price_data' => [
-//       'currency' => 'sgd',
-//       'unit_amount' => 2000,
-//       'product_data' => [
-//         'name' => 'Stubborn Attachments',
-//         'images' => ["https://i.imgur.com/EHyR2nP.png"],
-//       ],
-//     ],
-//     'quantity' => 1,
-//   ]],
-//   'mode' => 'payment',
-//   'success_url' => $YOUR_DOMAIN . '/success.html',
-//   'cancel_url' => $YOUR_DOMAIN . '/cancel.html',
-// ]);
+
 
 echo json_encode(['id' => $checkout_session->id]);
 

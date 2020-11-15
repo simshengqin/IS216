@@ -39,7 +39,7 @@
     $unrated_transactions = $transactionDAO->retrieve_unrated_transactions_by_user_id($user_id);
     $rated_transactions = $transactionDAO->retrieve_rated_transactions_by_user_id($user_id);
 
-    // $company_id = $orders->get_company_id();
+
 
     $companyDAO = new companyDAO();
     $productDAO = new productDAO();
@@ -62,7 +62,7 @@
   <link href="css/maincss.css" rel="stylesheet">
 
   <!-- icon -->
-  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>  -->
+  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.js" integrity="sha256-2JRzNxMJiS0aHOJjG+liqsEOuBb6++9cY4dSOyiijX4=" crossorigin="anonymous"></script>
 
   <!-- font -->
@@ -78,15 +78,14 @@
 <!-- Navigation -->
 <?php include 'include/customer_navbar.php';?>
 
-  <!-- <header class="py-5 mb-5 header-img">
 
-  </header> -->
+
+
 <div class="container">
     <div class='row mx-md-5 pl-3 pr-3'>
         <div class='col-md-3 profile rounded' style="margin-top: 50px; margin-right: 20p;">
             <div class="pb-5"> 
-                <!-- <h2 class="display-5 mx-md-5">Customer Profile</h2> -->
-                <!-- <hr class="my-4"> -->
+              
                 <?php
                     if (file_exists("images/profile_picture/user/$user_id.png")) {
                         $image_link = "images/profile_picture/user/$user_id.png";
@@ -111,14 +110,13 @@
             </div>
         </div>
 
-        <!--<div style="width:20px;"></div>-->
-  
+     
         <div class="col-md-9 profile rounded" style="margin-top: 50px;">
             <div class="mx-md-5" >
             <div class="d-none d-sm-none d-md-block d-lg-block d-xl-block" style= "height: 60px;"></div>
             <h2 style="margin-top: 30px;">Preferences</h2>
                 <p></p>
-                <!-- <div id="success"></div> -->
+            
 
 
                 <div name="toastdiv" id="toastdiv"style="display: none;">
@@ -142,30 +140,15 @@
                         $prefArr = explode(',',$preferences);
                         foreach($prefArr as $pref){
                             $counter++;
-                            /*
-                            if ($pref == 'true' || $pref != 0) {
-                              //echo "yey";
-                                if ($counter == 1) {
-                                    echo "<input type='checkbox' id='c1' name='c1' value='true' onchange =\"update_preferences('must_be_vegetarian')\" checked><label for='c1' style='padding-left: 10px;'> Must be Vegetarian</label><br>";
-                                } elseif ($counter == 2){
-                                    echo "<input type='checkbox' id='c2' name='c2' value='true' onchange =\"update_preferences('halal')\" checked><label for='c2'' style='padding-left: 10px;'> Halal</label><br>";
-                                }
-                            } else {
-                                  if ($counter == 1) {
-                                      echo "<input type='checkbox' id='c1' name='c1' value='false' onchange =\"update_preferences('must_be_vegetarian')\"><label for='c1' style='padding-left: 10px;'> Must be Vegetarian</label><br>";
-                                  } elseif ($counter == 2){
-                                      echo "<input type='checkbox' id='c2' name='c2' value='false' onchange =\"update_preferences('halal')\"><label for='c2' style='padding-left: 10px;'> Halal</label><br>";
-                                  } 
-                            }
-                            */
+                            
 
                         }                            
-                        //echo "<label for='c3'> Within a proximity range (m): <input type='number' min='0' id='updated_proximity'  value='{$pref}' aria-label='Text input with checkbox' onchange =\"update_preferences('proximity')\" ></label><br>";
+                        
                         echo "  <label for='updated_proximity' class='label-title'>Highlight to me when a restaurant is outside of this proximity range: <br> (Leave as 0 to turn off this feature)</label>
                                 <input type='range' min='0' max='20000' step='5' value='$pref' name='preferances[]' id='updated_proximity' class='form-input' oninput ='change_proximity()' style='height: 28px; width: 78%; padding: 0;' />
                                 <span id='proximity-label'>{$pref}m</span>";
                     ?>
-                <!--<div class="d-xs-none d-sm-none d-md-block d-lg-block d-xl-block" style= "height: 120px;"></div>-->
+                
                 <p style=""><button type="submit" style="margin-top: 40px" class="btn btn-primary" onclick="changePreferences()" >Change Preferences</button></p>
                 <div class="d-md-none" style= "height: 20px;"></div>
               
@@ -174,17 +157,17 @@
     </div>
 
 
-  <!-- <hr> -->
+ 
 
 
     <div class="row mx-md-5 pl-3 pr-3" style="margin-top: 50px; margin-bottom: 50px;">
         <?php          
             if ($unrated_transactions == []){
                 echo "";
-                //"<div class='col-12 mb-2'>No active orders</div>";
+               
             }
             else {
-                //echo "<div class='col-12'>";
+                
                 echo "<h2 style='margin-bottom: 20px;'>Active Orders</h2>
                         <div class='col-12'>
                         <i class='fas fa-info-circle'></i><small class='font-weight-bold'>&#8287;&#8287;&#8287;&#8287;Click 'Received' button to confirm that order is completed! Leave a rating and review for your order! (optional) <br> &#8287;&#8287;&#8287;&#8287;&#8287;&#8287;&#8287;&#8287; You are encouraged to bring your own reusable container to collect your food! &#128540; </small>
@@ -201,7 +184,7 @@
                         $time .= ' AM';
                     }
                     $cart = explode(',', $cart_string);
-                    //var_dump($cart);
+                    
                     $order_details = '';
                     foreach ($cart as $item) {
                         $item_array = explode(":",$item);
@@ -212,13 +195,7 @@
                         $order_details .= $product_name .': ' . $qty . ' pax <br>';
                     }
                     
-                    // if ($rating == ''){
-                    //   echo "<button type='submit' class='btn btn-primary btn-sm' onclick="addRating()">Rate</button>"
-                    // } 
-    
-                    // if ($review == ''){
-                    //   echo "<input type='text' name='review' id='review>";
-                    // }
+                   
                     echo "
                     <div class='col-12'>
                     <div class='row card border-dark mb-3'>
@@ -292,7 +269,7 @@
                         $time .= ' AM';
                     }
                     $cart = explode(',', $cart_string);
-                    //var_dump($cart);
+                   
                     $order_details = '';
                     foreach ($cart as $item) {
                         $item_array = explode(":",$item);
@@ -303,13 +280,7 @@
                         $order_details .= $product_name .': ' . $qty . ' pax <br>';
                     }
                     
-                    // if ($rating == ''){
-                    //   echo "<button type='submit' class='btn btn-primary btn-sm' onclick="addRating()">Rate</button>"
-                    // } 
-
-                    // if ($review == ''){
-                    //   echo "<input type='text' name='review' id='review>";
-                    // }
+                    
                     //rating = 0 means not rated yet, rating = -1 means customer dont want to review
                     $rating = $transaction->get_rating();
                     if ($rating == -1) {
@@ -370,28 +341,7 @@
     var preferences = document.getElementById('preferences').innerText;//.split(',');
     console.log(preferences);
     function update_preferences(condition) {
-        /*
-        if (condition == 'must_be_vegetarian') {
-            var must_be_vegetarian = document.getElementById("c1").value;
-            preferences[0] = opposite(must_be_vegetarian);
-            console.log(preferences[0]);
-        } else if (condition == 'halal') {
-            var halal = document.getElementById("c2").value;
-            preferences[1] = opposite(halal);
-            console.log(preferences[1]);
-        } else {
-            var proximity = document.getElementById("updated_proximity").value;
-            // if (document.getElementById("c3").checked) {
-            //     var proximity = document.getElementById("updated_proximity").value;
-            // } else {
-            //     var proximity = 0;
-            //     document.getElementById("updated_proximity").value = 0;
-            // }
-  
-            preferences[2] = proximity;
-            console.log(preferences[2]);
-        }   
-        */
+       
         preferences = proximity;
     }
 
@@ -405,8 +355,7 @@
             if (this.readyState == 4 && this.status == 200) {
                 //Add check for success here?
                 var success = JSON.stringify(this.responseText);
-                // console.log(this.responseText);  
-                // document.getElementById('success').innerHTML =  "<div class='alert alert-success alert-dismissible fade show' role='alert'>" + success + "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
+               
                 document.getElementById('toastdiv').setAttribute("style","display: block;");
                 $("#success_popup").toast({ delay: 2000 });
                 $("#success_popup").toast('show');
@@ -428,7 +377,7 @@
     }
     function received() {
         transaction_id = window.transaction_id;
-        //alert(transaction_id);
+        
         var rating = document.getElementById('rating-score').value;
         if (rating == 'No rating'){         
             rating = -1;
@@ -445,7 +394,7 @@
                 if (this.readyState == 4 && this.status == 200) {
                     //Add check for success here?
                     var success = JSON.stringify(this.responseText);
-                    //alert(success);
+                    
                     $('#review_modal').modal('hide');
                     $('#received_order_msg').modal('show');
                    
@@ -463,13 +412,7 @@
     function refresh_page() {
         window.location.href = "customer_profile.php";
     }
-    //****Add to cart message popup****//
-    $(document).ready(function(){
-    $(".success_popup").click(function(){
-            //$("#add_to_cart_message").toast({ delay: 7000 });
-            //$("#add_to_cart_message").toast('show');
-        }); 
-    });
+    
 
 
 

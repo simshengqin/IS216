@@ -8,7 +8,7 @@
 
     require 'vendor/autoload.php';
     $stripe = new \Stripe\StripeClient('sk_test_51Hl5isBMUcjHpFwRvz6qspAPqMCA5rKLA2vLHz9e3Yj8XK8mR8HaGwTSqEVIWijUWJ2QmiB2A7b5KoRFdW5JcJ1P00seOMCnvs');
-    #('sk_test_51HgOY8AgaC3WCXUJkZeI8NEO20nKkEYE99qUUjnjSdLxJ25DlKtKJipaM4CvoTWzi1cryHYmF6zD83J5cCunACSz007ce7SGlu');
+   
     $events = $stripe->events->all(['limit' => 3]);
 
     foreach($events->autoPagingIterator() as $event) {
@@ -20,17 +20,13 @@
           $time = $cart_info->time;
           $date = $cart_info->date;
           $price_in_cents = floatval($cart_info->price);
-          //var_dump($price_in_cents);
+         
           $price = strval(floatval($price_in_cents/100));
-          //var_dump($price);
+          
           $cart = $cart_info->cart;
           // add pending order into transactions table
           $transactionDAO->add($user_id, $cart, $company_id, $date, $time, $price, 'Self-pickup', '', 0, 'false');
-          //redirect to profile page immediately
-          
-
-
-          #amount = session['display_items'][0]['amount']         
+          //redirect to profile page immediately  
       }
     }
 
@@ -56,7 +52,6 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <link rel="stylesheet" href="css/maincss.css">
   <!-- icon -->
-  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>  -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.js" integrity="sha256-2JRzNxMJiS0aHOJjG+liqsEOuBb6++9cY4dSOyiijX4=" crossorigin="anonymous"></script>
 
   <!-- font -->

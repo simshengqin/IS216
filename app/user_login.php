@@ -50,7 +50,7 @@
                          <div class="text-center">
                     
                             <a class="small font-weight-bold .text-secondary" href="company_login.php">Login as a company instead</a>
-                            <!-- <hr> -->
+                    
                     
                         </div>
                     </form>
@@ -96,9 +96,7 @@
                         url: "user_jslogin.php",
                         data: {username:username, password:password},
                         success:function(data){
-                            //alert(data);
                             if( $.trim(data) === "1" ){
-                                //sessionStorage.setItem('username', data['username']);
                                 window.location.href = "index.php";               
                                 setTimeout( 'window.location.href = "index.php"', 1000)
                             } else {

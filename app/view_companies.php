@@ -11,7 +11,7 @@
   } 
   if (isset($_GET['postal_code'])) {
     $_SESSION["postal_code"] = $_GET['postal_code'];
-    //print_r($_SESSION);      
+    
   }
 
 
@@ -37,18 +37,10 @@
     $companyDAO = new companyDAO();
     //Retrieve all the special descriptions, then we will retrieve all the companies by each special description
     $unique_special_descriptions = $companyDAO->retrieve_unique_special_description();
-    //echo '<pre>'; print_r($unique_special_descriptions); echo '</pre>'; 
+
 
 ?>
-<!--
-<div class="jumbotron color-grey-light">
-    <div class="d-flex align-items-center h-20">
-    <div class="container text-center py-5">
-    <h3 class="mb-0">View Companies</h3>
-    </div>
-    </div>
-</div>
--->
+
 </head>
 <body>
 </head>
@@ -64,7 +56,7 @@
                 <!-- Then put toasts within -->
                 <div class="toast hide" id="add_to_cart_message" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="toast-header">
-                    <!--<img src="..." class="rounded mr-2" alt="...">-->
+                   
                     <strong class="mr-auto">Success!</strong>
                     <small class="text-muted">just now</small>
                     <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
@@ -178,15 +170,15 @@
                     //To calculate whether a company is within the range of the user specified proximity in preferences
                     $userDAO = new userDAO();
                     $preferences = $userDAO->retrieve_user_preferences($_SESSION["user_id"]);
-                    $proximity_range = $preferences; //explode(",",$preferences)[2];
+                    $proximity_range = $preferences; 
                     echo "<input type='hidden' id='proximity_range' value='$proximity_range'></input>";
                 ?>
-                <div id='proximity'         
+                <div id='proximity'></div>       
                 <?php
                     function display_company_grids($data) {
                         echo "<div class='row'>";
                         foreach ($data as $company) {
-                            //echo $company->get_name();
+                           
                             $company_id = $company->get_company_id();
                             $company_address = $company->get_address();
                             $company_latitude = $company-> get_latitude();
@@ -196,8 +188,7 @@
                             $company_joined_date = $company->get_joined_date();
                             $company_mode_of_collection = ucwords($company->get_mode_of_collection());
                             $company_name = $company->get_name();
-                            //$company_password = $company->get_password();
-                            //$company_rating = $company->get_rating();
+                          
                             $transactionDAO = new transactionDAO();
                             $transactions = $transactionDAO -> retrieve_transactions_by_company_id($company_id);
                             $company_total_rating = 0;
@@ -260,14 +251,7 @@
                         echo "</div>";                   
                     }
                     echo "<div class='col-12'>";
-                    //Print top rated restaurants
-                    /*
-                    echo "  <div class='row' style='margin-left: 5px; margin-bottom: 20px;'>
-                                <h2 class='font-weight-bold'>Top-rated restaurants</h2>
-                            </div>";                        
-                    $top_rated_companies = $companyDAO->retrieve_top_rated_companies();
-                    echo display_company_grids($top_rated_companies);
-                    */
+                   
                     // Print special description (of the food product) by special description
                     foreach ($unique_special_descriptions as $unique_special_description) {
                         echo "  <div class='row' style='margin-left: 5px; margin-bottom: 20px;'>
@@ -284,7 +268,7 @@
                     $companies = $companyDAO->retrieve_companies();
                     echo display_company_grids($companies);
                     echo "</div>";
-                ?>
+                ?> 
             </div>
         </div>
     </div>
@@ -300,32 +284,22 @@
         
 
         has_at_least_one_value = false;
-        //main_company_grid.innerHTML = "";
+     
         for (var i=0; i < company_grids.length; i++) {
             var company_grid = company_grids[i];
             var company_info_arr = company_grid.getAttribute("name").split("|");        
-            //product_id = product_info_arr[0];
-            //company_id = product_info_arr[1];
-            //decay_date = product_info_arr[2];
-            //decay_time = product_info_arr[3];
+            
             var name = company_info_arr[6].toLowerCase();
-            //console.log(company_info_arr);
-            //posted_date = product_info_arr[5];
-            //posted_time = product_info_arr[6];
-            //price_after = parseFloat(product_info_arr[7]);
-            //price_before = parseFloat(product_info_arr[8]);
-            //quantity = product_info_arr[9];
-            //type = product_info_arr[10];
-            //mode_of_collection_user = product_info_arr[11];
+            
                 //Checks whether the company meets all filter criteria. 
             if (name.includes(search_for_company)) {
                 company_grid.setAttribute("style", "display: block;");
-                //main_company_grid.appendChild(company_grid);
+               
                 console.log(company_grid);
                 has_at_least_one_value = true;
             }
             else {
-                //company_grid.setAttribute("style", " position: absolute; left: -999em;");
+              
                 company_grid.setAttribute("style", "display: none;");
             }
         }
@@ -466,7 +440,7 @@
     function sort_companys() {
         var selected_option = document.getElementById("sort_by_bar").value;        
         var main_company_grid = document.getElementById('main_company_grid');
-        //var divs = container.getElementsById('single_company_grid');
+ 
         var company_grids = Array.from(document.getElementsByClassName("single_company_grid"));
         var search_for_company = document.getElementById("search_for_company").value;
         var price_min = document.getElementById("price_min").value;
@@ -499,38 +473,12 @@
             var company_grids_sorted = company_grids.sort(function(a, b){return Date.parse(a.getAttribute("name").split(",")[2] + " " + a.getAttribute("name").split(",")[3])-Date.parse(b.getAttribute("name").split(",")[2] + " " + b.getAttribute("name").split(",")[3])});
         }  
         
-        //console.log(sorted_by_price);
+     
         main_company_grid.innerHTML = "";
         for (var i = 0; i < company_grids_sorted.length; i++) {
             main_company_grid.appendChild(company_grids_sorted[i]);
         }
           
-        /*
-        for (var i=0; i < company_grids.length; i++) {
-            var company_grid = company_grids[i];
-            if (sorted_by_price.length == 0){
-                sorted_by_price.push()
-            }
-            for (var j=0; j < sorted_by_price.length; j++) {
-
-            }
-        */
-            //companyinfo = $company_id, $company_id, $decay_date, $decay_time, $name, $posted_date, $posted_time, $price_after, $price_before, $quantity, $type, $mode_of_collection
-            //To retrieve the name, need to split by , and find the 5th element
-            //company_info_arr = company_grid.getAttribute("name").split(",");
-            //company_id = company_info_arr[0];
-            //company_id = company_info_arr[1];
-            //decay_date = company_info_arr[2];
-            //decay_time = company_info_arr[3];
-            //name = company_info_arr[4];
-            //posted_date = company_info_arr[5];
-            //posted_time = company_info_arr[6];
-            //price_after = parseFloat(company_info_arr[7]);
-            //price_before = parseFloat(company_info_arr[8]);
-            //quantity = company_info_arr[9];
-            //type = company_info_arr[10];
-            //mode_of_collection_user = company_info_arr[11];   
-
     }
 
     // change active navbar

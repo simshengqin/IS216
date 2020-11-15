@@ -6,12 +6,8 @@ if(isset($_POST['from_id']) && isset($_POST['from_type']) && isset($_POST['to_id
     $to_id = $_POST['to_id'];
     $to_type = $_POST['to_type'];
     //companyDAO is for retrieving the and company image
-    //$userDAO = new userDAO();
-    //$companyDAO = new companyDAO();
     $messageDAO = new messageDAO();
     //userDAO and companyDAO are for retrieving the user picture and company picture
-    //$userDAO = new userDAO();
-   // $companyDAO = new companyDAO();
     //Need to account for messages sent TO the user and received FROM the user
     $messages = $messageDAO->retrieve_message_from_to($from_id, $from_type, $to_id, $to_type);
     //Need to convert to a format that javascript can read!!! As JS cannot read what is message, which is a message object from message.php

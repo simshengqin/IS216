@@ -18,13 +18,7 @@
 <link rel='stylesheet' href='css\maincss.css'>
 
 <?php include 'include/customer_navbar.php';?>
-<!-- <div class="jumbotron color-grey-light">
-    <div class="d-flex align-items-center h-20">
-        <div class="container text-center py-5">
-        <h3 class="mb-0">List of products</h3>
-        </div>
-    </div>
-</div> -->
+
 </head>
 <body>
 <div class='container-fluid' style="background-color:white;">
@@ -38,7 +32,7 @@
                 <!-- Then put toasts within -->
                 <div class="toast hide" id="add_to_cart_message" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="toast-header">
-                    <!--<img src="..." class="rounded mr-2" alt="...">-->
+                 
                     <strong class="mr-auto">Success!</strong>
                     <small class="text-muted">just now</small>
                     <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
@@ -200,7 +194,7 @@
                     $productDAO = new productDAO();
                     $all_product_info = $productDAO->retrieve_all(true);                 
                     $userDAO = new userDAO();
-                    //HARDCODED user_id here, need to change
+                    
                     $user_id = $_SESSION["user_id"];
                     $user = $userDAO-> retrieve_user($user_id);
                     $cart = $user -> get_cart();
@@ -229,7 +223,6 @@
                         $i += 1;
                     }
                     foreach ($all_product_info as $product) {
-                        //echo $product->get_name();
                         $product_id = $product->get_product_id();
                         $company_id = $product->get_company_id();
                         $decay_date = $product->get_decay_date();
@@ -370,7 +363,7 @@
             var difference_in_days = difference_in_time / (1000 * 3600 * 24); 
             //Checks whether the product meets all filter criteria. As long as the product does not meet one of the criteria, it wont be displayed
             //Display the product as long as it fufills 1 of the categories. Hence, if both dessert and vegeatables are checked, it will display products with either dessert or vegetables
-            //console.log(price_before);
+            
             if ((!categories_dessert && !categories_vegetables && !categories_meal) || (categories_dessert && category == "dessert") || (categories_vegetables && category == "vegetables") || (categories_meal && category == "japanese_food"))
             {
                 if (name.includes(search_for_products) && (mode_of_collection == "" || mode_of_collection == mode_of_collection_user) && (price_max == "" || price_after <= parseFloat(price_max)) && (price_min == "" || price_after >= parseFloat(price_min)) && (!offers_has_discount|| price_before != price_after) && (freshness_min_days_to_expiry == "" || difference_in_days >= freshness_min_days_to_expiry)) {
@@ -397,7 +390,6 @@
     function sort_products() {
         var selected_option = document.getElementById("sort_by_bar").value;        
         var main_product_grid = document.getElementById('main_product_grid');
-        //var divs = container.getElementsById('single_product_grid');
         var product_grids = Array.from(document.getElementsByClassName("single_product_grid"));
         var search_for_products = document.getElementById("search_for_products").value;
         var price_min = document.getElementById("price_min").value;
@@ -430,45 +422,15 @@
             var product_grids_sorted = product_grids.sort(function(a, b){return Date.parse(a.getAttribute("name").split(",")[2] + " " + a.getAttribute("name").split(",")[3])-Date.parse(b.getAttribute("name").split(",")[2] + " " + b.getAttribute("name").split(",")[3])});
         }  
         
-        //console.log(sorted_by_price);
+       
         main_product_grid.innerHTML = "";
         for (var i = 0; i < product_grids_sorted.length; i++) {
             main_product_grid.appendChild(product_grids_sorted[i]);
         }
           
-        /*
-        for (var i=0; i < product_grids.length; i++) {
-            var product_grid = product_grids[i];
-            if (sorted_by_price.length == 0){
-                sorted_by_price.push()
-            }
-            for (var j=0; j < sorted_by_price.length; j++) {
-
-            }
-        */
-            //productinfo = $product_id, $company_id, $decay_date, $decay_time, $name, $posted_date, $posted_time, $price_after, $price_before, $quantity, $category, $mode_of_collection
-            //To retrieve the name, need to split by , and find the 5th element
-            //product_info_arr = product_grid.getAttribute("name").split(",");
-            //product_id = product_info_arr[0];
-            //company_id = product_info_arr[1];
-            //decay_date = product_info_arr[2];
-            //decay_time = product_info_arr[3];
-            //name = product_info_arr[4];
-            //posted_date = product_info_arr[5];
-            //posted_time = product_info_arr[6];
-            //price_after = parseFloat(product_info_arr[7]);
-            //price_before = parseFloat(product_info_arr[8]);
-            //quantity = product_info_arr[9];
-            //category = product_info_arr[10];
-            //mode_of_collection_user = product_info_arr[11];    
+        
     }
-    //****Add to cart message popup****//
-    $(document).ready(function(){
-    $(".add-to-cart").click(function(){
-            //$("#add_to_cart_message").toast({ delay: 7000 });
-            //$("#add_to_cart_message").toast('show');
-        }); 
-    });
+    
     function add_to_cart(target) {        
         arr = event.target.id.split(",");
         product_id = arr[0];
@@ -522,8 +484,7 @@
         request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded'); 
         
         request.send("user_id="+user_id+"&product_id="+product_id+"&quantity="+quantity+"&quantity_change="+quantity_change);
-        //$("#add_to_cart_message").toast('show');
-        //alert('Successfully added ' + name + ' to cart!');
+      
     }
 </script>
 </body>

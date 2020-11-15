@@ -18,7 +18,7 @@ if(isset($_POST['body']) && isset($_POST['date']) && isset($_POST['from_id']) &&
     else {
         echo "success";
     }
-    //echo json_encode($messages_output);
+   
 
 }
 

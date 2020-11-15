@@ -41,21 +41,7 @@
             <div class="inbox_msg row" style="margin-left: 40px; margin-right: 40px;">
                 <!--Main leftsidebar, contains both searchbar and chat previews to other people-->
                 <div class="inbox_people2 col-sm-4 p-0" style="border-right: 1px solid #c4c4c4;">
-                    <!--The leftsidebar containing the searchbar-->
-                    <!--
-                    <div class="headind_srch">
-                        <div class="recent_heading">
-                            <h4></h4>
-                        </div>
-                        Search bar
-                        <div class="srch_bar">
-                            <div class="stylish-input-group">
-                            <input type="text" class="search-bar"  placeholder="Search" >
-                            <span class="input-group-addon">
-                            <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
-                            </span> </div>
-                        </div
-                    </div>>-->
+                   
                     <!--The left sidebar below the searchbar containing all the chat previews to other people -->
                     <div class="inbox_chat" id="inbox_chat">
                         <!--<div class='alert alert-warning m-3'>No messages currently!</div>-->
@@ -84,17 +70,17 @@
     window.onload = function(){
                   
         //Get the user_id and user_type from the current url
-        //alert("g");
+       
         var params_arr = parseURLParams(window.location.href);
         var user_id = params_arr["user_id"];
         var user_type = params_arr["user_type"]; 
         if (sessionStorage.getItem("selected_from_id") !== undefined && sessionStorage.getItem("selected_from_type") !== undefined) {
-            //alert("zzzzzzzzzzz");
+           
             sessionStorage.setItem("selected_from_id","");
             sessionStorage.setItem("selected_from_type","");            
         }
         window.scroll_down = "true";
-        //alert(sessionStorage.getItem("selected_from_id") !== "");
+        
         update_selected_messages_leftbar();
         update_selected_messages();
 
@@ -119,13 +105,13 @@
                 //Add check for success here?
                 
                 var messages = JSON.parse(this.responseText);
-                //console.log(messages);  
+               
                 //Only retrieve the first chat message received by a certain from_id
                 //Note that it is sorted by descending, so the first one message will always be the latest message by that user
                 //Hence, keep a list to keep track which user/company has already been displayed, so as not to duplicate them
                 var displayed = []; 
                 var params_arr = parseURLParams(window.location.href);
-                //alert(sessionStorage.getItem("selected_from_id") != ""  && sessionStorage.getItem("selected_from_type") != "");
+               
                 if (sessionStorage.getItem("selected_from_id") == ""  && sessionStorage.getItem("selected_from_type") == "") {
                     //Select this empty message window
                     sessionStorage.setItem("selected_from_id", params_arr["target_id"]);
@@ -154,15 +140,14 @@
                     
                     
                     
-                    //alert(params_arr["target_id"] +params_arr["user_id"] + params_arr["target_type"] + params_arr["user_type"] );
+                   
                     if (!has_existing_chat && !(String(params_arr["target_id"]) === String(params_arr["user_id"])  && String(params_arr["target_type"]) === String(params_arr["user_type"]))) {
 
                         //This part is to just create a new chat window based on the url if there no existing chat messages with that user
                         //If there is, just select that chat window
                         //Retrieve the user name or company name depending on from_type
                         if (from_type_url == "user") {
-                            //from_name = ucfirst($userDAO->retrieve_user($from_id_url)->get_name());
-                            //from_image = "images/profile_picture/user/$from_id_url.png";
+                            
                             var from_name = from_name_url;
                             var from_image = "images/profile_picture/user/default.png";
                             //Use the default picture if the image does not exist
@@ -173,8 +158,7 @@
                         }
                         else if (from_type_url == "company") {
                             
-                            //from_name = ucfirst($companyDAO->retrieve_company($from_id_url)->get_name());
-                            //from_image = "images/profile_picture/company/$from_id_url.png";
+                            
                             var from_name = String(from_name_url).charAt(0).toUpperCase() + String(from_name_url).slice(1);
                             var from_image = "images/profile_picture/company/"+from_id_url+".png";
                             //Use the default picture if the image does not exist
@@ -233,7 +217,7 @@
                         else if ( params_arr["target_id"] !== undefined && params_arr["target_type"] !== undefined) {
 
                             active_chat = ((params_arr["target_id"] == from_id && params_arr["target_type"] ==  from_type) ? "active_chat" : "");
-                            //alert(active_chat);
+                            
                         } 
                         // Change quotes
                         message_body = message_body.replace(/[\u00A0-\u9999<>\&]/gim, function(i) {
@@ -299,7 +283,7 @@
     function update_selected_messages() {
         //Update the rightsidebar messages
         //Send an AJAX request to retrieve all messages received by or sent to the selected user/company
-        //console.log(selected_from_type);
+       
         var request = new XMLHttpRequest();  
         request.onreadystatechange = function() {    
             
@@ -307,9 +291,9 @@
                 //Add check for success here?
                 
                 messages = JSON.parse(this.responseText);
-                //console.log(messages);  
+                
                 //Empty out all the messages displayed first
-                //document.getElementById("selected_messages").innerHTML = "";
+               
                 new_html = "";
                 for (var i=0; i < messages.length; i++) {
                     message = messages[i];
@@ -353,17 +337,7 @@
                 }  
                 document.getElementById("selected_messages").innerHTML = new_html;
                 //Keeps it scrolled down only when there is a change in the html
-                /*
-                old_html =  document.getElementById("selected_messages").innerHTML;
-                if (!(String(old_html.trim()) === String(new_html).trim())) {
-                    //difference = getDifference(old_html, new_html);
-                    //console.log("Differences", difference);
-                    //console.log("-----------------");
-                    document.getElementById("selected_messages").innerHTML = new_html;
-                    var element = document.getElementsByClassName("msg_history")[0];
-                    element.scrollTop = element.scrollHeight;                           
-                }               
-                */
+               
                 
                 if (window.scroll_down == "true") {
                     var element = document.getElementsByClassName("msg_history")[0];
@@ -386,7 +360,7 @@
             selected_from_type = sessionStorage.getItem("selected_from_type");            
         }
         else if ( params_arr["target_id"] !== undefined && params_arr["target_type"] !== undefined){
-            //alert("yyyy");
+           
             selected_from_id = params_arr["target_id"];
             selected_from_type = params_arr["target_type"];
         }
@@ -404,7 +378,6 @@
         chat_lists = document.getElementsByClassName("chat_list");
         //Remove the grey background of all chat
         for (chat_list of chat_lists) { 
-            //console.log(chat_list);
             chat_list.setAttribute("class", "chat_list");
         }
         target_element = event.target;
@@ -419,7 +392,6 @@
         selected_from_type = selected_id_arr[1];
         sessionStorage.setItem("selected_from_id", selected_from_id);
         sessionStorage.setItem("selected_from_type", selected_from_type);
-        //alert(selected_from_id + selected_from_type);
         window.scroll_down = "true";
         //Update the right side chat bar
         update_selected_messages();

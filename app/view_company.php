@@ -25,9 +25,6 @@
   $company_description = $company-> get_description();
   $company_following = $company-> get_following();
   $company_joined_date = $company-> get_joined_date();
-  //$company_name = $company-> get_name()
-  //$company_password= $company-> get_password()
-  //$company_rating = $company-> get_rating();
   $transactions = $transactionDAO -> retrieve_transactions_by_company_id($company_id);
   $company_total_rating = 0;
   $company_rating_count = 0;
@@ -46,8 +43,6 @@
 else {
         $company_rating = round($company_total_rating / $company_rating_count , 2);
     }
-  //$company_rating = round($company_total_rating / $company_rating_count , 2);
-  //$company_rating_count = $company-> get_rating_count();
   $user_id = $_SESSION["user_id"];
   $userDAO = new userDAO();
   $user = $userDAO-> retrieve_user($user_id);
@@ -62,8 +57,6 @@ else {
   $transactionDAO = new transactionDAO();
   $transactions = $transactionDAO -> retrieve_transactions_by_company_id($company_id);
 
-  //$username = $user -> get_name();
-  //var_dump($transactions);
   
 
 
@@ -76,10 +69,7 @@ else {
 <title>View Restaurant</title>
 <!-- Poppins font -->
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
-  <!-- Roboto Font -->
-  <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700&display=swap"> -->
-  <!-- Font Awesome -->
-  <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css"> -->
+  
   <!--Bootstrap 4 and AJAX-->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -161,7 +151,7 @@ else {
         <div class="col-sm-6 col-md-2">
         </div>
     </div>
-    <!--<div class="d-flex align-items-center h-20"></div>-->
+   
 </div>
 
 
@@ -251,10 +241,7 @@ else {
                                         Sort By 
                                      </div>
                                     <div class="input-group">
-                                        <!--<span class="input-group-prepend">
-                                            <label class="input-group-text" for="inputGroupSelect01">
-                                            Sort by</label>
-                                        </span>-->
+                                      
                                         
                                         <select class="form-control custom-select w-100" id="sort_by_bar" >
                                             <option selected value="Posted Date: Newest to oldest">Posted Date: Newest to oldest</option>
@@ -301,20 +288,7 @@ else {
                                     <input type="number" class="p-2 w-100" id="freshness_min_days_to_expiry" min="1" step="1" placeholder='Min days to expiry'></input>   
                                 </div>
                             </div>
-                            <!--
-                            <div class="form-row mb-2">
-                                Categories
-                            </div>
-                        
-                            <div class="form-row">
-                                <div class="form-group col-12">
-                                    <input type="checkbox" id="categories_dessert" onchange ='search_filter()'> Dessert
-                                    <input type="checkbox" id="categories_vegetables" onchange ='search_filter()'> Vegetables
-                                    <input type="checkbox" id="categories_meal" onchange ='search_filter()'> Meal
-
-                                </div>
-                            </div>
-                            -->
+                           
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -354,14 +328,14 @@ else {
                     </button>
                     </div>
                     <div class="modal-body">
-                        <!-- <div id="product_reviews"></div> -->
+                        
                         <ul class="list-group list-group-flush">
                         <?php
                             $reviews = '';
                             foreach ($transactions as $transaction) {
                                 $user_id = $transaction->get_user_id();
                                 $username = $userDAO -> retrieve_user($user_id) -> get_name();
-                                //var_dump($transaction->get_review());
+                               
                                 $rating = $transaction->get_rating();
                                 $review = $transaction->get_review();
                                 if ($rating != 0 && $rating != -1) {
@@ -410,41 +384,10 @@ else {
                         
         <input type="hidden" id="same_company_id_from_user_cart" value="<?php 
                                                                 $userDAO = new userDAO();
-                                                                //HARDCODED user_id here, need to change
+                                                                
                                                                 $user_id = $_SESSION["user_id"];
                                                                 $cart_company_id = $_SESSION['cart_company_id'];
-                                                                echo ""
-                                                                /*
-                                                                $user = $userDAO-> retrieve_user($user_id);
-                                                                
-                                                                $cart = $user -> get_cart();
-                                                                if (strlen($cart) ==0) {
-                                                                    //echo the company_id for the below js function to access it
-                                                                    echo "New" . "$company_id";
-                                                                    echo "true";
-                                                                    //echo 'true';
-                                                                }
-                                                                else {
-                                                                    $cart = $user -> get_cart();
-                                                                    if (strlen($cart) ==0) {
-                                                                        $cart_arr = [];
-                                                                        $_SESSION['cart_company_id'] = 0;
-                                                                        $_SESSION['cart_company_name'] = "";    
-                                                                      }
-                                                                      else {
-                                                                        $cart_arr = explode(",",$cart);
-                                                                    }  
-                                                                    $cart_company_id = $user->get_cart_company_id();
-                                                                    if ($cart_company_id == $company_id) {
-                                                                        echo 'true';
-                                                                    }
-                                                                    else {
-                                                                        //echo the company_id for the below js function to access it
-                                                                        echo "$company_id";
-                                                                    }
-
-                                                                }  
-                                                                */
+                                                                echo "";
                                                                 
                                                             ?>"></input>
         <input type="hidden" id="cart_company_name" value="<?php echo $cart_company_name;          
@@ -458,25 +401,13 @@ else {
         <!--Product grid displaying all food products-->
         <div class="col-2"></div>
         <div class="grid_beside_filterform col-8">    
-            <!--Search bar-->
-            <!--
-            <div class="row" name="search_for_products">    
-                <div class="form-group col-12">
-                    <input type="text" class="form-control" name="x" id="search_for_products" oninput ='search_filter()' placeholder="Search for products">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">
-                        <span class="glyphicon glyphicon-search"></span>
-                        </button>
-                    </span>
-                </div>
-            </div> -->
             
             <div class="row">               
                 <?php
                     $productDAO = new productDAO();
                     #$all_product_info = $productDAO->retrieve_all();                 
                     $userDAO = new userDAO();
-                    //HARDCODED user_id here, need to change
+                   
                     $user_id = $_SESSION["user_id"];
                     $user = $userDAO-> retrieve_user($user_id);
                     $cart = $user -> get_cart();
@@ -525,11 +456,9 @@ else {
                                     <h1 class='font-weight-bold'>$category</h1>
                                 </div>";
                         $company_products_by_category = $productDAO->retrieve_products_by_category($category, $company_id);
-                        //echo '<pre>'; print_r($company_products_by_category); echo '</pre>';
                         echo "<div class='col-12' style='margin-left: 5px; margin-bottom: 20px;'>";
                         echo "  <div class='row'>";
                         foreach ($company_products_by_category as $product) {
-                            //echo $product->get_name();
                             $product_id = $product->get_product_id();
                             $company_id = $product->get_company_id();
                             $decay_date = $product->get_decay_date();
@@ -578,7 +507,6 @@ else {
                             }           
                             //set timezone to singapore so the time will be correct
                             date_default_timezone_set('Asia/Singapore');
-                            //$datetime = date('m/d/Y h:i:s a', time());
                             if ($product_quantity_in_database != 0) {
                                 echo "
                                 <div class='col-xxl-3 col-xl-4 col-lg-4 col-sm-6 single_product_grid' id ='single_product_grid' name='$product_id,$company_id,$decay_date,$decay_time,$name,$posted_date,$posted_time,$price_after,$price_before,$quantity,$category,$mode_of_collection'>
@@ -744,10 +672,7 @@ else {
             else {
             product_grid.setAttribute("style", "display: none;");
             }           
-            //}
-            //else {
-            //    product_grid.setAttribute("style", "display: none;");
-            //}
+            
         }
         //Display warning message if no products match the filter criteria
         if (!has_at_least_one_value) {
@@ -768,9 +693,7 @@ else {
         var price_max = document.getElementById("price_max").value;
         var offers_has_discount = document.getElementById("offers_has_discount").checked;
         var freshness_min_days_to_expiry = document.getElementById("freshness_min_days_to_expiry").value;
-        //var categories_dessert = document.getElementById("categories_dessert").checked;
-        //var categories_vegetables = document.getElementById("categories_vegetables").checked;
-        //var categories_meal = document.getElementById("categories_meal").checked;
+
         var has_at_least_one_value = false;
         if (selected_option == "Price: Low to high") {
             var product_grids_sorted = product_grids.sort(function(a, b){return parseFloat(a.getAttribute("name").split(",")[7])-parseFloat(b.getAttribute("name").split(",")[7])});
@@ -793,45 +716,14 @@ else {
             var product_grids_sorted = product_grids.sort(function(a, b){return Date.parse(a.getAttribute("name").split(",")[2] + " " + a.getAttribute("name").split(",")[3])-Date.parse(b.getAttribute("name").split(",")[2] + " " + b.getAttribute("name").split(",")[3])});
         }  
         
-        //console.log(sorted_by_price);
+       
         main_product_grid.innerHTML = "";
         for (var i = 0; i < product_grids_sorted.length; i++) {
             main_product_grid.appendChild(product_grids_sorted[i]);
         }
-          
-        /*
-        for (var i=0; i < product_grids.length; i++) {
-            var product_grid = product_grids[i];
-            if (sorted_by_price.length == 0){
-                sorted_by_price.push()
-            }
-            for (var j=0; j < sorted_by_price.length; j++) {
-
-            }
-        */
-            //productinfo = $product_id, $company_id, $decay_date, $decay_time, $name, $posted_date, $posted_time, $price_after, $price_before, $quantity, $category, $mode_of_collection
-            //To retrieve the name, need to split by , and find the 5th element
-            //product_info_arr = product_grid.getAttribute("name").split(",");
-            //product_id = product_info_arr[0];
-            //company_id = product_info_arr[1];
-            //decay_date = product_info_arr[2];
-            //decay_time = product_info_arr[3];
-            //name = product_info_arr[4];
-            //posted_date = product_info_arr[5];
-            //posted_time = product_info_arr[6];
-            //price_after = parseFloat(product_info_arr[7]);
-            //price_before = parseFloat(product_info_arr[8]);
-            //quantity = product_info_arr[9];
-            //category = product_info_arr[10];
-            //mode_of_collection_user = product_info_arr[11];    
+           
     }
-    //****Add to cart message popup****//
-    $(document).ready(function(){
-    $(".add-to-cart").click(function(){
-            //$("#add_to_cart_message").toast({ delay: 7000 });
-            //$("#add_to_cart_message").toast('show');
-        }); 
-    });
+   
     function change_cart_company_id() {
         window.target_element.innerText= "ALREADY ADDED";
         var quantity = 0;
@@ -850,7 +742,6 @@ else {
                 }        
                 else {
                     //Now the user cart should be the same company id as this current page
-                    //document.getElementById("same_company_id_from_user_cart").value = "true";
                     document.getElementById("cart_company_id").value = document.getElementById("company_id").value;
                     //Update the toast to reflect what item was added
                     arr = window.target_element.id.split(",");
@@ -871,10 +762,7 @@ else {
         user_id = document.getElementById("user_id").innerText;
         request.open('POST', 'update_user.php', true);
         request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded'); 
-        //alert(document.getElementById("same_company_id_from_user_cart").value);
         request.send("user_id="+user_id+"&product_id="+product_id+"&quantity="+quantity+"&quantity_change="+quantity_change+"&change_cart_company_id="+document.getElementById("company_id").value+"&delete_cart=true" );
-        //$("#add_to_cart_message").toast('show');
-        //alert('Successfully added ' + name + ' to cart!');
     }
     
 
@@ -932,7 +820,7 @@ else {
                 //Update the toast to reflect what item was added
                 document.getElementById("cart_message_body").innerText = name.charAt(0).toUpperCase() + name.slice(1) + " was successfully added to your cart. ";             
             }
-            //Also no warning message if there is currently nothing in the user ccart, but should still update the user cart
+            //Also no warning message if there is currently nothing in the user cart, but should still update the user cart
             //company id!
             else if (cart_company_id == "0") {
                 //To change the add to cart btn to ALREADY ADDED
@@ -982,14 +870,7 @@ else {
                     target.innerText = "OUT OF STOCK";
                     target.setAttribute("class", "add-to-cart");                   
                 }        
-                else {
-                    
-                    //alert("HIII");
-                    //$("#success_popup").toast({ delay: 2000 });
-                    //$("#success_popup").toast('show');
-                    //$("#add_to_cart_message").toast({ delay: 7000 });
-                    //$("#add_to_cart_message").toast('show');
-                }
+               
             }  
         };  
         //Hardcorded user id here. Rmb to change
@@ -998,9 +879,7 @@ else {
         request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded'); 
         //Add to cart should ALWAYS update the cart company id just to be safe!
         request.send("user_id="+user_id+"&product_id="+product_id+"&quantity="+quantity+"&quantity_change="+quantity_change+"&change_cart_company_id="+document.getElementById("company_id").value );
-        //request.send("user_id="+user_id+"&product_id="+product_id+"&quantity="+quantity+"&quantity_change="+quantity_change);
-        //$("#add_to_cart_message").toast('show');
-        //alert('Successfully added ' + name + ' to cart!');
+        
     }
     function parseURLParams(url) {
         //Works similar to $_GET, retrieve parameters from the url
@@ -1081,7 +960,7 @@ else {
       
             end_latitude = end_latlng_arr[0]/10000000;
             end_longtitude = end_latlng_arr[1]/10000000;
-            //console.log("End:", end_latitude, end_longtitude);                        
+                                   
             try {
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function() {
@@ -1094,16 +973,16 @@ else {
                             var loc = data["results"][0]["geometry"]["location"];
                             start_latitude = loc["lat"];
                             start_longtitude = loc["lng"];
-                            //console.log("Start:",start_latitude, start_longtitude);
+                           
                             //After getting current latitude and longtitude, calculates distance from this point to this company's longtitude and latitude
                             var distance = google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(start_latitude,start_longtitude), new google.maps.LatLng(end_latitude, end_longtitude))/1000; 
-                            //console.log("Distance between start and end:", distance, "km");
+                            
                             //round to 2 dp
                             var distance = Math.round(distance * 100) / 100;               
                             document.getElementById("distance").innerText = distance + " km away";    
                             //If the user provides his postal code through the modal, saves it in the ALREADY ADDED msg so he dont need to enter it again 
                             added_to_cart_msg = document.getElementById("added_to_cart_msg");
-                            //added_to_cart_msg.setAttribute("href", added_to_cart_msg.getAttribute("href") + "?postal_code=" + start);   
+                              
                     }
                 };
                 xhttp.open("GET", url, true);
@@ -1163,14 +1042,14 @@ else {
         else {
             //Hides the modal
             $('#input_postal_code').modal('hide');
-            //document.getElementById("input_postal_code_confirm").setAttribute("data-dismiss","modal");
+            
             //Sets the postal code in session
             sessionStorage.setItem('postal_code', document.getElementById("postal_code").value);
             calculates_distance();
         }
     }
     function initMap() {
-    //alert(document.getElementById('map').getAttribute("style"));
+    
     
     if (document.getElementById('map').getAttribute("style") == "height: 400px; position: relative; overflow: hidden;") {
         //if the map is already rendered, dont render it again
@@ -1210,7 +1089,7 @@ else {
         else {
             start = sessionStorage.getItem('postal_code');
         }    
-        //console.log(start[0]);
+      
         var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + start + "&key=AIzaSyDcIUwwXfLUWzMAE1WspewghH9f-vmSkzc";
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
@@ -1228,20 +1107,19 @@ else {
             var loc = data["results"][0]["geometry"]["location"];
             start_latitude = loc["lat"];
             start_longtitude = loc["lng"];
-            //console.log("Start:",start_latitude, start_longtitude);
+            
             //Retrieves the company latitude and longtitude                        
             end_latlng_arr = document.getElementById("distance").getAttribute("name").split(",");
     
             end_latitude = end_latlng_arr[0]/10000000;
             end_longtitude = end_latlng_arr[1]/10000000;
-            //console.log("End:", end_latitude, end_longtitude);    
-            //console.log(window.latitude, window.longtitude);            
+                      
             var directionsService = new google.maps.DirectionsService();
             var directionsRenderer = new google.maps.DirectionsRenderer();
             var start = new google.maps.LatLng(start_latitude,start_longtitude);
             var end = new google.maps.LatLng(end_latitude, end_longtitude);
             directionsRenderer.setMap(map);
-            //var selectedMode = document.getElementById('mode').value;
+           
             var request = {
                 origin: start,
                 destination: end,
@@ -1250,26 +1128,20 @@ else {
                 // "property."
                 travelMode: 'DRIVING' //google.maps.TravelMode[selectedMode]
             };
-            //console.log(start);
-            //console.log(end);
+           
 
             directionsService.route(request, function(response, status) {
                 if (status == 'OK') {
                     directionsRenderer.setDirections(response);
                     //No need to enter postal code if map is rendered successfully
                     document.getElementById("close_input_postal_code").setAttribute("onclick","");
-                    //If the user provides his postal code through the modal, saves it in the ALREADY ADDED msg so he dont need to enter it again 
-                    // added_to_cart_msg = document.getElementById("added_to_cart_msg");
-                    // var currrent_link = added_to_cart_msg.getAttribute("href");
-                    // if (current_link.includes("?postal_code=") == false) {
-                    //     added_to_cart_msg.setAttribute("href", current_link + "?postal_code=" + start);  
-                    // }
+                  
                    
                 }
                 else {
                         document.getElementById("map").innerHTML = "<div class='alert alert-danger'>Invalid postal code</div>";
                 }
-                //console.log(response);
+              
             }); 
             } catch(err) { // show error message
                 // not a good idea to directly show err.message 
@@ -1281,7 +1153,7 @@ else {
                 document.getElementById("close_input_postal_code").setAttribute("onclick","show_postal_code_modal()");
                 //Need to reset the style of map so it will generate again
                 document.getElementById('map').setAttribute("style","height: auto;");
-                //document.getElementById("display").innerHTML = "Sorry, invalid address. Please try again!";
+               
             }
         }
         };
@@ -1312,13 +1184,7 @@ else {
         bounce();
         
     });
-    /*
-    $("#change_company_id_in_cart_msg_yes_btn").click(function(){
-        
-        $(".cart-label").addClass("bounce-4");
-        change_cart_company_id();
-    });
-    */
+   
 
 
 </script>
