@@ -124,7 +124,7 @@
 
                         <!-- Then put toasts within -->
                         <div class="toast hide" id="success_popup"  style="margin: 10px;" aria-live="assertive" aria-atomic="true">
-                            <!-- <div class="toast-body"> -->
+                           
                                 <div class='alert alert-success alert-dismissible fade show' style="margin: 0px;" role='alert'>
                                     Successfully updated your preferences!
                                     <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>      

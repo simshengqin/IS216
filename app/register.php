@@ -52,7 +52,7 @@
                                 $("#email-error").modal('show');
                                                            
                             });
-                            console.log("hi");
+                           
                         </script>
                 <?php
                     } else{    
@@ -63,7 +63,7 @@
                                 $("#success-register").modal('show');
                                                            
                             });
-                            console.log("hi");
+                     
                         </script>
                 <?php
 

@@ -12,11 +12,7 @@
       $company_name = $_GET["company_name"];   
       
   }
-  else {
-    //Just a backup for now
-    $company_name = "saizeriya";
-    $company_id = "1";
-  }
+  
   $company = $companyDAO->retrieve_company_from_company_name($company_name);
   $company_id = $company-> get_company_id();
   $company_address = $company-> get_address();
@@ -405,7 +401,7 @@ else {
             <div class="row">               
                 <?php
                     $productDAO = new productDAO();
-                    #$all_product_info = $productDAO->retrieve_all();                 
+                                
                     $userDAO = new userDAO();
                    
                     $user_id = $_SESSION["user_id"];
@@ -636,7 +632,7 @@ else {
         for (var i=0; i < product_grids.length; i++) {
             var product_grid = product_grids[i];
 
-            //productinfo = $product_id, $company_id, $decay_date, $decay_time, $name, $posted_date, $posted_time, $price_after, $price_before, $quantity, $type, $mode_of_collection
+            
             //To retrieve the name, need to split by , and find the 5th element
             product_info_arr = product_grid.getAttribute("name").split(",");
             product_id = product_info_arr[0];

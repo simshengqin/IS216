@@ -698,7 +698,7 @@
                     var start = new google.maps.LatLng(start_latitude,start_longtitude);
                     var end = new google.maps.LatLng(end_latitude, end_longtitude);
                     directionsRenderer.setMap(map);
-                    //var selectedMode = document.getElementById('mode').value;
+                    
                     var request = {
                         origin: start,
                         destination: end,

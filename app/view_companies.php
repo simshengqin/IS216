@@ -350,7 +350,7 @@
         else {
             //Hides the modal
             $('#input_postal_code').modal('hide');
-            //document.getElementById("input_postal_code_confirm").setAttribute("data-dismiss","modal");
+            
             //Sets the postal code in session
             sessionStorage.setItem('postal_code', document.getElementById("postal_code").value);
             calculates_distance();
@@ -362,7 +362,7 @@
         //This functions calculate distance from provided postal code to all companies location
         //Get the latitude and longtitude using a postal code (from the url)
         //if the user enters his postal code in the modal on top, this will have a value
-        //var start = document.getElementById("postal_code").value;
+       
         if (sessionStorage.getItem('postal_code') == undefined) {
                 //if user never provides a postalcode, ask for it
                 $('#input_postal_code').modal('show');
@@ -372,11 +372,7 @@
             start = sessionStorage.getItem('postal_code');
         }    
         
-        //If the user provides his postal code through the modal, saves it in all the links of the product images so he dont need to enter it again
-        // product_links = document.getElementsByClassName("product_link");
-        // for (product_link of product_links) {
-        //     product_link.setAttribute("href", product_link.getAttribute("href") + "&postal_code=" + start);
-        // }
+        
 
         var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + start + "&key=AIzaSyDcIUwwXfLUWzMAE1WspewghH9f-vmSkzc";              
         //Retrieves the company latitude and longtitude 

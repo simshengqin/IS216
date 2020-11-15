@@ -338,7 +338,7 @@
         for (var i=0; i < product_grids.length; i++) {
             var product_grid = product_grids[i];
 
-            //productinfo = $product_id, $company_id, $decay_date, $decay_time, $name, $posted_date, $posted_time, $price_after, $price_before, $quantity, $category, $mode_of_collection
+            
             //To retrieve the name, need to split by , and find the 5th element
             product_info_arr = product_grid.getAttribute("name").split(",");
             product_id = product_info_arr[0];
