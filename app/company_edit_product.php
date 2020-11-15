@@ -11,16 +11,9 @@
       header("Location: company_login.php");
       exit();
     }
-    /*
-    if (isset($_GET["company_id"])) {
-        $company_id = $_GET["company_id"];   
-    }
-    else {
-      $company_id = "1";
-    }
-    */
+   
 
-    //if(isset($_POST["productid"]) && isset($_POST["decay_date"]) && isset($_POST["decay_time"]) && isset($_POST["price_after"]) && isset($_POST["quantity"]))
+    
     if(isset($_POST['editProduct']))
     {
       $id = $_POST["productid"];
@@ -36,7 +29,7 @@
     
     if(isset($_POST['deleteProduct']))
     {
-      //$id = $_POST["productid"];
+     
       $id = $_POST["modalProductName"];
       $result = $productDAO->remove_product($id);;
       if($result){
@@ -115,13 +108,7 @@
         </div>
     </div>
 
-    <!-- Footer -->
-  <!--
-  <footer class="py-5">
-    <div class="container">
-      <p class="text-center">Copyright &copy; Eco G5T4 2020</p>
-    </div>
-  </footer> -->
+    
   <?php include 'include/footer.php';?>
 
 <script>
@@ -155,7 +142,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         var num = ele.getAttribute('value');
         num = parseFloat(num);
         num = num.toFixed(2)
-        //console.log(num);
+      
         ele.setAttribute('value', num);
       }
 
@@ -164,7 +151,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         var num = ele.getAttribute('value');
         num = parseFloat(num);
         num = num.toFixed(2)
-        //console.log(num);
+     
         ele.setAttribute('value', num);
       }
 
@@ -298,8 +285,7 @@ function validationUpdate(errorDateInput, decay_date_value, errorEndTime, decay_
 
 function validationDelete(productId){
   console.log(productId);
-  //console.log(productName);
-  //document.getElementById(modalProductName).innerHTML = productId;
+ 
   document.getElementById("modalProductName").setAttribute("value", productId)
   $('#confirmDelete').modal('show');
 }
