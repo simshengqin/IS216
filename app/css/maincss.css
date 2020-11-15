@@ -1,10 +1,7 @@
 body {
   background-color: #f7f7f7;
   /* background-color: #92bdb7; */
-  /* font-family: 'Lato'; */
-  /* font-family: 'Montserrat'; */
   font-family: "Poppins";
-  /* font-family: 'Roboto'; */
 }
 
 .navbar-light .navbar-nav .nav-item > a:hover {
@@ -16,10 +13,6 @@ body {
 input[type="date"]:disabled { 
   background-color: white;
 }
-
-/* .jumbotron, .jumbotron-fluid {
-  background-color: #00a69c!important;
-} */
 
 .bg-special {
   background-color:  #00a69c!important;

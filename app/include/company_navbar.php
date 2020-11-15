@@ -16,7 +16,6 @@
   <link href="css/maincss.css" rel="stylesheet">
 
   <!-- icon -->
-  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>  -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.js" integrity="sha256-2JRzNxMJiS0aHOJjG+liqsEOuBb6++9cY4dSOyiijX4=" crossorigin="anonymous"></script>
 
   <!-- font -->
@@ -39,11 +38,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
-        <!--
-        <li class="nav-item mr-4" id="link-company-profile">
-          <a class="nav-link" href="company_profile.php">Dashboard </a>
-        </li>
-        -->
+       
         <li class="nav-item mr-4" id="link-post-product" >
         <a class="nav-link" href="company_post_product.php">Post</a>
         </li>

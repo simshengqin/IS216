@@ -206,31 +206,7 @@ class productDAO {
         return $status;
     }
 
-    /* can we delete this tables ? 
-
-    public function removeAll(){
-        $sql = 'TRUNCATE TABLE student';
-        
-        $connMgr = new ConnectionManager();
-        $conn = $connMgr->getConnection();
-        
-        $stmt = $conn->prepare($sql);
-        
-        $stmt->execute();
-        $count = $stmt->rowCount();
-    }
-
-
-    public function updateEDollar($userid,$edollar){
-        $sql = "UPDATE student SET edollar =:edollar WHERE userid =:userid";
-        $connMgr = new ConnectionManager();    
-        $conn = $connMgr->getConnection();
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':userid', $userid, PDO::PARAM_STR);
-        $stmt->bindParam(':edollar', $edollar, PDO::PARAM_STR);
-        $stmt->execute();
-    }
-    */
+    
 
 
     public function retrieve_product_category(){

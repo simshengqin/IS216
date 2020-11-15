@@ -1,5 +1,5 @@
 <?php
-//require_once 'common.php';
+
 class transactionDAO {
   
     public function retrieve_transactions_by_user_id($userid){
@@ -170,10 +170,6 @@ class transactionDAO {
 
     
 }
-
-// $orderDAO = new orderDAO();
-// $order = $orderDAO ->retrieve_orders_by_user_id(1);
-// var_dump($order);
 
 
 
