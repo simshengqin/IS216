@@ -74,6 +74,15 @@
   <!--Link to main.css files while contains all the css of this project-->
   <link rel='stylesheet' href='css\maincss.css'>
 
+  <script>
+    // change active navbar
+    $(document).ready(function(){
+        $(".active").removeClass("active");
+        $("#link-company-profile").addClass("active");
+    }); 
+
+  </script>
+
 </head>
 
 
