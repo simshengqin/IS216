@@ -33,6 +33,16 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <!--Link to main.css files while contains all the css of this project-->
 <link rel='stylesheet' href='css\maincss.css'>
+
+<script>
+  // change active navbar
+    $(document).ready(function(){
+        $(".active").removeClass("active");
+        $("#link-companies").addClass("active");
+    }); 
+ </script> 
+
+ 
 <?php
     $companyDAO = new companyDAO();
     //Retrieve all the special descriptions, then we will retrieve all the companies by each special description
@@ -477,12 +487,7 @@
           
     }
 
-    // change active navbar
-    $(document).ready(function(){
-        $(".active").removeClass("active");
-        $("#link-companies").addClass("active");
-    }); 
-
+   
 </script>
 <!-- To calculate distance between 2 points-->
 <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false&v=3&libraries=geometry"></script>

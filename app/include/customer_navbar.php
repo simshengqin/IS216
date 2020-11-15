@@ -91,7 +91,7 @@
     <div class="collapse navbar-collapse mb-20 float-right" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item mr-4 active" id="link-home">
-          <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="index.php">Home</a>
         </li>
         <li class="nav-item mr-4" id="link-companies">
         <a class="nav-link" href="view_companies.php">Restaurants</a>

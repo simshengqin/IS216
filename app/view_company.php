@@ -75,6 +75,16 @@ else {
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <!--Link to main.css files while contains all the css of this project-->
   <link rel='stylesheet' href='css\maincss.css'>
+
+  <script>
+  // change active navbar
+    $(document).ready(function(){
+        $(".active").removeClass("active");
+        $("#link-companies").addClass("active");
+    }); 
+ </script> 
+
+ 
 <!--Company main info such as logo, numbero f products, followers etc-->
 <?php
     //Process the database into info to be displayed
