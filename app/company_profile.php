@@ -36,8 +36,26 @@
     $company_following = $company->get_following();
     $numOfFollowing = count(explode( ',', $company_following ));
     $company_joined_date = $company->get_joined_date();
-    $company_rating = $company->get_rating();
-
+    //$company_rating = $company->get_rating();
+    $transactionDAO = new transactionDAO();
+    $transactions = $transactionDAO -> retrieve_transactions_by_company_id($company_id);
+    $company_total_rating = 0;
+    $company_rating_count = 0;
+    foreach ($transactions as $transaction) {
+        $transaction_rating = floatval($transaction->get_rating());
+        $transaction_company_id = $transaction->get_company_id();
+        if ($transaction_company_id == $company_id && $transaction_rating > 0 ) {
+              $company_total_rating += $transaction_rating;
+              $company_rating_count += 1;
+        }
+  
+    }
+    if ($company_rating_count == 0) {
+        $company_rating = 0;
+    }
+    else {
+        $company_rating = round($company_total_rating / $company_rating_count , 2);
+    }
     if(isset($_POST['companyAddress']) && isset($_POST['companyDescription'])) 
     {
       $update_company_address = $_POST['companyAddress'];
@@ -169,7 +187,22 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 <div class="col-md-6 text-center">
                     <img class="mr-2 mb-2 bg-white" width="200px" src="images/profile_picture/company/<?php echo $company_id ?>.png"></img>
                     <h3> <?php echo ucfirst(str_replace('_', ' ', $company_name))?></h3>
-                    <div> <i class="fas fa-star mr-2"></i> <span> Rating: <?php echo $company_rating ?></span> </div>
+                    <div> <i class="fas fa-star mr-2"></i> 
+                    <?php if ($company_rating == 0) {
+                                                        echo "<span class='font-weight-bold ml-1'>No rating yet!</span>";
+                                                    }
+                                                    else {
+                                                        echo "<span class='font-weight-bold ml-1'>$company_rating</span>
+                                                        <span>/5</span>&nbsp;($company_rating_count ";
+                                                        if ($company_rating_count > 1) {
+                                                            echo "reviews)";
+                                                        }
+                                                        else {
+                                                            echo "review)";
+                                                        }
+                                                    }
+                    ?>
+                    </div>
                     
                     </br>
                     
