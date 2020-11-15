@@ -2,11 +2,12 @@
 -- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3306
--- Generation Time: Nov 14, 2020 at 03:24 PM
--- Server version: 5.7.23
+-- Host: is216a.cr6kl6lkyeyy.eu-west-1.rds.amazonaws.com:3306
+-- Generation Time: Nov 15, 2020 at 04:26 AM
+-- Server version: 8.0.20
 -- PHP Version: 7.2.10
-
+CREATE Database IF NOT EXISTS `is216`;
+USE is216;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
@@ -30,10 +31,10 @@ SET time_zone = "+00:00";
 
 DROP TABLE IF EXISTS `company`;
 CREATE TABLE IF NOT EXISTS `company` (
-  `company_id` int(11) NOT NULL AUTO_INCREMENT,
+  `company_id` int NOT NULL AUTO_INCREMENT,
   `address` varchar(1000) CHARACTER SET utf8mb4 NOT NULL,
-  `latitude` int(11) NOT NULL,
-  `longtitude` int(11) NOT NULL,
+  `latitude` int NOT NULL,
+  `longtitude` int NOT NULL,
   `description` varchar(9999) CHARACTER SET utf8mb4 NOT NULL,
   `following` varchar(1000) CHARACTER SET utf8mb4 NOT NULL,
   `joined_date` date NOT NULL,
@@ -51,15 +52,15 @@ CREATE TABLE IF NOT EXISTS `company` (
 
 INSERT INTO `company` (`company_id`, `address`, `latitude`, `longtitude`, `description`, `following`, `joined_date`, `name`, `password`, `rating`, `mode_of_collection`, `special_description`) VALUES
 (1, '1 Hougang Street 91, #01-38, Singapore 538692', 13758021, 1038794307, 'Italian, Western', '1,2,3,4,5,6', '2020-09-02', 'saizeriya', 'password1', 4.8, 'pickup,delivery', ''),
-(2, '30 Boat Quay, Singapore 049819', 12860673, 1038498748, 'Indian, Chicken, Islandwide Delivery, Vegetarian Friendly', '1,2,3,6', '2020-09-02', 'pasta fresca', 'password1', 4.5, 'pickup', 'Featured'),
-(3, '1 Sengkang Square, Singapore 545078', 13920112, 1038950057, 'Bakery, Breakfast & Brunch, Local, Snacks, Asian and \"Cake!\"', '1,2,3,6', '2020-09-02', 'breadtalk', 'password1', 4.2, 'pickup', 'Featured'),
-(4, '229 Victoria St, Singapore 188023', 12998721, 1038548541, 'Fast Food, Western, Halal, Chicken, Islandwide Delivery', '1,2,3,6', '2020-09-02', 'popeyes', 'password1', 4.1, 'pickup', ''),
+(2, '30 Boat Quay, Singapore 049819', 12860673, 1038498748, 'Indian, Chicken, Islandwide Delivery, Vegetarian Friendly', '1,2,3,6', '2020-09-02', 'pasta fresca', 'password1', 4.5, 'pickup', ''),
+(3, '1 Sengkang Square, Singapore 545078', 13920112, 1038950057, 'Bakery, Breakfast & Brunch, Local, Snacks, Asian and \"Cake!\"', '1,2,3,6', '2020-09-02', 'breadtalk', 'password1', 4.2, 'pickup', ''),
+(4, '229 Victoria St, Singapore 188023', 12998721, 1038548541, 'Fast Food, Western, Halal, Chicken, Islandwide Delivery', '1,2,3,6', '2020-09-02', 'popeyes', 'password1', 4.1, 'pickup', 'Featured'),
 (5, '1 Sengkang Square Compass One #01-24, 545078', 13924343, 1038954118, 'Sushi, Japanese, Asian', '1,2,3,6', '2020-09-02', 'umisushi', 'password1', 4.7, 'pickup', ''),
 (6, 'Blk, 991 Buangkok Link, #01-14, Singapore 530991', 13843301, 1038820829, 'Chicken, Fast Food, Halal, Burger', '1,2,3,6,5,8,10,17,18,33,56,57', '2020-09-09', 'mcdonald', 'password1', 4, 'pickup,delivery', ''),
-(7, '1 Bukit Batok Central Link, #01-42 West Mall, Singapore 658713', 13500142, 1037491801, 'Korean, Asian, Chicken, Islandwide Delivery', '1,2,3,6,5,8,10,17,18,33,56,57', '2020-09-09', 'Icg Incredible Chicken', 'password1', 4.5, 'pickup', ''),
+(7, '1 Bukit Batok Central Link, #01-42 West Mall, Singapore 658713', 13500142, 1037491801, 'Korean, Asian, Chicken, Islandwide Delivery', '1,2,3,6,5,8,10,17,18,33,56,57', '2020-09-09', 'Icg Incredible Chicken', 'password1', 4.5, 'pickup', 'Featured'),
 (8, '801 Tampines Ave 4, Singapore 520801', 13471997, 1039380066, 'Thai, Local, Asian, Islandwide Delivery', '1,2,3,6,5,8,10,17,18,33,56,57', '2020-09-09', 'Yaowarat Thai Kway Chap', 'password1', 3.9, 'pickup', ''),
-(9, '949 Upper Serangoon Rd, Singapore 534713', 13614300, 1038863660, 'Local, Chinese, Islandwide Delivery', '1,2,3,6,5,8,10,17,18,33,56,57', '2020-09-09', 'DingTeLe', 'password1', 4.7, 'pickup', ''),
-(10, '5 Simon Rd, Singapore 545893', 13616244, 1038859897, 'Islandwide Delivery, Western, Beverages, Snack, Cold Brew', '1,2,3,6,5,8,10,17,18,33,56,57', '2020-09-09', 'Lola Cafe', 'password1', 4.6, 'pickup', 'Featured');
+(9, '949 Upper Serangoon Rd, Singapore 534713', 13614300, 1038863660, 'Local, Chinese, Islandwide Delivery', '1,2,3,6,5,8,10,17,18,33,56,57', '2020-09-09', 'DingTeLe', 'password1', 4.7, 'pickup', 'Featured'),
+(10, '5 Simon Rd, Singapore 545893', 13616244, 1038859897, 'Islandwide Delivery, Western, Beverages, Snack, Cold Brew', '1,2,3,6,5,8,10,17,18,33,56,57', '2020-09-09', 'Lola Cafe', 'password1', 4.6, 'pickup', '');
 
 -- --------------------------------------------------------
 
@@ -69,14 +70,14 @@ INSERT INTO `company` (`company_id`, `address`, `latitude`, `longtitude`, `descr
 
 DROP TABLE IF EXISTS `message`;
 CREATE TABLE IF NOT EXISTS `message` (
-  `message_id` int(11) NOT NULL AUTO_INCREMENT,
+  `message_id` int NOT NULL AUTO_INCREMENT,
   `body` varchar(1000) CHARACTER SET utf8mb4 NOT NULL,
   `date` datetime NOT NULL,
-  `from_id` int(11) NOT NULL,
+  `from_id` int NOT NULL,
   `from_type` varchar(1000) CHARACTER SET utf8mb4 NOT NULL,
   `seen` varchar(1000) CHARACTER SET utf8mb4 NOT NULL,
   `time` varchar(1000) CHARACTER SET utf8mb4 NOT NULL,
-  `to_id` int(11) NOT NULL,
+  `to_id` int NOT NULL,
   `to_type` varchar(1000) CHARACTER SET utf8mb4 NOT NULL,
   `type` varchar(1000) CHARACTER SET utf8mb4 NOT NULL,
   PRIMARY KEY (`message_id`)
@@ -107,8 +108,8 @@ INSERT INTO `message` (`message_id`, `body`, `date`, `from_id`, `from_type`, `se
 
 DROP TABLE IF EXISTS `product`;
 CREATE TABLE IF NOT EXISTS `product` (
-  `product_id` int(11) NOT NULL AUTO_INCREMENT,
-  `company_id` int(11) NOT NULL,
+  `product_id` int NOT NULL AUTO_INCREMENT,
+  `company_id` int NOT NULL,
   `decay_date` date NOT NULL,
   `decay_time` time(6) NOT NULL,
   `name` varchar(1000) CHARACTER SET utf8mb4 NOT NULL,
@@ -116,7 +117,7 @@ CREATE TABLE IF NOT EXISTS `product` (
   `posted_time` time(6) NOT NULL,
   `price_after` float NOT NULL,
   `price_before` float NOT NULL,
-  `quantity` int(11) NOT NULL,
+  `quantity` int NOT NULL,
   `category` varchar(1000) CHARACTER SET utf8mb4 NOT NULL,
   `mode_of_collection` varchar(9999) NOT NULL DEFAULT 'pickup',
   `image_url` varchar(9999) CHARACTER SET utf8mb4 NOT NULL,
@@ -254,9 +255,7 @@ INSERT INTO `product` (`product_id`, `company_id`, `decay_date`, `decay_time`, `
 (1007, 10, '2020-12-21', '15:07:21.000000', 'Iced Matcha Latte', '2020-09-27', '16:34:20.000000', 5.77, 7.5, 14, 'Drinks', 'pickup', 'https://d1sag4ddilekf6.cloudfront.net/compressed/items/SGDD00756ITM0590542/photo/c1fc7103befb4519bbfe04d21a855582_1578555575006700979.jpeg', 'true'),
 (1008, 10, '2020-12-01', '15:07:21.000000', 'Lola’s Chocolate Cake', '2020-09-27', '16:34:20.000000', 8.1, 8.5, 14, 'Desserts', 'pickup', 'https://d1sag4ddilekf6.cloudfront.net/compressed/items/SGDD00756ITM0590534/photo/menueditor_item_8de6fac671614bff87f07f132d241a30_1591494184183816335.jpg', 'true'),
 (1009, 10, '2020-12-21', '15:07:21.000000', 'Lychee Rosewater Cake', '2020-09-27', '16:34:20.000000', 7.1, 8.5, 13, 'Desserts', 'pickup', 'https://d1sag4ddilekf6.cloudfront.net/compressed/items/SGDD00756ITM0590531/photo/6f6f829f94f145f6b4af8fd4213bb15d_1578555831607531368.jpeg', 'true'),
-(1010, 10, '2020-12-01', '15:07:21.000000', 'Hummingbird Cake', '2020-09-27', '16:35:56.000000', 5.11, 7, 14, 'Desserts', 'pickup', 'https://d1sag4ddilekf6.cloudfront.net/compressed/items/SGDD00756ITM1034215/photo/b7f8a7c91e7d496a89da3ca08d68559f_1578555399071958057.jpeg', 'true'),
-(1012, 3, '2020-11-14', '23:36:00.000000', 'Mango Cake', '2020-11-14', '19:31:46.000000', 1.5, 2, 2, 'Tea Cakes', 'selfcollect', './images/product/3/Mango Cake_10.jpg', 'true'),
-(1017, 3, '2020-12-01', '12:30:00.000000', 'Coco Cake', '2020-11-14', '23:16:52.000000', 4, 5, 20, 'Toast', 'selfcollect', './images/product/3/Coco Cake_12.jpg', 'true');
+(1010, 10, '2020-12-01', '15:07:21.000000', 'Hummingbird Cake', '2020-09-27', '16:35:56.000000', 5.11, 7, 14, 'Desserts', 'pickup', 'https://d1sag4ddilekf6.cloudfront.net/compressed/items/SGDD00756ITM1034215/photo/b7f8a7c91e7d496a89da3ca08d68559f_1578555399071958057.jpeg', 'true');
 
 -- --------------------------------------------------------
 
@@ -266,16 +265,16 @@ INSERT INTO `product` (`product_id`, `company_id`, `decay_date`, `decay_time`, `
 
 DROP TABLE IF EXISTS `transactions`;
 CREATE TABLE IF NOT EXISTS `transactions` (
-  `transaction_id` int(11) NOT NULL AUTO_INCREMENT,
-  `userid` int(11) NOT NULL,
+  `transaction_id` int NOT NULL AUTO_INCREMENT,
+  `userid` int NOT NULL,
   `cart` varchar(255) NOT NULL,
-  `company_id` int(11) NOT NULL,
+  `company_id` int NOT NULL,
   `order_date` varchar(10) NOT NULL,
   `order_time` varchar(10) NOT NULL,
   `amount` varchar(100) NOT NULL,
   `collection_type` text NOT NULL,
   `review` varchar(255) NOT NULL,
-  `rating` int(11) NOT NULL,
+  `rating` int NOT NULL,
   `collected` varchar(100) NOT NULL,
   PRIMARY KEY (`transaction_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=latin1;
@@ -328,9 +327,9 @@ INSERT INTO `transactions` (`transaction_id`, `userid`, `cart`, `company_id`, `o
 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
-  `user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL AUTO_INCREMENT,
   `cart` varchar(9999) CHARACTER SET utf8mb4 NOT NULL,
-  `cart_company_id` int(11) NOT NULL,
+  `cart_company_id` int NOT NULL,
   `password` varchar(100) NOT NULL,
   `name` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,

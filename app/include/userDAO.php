@@ -11,7 +11,7 @@ class userDAO {
          
         $stmt = $conn->prepare($sql); 
 
-        //$stmt->bindParam(':userid', $userid, PDO::PARAM_STR);
+  
         $stmt->bindParam(':password', $password, PDO::PARAM_STR);
         $stmt->bindParam(':name', $name, PDO::PARAM_STR);
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
@@ -204,15 +204,6 @@ class userDAO {
     }
 
 
-    // public function updateEDollar($userid,$edollar){
-    //     $sql = "UPDATE student SET edollar =:edollar WHERE userid =:userid";
-    //     $connMgr = new ConnectionManager();    
-    //     $conn = $connMgr->getConnection();
-    //     $stmt = $conn->prepare($sql);
-    //     $stmt->bindParam(':userid', $userid, PDO::PARAM_STR);
-    //     $stmt->bindParam(':edollar', $edollar, PDO::PARAM_STR);
-    //     $stmt->execute();
-    // }
 
     
 }

@@ -57,7 +57,7 @@
                     <div class="type_msg" id="type_msg">
                         <div class="input_msg_write d-none" id="input_msg_write" >
                             <input type="text" class="write_msg" id="sent_message" placeholder="Type a message" />
-                            <button class="msg_send_btn" id="msg_send_btn" type="button" onclick='send_message()'><i class="fas fa-paper-plane" aria-hidden="true" name="false"></i></button>
+                            <button class="msg_send_btn" id="msg_send_btn" type="button" onclick='send_message()'><i class="fas fa-paper-plane mr-3" aria-hidden="true" name="false"></i></button>
                         </div>
                     </div>       
                 </div>
@@ -488,7 +488,7 @@ $('.msg_history').on('scroll', function() {
 })
 });
 window.setInterval(function(){
-    console.log(checkbottom);
+    
 if (checkbottom=="bottom") {
     //Scrolls down only if the user is already at the bottom when new messages arrive
     var element = document.getElementsByClassName("msg_history")[0];

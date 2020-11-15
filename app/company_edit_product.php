@@ -11,16 +11,9 @@
       header("Location: company_login.php");
       exit();
     }
-    /*
-    if (isset($_GET["company_id"])) {
-        $company_id = $_GET["company_id"];   
-    }
-    else {
-      $company_id = "1";
-    }
-    */
+   
 
-    //if(isset($_POST["productid"]) && isset($_POST["decay_date"]) && isset($_POST["decay_time"]) && isset($_POST["price_after"]) && isset($_POST["quantity"]))
+    
     if(isset($_POST['editProduct']))
     {
       $id = $_POST["productid"];
@@ -36,7 +29,7 @@
     
     if(isset($_POST['deleteProduct']))
     {
-      //$id = $_POST["productid"];
+     
       $id = $_POST["modalProductName"];
       $result = $productDAO->remove_product($id);;
       if($result){
@@ -115,13 +108,7 @@
         </div>
     </div>
 
-    <!-- Footer -->
-  <!--
-  <footer class="py-5">
-    <div class="container">
-      <p class="text-center">Copyright &copy; Eco G5T4 2020</p>
-    </div>
-  </footer> -->
+    
   <?php include 'include/footer.php';?>
 
 <script>
@@ -155,7 +142,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         var num = ele.getAttribute('value');
         num = parseFloat(num);
         num = num.toFixed(2)
-        //console.log(num);
+      
         ele.setAttribute('value', num);
       }
 
@@ -164,7 +151,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         var num = ele.getAttribute('value');
         num = parseFloat(num);
         num = num.toFixed(2)
-        //console.log(num);
+     
         ele.setAttribute('value', num);
       }
 
@@ -201,9 +188,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
       var timeRemaining =  countDownDate - now;
 
       if (timeRemaining < 0) {
-        var newValue = document.getElementById('name_'+productid).getAttribute('value');
-        newValue = newValue + " * EXPIRED";
-        document.getElementById('name_'+productid).setAttribute('value', newValue);
+        document.getElementById('name_'+productid).innerText += " * EXPIRED";
         document.getElementById('name_'+productid).style.color = "red";
       }
     }
@@ -300,8 +285,7 @@ function validationUpdate(errorDateInput, decay_date_value, errorEndTime, decay_
 
 function validationDelete(productId){
   console.log(productId);
-  //console.log(productName);
-  //document.getElementById(modalProductName).innerHTML = productId;
+ 
   document.getElementById("modalProductName").setAttribute("value", productId)
   $('#confirmDelete').modal('show');
 }
@@ -346,8 +330,7 @@ function checkIfDateTimeExpired(date,time){
 
         $strProductId = strval($product->get_product_id());
 
-        //$productName = str_replace(' ', '_', $product->get_name());
-
+       
         $errorDateInput = "errorDateInput".$strProductId;
         $decay_date_value = "decayDate".$strProductId;
         $errorEndTime = "errorEndTime".$strProductId;
@@ -377,19 +360,14 @@ function checkIfDateTimeExpired(date,time){
 
           <div class='col-md-6'>
             <form action='company_edit_product.php' method='POST'>
-                
-                <input type='text' readonly class='form-control-plaintext' id='name_{$product->get_product_id()}' value='".ucfirst(str_replace('_', ' ', $product->get_name()))."' style='font-size: 30px;'>
-                <!-- <h2 class='card-title font-weight-light' id='{$product->get_product_id()}_OLD'>".ucfirst(str_replace('_', ' ', $product->get_name()))."</h2> -->
-                
-                <div class='form-group' style='margin-bottom: 15px; margin-top: -15px'>
-                  <div class='input-group mb-3'>
-                    <label for='product_category_{$product->get_category()}' class='col-form-label' style='font-size: 20px;'> Category:  </label>
-                    <input type='text' readonly class='form-control-plaintext'  name='product_category' value=' ". ucfirst(str_replace('_', ' ', $product->get_category()))."' style='font-size: 20px;'>
-                    
-                    </div>
-                </div>
-                
 
+                <h4 class='card-title' id='name_{$product->get_product_id()}' style='font-size: 24px; '>" . ucfirst(str_replace('_', ' ', $product->get_name())) . "</h4>";
+                echo "                
+                    <div class='card-subtitle mb-2'> Category: " . 
+                     ucfirst(str_replace('_', ' ', $product->get_category()))."
+                    </div>
+                    ";
+                echo "
                 <input type='hidden' name='errorBugBlock' value={$product->get_product_id()}>
 
                 <input type='hidden' name='productid' value={$product->get_product_id()}>

@@ -10,23 +10,7 @@
       header("Location: company_login.php");
       exit();
     }
-    /*
-    if (isset($_GET["company_id"])) {
-        $company_id = $_GET["company_id"];   
-    }
-    else {
-      $company_id = "1";
-    }
-    */
-
-  // Check if the directory exsit, else create new directory
-  $dir = 'images/product/'.$company_id;
-  if(is_dir($dir)){
-    $diplayOutput_directoryExist = "directory exist";
-  } else{
-    $diplayOutput_directoryExist = "directory does not exist";
-    mkdir($dir);
-  }
+   
 
     $company = $companyDAO->retrieve_company($company_id);
     
@@ -36,8 +20,26 @@
     $company_following = $company->get_following();
     $numOfFollowing = count(explode( ',', $company_following ));
     $company_joined_date = $company->get_joined_date();
-    $company_rating = $company->get_rating();
-
+ 
+    $transactionDAO = new transactionDAO();
+    $transactions = $transactionDAO -> retrieve_transactions_by_company_id($company_id);
+    $company_total_rating = 0;
+    $company_rating_count = 0;
+    foreach ($transactions as $transaction) {
+        $transaction_rating = floatval($transaction->get_rating());
+        $transaction_company_id = $transaction->get_company_id();
+        if ($transaction_company_id == $company_id && $transaction_rating > 0 ) {
+              $company_total_rating += $transaction_rating;
+              $company_rating_count += 1;
+        }
+  
+    }
+    if ($company_rating_count == 0) {
+        $company_rating = 0;
+    }
+    else {
+        $company_rating = round($company_total_rating / $company_rating_count , 2);
+    }
     if(isset($_POST['companyAddress']) && isset($_POST['companyDescription'])) 
     {
       $update_company_address = $_POST['companyAddress'];
@@ -138,30 +140,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 </script>
 
-<!-- Navigation Bar -->
-<!--
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-    <div class="container">
-    <a class="navbar-brand" href="mainpage.html">Eco</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarResponsive">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item active mr-4">
-          <a class="nav-link" href="company_profile.php"> Dashboard <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item mr-4">
-          <a class="nav-link" href="company_post_product.php"> Post </a>
-        </li>
-        <li class="nav-item mr-4">
-          <a class="nav-link" href="company_edit_product.php"> Edit </a>
-        </li>
-      </ul>
-    </div>
-    </div>
-  </nav>
-  -->
+
   <?php include 'include/company_navbar.php';?>
 
   <!--Company profile  -->
@@ -178,7 +157,22 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 <div class="col-md-6 text-center">
                     <img class="mr-2 mb-2 bg-white" width="200px" src="images/profile_picture/company/<?php echo $company_id ?>.png"></img>
                     <h3> <?php echo ucfirst(str_replace('_', ' ', $company_name))?></h3>
-                    <div> <i class="fas fa-star mr-2"></i> <span> Rating: <?php echo $company_rating ?></span> </div>
+                    <div> <i class="fas fa-star mr-2"></i> 
+                    <?php if ($company_rating == 0) {
+                                                        echo "<span class='font-weight-bold ml-1'>No rating yet!</span>";
+                                                    }
+                                                    else {
+                                                        echo "<span class='font-weight-bold ml-1'>$company_rating</span>
+                                                        <span>/5</span>&nbsp;($company_rating_count ";
+                                                        if ($company_rating_count > 1) {
+                                                            echo "reviews)";
+                                                        }
+                                                        else {
+                                                            echo "review)";
+                                                        }
+                                                    }
+                    ?>
+                    </div>
                     
                     </br>
                     
@@ -220,14 +214,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         </div>
     </div>
     
-  <!-- Footer -->
-  <!--
-  <footer class="py-5">
-    <div class="container">
-      <p class="text-center">Copyright &copy; Eco G5T4 2020</p>
-    </div>
-  </footer>
-  -->
+ 
 
   <?php include 'include/footer.php';?>
 
@@ -246,8 +233,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
               <!-- <img class='card-img-top' src='images/{$product->get_category()}/{$product->get_name()}.jpg' width='100%' height='225'> -->
               <img class='card-img-top' src='{$product->get_image_url()}' width='100%' height='225'>
               <div class='card-body'>
-                <h4 class='card-title'> ".ucfirst(str_replace('_', ' ', $product->get_name()))."</h4>
-                <p class='card-text'> Promotion End: </p>
+                <h4 class='card-title'> ".ucfirst(str_replace('_', ' ', $product->get_name()))."</h4>";
+                echo "                
+                    <div class='card-subtitle mb-2'> Category: " . 
+                     ucfirst(str_replace('_', ' ', $product->get_category())) . "
+                    </div>
+                    ";
+                echo "<p class='card-text'> Promotion End: </p>
                 <input type='hidden' class='dateTimeInputLeft' value='{$product->get_product_id()}*{$product->get_decay_date()}*{$product->get_decay_time()}'>
                 <p class='card-text text-center' style='font-size: 22px;' id='{$product->get_product_id()}')>  0:00:00 </p>
                 <!-- <p class='card-text font-weight-light' style='margin-bottom: -5px; font-size: 18px;'> Before Price: $  {$product->get_price_after()}</p> -->
@@ -255,15 +247,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 
                 <div class='form-group' style='margin-bottom:-30px;'>
                   <div class='input-group mb-3'>
-                    <label for='salePrice_{$product->get_product_id()}' class='col-form-label' style='font-size: 20px;'> Sale's Price : $  </label>
-                    <input type='text' readonly class='form-control-plaintext' name='salePrice' id='salePrice_{$product->get_product_id()}' value='{$product->get_price_before()}' style='font-size: 20px;'>
+                    <label for='salePrice_{$product->get_product_id()}' class='col-form-label' > Sale's Price : $"."{$product->get_price_before()} </label>
+                   
                   </div>
                 </div>
 
                 <div class='form-group' style='margin-bottom:-15px;'>
                 <div class='input-group mb-3'>
-                  <label for='Remaining_{$product->get_product_id()}' class='col-form-label' style='font-size: 20px;'> Qty: &nbsp </label>
-                  <input type='text' readonly class='form-control-plaintext' id='Remaining_{$product->get_product_id()}' value='{$product->get_quantity()}' style='font-size: 20px;'>
+                  <label for='Remaining_{$product->get_product_id()}' class='col-form-label' > Qty: {$product->get_quantity()}&nbsp </label>
+                  
                 </div>
               </div>
 
@@ -289,8 +281,14 @@ for(var ele of salesPrice){
   var num = ele.getAttribute('value');
   num = parseFloat(num);
   num = num.toFixed(2)
-  console.log(num);
+ 
   ele.setAttribute('value', num);
 }
 
+$('textarea').each(function () {
+  this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow-y:hidden;');
+}).on('input', function () {
+  this.style.height = 'auto';
+  this.style.height = (this.scrollHeight) + 'px';
+});
 </script>

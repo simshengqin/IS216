@@ -1,5 +1,5 @@
 <?php
-//require_once 'common.php';
+
 class transactionDAO {
   
     public function retrieve_transactions_by_user_id($userid){
@@ -91,7 +91,7 @@ class transactionDAO {
          
         $stmt = $conn->prepare($sql); 
 
-        //$stmt->bindParam(':product_id', $company_id, PDO::PARAM_INT);
+      
         $stmt->bindParam(':userid', $userid, PDO::PARAM_INT);
         $stmt->bindParam(':cart', $cart, PDO::PARAM_STR);
         $stmt->bindParam(':company_id', $company_id, PDO::PARAM_INT);

@@ -124,7 +124,7 @@
 
                         <!-- Then put toasts within -->
                         <div class="toast hide" id="success_popup"  style="margin: 10px;" aria-live="assertive" aria-atomic="true">
-                            <!-- <div class="toast-body"> -->
+                           
                                 <div class='alert alert-success alert-dismissible fade show' style="margin: 0px;" role='alert'>
                                     Successfully updated your preferences!
                                     <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>      
@@ -145,7 +145,7 @@
                         }                            
                         
                         echo "  <label for='updated_proximity' class='label-title'>Highlight to me when a restaurant is outside of this proximity range: <br> (Leave as 0 to turn off this feature)</label>
-                                <input type='range' min='0' max='20000' step='5' value='$pref' name='preferances[]' id='updated_proximity' class='form-input' oninput ='change_proximity()' style='height: 28px; width: 78%; padding: 0;' />
+                                <input type='range' min='0' max='20000' step='5' value='$pref' name='preferances[]' id='updated_proximity' class='form-input' oninput ='change_proximity()' style='height: 28px; margin: -5px;width: 75%; padding: 0;' />
                                 <span id='proximity-label'>{$pref}m</span>";
                     ?>
                 

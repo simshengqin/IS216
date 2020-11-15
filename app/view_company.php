@@ -12,11 +12,7 @@
       $company_name = $_GET["company_name"];   
       
   }
-  else {
-    //Just a backup for now
-    $company_name = "saizeriya";
-    $company_id = "1";
-  }
+  
   $company = $companyDAO->retrieve_company_from_company_name($company_name);
   $company_id = $company-> get_company_id();
   $company_address = $company-> get_address();
@@ -84,7 +80,7 @@ else {
     //Process the database into info to be displayed
     $productDAO = new productDAO();
     //Retrieve all the unique categories, then we will retrieve all thep roducts category by category
-    $unique_categories = $productDAO->retrieve_unique_categories_by_company_id($company_id);
+    $unique_categories = $productDAO->retrieve_unique_categories_by_company_id_non_zero_quantity($company_id);
     //echo '<pre>'; print_r($unique_categories); echo '</pre>'; 
     $company_products = $productDAO->retrieve_product_by_company($company_id);
     $company_products_count = count($company_products);
@@ -111,9 +107,9 @@ else {
             <h1 class="font-weight-bold;"><?php echo $company_name ?>  
             </div> 
             <div class="row mb-3 ml-3">         
-                <button type="button" onclick="location.href='inbox.php?user_id=<?php echo $_SESSION['user_id']?>&user_type=user&target_id=<?php echo $company_id?>&target_type=company&target_name=<?php echo $company_name?>'" class="btn btn-outline-info mr-2"><i class="fas fa-comment mr-2"></i>Chat</button>
-                <button type="button" onclick="show_map_modal()" class="btn btn-outline-info"><i class="fa fa-map-marker mr-1"></i>View Map</button>&#8287;&#8287;
-                <button type="button" onclick="show_reviews()" class="btn btn-outline-info" data-toggle="modal" data-target="#reviewsModalLabel"><i class="fas fa-marker mr-1"></i>View Reviews</button>
+                <button type="button" onclick="location.href='inbox.php?user_id=<?php echo $_SESSION['user_id']?>&user_type=user&target_id=<?php echo $company_id?>&target_type=company&target_name=<?php echo $company_name?>'" style="margin-top: 5px;" class="btn btn-outline-info mr-2"><i class="fas fa-comment mr-2"></i>Chat</button>
+                <button type="button" onclick="show_map_modal()" style="margin-top: 5px;" class="btn btn-outline-info"><i class="fa fa-map-marker mr-1"></i>View Map</button>&#8287;&#8287;
+                <button type="button" onclick="show_reviews()"  style="margin-top: 5px;" class="btn btn-outline-info" data-toggle="modal" data-target="#reviewsModalLabel"><i class="fas fa-marker mr-1"></i>View Reviews</button>
             </div>
             </h1>         
             <div class="row mb-3 ml-3">
@@ -203,7 +199,7 @@ else {
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Delivery Address</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Current Location</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -405,7 +401,7 @@ else {
             <div class="row">               
                 <?php
                     $productDAO = new productDAO();
-                    #$all_product_info = $productDAO->retrieve_all();                 
+                                
                     $userDAO = new userDAO();
                    
                     $user_id = $_SESSION["user_id"];
@@ -453,7 +449,7 @@ else {
                     echo '<div class="row" id="main_product_grid">';
                     foreach ($unique_categories as $category) {
                         echo "  <div class='col-12' style='margin-left: 5px; margin-bottom: 20px;'>
-                                    <h1 class='font-weight-bold'>$category</h1>
+                                    <h1 class='font-weight-bold'>" . ucfirst(str_replace('_', ' ', $category)) . "</h1>
                                 </div>";
                         $company_products_by_category = $productDAO->retrieve_products_by_category($category, $company_id);
                         echo "<div class='col-12' style='margin-left: 5px; margin-bottom: 20px;'>";
@@ -631,14 +627,12 @@ else {
         var price_max = document.getElementById("price_max").value;
         var offers_has_discount = document.getElementById("offers_has_discount").checked;
         var freshness_min_days_to_expiry = document.getElementById("freshness_min_days_to_expiry").value;
-        //var categories_dessert = document.getElementById("categories_dessert").checked;
-        //var categories_vegetables = document.getElementById("categories_vegetables").checked;
-        //var categories_meal = document.getElementById("categories_meal").checked;
+      
         var has_at_least_one_value = false;
         for (var i=0; i < product_grids.length; i++) {
             var product_grid = product_grids[i];
 
-            //productinfo = $product_id, $company_id, $decay_date, $decay_time, $name, $posted_date, $posted_time, $price_after, $price_before, $quantity, $type, $mode_of_collection
+            
             //To retrieve the name, need to split by , and find the 5th element
             product_info_arr = product_grid.getAttribute("name").split(",");
             product_id = product_info_arr[0];
@@ -662,7 +656,7 @@ else {
             var difference_in_days = difference_in_time / (1000 * 3600 * 24); 
             //Checks whether the product meets all filter criteria. As long as the product does not meet one of the criteria, it wont be displayed
             //Display the product as long as it fufills 1 of the categories. Hence, if both dessert and vegeatables are checked, it will display products with either dessert or vegetables
-            //console.log(price_before);
+            
             //if ((!categories_dessert && !categories_vegetables && !categories_meal) || (categories_dessert && category == "dessert") || (categories_vegetables && category == "vegetables") || (categories_meal && category == //"japanese_food"))
             //{
             if (name.includes(search_for_products) && (price_max == "" || price_after <= parseFloat(price_max)) && (price_min == "" || price_after >= parseFloat(price_min)) && (!offers_has_discount|| price_before != price_after) && (freshness_min_days_to_expiry == "" || difference_in_days >= freshness_min_days_to_expiry)) {
@@ -758,7 +752,7 @@ else {
                 }
             }  
         };  
-        //Hardcorded user id here. Rmb to change
+
         user_id = document.getElementById("user_id").innerText;
         request.open('POST', 'update_user.php', true);
         request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded'); 
@@ -830,7 +824,7 @@ else {
             }
             else {
                 window.target_element = target;
-                //document.getElementById("change_company_id_in_cart_msg_yes_btn").setAttribute("name",target);
+               
                 //Update the modal to show what company the user cart currently contains
                 var cart_company_name = document.getElementById("cart_company_name").value;
                 //Converts to uppercase
