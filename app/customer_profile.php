@@ -70,6 +70,16 @@
   <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet'>
   <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
   <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+
+  <script>
+        // change active navbar
+        $(document).ready(function(){
+            $(".active").removeClass("active");
+            console.log($("#link-customer-profile"));
+            $("#link-customer-profile").addClass("active");
+            console.log($("#link-customer-profile"));
+        }); 
+    </script>
   
 </head>
 
@@ -316,11 +326,7 @@
 
 <script>
 
-    // change active navbar
-    $(document).ready(function(){
-        $(".active").removeClass("active");
-        $("#link-customer-profile").addClass("active");
-    }); 
+   
 
     var user_id = document.getElementById('user_id').innerText;
     console.log(user_id);
@@ -413,7 +419,6 @@
         window.location.href = "customer_profile.php";
     }
     
-
 
 
 </script>

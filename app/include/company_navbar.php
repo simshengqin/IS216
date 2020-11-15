@@ -55,7 +55,7 @@
                       <a class='nav-link' href='company_login.php'>Login/Register</a>
                   </li>";
               } else {
-                echo " <li class='nav-item mr-4' id='link-company-profile'> <a class='nav-link' href='company_profile.php'>" . ucwords($_SESSION['name']) . "</a></li>
+                echo " <li class='nav-item mr-4 active' id='link-company-profile'> <a class='nav-link' href='company_profile.php'>" . ucwords($_SESSION['name']) . "</a></li>
                     <li class='nav-item mr-4 id='link-login'>
                       <a class='nav-link' href='include/protect.php?logout=true'>Logout</a>
                     </li>";
