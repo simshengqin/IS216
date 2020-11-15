@@ -10,23 +10,7 @@
       header("Location: company_login.php");
       exit();
     }
-    /*
-    if (isset($_GET["company_id"])) {
-        $company_id = $_GET["company_id"];   
-    }
-    else {
-      $company_id = "1";
-    }
-    */
-
-  // Check if the directory exsit, else create new directory
-  $dir = 'images/product/'.$company_id;
-  if(is_dir($dir)){
-    $diplayOutput_directoryExist = "directory exist";
-  } else{
-    $diplayOutput_directoryExist = "directory does not exist";
-    mkdir($dir);
-  }
+   
 
     $company = $companyDAO->retrieve_company($company_id);
     
@@ -147,30 +131,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 </script>
 
-<!-- Navigation Bar -->
-<!--
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-    <div class="container">
-    <a class="navbar-brand" href="mainpage.html">Eco</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarResponsive">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item active mr-4">
-          <a class="nav-link" href="company_profile.php"> Dashboard <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item mr-4">
-          <a class="nav-link" href="company_post_product.php"> Post </a>
-        </li>
-        <li class="nav-item mr-4">
-          <a class="nav-link" href="company_edit_product.php"> Edit </a>
-        </li>
-      </ul>
-    </div>
-    </div>
-  </nav>
-  -->
+
   <?php include 'include/company_navbar.php';?>
 
   <!--Company profile  -->
@@ -244,14 +205,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         </div>
     </div>
     
-  <!-- Footer -->
-  <!--
-  <footer class="py-5">
-    <div class="container">
-      <p class="text-center">Copyright &copy; Eco G5T4 2020</p>
-    </div>
-  </footer>
-  -->
+ 
 
   <?php include 'include/footer.php';?>
 
@@ -279,15 +233,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 
                 <div class='form-group' style='margin-bottom:-30px;'>
                   <div class='input-group mb-3'>
-                    <label for='salePrice_{$product->get_product_id()}' class='col-form-label' style='font-size: 20px;'> Sale's Price : $  </label>
-                    <input type='text' readonly class='form-control-plaintext' name='salePrice' id='salePrice_{$product->get_product_id()}' value='{$product->get_price_before()}' style='font-size: 20px;'>
+                    <label for='salePrice_{$product->get_product_id()}' class='col-form-label' > Sale's Price : $"."{$product->get_price_before()} </label>
+                   
                   </div>
                 </div>
 
                 <div class='form-group' style='margin-bottom:-15px;'>
                 <div class='input-group mb-3'>
-                  <label for='Remaining_{$product->get_product_id()}' class='col-form-label' style='font-size: 20px;'> Qty: &nbsp </label>
-                  <input type='text' readonly class='form-control-plaintext' id='Remaining_{$product->get_product_id()}' value='{$product->get_quantity()}' style='font-size: 20px;'>
+                  <label for='Remaining_{$product->get_product_id()}' class='col-form-label' > Qty: {$product->get_quantity()}&nbsp </label>
+                  
                 </div>
               </div>
 
@@ -313,7 +267,7 @@ for(var ele of salesPrice){
   var num = ele.getAttribute('value');
   num = parseFloat(num);
   num = num.toFixed(2)
-  console.log(num);
+ 
   ele.setAttribute('value', num);
 }
 

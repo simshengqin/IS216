@@ -346,8 +346,7 @@ function checkIfDateTimeExpired(date,time){
 
         $strProductId = strval($product->get_product_id());
 
-        //$productName = str_replace(' ', '_', $product->get_name());
-
+       
         $errorDateInput = "errorDateInput".$strProductId;
         $decay_date_value = "decayDate".$strProductId;
         $errorEndTime = "errorEndTime".$strProductId;
@@ -377,8 +376,8 @@ function checkIfDateTimeExpired(date,time){
 
           <div class='col-lg-6'>
             <form action='company_edit_product.php' method='POST'>
-                
-                <input type='text' readonly class='form-control-plaintext' id='name_{$product->get_product_id()}' value='".ucfirst(str_replace('_', ' ', $product->get_name()))."' style='font-size: 30px;'>
+
+                <input type='text' readonly class='form-control-plaintext' id='name_{$product->get_product_id()}' value='".ucfirst(str_replace('_', ' ', $product->get_name()))."' style='font-size: 24px; '>
                 <!-- <h2 class='card-title font-weight-light' id='{$product->get_product_id()}_OLD'>".ucfirst(str_replace('_', ' ', $product->get_name()))."</h2> -->
                 
                 <div class='form-group' style='margin-bottom: 15px; margin-top: -15px'>
