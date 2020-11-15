@@ -8,7 +8,6 @@
   <meta name="author" content="">
 
   <title>Eco</title>
-
   <!-- Bootstrap core CSS -->  
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
  
@@ -74,7 +73,7 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" style="">
     <div class="container">
-    <a class="navbar-brand" href="index.php"><img src="images/logo/rsz_e (1).png">    <img src="images/logo/rsz_shadow_eco.png"></a>    
+    <a class="navbar-brand" href="index.php"><img src="images/logo/eco-logo.png">    <img src="images/logo/rsz_shadow_eco.png"></a>    
     <ul class="navbar-nav ml-auto mr-4 d-lg-none">
       <li class="nav-item" id="link-cart">
                 <a href="shoppingcart.php" class="nav-link navbar-link-2 waves-effect cart-icon">

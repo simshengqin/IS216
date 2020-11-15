@@ -14,6 +14,7 @@
 
 
     ?>
+    <link rel="icon" href="images/logo/favicon.png">;
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet">
     <!--Link to main.css files while contains all the css of this project-->
     <link rel='stylesheet' href='css\maincss.css'>
