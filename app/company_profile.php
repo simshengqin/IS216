@@ -127,6 +127,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 });
 
+      var afterPrice = document.getElementsByName("salePrice");
+      for(var ele of afterPrice){
+        var num = ele.getAttribute('value');
+        num = parseFloat(num);
+        num = num.toFixed(2)
+        //console.log(num);
+        ele.setAttribute('value', num);
+      }
+
 </script>
 
 <!-- Navigation Bar -->
