@@ -227,6 +227,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
       $companyProducts = new productDAO();
       $products = $companyProducts->retrieve_product_by_company($company_id);
       foreach($products as $product){
+        $price = floatval($product->get_price_before());
+        $AfterPrice = number_format($price , 2, '.', ' ');
+
         echo"
           <div class='col-md-4'>
             <div class='card mb-4 shadow-sm'>
@@ -247,7 +250,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 
                 <div class='form-group' style='margin-bottom:-30px;'>
                   <div class='input-group mb-3'>
-                    <label for='salePrice_{$product->get_product_id()}' class='col-form-label' > Sale's Price : $"."{$product->get_price_before()} </label>
+                    <!-- <label for='salePrice_{$product->get_product_id()}' class='col-form-label'> Sale's Price :  $"."{$product->get_price_before()} </label> -->
+                    <label for='salePrice_{$product->get_product_id()}' class='col-form-label'> Sale's Price :  $"."{$AfterPrice} </label>
                    
                   </div>
                 </div>
