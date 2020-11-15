@@ -111,9 +111,9 @@ else {
             <h1 class="font-weight-bold;"><?php echo $company_name ?>  
             </div> 
             <div class="row mb-3 ml-3">         
-                <button type="button" onclick="location.href='inbox.php?user_id=<?php echo $_SESSION['user_id']?>&user_type=user&target_id=<?php echo $company_id?>&target_type=company&target_name=<?php echo $company_name?>'" class="btn btn-outline-info mr-2"><i class="fas fa-comment mr-2"></i>Chat</button>
-                <button type="button" onclick="show_map_modal()" class="btn btn-outline-info"><i class="fa fa-map-marker mr-1"></i>View Map</button>&#8287;&#8287;
-                <button type="button" onclick="show_reviews()" class="btn btn-outline-info" data-toggle="modal" data-target="#reviewsModalLabel"><i class="fas fa-marker mr-1"></i>View Reviews</button>
+                <button type="button" onclick="location.href='inbox.php?user_id=<?php echo $_SESSION['user_id']?>&user_type=user&target_id=<?php echo $company_id?>&target_type=company&target_name=<?php echo $company_name?>'" style="margin-top: 5px;" class="btn btn-outline-info mr-2"><i class="fas fa-comment mr-2"></i>Chat</button>
+                <button type="button" onclick="show_map_modal()" style="margin-top: 5px;" class="btn btn-outline-info"><i class="fa fa-map-marker mr-1"></i>View Map</button>&#8287;&#8287;
+                <button type="button" onclick="show_reviews()"  style="margin-top: 5px;" class="btn btn-outline-info" data-toggle="modal" data-target="#reviewsModalLabel"><i class="fas fa-marker mr-1"></i>View Reviews</button>
             </div>
             </h1>         
             <div class="row mb-3 ml-3">
