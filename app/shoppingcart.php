@@ -297,7 +297,7 @@
 
                 <h5 class="mb-4"><b>Self-pickup Timing</b></h5>
                 <div class="input-group mb-3">
-                  <div class="col-md-6">
+                  <div class="col-lg-6">
                     <div class="row mb-3">
                       <div class="input-group-prepend">
                         <span class="input-group-text">Date:</span>
@@ -305,7 +305,7 @@
                       <input type="date" class="col form-control check-checkout" value='<?php echo date('Y-m-d');?>'  id="collection_date" aria-label="collection_date" disabled>
                     </div>
                   </div>
-                  <div class="col-md-6 mb-3">
+                  <div class="col-lg-6 mb-3">
                     <div class="row">
                       <div class="input-group-prepend">
                         <span class="input-group-text">Time:</span>
