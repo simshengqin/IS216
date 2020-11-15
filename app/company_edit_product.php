@@ -369,13 +369,13 @@ function checkIfDateTimeExpired(date,time){
             <input type='hidden' class='dateTimeInputLeft' value='{$product->get_product_id()}*{$product->get_decay_date()}*{$product->get_decay_time()}'>
           </div>
 
-          <div class='col-md-6 text-center' style='padding-bottom: 30px;'>
+          <div class='col-lg-6 text-center' style='padding-bottom: 30px;'>
               <!-- <img class='.img-fluid' style='max-width: 75%; height: auto' src='images/{$product->get_category()}/{$product->get_name()}.jpg'> -->
               <!-- <img class='.img-fluid rounded shadow d-flex w-100 mx-auto justify-content-center' style='max-width: auto; height: auto' src='{$product->get_image_url()}'> -->
               <img class='.img-fluid rounded shadow d-flex w-100 mx-auto justify-content-center' src='{$product->get_image_url()}'>
           </div>
 
-          <div class='col-md-6'>
+          <div class='col-lg-6'>
             <form action='company_edit_product.php' method='POST'>
                 
                 <input type='text' readonly class='form-control-plaintext' id='name_{$product->get_product_id()}' value='".ucfirst(str_replace('_', ' ', $product->get_name()))."' style='font-size: 30px;'>

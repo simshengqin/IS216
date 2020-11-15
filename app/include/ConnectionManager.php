@@ -11,7 +11,7 @@ class ConnectionManager {
         else
             $password = "";  
         $dbname = "is216";
-        $port = 3306;    
+        $port = 3308;    
         
         //Need to put uft8 to support chinese and latin characters!
         $url  = "mysql:host={$host};dbname={$dbname};port={$port};charset=utf8";
