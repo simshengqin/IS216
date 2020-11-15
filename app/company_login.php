@@ -100,7 +100,7 @@
                             }
                         },
                         error:function(data){
-                            alert("there were trouble!");
+                            alert("Server is down or database is216 not found!");
                         }
                     });
                 })
