@@ -1,5 +1,5 @@
-
 <?php
+
 // this will autoload the class that we need in our code
 spl_autoload_register(function($class) {
  
@@ -65,4 +65,3 @@ function isEmpty($var) {
     if (empty($var))
         return TRUE;
 }
-?>
