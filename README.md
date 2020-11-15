@@ -15,29 +15,42 @@ Step by step instructions of:
 
 ## Username/password details:
 
-(User)
+**User**
 
 
 Username 1: sunjunlovesg5t4@smu.edu.sg
-
 
 Password 1: Password2
 
 
 Username 2: chrislee@gmail.com
 
-
 Password 2: Password1
 
 
-(Company)
+**Company**
+
+* all companies have the same password - password1
+Usernames: 
+1. breadtalk
+2. saizeriya
+3. pasta fresca
+4. Lola Cafe
+5. DingTeLe
+6. popeyes
+7. umisushi
+8. mcdonald
+9. Icg Incredible Chicken
+10. Yaowarat Thai Kway Chap
 
 
-Username: breadtalk
+##Note
+Stripe API has a order/rate limit, hence if Stripe appears to timeout or stop working after the Stripe checkout page, you can create a new Stripe API account and follow the steps below:
+1. Name `Account Name` in Stripe as `Eco`
+2. Get the public key and secret key
+3. Replace the public key in `shoppingcart.php` and replace the secret key in `success.php` and `create-session.php`
+4. The Stripe API checkout page should work again.
 
 
-Password: password1
-
-
-## Version 
+###### Version 
 * Version 1.0
