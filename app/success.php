@@ -7,7 +7,7 @@
     $userDAO = new userDAO();
 
     require 'vendor/autoload.php';
-    $stripe = new \Stripe\StripeClient('sk_test_51Hnc3NFI6XY9iwatovIPdfXDVVM5Gq5aB8tvuSXEHiZqaFywO5e1gaHWniCEJvdfAAMU7EpMxuD15Q5WsfxYE3cb00isYDc3Gc');
+    $stripe = new \Stripe\StripeClient('sk_test_51HnnHcGmZOdyBZEcx9a9NnEe3AzWX102pVGiyFU4u9wnmFsIqf18vl0CfVvO50ijsGob8lIYulJq2j8PxpXL9huJ00DNIEv2SM');
    
     $events = $stripe->events->all(['limit' => 3]);
 

@@ -794,7 +794,7 @@
       function checkout(current_cart) {
         var url = "create-session.php";
         // Create an instance of the Stripe object with your publishable API key
-        var stripe = Stripe("pk_test_51Hnc3NFI6XY9iwat19YgjSn7VtrRXxsdCjQ0fFqP5PtmVGc4q82zCggY6gGAAEvkNcpioJyNiAkIWxjDlYG7lHol00eo8aZAr0") 
+        var stripe = Stripe("pk_test_51HnnHcGmZOdyBZEc6byoomAik3TFxg6cSDoPrZOZ7Bnw1nj21oBby5SUl1wtHtMeoWOQvFMtlxhaONm8c11IZKEx00qLhqvj5o") 
            
             try { 
                 var xhttp = new XMLHttpRequest();
