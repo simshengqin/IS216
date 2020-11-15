@@ -181,7 +181,7 @@
                                                                                     <div class='incoming_msg'> \
                                                                                         <div class='chat_list active_chat' id='"+from_id_url+","+from_type_url+"' onclick='select_chat()'> \
                                                                                         <div class='chat_people2 row d-flex justify-content-center'> \
-                                                                                            <div class='chat_img col-xs-4'> <img class='d-block mx-auto' src='" + from_image +"' width='100px'> </div> \
+                                                                                            <div class='chat_img col-xs-4'> <img class='d-block mx-auto rounded-circle' src='" + from_image +"' width='100px'> </div> \
                                                                                             <div class='chat_ib col-xs-4'> \
                                                                                                 <div class='text-center mt-1'>" + from_name +" </div> <div class='text-center chat_date'>Today</div> \
                                                                                             </div>\
@@ -235,7 +235,7 @@
                                                                                     <div class='incoming_msg'> \
                                                                                         <div class='chat_list" + " " + active_chat + "' id='"+from_id+","+from_type+"' onclick='select_chat()'> \
                                                                                         <div class='chat_people2 row d-flex justify-content-center'> \
-                                                                                            <div class='chat_img col-xs-4'> <img class='d-block mx-auto' src='" + from_image +"' width='100px'> </div> \
+                                                                                            <div class='chat_img col-xs-4'> <img class='d-block mx-auto rounded-circle' src='" + from_image +"' width='100px'> </div> \
                                                                                              <div class='chat_ib col-xs-4'> \
                                                                                                 <div class='text-center mt-1'>" + from_name +" </div> <div class='text-center chat_date'>" + message_date +"</div> \
                                                                                             </div>\
@@ -319,7 +319,7 @@
 
                         new_html = new_html + "\
                                                                                     <div class='incoming_msg'> \
-                                                                                        <div class='incoming_msg_img'> <img src='" + from_image + "' alt='sunil'> </div> \
+                                                                                        <div class='incoming_msg_img'> <img src='" + from_image + "' alt='sunil' class='rounded-circle'> </div> \
                                                                                         <div class='received_msg'> \
                                                                                             <div class='received_withd_msg'> \
                                                                                                 <p>" + message["body"] + "</p> \
