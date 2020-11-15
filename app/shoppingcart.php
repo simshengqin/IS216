@@ -680,7 +680,7 @@
                     var data = JSON.parse(this.responseText);
                     console.log(data);
                     if ( data["status"] == "ZERO_RESULTS") {
-                        document.getElementById("map").innerHTML = "<div class='alert alert-danger'>Invalid postal code. Please refresh the page </div>";
+                        document.getElementById("map").innerHTML = "<div class='alert alert-danger'>Invalid postal code. Please go to home page to re-enter your postal code </div>";
                     }
                     var addr = data["results"][0]["formatted_address"];
                     var loc = data["results"][0]["geometry"]["location"];
@@ -715,7 +715,7 @@
                         directionsRenderer.setDirections(response);
                         }
                         else {
-                          document.getElementById("map").innerHTML = "<div class='alert alert-danger'>Invalid postal code. Please refresh the page!</div>";
+                          document.getElementById("map").innerHTML = "<div class='alert alert-danger'>Invalid postal code. Please go to home page to re-enter your postal code!</div>";
                         }
                         console.log(response);
                     });  
@@ -727,7 +727,7 @@
                   // show a predefined error message string
                   console.log("Sorry, invalid address. Please try again!");  
                   
-                  document.getElementById("map").innerHTML = "<div class='alert alert-warning'>Invalid postal code. Please refresh the page.</div>";
+                  document.getElementById("map").innerHTML = "<div class='alert alert-warning'>Invalid postal code. Please go to home page to re-enter your postal code.</div>";
                   document.getElementById("map").setAttribute("style","height: 10px;");
                   
               }

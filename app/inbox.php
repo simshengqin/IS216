@@ -488,7 +488,6 @@ $('.msg_history').on('scroll', function() {
 })
 });
 window.setInterval(function(){
-    console.log(checkbottom);
 if (checkbottom=="bottom") {
     //Scrolls down only if the user is already at the bottom when new messages arrive
     var element = document.getElementsByClassName("msg_history")[0];
