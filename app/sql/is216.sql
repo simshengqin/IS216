@@ -273,7 +273,7 @@ CREATE TABLE IF NOT EXISTS `transactions` (
   `order_time` varchar(10) NOT NULL,
   `amount` varchar(100) NOT NULL,
   `collection_type` text NOT NULL,
-  `review` varchar(255) NOT NULL,
+  `review` varchar(9999) NOT NULL,
   `rating` int NOT NULL,
   `collected` varchar(100) NOT NULL,
   PRIMARY KEY (`transaction_id`)
