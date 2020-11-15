@@ -27,25 +27,14 @@ if(isset($_POST["productName"]) && isset($_POST["productType"]) && isset($_POST[
   $totalProducts = $productDAO->retrieve_product_by_company($company_id);
   $uniqueNum = count($totalProducts);
   $uniqueNum += 1;
-  //var_dump($_POST["image_path_source"]);
-  //var_dump($_POST["image_Name"]);
-  //var_dump($_FILES["productImageUpload"]["tmp_name"]);
+  
 }
 
-/* No longer required, as directory is made when start
-// Check if the directory exsit, else create new directory
-  $dir = 'images/'.$_POST["productType"];
-  if(is_dir($dir)){
-    $diplayOutput_directoryExist = "directory exist";
-  } else{
-    $diplayOutput_directoryExist = "directory does not exist";
-    mkdir($dir);
-  }
-*/
+
 
   // Copy the file and rename
   // Php sents a temp file to the www folder, from there it would be use to be uploaded into the Database 
-  //$source = "C:/Users/Victor/Desktop/".$_POST["image_path_source"];
+
   $dir = 'images/product/'.$company_id;
   $source = $_FILES["productImageUpload"]["tmp_name"];
   $destination = $dir."/".$_POST["image_path_source"]; 
@@ -58,9 +47,9 @@ if(isset($_POST["productName"]) && isset($_POST["productType"]) && isset($_POST[
   } else {
     $diplayOutput_copy = "file copied to destination";
     copy($source, $destination);
-    //echo $source ." to ".$destination;
+
     rename($destination, $dir."/".$_POST["productName"]."_".$uniqueNum.'.jpg');
-    //$image_url = "./".$dir."/".$_POST["productName"].'.jpg';
+
     $image_url = "./".$dir."/".$_POST["productName"]."_".$uniqueNum.'.jpg';
   }
 
@@ -77,7 +66,7 @@ if(isset($_POST["productName"]) && isset($_POST["productType"]) && isset($_POST[
 
   $stmt = $conn->prepare($sql); 
 
-  //$stmt->bindParam(':product_id', $company_id, PDO::PARAM_INT);
+
   $stmt->bindParam(':company_id', $company_id, PDO::PARAM_INT);
   $stmt->bindParam(':decay_date', $decay_date, PDO::PARAM_STR);
   $stmt->bindParam(':decay_time', $decay_time, PDO::PARAM_STR);
@@ -92,63 +81,10 @@ if(isset($_POST["productName"]) && isset($_POST["productType"]) && isset($_POST[
   $stmt->bindParam(':image_url', $image_url, PDO::PARAM_STR);
   $stmt->bindParam(':visible', $visible, PDO::PARAM_STR);
   echo($stmt->execute());
-  //$output = $productDAO->add( $company_id, $decay_date, $decay_time, $name, 
-  //    $posted_date, $posted_time, $afterPrice, $beforePrice, $qty, $category, $modeOfCollection, $image_url, $visible);
-  //var_dump($output);
-  //var_dump($output);
   
 
 header("Location: company_edit_product.php");
 exit();
 
 
-
-/*
-$phpObj = json_decode($_POST["data"],true);
-$product = $phpObj['result'];
-
-
-  //$productId = $product["product_id"];
-  $companyID = $product["company_id"];
-  $name = $product["productName"];
-  $type = $product["productType"];
-  $qty = $product["productQty"];
-  $modeOfCollection = $product["productModeOfCollection"];
-  $beforePrice = $product["productBeforePrice"];
-  $afterPrice = $product["productAfterPrice"];
-  $decay_date = $product["decay_date"];
-  $decay_time = $product["decay_time"];
-  $posted_date = $product["posted_date"];
-  $posted_time = $product["posted_time"];
-  $imgaeName = $product["productImage"];
-
-  
-  // Check if the directory exsit, else create new directory
-  $dir = 'images/'.$type;
-  if(is_dir($dir)){
-    $diplayOutput_directoryExist = "directory exist";
-  } else{
-    $diplayOutput_directoryExist = "directory does not exist";
-    mkdir($dir);
-  }
-
-  //$source = $product["image_path_source"];
-  
-  $source = "C:\Users\Victor\Desktop".$imgaeName;
-  $destination = $dir;
-
-  if(!copy($source, $destination)){
-    $diplayOutput_copy = "was not able to copy file to destination";
-  } else {
-    $diplayOutput_copy = "file copied to destination";
-  }
-
-
-  //$output = $productDAO->add($productId, $companyID, $decay_date, $decay_time, $name, $posted_date, $posted_time, $afterPrice, $beforePrice, $qty, $type, $modeOfCollection);
-  $output = $productDAO->add( $companyID, $decay_date, $decay_time, $name, $posted_date, $posted_time, $afterPrice, $beforePrice, $qty, $type, $modeOfCollection);
-  
-  $result = array("result" =>  $diplayOutput_copy );
-  $jsonObj = json_encode($result);
-  echo $jsonObj;
-*/
 ?>

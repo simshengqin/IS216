@@ -631,9 +631,7 @@ else {
         var price_max = document.getElementById("price_max").value;
         var offers_has_discount = document.getElementById("offers_has_discount").checked;
         var freshness_min_days_to_expiry = document.getElementById("freshness_min_days_to_expiry").value;
-        //var categories_dessert = document.getElementById("categories_dessert").checked;
-        //var categories_vegetables = document.getElementById("categories_vegetables").checked;
-        //var categories_meal = document.getElementById("categories_meal").checked;
+      
         var has_at_least_one_value = false;
         for (var i=0; i < product_grids.length; i++) {
             var product_grid = product_grids[i];
@@ -662,7 +660,7 @@ else {
             var difference_in_days = difference_in_time / (1000 * 3600 * 24); 
             //Checks whether the product meets all filter criteria. As long as the product does not meet one of the criteria, it wont be displayed
             //Display the product as long as it fufills 1 of the categories. Hence, if both dessert and vegeatables are checked, it will display products with either dessert or vegetables
-            //console.log(price_before);
+            
             //if ((!categories_dessert && !categories_vegetables && !categories_meal) || (categories_dessert && category == "dessert") || (categories_vegetables && category == "vegetables") || (categories_meal && category == //"japanese_food"))
             //{
             if (name.includes(search_for_products) && (price_max == "" || price_after <= parseFloat(price_max)) && (price_min == "" || price_after >= parseFloat(price_min)) && (!offers_has_discount|| price_before != price_after) && (freshness_min_days_to_expiry == "" || difference_in_days >= freshness_min_days_to_expiry)) {
@@ -758,7 +756,7 @@ else {
                 }
             }  
         };  
-        //Hardcorded user id here. Rmb to change
+
         user_id = document.getElementById("user_id").innerText;
         request.open('POST', 'update_user.php', true);
         request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded'); 
@@ -830,7 +828,7 @@ else {
             }
             else {
                 window.target_element = target;
-                //document.getElementById("change_company_id_in_cart_msg_yes_btn").setAttribute("name",target);
+               
                 //Update the modal to show what company the user cart currently contains
                 var cart_company_name = document.getElementById("cart_company_name").value;
                 //Converts to uppercase
