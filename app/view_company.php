@@ -453,7 +453,7 @@ else {
                     echo '<div class="row" id="main_product_grid">';
                     foreach ($unique_categories as $category) {
                         echo "  <div class='col-12' style='margin-left: 5px; margin-bottom: 20px;'>
-                                    <h1 class='font-weight-bold'>$category</h1>
+                                    <h1 class='font-weight-bold'>" . ucfirst(str_replace('_', ' ', $category)) . "</h1>
                                 </div>";
                         $company_products_by_category = $productDAO->retrieve_products_by_category($category, $company_id);
                         echo "<div class='col-12' style='margin-left: 5px; margin-bottom: 20px;'>";
