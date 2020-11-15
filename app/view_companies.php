@@ -385,7 +385,7 @@
             end_latlng_arr = distance_obj.getAttribute("name").split(",");    
             end_latitude = end_latlng_arr[0]/10000000;
             end_longtitude = end_latlng_arr[1]/10000000;
-            console.log("End:", end_latitude, end_longtitude); 
+       
             //Need to put XHR_request as a seperate function and call it if
             //you want to make multiple AJAX requests!
             XHR_request(url, end_latitude, end_longtitude, distance_obj);                                 
@@ -397,7 +397,7 @@
     }
 
     function XHR_request(url, end_latitude, end_longtitude, distance_obj) {
-        console.log(distance_obj);
+    
         var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
@@ -409,10 +409,10 @@
                         var loc = data["results"][0]["geometry"]["location"];
                         start_latitude = loc["lat"];
                         start_longtitude = loc["lng"];
-                        console.log("Start:",start_latitude, start_longtitude);
+                        
                         //After getting current latitude and longtitude, calculates distance from this point to this company's longtitude and latitude
                         var distance = google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(start_latitude,start_longtitude), new google.maps.LatLng(end_latitude, end_longtitude))/1000; 
-                        console.log("Distance between start and end:", distance, "km");
+                      
                         //round to 2 dp
                         distance = Math.round(distance * 100) / 100;   
 
