@@ -9,7 +9,7 @@ if(isset($_POST['transaction_id']) && isset($_POST['rating']) && isset($_POST['r
     $transactionDAO = new transactionDAO();
     $transactionDAO-> update_transaction_by_transaction_id($transaction_id, $rating, $review, 'true');
     
-    //echo "$transaction_id"."  $rating"."  $review";
+
     echo "Successfully added rating and review!";
 }
 

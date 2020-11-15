@@ -5,7 +5,7 @@
 
     $companyDAO = new companyDAO();
     $productDAO = new productDAO();
-    //$productType = $productDAO->retrieve_product_type();
+
     $newProductId = count($productDAO->retrieve_all(false));
     
     if(isset($_SESSION["company_id"])){
@@ -14,14 +14,7 @@
       header("Location: company_login.php");
       exit();
     }
-    /*
-    if (isset($_GET["company_id"])) {
-        $company_id = $_GET["company_id"];    
-    }
-    else {
-      $company_id = "1";
-    }
-    */
+    
 
     $productType = $productDAO->retrieve_unique_categories_by_company_id($company_id);
 
@@ -87,11 +80,7 @@
                         </select>
                         <p id='errorProductType' class="error_msg" style='visibility: hidden; color: red;'>  </p>
                     </div>
-                   <!--
-                    <div class="form-group col-md-1" style="margin-bottom: 20px;">
-                      <button type="button" class="btn btn-info btn-lg"  data-toggle="modal" data-target="#foodTypeModal" style="left: 0%;"> <a  data-toggle="tooltip" data-placement="top" title="Tooltip on top"> Add </a> </button> 
-                    </div> 
-                    -->
+                   
                     <div class="form-group col-md-3" style="margin-bottom: 20px;">
                       <button type="button" class="btn btn-info btn-lg"  data-toggle="modal" data-target="#foodTypeModal" style="left: 0%;">  New Product Type </button> 
                     </div> 
@@ -105,10 +94,9 @@
                     <!-- Mode of Collection -->
                     <div class="form-group col-md-6" style="margin-bottom: -10px;">
                         <select class="form-control form-control-lg" id="modeOfCollection" name="modeOfCollection">
-                            <!-- <option disabled selected value=""> Mode Of Collection</option> -->
+                 
                             <option selected value="selfcollect"> Self-Collect Only</option>
-                            <!-- <option value="delivery"> Delivery Only</option> -->
-                            <!-- <option value="both"> Self-Collect / Delivery </option> -->
+                           
                         </select>
                         <p id='errorCollection'class="error_msg"  style='visibility: hidden; color: red;'>  </p>
                     </div>
@@ -143,7 +131,7 @@
 
                     <!-- promotion end date -->
                     <div class="form-group col-md-6" style="margin-bottom: -10px;">
-                        <!-- <label for="dateInput" class="col-form-label"><h5>End Date: </h5></label> -->
+                        
                         <span> Promotional End Date</span>
                         <input id="dateInput" class="form-control form-control-lg datepicker" name="dateInput" type="date" min="2000-01-01" max="2100-12-31"> 
                         <p id='errorPromotionEndDate'class="error_msg"  style='visibility: hidden; color: red;'>  </p>
@@ -223,8 +211,7 @@
 
   <script>
 
-      //var asiaTime = new Date().toLocaleString("en-US", {timeZone: "Asia/Singapore"}).split('T')[1];
-      //console.log("Singapore time: " + asiaTime);
+      
       
       var singaporeDateUnmodified = new Date().toLocaleString("en-US", {timeZone: "Asia/Singapore"}).split(',')[0];
       var singaporeTimeUnmodified = new Date().toLocaleString("en-US", {timeZone: "Asia/Singapore"}).split(',')[1];
@@ -236,8 +223,7 @@
       singaporeDate += "-";   
       singaporeDate += singaporeDateUnmodified.split('/')[1]; // Date
       
-      //console.log("Singapore Date: " + singaporeDate);
-      //console.log("Singapore Time (Unmodified): " + singaporeTimeUnmodified);
+      
 
       var tempTime = singaporeTimeUnmodified.split(' ')[1];
       var hourClock = singaporeTimeUnmodified.split(' ')[2];
@@ -299,8 +285,7 @@
         console.log(productBeforePrice);
         var productImagePathSource = document.getElementById('productImageUpload').value; // Get the file path 
         console.log(productImagePathSource);
-        //var productImagePathSource = document.getElementById("productImageUpload").files[0].path
-        //console.log("Source path " + productImagePathSource);
+       
         var productImage = "";
         if(productImagePathSource!=""){
           productImage = document.getElementById('productImageUpload').files[0].name; // Get the file name
@@ -356,7 +341,6 @@
           document.getElementById("errorQuantity").style.visibility = "visible";
           noError = false;
         } else {
-          //data["productQty"] = productQty;
           document.getElementById("errorQuantity").style.visibility = "hidden";
         }
 
@@ -366,7 +350,6 @@
           document.getElementById("errorCollection").style.visibility = "visible";
           noError = false;
         } else {
-          //data["productModeOfCollection"] = productModeOfCollection;
           document.getElementById("errorCollection").style.visibility = "hidden";
         }
 
@@ -380,7 +363,6 @@
           document.getElementById("errorBeforePrice").style.visibility = "visible";
           noError = false;
         } else{
-          //data["productBeforePrice"] = productBeforePrice;
           document.getElementById("errorBeforePrice").style.visibility = "hidden";
           noErrorBefore = true;
         }
@@ -401,7 +383,6 @@
               noError = false;
             }
         }else {
-          //data["productAfterPrice"] = productAfterPrice;
           document.getElementById("errorAfterPrice").style.visibility = "hidden";
         }
 
@@ -461,18 +442,6 @@
         document.getElementById("image_path_source").value = productImagePathSource;
         document.getElementById("image_path_source").value = productImage;
 
-        //data["company_id"] = <?php echo $company_id ?>;
-        //data["posted_date"] = singaporeDate;
-        //data["posted_time"] = singaporeTime;
-        //data["image_path_source"] = productImagePathSource;
-        
-       // console.log(productImagePathSource)
-      
-        //console.log(singaporeDate);
-        //console.log(singaporeTime);
-
-        //console.log(data);
-        //console.log(noError);
 
         if(noError){
           //processToServer(data)
@@ -484,28 +453,7 @@
         }
 
       }
-      /*
-      function processToServer(data){
-        var dataObj;
-        var request = new XMLHttpRequest();
-                request.onreadystatechange = function() {
-                  if(this.readyState == 4 && this.status == 200) {
-                    console.log(this.responseText);
-                    //dataObj = JSON.parse(this.responseText);
-                    //console.log(dataObj);
-                    console.log("it works!!");
-                  } else {
-                    //console.log("Error in transition to database")
-                  }
-                }
-        var jsObj = {"result": data};
-        var jsonObj = JSON.stringify(jsObj);
-        console.log(jsonObj);
-        request.open("POST", "company_post_product_transition.php", true);
-        request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        request.send("data=" + jsonObj);
-      }
-      */
+     
 
       function checkIfDateTimeExpired(date,time){
         console.log(date);

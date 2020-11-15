@@ -10,15 +10,7 @@
       header("Location: company_login.php");
       exit();
     }
-    /*
-    if (isset($_GET["company_id"])) {
-        $company_id = $_GET["company_id"];   
-    }
-    else {
-      $company_id = "1";
-    }
-    */
-
+   
   // Check if the directory exsit, else create new directory
   $dir = 'images/product/'.$company_id;
   if(is_dir($dir)){
@@ -129,30 +121,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 </script>
 
-<!-- Navigation Bar -->
-<!--
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-    <div class="container">
-    <a class="navbar-brand" href="mainpage.html">Eco</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarResponsive">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item active mr-4">
-          <a class="nav-link" href="company_profile.php"> Dashboard <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item mr-4">
-          <a class="nav-link" href="company_post_product.php"> Post </a>
-        </li>
-        <li class="nav-item mr-4">
-          <a class="nav-link" href="company_edit_product.php"> Edit </a>
-        </li>
-      </ul>
-    </div>
-    </div>
-  </nav>
-  -->
+
   <?php include 'include/company_navbar.php';?>
 
   <!--Company profile  -->
@@ -211,14 +180,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         </div>
     </div>
     
-  <!-- Footer -->
-  <!--
-  <footer class="py-5">
-    <div class="container">
-      <p class="text-center">Copyright &copy; Eco G5T4 2020</p>
-    </div>
-  </footer>
-  -->
+  
 
   <?php include 'include/footer.php';?>
 
