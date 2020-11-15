@@ -369,9 +369,10 @@ function checkIfDateTimeExpired(date,time){
             <input type='hidden' class='dateTimeInputLeft' value='{$product->get_product_id()}*{$product->get_decay_date()}*{$product->get_decay_time()}'>
           </div>
 
-          <div class='col-md-6 text-center ' style='padding-bottom: 30px;'>
+          <div class='col-md-6 text-center' style='padding-bottom: 30px;'>
               <!-- <img class='.img-fluid' style='max-width: 75%; height: auto' src='images/{$product->get_category()}/{$product->get_name()}.jpg'> -->
-              <img class='.img-fluid rounded shadow d-flex w-100 mx-auto' style='max-width: 80%; height: auto' src='{$product->get_image_url()}'>
+              <!-- <img class='.img-fluid rounded shadow d-flex w-100 mx-auto justify-content-center' style='max-width: auto; height: auto' src='{$product->get_image_url()}'> -->
+              <img class='.img-fluid rounded shadow d-flex w-100 mx-auto justify-content-center' src='{$product->get_image_url()}'>
           </div>
 
           <div class='col-md-6'>
@@ -380,12 +381,14 @@ function checkIfDateTimeExpired(date,time){
                 <input type='text' readonly class='form-control-plaintext' id='name_{$product->get_product_id()}' value='".ucfirst(str_replace('_', ' ', $product->get_name()))."' style='font-size: 30px;'>
                 <!-- <h2 class='card-title font-weight-light' id='{$product->get_product_id()}_OLD'>".ucfirst(str_replace('_', ' ', $product->get_name()))."</h2> -->
                 
-                <div class='form-group' style='margin-bottom: 15px;'>
+                <div class='form-group' style='margin-bottom: 15px; margin-top: -15px'>
                   <div class='input-group mb-3'>
                     <label for='product_category_{$product->get_category()}' class='col-form-label' style='font-size: 20px;'> Category:  </label>
-                    <input type='text' readonly class='form-control-plaintext'  name='product_category' value=' {$product->get_category()}' style='font-size: 20px;'>
-                  </div>
+                    <input type='text' readonly class='form-control-plaintext'  name='product_category' value=' ". ucfirst(str_replace('_', ' ', $product->get_category()))."' style='font-size: 20px;'>
+                    
+                    </div>
                 </div>
+                
 
                 <input type='hidden' name='errorBugBlock' value={$product->get_product_id()}>
 
