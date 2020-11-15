@@ -379,15 +379,11 @@ function checkIfDateTimeExpired(date,time){
 
                 <h4 class='card-title' id='name_{$product->get_product_id()}' style='font-size: 24px; '>" . ucfirst(str_replace('_', ' ', $product->get_name())) . "</h4>";
                 echo "                
-                <div class='form-group' style='margin-bottom: 15px; margin-top: -15px'>
-                  <div class='input-group mb-3'>
-                    <label for='product_category_{$product->get_category()}' class='col-form-label' style='font-size: 20px;'> Category:  </label>
-                    <input type='text' readonly class='form-control-plaintext'  name='product_category' value=' ". ucfirst(str_replace('_', ' ', $product->get_category()))."' style='font-size: 20px;'>
-                    
+                    <div class='card-subtitle mb-2'> Category:" . 
+                     ucfirst(str_replace('_', ' ', $product->get_category()))."' 
                     </div>
-                </div>
-                
-
+                    ";
+                echo "
                 <input type='hidden' name='errorBugBlock' value={$product->get_product_id()}>
 
                 <input type='hidden' name='productid' value={$product->get_product_id()}>
